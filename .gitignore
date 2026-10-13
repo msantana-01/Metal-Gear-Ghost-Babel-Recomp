@@ -44,4 +44,10 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
-*.swppackaging/dist/
+*.swp
+
+# Artefato montado pelo packaging/make_release.sh
+packaging/dist/
+
+# O jogo (Dear ImGui) escreve isto na pasta de onde foi aberto
+imgui.ini

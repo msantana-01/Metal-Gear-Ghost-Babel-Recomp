@@ -21,9 +21,10 @@ try:
     from tkinter import filedialog, messagebox, ttk
 except ImportError:  # pragma: no cover
     sys.stderr.write(
-        "A interface grafica precisa do pacote tkinter.\n\n"
+        "A interface grafica precisa da biblioteca do Tk, que nao veio.\n\n"
         "    sudo apt-get install -y python3-tk      # Debian/Ubuntu\n"
-        "    sudo pacman -S --needed python-tk         # Arch\n\n"
+        "    sudo pacman -S --needed tk               # Arch/Omarchy\n"
+        "    sudo dnf install -y python3-tkinter      # Fedora\n\n"
         "Alternativa: use a linha de comando, que faz o mesmo trabalho:\n"
         "    ./build.sh /caminho/da/rom.gbc\n"
     )
@@ -145,6 +146,11 @@ class App(tk.Tk):
             return
         if not GAME.exists():
             self.play_btn.configure(state="disabled")
+        else:
+            # O jogo já foi compilado numa sessão anterior: habilita direto.
+            # Sem isto, quem compila e reabre a janela vê "Jogar" cinza sem
+            # nenhuma explicação.
+            self.play_btn.configure(state="normal")
 
     def _open_log(self) -> None:
         for candidate in (REPO / ".build.log", REPO / ".bootstrap.log"):

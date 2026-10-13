@@ -42,11 +42,16 @@ if [ -n "$HIT" ]; then
   note "Se for a ROM que VOCÊ baixou, ela não pertence a este repositório."
 fi
 
-# 2. Diretórios que nunca são versionados
-DIRS="$(printf '%s\n' "$FILES" | grep -E '^(build|\.tools|output|rom|roms)/' || true)"
+# 2. Diretórios que nunca são versionados.
+# packaging/dist/ entra aqui porque o make_release.sh monta lá uma cópia de
+# todas as ferramentas: versionar parece inofensivo (é só código nosso), mas
+# duplica o repo e a próxima edição não chega na cópia.
+DIRS="$(printf '%s\n' "$FILES" | grep -E '^(build|\.tools|output|rom|roms|packaging/dist)/' || true)"
 if [ -n "$DIRS" ]; then
-  fail "conteúdo de build $SCOPE:"
+  fail "conteúdo que nunca deve ser versionado $SCOPE:"
   printf '%s\n' "$DIRS" | head -5 | sed 's/^/         /'
+  N_DIRS="$(printf '%s\n' "$DIRS" | wc -l)"
+  [ "$N_DIRS" -gt 5 ] && printf '         ... e mais %d\n' "$((N_DIRS - 5))"
 fi
 
 # 3. Tamanho: uma ROM de Game Boy tem no mínimo 32 KiB, e as deste jogo, MB.

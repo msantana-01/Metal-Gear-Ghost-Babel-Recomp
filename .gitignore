@@ -44,4 +44,4 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
-*.swp
+*.swppackaging/dist/

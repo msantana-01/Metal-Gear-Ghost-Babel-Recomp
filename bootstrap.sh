@@ -70,6 +70,21 @@ install_hint() { # install_hint <pacotes...>
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
+# --------------------------------------------------- 0.5 ferramentas já prontas
+#
+# Quem baixou o release recebe as ferramentas compiladas (bin/ e lib/) e não
+# precisa de cmake, ninja nem rede. Ajustamos o formato para o mesmo que o
+# build usa e seguimos como se o bootstrap tivesse compilado tudo.
+if [ -f "$REPO_DIR/bin/gbrecomp" ] && [ -f "$REPO_DIR/lib/libgbrt.a" ] \
+   && [ ! -x "$TOOLS_DIR/gbrecomp" ]; then
+  mkdir -p "$TOOLS_DIR"
+  cp "$REPO_DIR/bin/gbrecomp" "$TOOLS_DIR/gbrecomp"
+  cp "$REPO_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
+  chmod +x "$TOOLS_DIR/gbrecomp"
+  info "ferramentas do release detectadas (não precisam ser compiladas)"
+  RELEASE_MODE=1
+fi
+
 # ------------------------------------------------------- 0. checagem base
 step "Checando o essencial"
 
@@ -125,7 +140,22 @@ ok "SDL2 $SDL_VER (mínimo $SDL2_MIN)"
 printf '%s\n' "SDL_CFLAGS=$SDL_CFLAGS" >> "$TOOLS_DIR/env"
 
 # ------------------------------------------------- 2. engine (patch pinado)
+#
+# Quem baixou o tarball do release não precisa do clone: o gbrecomp embute o
+# runtime no projeto gerado, e o Makefile usa os headers de lá. O clone só é
+# necessário para COMPILAR as ferramentas — e nesse caso já vieram prontas.
 ENGINE_DIR="$TOOLS_DIR/engine"
+if [ -n "$RELEASE_MODE" ]; then
+  step "Ferramentas do release"
+  ok "gbrecomp e runtime já vêm prontos: nada a compilar, nada a baixar"
+  ok "os headers do runtime vêm junto com o C gerado"
+  mkdir -p "$TOOLS_DIR"
+  printf '%s\n' "GBRECOMP=$TOOLS_DIR/gbrecomp" >> "$TOOLS_DIR/env"
+  printf '\n%s%sPronto!%s\n' "$C_OK" "" "$C_RESET"
+  printf '\n  Próximo passo:\n\n      ./build.sh /caminho/para/sua/rom.gbc\n\n'
+  exit 0
+fi
+
 step "Baixando o motor (versão fixada)"
 
 if [ -d "$ENGINE_DIR/.git" ]; then

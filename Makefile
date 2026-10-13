@@ -11,8 +11,15 @@ OUT     ?= build/ghost-babel
 # Ferramentas preparadas pelo bootstrap.sh
 TOOLS_DIR := $(CURDIR)/.tools
 ENGINE_DIR := $(TOOLS_DIR)/engine
-GBRT      := $(ENGINE_DIR)/runtime
 LIB       := $(TOOLS_DIR)/libgbrt.a
+
+# Headers do runtime: o gbrecomp embute uma cópia completa do runtime dentro
+# do projeto gerado (3,4 MB), então quem tem o tarball do release não precisa
+# de rede nem do clone do engine para compilar. Quem clonou o repo usa o
+# checkout, se existir.
+GBRT ?= $(if $(wildcard $(ROM_SRC)/runtime/include/gbrt.h),\
+             $(ROM_SRC)/runtime,\
+             $(ENGINE_DIR)/runtime)
 
 # O diretório de trabalho da compilação: ao lado dos .c gerados, para que
 # os #include "baserom.h" etc. resolvam sem caminho extra.

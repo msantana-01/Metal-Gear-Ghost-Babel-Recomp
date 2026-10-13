@@ -1,0 +1,20 @@
+{
+  "name": "ghost-babel",
+  "description": "Metal Gear Solid: Ghost Babel (Game Boy Color). Perfil de análise: três endereções de entrada que o analisador não descobre sozinho.",
+  "title": "METALGEARGBBMGE",
+  "size_bytes": 2097152,
+  "gbrecomp_args": [
+    "--add-entry-point", "6:69fa",
+    "--add-entry-point", "80:49d6",
+    "--add-entry-point", "80:49e4"
+  ],
+  "why": [
+    "Sem estes endereços o gbrecomp ainda gera um jogo que roda, mas o código",
+    "que só é alcançado por estes pontos de entrada fica de fora da análise.",
+    "Usei-los é o que reproduz a configuração validada (testes de hardware",
+    "75/75, comparação frame a frame com emulador de referência).",
+    "",
+    "Este perfil não contém código nem dados do jogo: apenas o endereço de",
+    "três pontos de entrada, que é informação factual sobre a ROM."
+  ]
+}

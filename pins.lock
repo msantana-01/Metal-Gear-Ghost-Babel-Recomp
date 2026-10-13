@@ -1,0 +1,32 @@
+# Pins de dependência — Metal Gear Ghost Babel Recomp
+#
+# Este arquivo é lido por bootstrap.sh (formato: chave = valor, por seção).
+# Não edite à mão: mudar um pin aqui é mudar o resultado da compilação.
+#
+# O engine nunca é baixado de um espelho privado. A ferramenta vem do
+# upstream público e recebe um patch versionado deste repositório.
+
+[engine]
+name         = gb-recompiled
+url          = https://github.com/arcanite24/gb-recompiled.git
+commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
+patch        = patches/gb-recompiled-ghost-babel.patch
+patch_sha256 = a3b2fd68c183c559b36209cc25bc65e23cbd33ab5e171091909d4b2be57974b2
+# Árvore de fontes esperada DEPOIS de aplicar o patch. O bootstrap falha
+# se não bater: é a garantia de que o patch continua aplicando limpo.
+tree_after   = 5f9e3311dae4283803f59422e7fe95b998e3e1ef
+
+[build]
+# SDL2 mínimo testado. O runtime tem um único SDL_VERSION_ATLEAST(2,0,12).
+sdl2_min     = 2.0.12
+# Define obrigatória ao compilar o C gerado. Sem ela o binário linka, mas
+# nasce sem vídeo, sem input e sem dump — um jogo morto e silencioso.
+runtime_define = GB_HAS_SDL2
+
+[tools]
+# Versão das ferramentas (gbrecomp + runtime pré-compilado). Mesmo número
+# em todas as plataformas; ver README sobre a linha de versão única.
+version = 0.1.0-dev
+# URL base dos artefatos pré-compilados. Vazio = ainda não há release
+# publicado, e o bootstrap compila as ferramentas a partir do fonte.
+release_base =

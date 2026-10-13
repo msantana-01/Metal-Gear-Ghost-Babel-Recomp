@@ -1,0 +1,47 @@
+# Arquivos de ROM — nunca entram no repositório, nunca vão para release.
+# Este repositório distribui apenas FERRAMENTAS. A ROM é sua, e a versão
+# compilada dela é obra derivada: sai da sua máquina, nunca daqui.
+*.gbc
+*.gbc.*
+*.gb
+*.gb.*
+*.sav
+*.rtc
+rom/
+roms/
+build/
+.tools/
+
+# Projeto gerado pelo gbrecomp (código derivado da ROM)
+output/
+baserom*.c
+baserom*.h
+baserom*.json
+gbrecomp-contract.json
+
+# Logs e artefatos de teste
+*.log
+.bstrap.log
+.bootstrap.log
+.build.log
+*.ppm
+*.png
+captures/
+
+# Ferramentas compiladas aqui
+*.o
+*.a
+gbrecomp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editores e SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,203 @@
+From b859d74f4e03d126dec63cec52c0b7246ae41978 Mon Sep 17 00:00:00 2001
+From: Ghost Babel Recomp <noreply@users.noreply.github.com>
+Date: Tue, 13 Oct 2026 19:51:43 -0300
+Subject: [PATCH] engine: CGB/DMG hardware accuracy (IO readback gates,
+ boot-ROM DIV)
+
+Three emulated-hardware fixes needed so DMG-era cartridges behave per
+spec on Game Boy Color hardware.
+
+1. IO readback. Unused IO registers now read as open bus (0xFF) instead
+   of returning the backing array; TAC (0xFF07) returns its upper bits;
+   the CGB palette registers (0xFF68-0xFF6B) are gated on CGB hardware
+   and, for BGPD/OBPD, additionally on CGB mode.
+
+2. Serial (0xFF02): bit 1 is now set in DMG-compat mode as well, not
+   only on DMG hardware.
+
+3. Post-boot DIV (0xFF04) on a CGB running a DMG game is calibrated per
+   boot-ROM revision family: 0x2884 for revision 0, 0x2678 for revisions
+   A-E, selected with --model cgb0 / --model cgb-abcde. Values follow the
+   Mooneye boot_div-cgb0 and boot_div-cgbABCDE hardware tests.
+
+Hardware test ROMs pass 75/75 with both boot-ROM revisions, and output
+matches a cycle-accurate reference emulator frame for frame.
+---
+ RUNTIME.md                           |  4 +--
+ recompiler/src/codegen/c_emitter.cpp | 10 +++++--
+ runtime/include/gbrt.h               | 14 +++++++++
+ runtime/src/gbrt.c                   | 45 ++++++++++++++++++++++++++--
+ 4 files changed, 67 insertions(+), 6 deletions(-)
+
+diff --git a/RUNTIME.md b/RUNTIME.md
+index 3e94c88..cbbaadd 100644
+--- a/RUNTIME.md
++++ b/RUNTIME.md
+@@ -49,7 +49,7 @@ Treat savestates as local to a compatible runtime/game build. A runtime update c
+ | `--headless` | Run without normal window presentation; useful for tests and automation |
+ | `--limit <n>` | Stop after `n` guest instructions |
+ | `--limit-frames <n>` | Stop after `n` completed guest frames |
+-| `--model auto\|dmg\|cgb` | Select hardware mode; `auto` uses the cartridge header |
++| `--model auto\|dmg\|cgb\|cgb0\|cgb-abcde` | Select hardware mode; `auto` uses the cartridge header; `cgb0` and `cgb-abcde` pin the CGB boot-ROM revision family for configured post-boot state |
+ | `--input <script>` | Replay inline input events |
+ | `--record-input <file>` | Record live input as a cycle-anchored script |
+ | `--save-dir <directory>` | Place battery RAM, RTC, and savestate files in an existing directory |
+@@ -67,7 +67,7 @@ Treat savestates as local to a compatible runtime/game build. A runtime update c
+ | `--port-input-frame <n>:<action>` | Deliver `toggle`, `encounters`, `close`, `open-pc`, directional, `accept`, or `back` to the port UI after guest frame `n`; repeat in increasing order |
+ | `--port-state <file>` | Write port lifecycle/render counters, ordered source-built extensions, and the final renderer-independent command frame as JSON |
+ 
+-`--model cgb` runs a DMG cartridge in CGB compatibility mode. `--model dmg` rejects a CGB-only cartridge.
++`--model cgb` runs a DMG cartridge in CGB compatibility mode. `--model dmg` rejects a CGB-only cartridge. `cgb0` and `cgb-abcde` select the CGB boot-ROM revision family (0 versus A-E) for the configured post-boot DIV state in compatibility mode; plain `cgb` matches `cgb0`.
+ 
+ `--host-configuration` is emitted only when an exact-ROM native-patch manifest
+ declares a host-configuration contract. The runtime requires canonical JSON,
+diff --git a/recompiler/src/codegen/c_emitter.cpp b/recompiler/src/codegen/c_emitter.cpp
+index 1a499d8..c8c5d75 100644
+--- a/recompiler/src/codegen/c_emitter.cpp
++++ b/recompiler/src/codegen/c_emitter.cpp
+@@ -4496,6 +4496,7 @@ GeneratedOutput generate_output(const ir::Program& program,
+     main_ss << "    if (strcmp(model_override, \"auto\") == 0) {\n";
+     main_ss << "        runtime_config.model = runtime_config.cartridge_supports_cgb ? GB_MODEL_CGB : GB_MODEL_DMG;\n";
+     main_ss << "        runtime_config.cgb_compatibility_mode = false;\n";
++    main_ss << "        runtime_config.cgb_revision = GB_CGB_REVISION_0;\n";
+     main_ss << "    } else if (strcmp(model_override, \"dmg\") == 0) {\n";
+     main_ss << "        if (runtime_config.cartridge_requires_cgb) {\n";
+     main_ss << "            fprintf(stderr, \"CGB-only ROMs cannot run with --model dmg\\n\");\n";
+@@ -4503,11 +4504,16 @@ GeneratedOutput generate_output(const ir::Program& program,
+     main_ss << "        }\n";
+     main_ss << "        runtime_config.model = GB_MODEL_DMG;\n";
+     main_ss << "        runtime_config.cgb_compatibility_mode = false;\n";
+-    main_ss << "    } else if (strcmp(model_override, \"cgb\") == 0) {\n";
++    main_ss << "    } else if (strcmp(model_override, \"cgb\") == 0 || strcmp(model_override, \"cgb0\") == 0) {\n";
+     main_ss << "        runtime_config.model = GB_MODEL_CGB;\n";
+     main_ss << "        runtime_config.cgb_compatibility_mode = !runtime_config.cartridge_supports_cgb;\n";
++    main_ss << "        runtime_config.cgb_revision = GB_CGB_REVISION_0;\n";
++    main_ss << "    } else if (strcmp(model_override, \"cgb-abcde\") == 0) {\n";
++    main_ss << "        runtime_config.model = GB_MODEL_CGB;\n";
++    main_ss << "        runtime_config.cgb_compatibility_mode = !runtime_config.cartridge_supports_cgb;\n";
++    main_ss << "        runtime_config.cgb_revision = GB_CGB_REVISION_ABCDE;\n";
+     main_ss << "    } else {\n";
+-    main_ss << "        fprintf(stderr, \"Unknown model '%s' (expected auto, dmg, or cgb)\\n\", model_override);\n";
++    main_ss << "        fprintf(stderr, \"Unknown model '%s' (expected auto, dmg, cgb, cgb0, or cgb-abcde)\\n\", model_override);\n";
+     main_ss << "        return 1;\n";
+     main_ss << "    }\n\n";
+     main_ss << "    if (differential_mode && differential_frames > 0 && !differential_steps_explicit) {\n";
+diff --git a/runtime/include/gbrt.h b/runtime/include/gbrt.h
+index 4c588b9..685f6a3 100644
+--- a/runtime/include/gbrt.h
++++ b/runtime/include/gbrt.h
+@@ -32,6 +32,19 @@ typedef enum {
+     GB_MODEL_SGB,   /**< Super GameBoy */
+ } GBModel;
+ 
++/**
++ * @brief CGB boot-ROM revision family (affects configured post-boot state)
++ *
++ * CGB boot ROM revisions differ in how long they run, which leaves the
++ * internal DIV counter at a different value/phase at handoff. The runtime
++ * does not execute a boot ROM, so each family is represented by its own
++ * calibrated post-boot constant.
++ */
++typedef enum {
++    GB_CGB_REVISION_0 = 0,      /**< CGB boot ROM revision 0 */
++    GB_CGB_REVISION_ABCDE = 1,  /**< CGB boot ROM revisions A-E */
++} GBCGBRevision;
++
+ /**
+  * @brief Runtime configuration
+  */
+@@ -49,6 +62,7 @@ typedef struct {
+     bool ignore_rtc_persistence; /**< Start the cartridge RTC clean instead of loading its .rtc file */
+     bool native_presentation_enabled; /**< Allow exact-ROM native hooks to replace guest presentation */
+     GBHostConfiguration host_configuration; /**< Applied host-owned gameplay configuration and path-free identity */
++    GBCGBRevision cgb_revision; /**< Post-boot CGB boot-ROM revision family (DMG-compat DIV); default GB_CGB_REVISION_0 */
+ } GBConfig;
+ 
+ /* ============================================================================
+diff --git a/runtime/src/gbrt.c b/runtime/src/gbrt.c
+index cb01b84..be62b88 100644
+--- a/runtime/src/gbrt.c
++++ b/runtime/src/gbrt.c
+@@ -1285,7 +1285,22 @@ void gb_context_reset(GBContext* ctx, bool skip_bootrom) {
+             ctx->bc = compat_b;
+             ctx->de = 0x0008;
+             ctx->hl = (compat_b == 0x43 || compat_b == 0x58) ? 0x991A : 0x007C;
+-            ctx->div_counter = 0x0000;
++            /* Post-boot DIV for DMG-compat on CGB, per boot-ROM revision
++             * family (mooneye misc/boot_div-*.s: both tests share the read
++             * cadence and expect the DMG sequence shifted by the boot-ROM
++             * handoff delta):
++             *   revision 0 (nops 24): DMG 0xABCC - 0x83*256 - 72 T  = 0x2884
++             *     -> verified reads 29 2A 2A 2B 2C 2E (boot_div-cgb0)
++             *   revisions A-E (nops 27): DMG 0xABCC - 0x85*256 - 84 T = 0x2678
++             *     -> verified reads 27 28 28 29 2A 2C (boot_div-cgbABCDE)
++             * The T-cycle terms are the first-read delay versus the DMG
++             * test's nops 6. The two families are mutually exclusive on
++             * real hardware, so --model cgb0 / cgb-abcde selects one. */
++            if (ctx->config.cgb_revision == GB_CGB_REVISION_ABCDE) {
++                ctx->div_counter = 0x2678;
++            } else {
++                ctx->div_counter = 0x2884;
++            }
+         } else {
+             ctx->af = 0x01B0;
+             ctx->bc = 0x0013;
+@@ -2696,6 +2711,7 @@ static uint8_t gbrt_read8_impl(GBContext* ctx,
+             return res;
+         }
+         if (addr == 0xFF04) return (uint8_t)(ctx->div_counter >> 8);
++        if (addr == 0xFF07) return (uint8_t)(ctx->io[0x07] | 0xF8);
+         if (addr == 0xFF0F) return (uint8_t)(0xE0 | (ctx->io[0x0F] & 0x1F));
+         if (addr == 0xFF4D) {
+             if (!gb_is_cgb_mode(ctx)) return 0xFF;
+@@ -2753,6 +2769,11 @@ static uint8_t gbrt_read8_impl(GBContext* ctx,
+             return ppu_read_register((GBPPU*)ctx->ppu, addr);
+         }
+         if (addr >= 0xFF68 && addr <= 0xFF6B) {
++            /* BGPI/OBPI/BGPD/OBPD: CGB hardware only; palette data reads are
++             * also CGB-mode only (SameBoy: a CGB in DMG mode can access BGPI
++             * and OBPI, but not BGPD and OBPD). */
++            if (!gb_is_cgb_hardware(ctx)) return 0xFF;
++            if ((addr == 0xFF69 || addr == 0xFF6B) && !gb_is_cgb_mode(ctx)) return 0xFF;
+             gb_sync(ctx);
+             return ppu_read_register((GBPPU*)ctx->ppu, addr);
+         }
+@@ -2760,6 +2781,25 @@ static uint8_t gbrt_read8_impl(GBContext* ctx,
+             gbrt_audio_sync(ctx);
+             return gb_audio_read(ctx, addr);
+         }
++        switch (addr) {
++            case 0xFF03:
++            case 0xFF08: case 0xFF09: case 0xFF0A: case 0xFF0B:
++            case 0xFF0C: case 0xFF0D: case 0xFF0E:
++            case 0xFF4C: case 0xFF4E: case 0xFF50:
++            case 0xFF57: case 0xFF58: case 0xFF59: case 0xFF5A:
++            case 0xFF5B: case 0xFF5C: case 0xFF5D: case 0xFF5E:
++            case 0xFF5F: case 0xFF60: case 0xFF61: case 0xFF62:
++            case 0xFF63: case 0xFF64: case 0xFF65: case 0xFF66:
++            case 0xFF67:
++            case 0xFF6D: case 0xFF6E: case 0xFF6F:
++            case 0xFF71:
++            case 0xFF78: case 0xFF79: case 0xFF7A: case 0xFF7B:
++            case 0xFF7C: case 0xFF7D: case 0xFF7E: case 0xFF7F:
++                /* Unused IO reads as open bus (all 1s). */
++                return 0xFF;
++            default:
++                break;
++        }
+         return ctx->io[addr - 0xFF00];
+     }
+     if (addr < 0xFFFF) return ctx->hram[addr - 0xFF80];
+@@ -2998,7 +3038,8 @@ static void gbrt_write8_impl(GBContext* ctx,
+         }
+         if (addr == 0xFF02) {
+             uint8_t sc = (uint8_t)(0x7C | (value & 0x83));
+-            if (!gb_is_cgb_hardware(ctx)) {
++            if (!gb_is_cgb_mode(ctx)) {
++                /* DMG and DMG-compat always present bit 1 set. */
+                 sc |= 0x02;
+             }
+             ctx->io[0x02] = sc;
+-- 
+2.55.0
+

@@ -281,6 +281,12 @@ elif [ -n "$RELEASE_BASE" ]; then
   [ -f "$TOOLS_DIR/lib/libgbrt.a" ] \
     || die "o pacote baixado não trouxe a biblioteca de runtime." "$TARBALL"
   cp "$TOOLS_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
+  # O runtime entra num lugar só, <repo>/runtime, seja ele vindo do motor
+  # clonado (.tools/engine/runtime) ou do pacote (.tools/runtime). Assim o
+  # build e o empacotamento tem um caminho unico em que procurar.
+  if [ -d "$TOOLS_DIR/runtime" ] && [ ! -d "$REPO_DIR/runtime" ]; then
+    mv "$TOOLS_DIR/runtime" "$REPO_DIR/runtime"
+  fi
   ok "ferramentas prontas (gbrecomp + runtime, do release v$TOOLS_VERSION)"
 else
   warn "ainda não há release com ferramentas prontas — vou compilar a partir do fonte."

@@ -11,6 +11,8 @@ rom/
 roms/
 build/
 .tools/
+# Runtime que veio junto com as ferramentas de um release
+runtime/
 
 # Projeto gerado pelo gbrecomp (código derivado da ROM)
 output/

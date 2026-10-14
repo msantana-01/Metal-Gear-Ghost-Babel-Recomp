@@ -58,9 +58,16 @@ cp .tools/libgbrt.a "$OUT/ghost-babel-tools/lib/libgbrt.a"
 # absoluto do build em que foi compilado, que só existe na máquina de quem
 # compilou: sem este diretorio no pacote, o gbrecomp falha em qualquer outra
 # maquina com "Could not locate the runtime snapshot".
-[ -d .tools/engine/runtime ] || { echo "FALTA .tools/engine/runtime: rode ./bootstrap.sh"; exit 1; }
+# O runtime pode estar em dois lugares: no clone do engine (quando as
+# ferramentas foram compiladas a partir do fonte) ou na raiz, empacotado
+# (quando vieram prontas de um release anterior).
+RUNTIME_SRC=""
+for candidate in .tools/engine/runtime runtime; do
+  [ -d "$candidate" ] && { RUNTIME_SRC="$candidate"; break; }
+done
+[ -n "$RUNTIME_SRC" ] || { echo "FALTA o runtime: rode ./bootstrap.sh"; exit 1; }
 mkdir -p "$OUT/ghost-babel-tools/runtime"
-cp -r .tools/engine/runtime/. "$OUT/ghost-babel-tools/runtime/"
+cp -r "$RUNTIME_SRC"/. "$OUT/ghost-babel-tools/runtime/"
 
 # GUI (opcional neste release: fonte, não empacotado)
 mkdir -p "$OUT/ghost-babel-tools/tools/gui"

@@ -6,7 +6,7 @@ in the hot path. No game data is downloaded or shipped here: you use your own
 ROM.
 
 ```bash
-git clone https://github.com/<owner>/Metal-Gear-Ghost-Babel-Recomp.git
+git clone https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp.git
 cd Metal-Gear-Ghost-Babel-Recomp
 ./bootstrap.sh
 ./build.sh ~/my-rom.gbc
@@ -219,7 +219,7 @@ A interface gráfica também precisa do Tk: `python3-tk` (Debian/Ubuntu),
 ### Os três comandos
 
 ```bash
-git clone https://github.com/<owner>/Metal-Gear-Ghost-Babel-Recomp.git
+git clone https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp.git
 cd Metal-Gear-Ghost-Babel-Recomp
 ./bootstrap.sh                  # prepara tudo (~30s)
 ./build.sh /caminho/da/rom.gbc  # compila (~3 a 4 minutos)

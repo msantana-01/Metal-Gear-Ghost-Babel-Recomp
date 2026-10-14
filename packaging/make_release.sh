@@ -53,6 +53,15 @@ done
 cp .tools/gbrecomp "$OUT/ghost-babel-tools/bin/gbrecomp"
 cp .tools/libgbrt.a "$OUT/ghost-babel-tools/lib/libgbrt.a"
 
+# O runtime source vai junto porque o gbrecomp precisa EMBUTIR uma cópia dele
+# no projeto gerado (headers que o Makefile usa). O binario traz o caminho
+# absoluto do build em que foi compilado, que só existe na máquina de quem
+# compilou: sem este diretorio no pacote, o gbrecomp falha em qualquer outra
+# maquina com "Could not locate the runtime snapshot".
+[ -d .tools/engine/runtime ] || { echo "FALTA .tools/engine/runtime: rode ./bootstrap.sh"; exit 1; }
+mkdir -p "$OUT/ghost-babel-tools/runtime"
+cp -r .tools/engine/runtime/. "$OUT/ghost-babel-tools/runtime/"
+
 # GUI (opcional neste release: fonte, não empacotado)
 mkdir -p "$OUT/ghost-babel-tools/tools/gui"
 cp tools/gui/app.py "$OUT/ghost-babel-tools/tools/gui/"

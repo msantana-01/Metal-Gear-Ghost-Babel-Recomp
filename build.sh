@@ -83,12 +83,30 @@ if [ -n "$PROFILE_ARGS" ]; then
   info "analysis profile: $(python3 "$REPO_DIR/tools/pick_profile.py" --name "$ROM_ABS" 2>/dev/null || echo ROM)"
 fi
 
+# gbrecomp embute uma cópia do runtime no projeto gerado (o Makefile usa os
+# headers dela). Ele tenta achar esse runtime sozinho, mas o caminho que o
+# binário carrega é o do build em que foi compilado - ou seja, só existe na
+# máquina de quem compilou. Por isso apontamos explicitamente, senão a
+# ferramenta falha em qualquer outra máquina.
+RUNTIME_DIR=""
+for candidate in "$REPO_DIR/runtime" "$REPO_DIR/.tools/engine/runtime"; do
+  [ -d "$candidate" ] && { RUNTIME_DIR="$candidate"; break; }
+done
+if [ -n "$RUNTIME_DIR" ]; then
+  GBRECOMP_RUNTIME_ARGS=(--runtime-dir "$RUNTIME_DIR")
+  info "runtime: ${RUNTIME_DIR#$REPO_DIR/}"
+else
+  GBRECOMP_RUNTIME_ARGS=()
+  warn "achei o gbrecomp mas nao o runtime dele; se a geracao falhar, o bootstrap esta incompleto"
+fi
+
 # The GB* lines are read by the GUI to show progress. They are markers, not
 # prose, so the interface never has to guess what stage we are in.
 echo "GBPHASE translate"
 
 # shellcheck disable=SC2086
-if ! "$TOOLS_DIR/gbrecomp" "$ROM_ABS" -o "$BUILD_DIR/project" $PROFILE_ARGS >>"$LOG_FILE" 2>&1; then
+if ! "$TOOLS_DIR/gbrecomp" "$ROM_ABS" -o "$BUILD_DIR/project" \
+      "${GBRECOMP_RUNTIME_ARGS[@]}" $PROFILE_ARGS >>"$LOG_FILE" 2>&1; then
   printf '\n%sCode generation failed.%s\n' "$C_ERR" "$C_RESET" >&2
   printf 'This can mean an unsupported ROM. The log says:\n\n' >&2
   tail -20 "$LOG_FILE" >&2

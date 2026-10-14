@@ -268,7 +268,9 @@ elif [ -n "$RELEASE_BASE" ]; then
   elif have wget; then wget -q "$TARBALL" -O "$TOOLS_DIR/tools.tar.gz"
   else die "preciso de curl ou wget para baixar as ferramentas." "$(install_hint curl)"
   fi
-  tar -xzf "$TOOLS_DIR/tools.tar.gz" -C "$TOOLS_DIR" \
+  # --strip-components=1: o tarball tem um diretorio ghost-babel-tools/ na
+  # raiz, e aqui queremos bin/ e lib/ direto dentro de .tools/.
+  tar -xzf "$TOOLS_DIR/tools.tar.gz" -C "$TOOLS_DIR" --strip-components=1 \
     || die "não consegui descompactar as ferramentas baixadas." "rm -f .tools/tools.tar.gz && ./bootstrap.sh"
   # O tarball traz bin/gbrecomp e lib/libgbrt.a; o resto do script espera
   # os dois em .tools/. Sem esta copia, o passo seguinte tentaria compilar

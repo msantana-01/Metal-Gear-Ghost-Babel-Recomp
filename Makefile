@@ -1,56 +1,52 @@
-# Makefile — build do usuário final.
+# Makefile - the user's build.
 #
-# Você não deveria precisar mexer neste arquivo: use ./build.sh.
-# Ele existe para que o build seja previsível e para dar uma receita
-# honesta de como o jogo é montado (283 arquivos gerados + 1 biblioteca).
+# You should not need to touch this file: use ./build.sh. It exists so the
+# build is predictable, and so there is an honest recipe for how the game is
+# assembled (283 generated files + one library).
 
-# Entradas (build.sh passa isso; os defaults servem para uso manual)
+# Inputs (build.sh passes these; the defaults are for manual use)
 ROM_SRC ?= build/project
 OUT     ?= build/ghost-babel
 
-# Ferramentas preparadas pelo bootstrap.sh
+# Tools prepared by bootstrap.sh
 TOOLS_DIR := $(CURDIR)/.tools
 ENGINE_DIR := $(TOOLS_DIR)/engine
 LIB       := $(TOOLS_DIR)/libgbrt.a
 
-# Headers do runtime: o gbrecomp embute uma cópia completa do runtime dentro
-# do projeto gerado (3,4 MB), então quem tem o tarball do release não precisa
-# de rede nem do clone do engine para compilar. Quem clonou o repo usa o
-# checkout, se existir.
+# Runtime headers: gbrecomp embeds a complete copy of the runtime inside the
+# generated project (3.4 MB), so whoever has the release tarball needs neither
+# the network nor the engine clone to build. Whoever cloned the repo uses the
+# checkout, if it is there.
 GBRT ?= $(if $(wildcard $(ROM_SRC)/runtime/include/gbrt.h),\
              $(ROM_SRC)/runtime,\
              $(ENGINE_DIR)/runtime)
 
-# O diretório de trabalho da compilação: ao lado dos .c gerados, para que
-# os #include "baserom.h" etc. resolvam sem caminho extra.
-WORK := build/work
-
 CC      ?= cc
 CXX     ?= c++
-# -DGB_HAS_SDL2 é OBRIGATÓRIO. Sem ele o C gerado nem inclui o cabeçalho
-# da plataforma: o binário linka, mas nasce sem vídeo, sem input e sem
-# salvar progresso. O CMake do upstream passa essa define; aqui é explícita.
+# -DGB_HAS_SDL2 is MANDATORY. Without it the generated C does not even include
+# the platform header: the binary links, but is born without video, input or
+# save states. Upstream's CMake passes this define; here it is explicit.
 DEFINES := -DGB_HAS_SDL2
 
-# SDL2: resolvido pelo pkg-config, com sdl2-config como reserva.
+# SDL2: resolved through pkg-config, with sdl2-config as a fallback.
 SDL_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null || sdl2-config --cflags 2>/dev/null)
 SDL_LIBS   := $(shell pkg-config --libs sdl2 2>/dev/null || sdl2-config --libs 2>/dev/null)
+
+# Compilation directory: next to the generated .c files, so that includes like
+# "baserom.h" resolve without an extra path.
+WORK := build/work
 
 CFLAGS   ?= -std=gnu11 -O2 -ffunction-sections -fdata-sections
 LDFLAGS  ?= -Wl,--gc-sections
 
-# Sem warnings por padrão. O código gerado tem 283 arquivos e sempre produz
-# avisos que não significam nada para quem está usando a ferramenta — eles
-# entulham o log da interface e escondem o que importa. Para depurar:
+# No warnings by default. The generated code is 283 files and always produces
+# warnings that mean nothing to someone using the tool - they flood the
+# interface log and hide what matters. To debug:
 #     make WARN="-Wall -Wextra" ...
 WARN     ?=
 
-GEN_SRC := $(wildcard $(ROM_SRC)/*.c)
-GEN_OBJ := $(patsubst $(ROM_SRC)/%.c,$(WORK)/%.o,$(GEN_SRC))
-GEN_TOTAL := $(words $(GEN_SRC))
-
-# Silencioso por padrão: 283 linhas de comando de compilador viram muro no
-# log da interface. Para depurar, rode com V=1 e as linhas voltam.
+# Silent by default: 283 lines of compiler command become a wall in the log.
+# For debugging, build with V=1 and the lines come back.
 V ?= 0
 ifeq ($(V),1)
   Q :=
@@ -58,9 +54,13 @@ else
   Q := @
 endif
 
-# Paralelismo: o gargalo é CPU e são ~283 arquivos. O upstream também limita
-# a 8 compilações simultâneas, porque cada cc segura bastante memória sobre o
-# C gerado. Sobrescreva com JOBS=16 se sua máquina aguentar.
+GEN_SRC := $(wildcard $(ROM_SRC)/*.c)
+GEN_OBJ := $(patsubst $(ROM_SRC)/%.c,$(WORK)/%.o,$(GEN_SRC))
+GEN_TOTAL := $(words $(GEN_SRC))
+
+# Parallelism: the bottleneck is CPU and there are ~283 files. Upstream also
+# caps this at 8 concurrent compiles, because each cc holds a lot of memory
+# over the generated code. Override with JOBS=16 if your machine takes it.
 JOBS ?= $(shell n=$(nproc 2>/dev/null || echo 4); [ "$n" -gt 8 ] && echo 8 || echo $$n)
 
 .PHONY: all clean check-tools
@@ -68,26 +68,26 @@ all: check-tools $(OUT)
 
 check-tools:
 	@test -f "$(LIB)" || { \
-	  echo "ERRO: $(LIB) nao existe. Rode ./bootstrap.sh primeiro."; exit 1; }
+	  echo "ERROR: $(LIB) does not exist. Run ./bootstrap.sh first."; exit 1; }
 	@test -n "$(SDL_CFLAGS)" || { \
-	  echo "ERRO: headers do SDL2 nao encontrados. Instale libsdl2-dev (ou SDL2-devel)."; exit 1; }
+	  echo "ERROR: SDL2 headers not found. Install libsdl2-dev (or SDL2-devel)."; exit 1; }
 
 $(WORK):
 	@mkdir -p $(WORK)
 
-# Compilação paralela: o gargalo é CPU, e são ~283 arquivos.
+# Parallel compile: the bottleneck is CPU, and there are ~283 files.
 $(WORK)/%.o: $(ROM_SRC)/%.c | $(WORK)
 	$(Q)$(CC) $(CFLAGS) $(WARN) $(DEFINES) $(SDL_CFLAGS) \
 	  -I$(ROM_SRC) -I$(GBRT)/include -I$(GBRT)/vendor/imgui -c $< -o $@
 	$(Q)echo "GBPROGRESS $$(ls $(WORK)/*.o 2>/dev/null | wc -l) $(GEN_TOTAL)"
 
-# O link usa o driver C++ porque a biblioteca tem partes C++ (SDL/ImGui)
-# e depende de libstdc++.
+# Linking uses the C++ driver because the library has C++ parts (SDL/ImGui)
+# and depends on libstdc++.
 $(OUT): $(GEN_OBJ) $(LIB)
 	@echo "GBPHASE link"
 	$(Q)$(CXX) $(GEN_OBJ) $(LIB) -o $@ $(SDL_LIBS) -lm -ldl -lpthread $(LDFLAGS)
 	@strip $@ 2>/dev/null || true
-	@echo "gerado: $@ ($$(du -h $@ | cut -f1))"
+	@echo "built: $@ ($$(du -h $@ | cut -f1))"
 
 clean:
 	rm -rf $(WORK) $(OUT)

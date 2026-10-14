@@ -7,38 +7,38 @@ on:
 
 jobs:
   test:
-    # O job roda numa máquina limpa: é o mesmo teste que um usuário faz pela
-    # primeira vez, sem nada herdado do desenvolvedor.
+    # The job runs on a clean machine: the same test a user does the first
+    # time, with nothing inherited from the developer.
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Dependências de sistema
+      - name: System dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake ninja-build pkg-config libsdl2-dev
 
-      - name: Guarda de copyright
+      - name: Copyright guard
         run: ./tools/guard_copyright.sh
 
       - name: bootstrap
         run: ./bootstrap.sh
 
-      - name: Prova de fumaça (ROM sintética, sem material de terceiros)
+      - name: Smoke test (synthetic ROM, no third-party material)
         run: ./tests/smoke.sh
 
       - name: Guarda de copyright (depois do build)
-        # O build gera artefatos; nenhum deles pode ter vazado para o git.
+        # The build produces artifacts; none of them may have leaked into git.
         run: ./tools/guard_copyright.sh
 
-      - name: Confirma que o build não sujou o repositório
+      - name: Check that the build did not dirty the repository
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "::error::o build criou arquivos versionados:"
+            echo "::error::the build created tracked files:"
             git status --porcelain
             exit 1
           fi
 
-      - name: Artefato de release monta e se autoverifica
+      - name: Release artifact builds and checks itself
         run: ./packaging/make_release.sh 0.0.0-ci

@@ -83,11 +83,11 @@ if [ -n "$PROFILE_ARGS" ]; then
   info "analysis profile: $(python3 "$REPO_DIR/tools/pick_profile.py" --name "$ROM_ABS" 2>/dev/null || echo ROM)"
 fi
 
-# gbrecomp embute uma cópia do runtime no projeto gerado (o Makefile usa os
-# headers dela). Ele tenta achar esse runtime sozinho, mas o caminho que o
-# binário carrega é o do build em que foi compilado - ou seja, só existe na
-# máquina de quem compilou. Por isso apontamos explicitamente, senão a
-# ferramenta falha em qualquer outra máquina.
+# gbrecomp embeds a copy of the runtime in the generated project (the
+# Makefile uses its headers). It tries to find that runtime on its own, but
+# the path baked into the binary is the one from the build it was compiled
+# in - which only exists on the machine that compiled it. So we point at it
+# explicitly, otherwise the tool fails on every other machine.
 RUNTIME_DIR=""
 for candidate in "$REPO_DIR/runtime" "$REPO_DIR/.tools/engine/runtime"; do
   [ -d "$candidate" ] && { RUNTIME_DIR="$candidate"; break; }

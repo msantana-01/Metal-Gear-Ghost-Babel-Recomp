@@ -1,10 +1,10 @@
 # Pins de dependência — Metal Gear Ghost Babel Recomp
 #
-# Este arquivo é lido por bootstrap.sh (formato: chave = valor, por seção).
-# Não edite à mão: mudar um pin aqui é mudar o resultado da compilação.
+# Read by bootstrap.sh (format: key = value, per section).
+# Do not edit by hand: changing a pin here changes the build output.
 #
-# O engine nunca é baixado de um espelho privado. A ferramenta vem do
-# upstream público e recebe um patch versionado deste repositório.
+# The engine is never fetched from a private mirror. The tool comes from
+# public upstream plus a versioned patch from this repository.
 
 [engine]
 name         = gb-recompiled
@@ -12,15 +12,15 @@ url          = https://github.com/arcanite24/gb-recompiled.git
 commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
 patch        = patches/gb-recompiled-ghost-babel.patch
 patch_sha256 = 35421d5bca3a986fc823c5716023ab9b59584c8d5a0a4d9ea25e85ce0d123930
-# Árvore de fontes esperada DEPOIS de aplicar o patch. O bootstrap falha
-# se não bater: é a garantia de que o patch continua aplicando limpo.
+# Expected source tree AFTER applying the patch. The bootstrap fails if it
+# does not match: that is what guarantees the patch still applies cleanly.
 tree_after   = 5f9e3311dae4283803f59422e7fe95b998e3e1ef
 
 [build]
-# SDL2 mínimo testado. O runtime tem um único SDL_VERSION_ATLEAST(2,0,12).
+# Lowest SDL2 tested. The runtime has a single SDL_VERSION_ATLEAST(2,0,12).
 sdl2_min     = 2.0.12
-# Define obrigatória ao compilar o C gerado. Sem ela o binário linka, mas
-# nasce sem vídeo, sem input e sem dump — um jogo morto e silencioso.
+# Mandatory define when compiling the generated C. Without it the binary
+# links, but is born without video, input or dumping - a dead game, silently.
 runtime_define = GB_HAS_SDL2
 
 [tools]

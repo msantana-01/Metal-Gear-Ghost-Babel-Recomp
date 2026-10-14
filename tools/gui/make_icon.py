@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Gera o ícone da GUI: um cartucho de Game Boy, em pixel art.
+"""Generates the GUI icon: a Game Boy cartridge, in pixel art.
 
-Esta arte é NOSSA. Nada aqui vem da ROM, do jogo ou de qualquer imagem de
-terceiros — são formas geométricas (um cartucho visto de frente) desenhadas
-por código. É por isso que ela pode ficar no repositório público.
+This artwork is OURS. Nothing here comes from the ROM, from the game, or from
+any third-party image - these are geometric shapes (a cartridge seen from the
+front) drawn by code. That is why it can live in the public repository.
 
-O Tkinter só lê PNG e GIF, nunca JPEG: por isso o ícone é gerado já em PNG.
-Sem dependência externa (sem Pillow): o PNG é escrito à mão com zlib.
+Tkinter only reads PNG and GIF, never JPEG, so the icon is generated as PNG
+already. No external dependency (no Pillow): the PNG is written by hand with
+zlib.
 
-Uso:  python3 tools/gui/make_icon.py [saida.png]
+Usage:  python3 tools/gui/make_icon.py [output.png]
 """
 
 from __future__ import annotations
@@ -66,21 +67,21 @@ class Canvas:
 def draw_cartridge() -> Canvas:
     c = Canvas(GRID)
 
-    # --- corpo do cartucho
+    # --- cartridge body
     c.rounded(3, 3, 28, 30, 2, SHELL)
     c.frame(3, 3, 28, 30, INK)
 
-    # --- luz no canto superior esquerdo: dá volume ao plástico
+    # --- light on the top-left corner: gives the plastic some volume
     for i in range(4):
         c.rect(5 + i, 5, 5 + i, 7, SHELL_HI)
 
-    # --- conector de metal no topo, com os dois entalhes
+    # --- metal connector at the top, with its two notches
     c.rect(8, 1, 23, 4, SHELL_HI)
     c.frame(8, 1, 23, 4, INK)
     for x in (12, 17):                      # entalhes do conector
         c.rect(x, 1, x + 2, 4, TRANSPARENT)
 
-    # --- pinos dentro do conector
+    # --- pins inside the connector
     for x in range(9, 12):
         c.rect(x, 2, x, 3, INK)
     for x in range(14, 17):
@@ -88,19 +89,19 @@ def draw_cartridge() -> Canvas:
     for x in range(20, 23):
         c.rect(x, 2, x, 3, INK)
 
-    # --- etiqueta
+    # --- label
     c.rect(7, 9, 24, 24, LABEL)
     c.frame(7, 9, 24, 24, INK)
     c.rect(8, 10, 23, 12, ACCENT)           # faixa colorida
     c.frame(8, 10, 23, 12, INK)
 
-    # --- "linhas de texto" na etiqueta: blocos, não letras (fica legível
-    #     em 32 pixels e não sugere grafia do jogo)
+    # --- "text lines" on the label: blocks, not letters (readable at 32
+    #     pixels, and it does not imitate the game's lettering)
     c.rect(10, 15, 21, 16, SHELL)
     c.rect(10, 18, 18, 19, SHELL)
     c.rect(10, 21, 20, 22, WARM)
 
-    # --- entalhe de pega no rodapé
+    # --- grip notch at the bottom
     c.rect(12, 26, 19, 28, TRANSPARENT)
     c.frame(12, 26, 19, 28, INK)
     c.rect(13, 27, 18, 27, SHELL)
@@ -141,7 +142,7 @@ def main() -> int:
     dest = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name("icon.png")
     art = draw_cartridge()
     write_png(dest, scale(art, SCALE))
-    print(f"icone: {dest} ({OUT}x{OUT}, arte original de {GRID}x{GRID} px)")
+    print(f"icon: {dest} ({OUT}x{OUT}, original artwork drawn at {GRID}x{GRID} px)")
     return 0
 
 

@@ -22,11 +22,11 @@ SOFTWARE.
 
 ---
 
-Este licenciamento cobre APENAS as ferramentas deste repositório (o tradutor,
-o runtime, a interface gráfica e os scripts).
+This license covers ONLY the tools in this repository: the translator, the
+runtime, the graphical interface and the scripts.
 
-Metal Gear Solid: Ghost Babel é uma obra de Konami / Nintendo. Este projeto
-NÃO inclui, distribui ou obtém a ROM, o código-fonte do jogo, seus gráficos,
-sua trilha sonora nem o executável gerado a partir da ROM. O executável
-gerado a partir da sua própria ROM é obra derivada do jogo e é responsabilidade
-de quem o compila, no seu computador.
+Metal Gear Solid: Ghost Babel is a work of Konami / Nintendo. This project
+does NOT include, distribute or obtain the ROM, the game's source code, its
+graphics, its music, or the executable generated from the ROM. The executable
+generated from your own ROM is a derivative work of the game and is the
+responsibility of whoever compiles it, on their own computer.

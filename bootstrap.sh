@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# bootstrap.sh — prepara tudo que o build precisa. Rode UMA vez.
+# bootstrap.sh - prepares everything the build needs. Run this ONCE.
 #
 #   ./bootstrap.sh
 #
-# O script é escritos para nunca encerrar com uma mensagem que não diga
-# o que fazer. Se algo faltar, ele diz o que falta e o comando exato
-# que resolve, para a sua distribuição.
+# The script is written so that it never stops with a message that does not
+# say what to do. If something is missing it says what is missing and the
+# exact command that fixes it, for your distribution.
 
 set -uo pipefail
 
@@ -14,16 +14,18 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOOLS_DIR="$REPO_DIR/.tools"
 LOG_FILE="$REPO_DIR/.bootstrap.log"
 
-# shellcheck disable=SC1091
-[ -f "$REPO_DIR/pins.lock" ] || { echo "ERRO: pins.lock não encontrado. Repo clonado errado?"; exit 1; }
+[ -f "$REPO_DIR/pins.lock" ] || {
+  echo "ERROR: pins.lock not found. Cloned the wrong thing?"
+  exit 1
+}
 
-pin() { # pin <secao> <chave>
+pin() { # pin <section> <key>
   sed -n "/^\[$1\]/,/^\[/s/^$2[[:space:]]*=[[:space:]]*//p" "$REPO_DIR/pins.lock" | head -1
 }
 
-# Release (tarball) ou build a partir do fonte. Precisa existir vazia: com
-# `set -u`, referenciar uma variável nunca atribuída aborta o script — e o
-# caminho de quem clonou o repo é justamente o que não atribui.
+# Release (tarball) or build from source. It has to exist even when empty:
+# with `set -u`, referencing a variable that was never assigned aborts the
+# script - and the git-clone path is exactly the one that does not assign it.
 RELEASE_MODE=""
 
 ENGINE_URL="$(pin engine url)"
@@ -41,13 +43,13 @@ C_RESET=$'\033[0m'; C_OK=$'\033[32m'; C_WARN=$'\033[33m'; C_ERR=$'\033[31m'; C_H
 step()  { printf '\n%s==> %s%s\n' "$C_HDR" "$1" "$C_RESET"; }
 ok()    { printf '    %sok%s   %s\n' "$C_OK" "$C_RESET" "$1"; }
 info()  { printf '    -    %s\n' "$1"; }
-warn()  { printf '    %saviso%s %s\n' "$C_WARN" "$C_RESET" "$1"; }
+warn()  { printf '    %snote%s %s\n' "$C_WARN" "$C_RESET" "$1"; }
 log()   { printf '[%s] %s\n' "$(date +%H:%M:%S)" "$1" >>"$LOG_FILE" 2>/dev/null || true; }
 
-die() { # die <o que faltou> <comando que resolve>
-  printf '\n%sFALTOU: %s%s\n' "$C_ERR" "$1" "$C_RESET" >&2
-  [ $# -ge 2 ] && printf '\n  Resolva assim:\n\n    %s\n\n' "$2" >&2
-  printf '  Detalhes técnicos: %s\n' "$LOG_FILE" >&2
+die() { # die <what is missing> <the command that fixes it>
+  printf '\n%sFAILED: %s%s\n' "$C_ERR" "$1" "$C_RESET" >&2
+  [ $# -ge 2 ] && printf '\n  Fix it like this:\n\n    %s\n\n' "$2" >&2
+  printf '  Technical details: %s\n' "$LOG_FILE" >&2
   exit 1
 }
 
@@ -56,12 +58,11 @@ mkdir -p "$TOOLS_DIR"
 
 # ---------------------------------------------------------------- distro
 DISTRO="$(. /etc/os-release 2>/dev/null && echo "${ID:-unknown}")"
-DISTRO_LIKE="$(. /etc/os-release 2>/dev/null && echo "${ID_LIKE:-}")"
 
-# Enquanto não houver release publicado, as ferramentas são compiladas a
-# partir do fonte — e isso exige cmake e ninja. Dá para saber isso ANTES da
-# primeira instalação: sem isto o usuário instala o básico, roda o bootstrap
-# de novo, e só então descobre que precisa de cmake (duas idas ao apt).
+# While no release is published, the tools are compiled from source, which
+# needs cmake and ninja. That can be known BEFORE the first install: without
+# it, the user installs the basics, runs bootstrap again, and only then finds
+# out cmake is needed (two trips to the package manager).
 BUILD_EXTRA=""
 if [ -z "$RELEASE_BASE" ]; then
   case "$DISTRO" in
@@ -72,76 +73,89 @@ if [ -z "$RELEASE_BASE" ]; then
   esac
 fi
 
-install_hint() { # install_hint <pacotes...>
+install_hint() { # install_hint <packages...>
   case "$DISTRO" in
     arch|manjaro|endeavours|cachyos|garuda)
       printf 'sudo pacman -S --needed base-devel pkgconf sdl2 %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     debian|ubuntu|linuxmint|pop|elementary|zorin)
-      # O `update` não é enfeite: numa máquina recém-instalada, ou com a lista
-      # de pacotes velha, `apt-get install` sozinho falha com "Unable to
-      # locate package". Foi o teste em distro limpa que revelou isso.
+      # The `update` is not decoration: on a freshly installed machine, or
+      # with a stale package list, `apt-get install` on its own fails with
+      # "Unable to locate package". The clean-distro test found this.
       printf 'sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     fedora)
       printf 'sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     opensuse*|sles)
       printf 'sudo zypper install -y gcc-c++ make pkg-config libSDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     *)
-      printf '# instale: compilador C/C++, make, pkg-config, cmake e os headers do SDL2\n' ;;
+      printf '# install: a C/C++ compiler, make, pkg-config, cmake and the SDL2 headers\n' ;;
   esac
 }
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
-# --------------------------------------------------- 0.5 ferramentas já prontas
+# --------------------------------------------- 0.5 tools already shipped
 #
-# Quem baixou o release recebe as ferramentas compiladas (bin/ e lib/) e não
-# precisa de cmake, ninja nem rede. Ajustamos o formato para o mesmo que o
-# build usa e seguimos como se o bootstrap tivesse compilado tudo.
+# Whoever downloaded the release gets the compiled tools (bin/ and lib/) and
+# needs no cmake, no ninja and no network. Copy them into the layout the
+# build expects and carry on as if bootstrap had compiled them.
 if [ -f "$REPO_DIR/bin/gbrecomp" ] && [ -f "$REPO_DIR/lib/libgbrt.a" ] \
    && [ ! -x "$TOOLS_DIR/gbrecomp" ]; then
   mkdir -p "$TOOLS_DIR"
   cp "$REPO_DIR/bin/gbrecomp" "$TOOLS_DIR/gbrecomp"
   cp "$REPO_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
   chmod +x "$TOOLS_DIR/gbrecomp"
-  info "ferramentas do release detectadas (não precisam ser compiladas)"
+  info "release tools detected (nothing to compile)"
   RELEASE_MODE=1
 fi
 
-# Com um release publicado, quem clonou do git também pode baixar as
-# ferramentas prontas em vez de compilar. Nesse caso o motor (16 MB de
-# código de terceiro que ninguém pediu) é desnecessário: os headers que o
-# build precisa vêm embutidos no projeto que o gbrecomp gera.
+# With a published release, whoever cloned from git can download the ready
+# tools instead of compiling them. In that case the engine (16 MB of
+# third-party source nobody asked for) is unnecessary: the headers the build
+# needs are embedded in the project gbrecomp generates.
 if [ -z "$RELEASE_MODE" ] && [ -n "$RELEASE_BASE" ]; then
   RELEASE_MODE=download
 fi
 
-# ------------------------------------------------------- 0. checagem base
-step "Checando o essencial"
-
-if [ "$(uname -s)" != "Linux" ]; then
-  warn "Este projeto ainda só funciona no Linux (você está em $(uname -s))."
-  warn "Windows e Android estão planejados."
+# With a published release the tools arrive by download, which needs curl or
+# wget. That has to be in the FIRST install hint: otherwise the user installs
+# the basics, runs bootstrap again, and only then finds out they need a
+# downloader (two trips to the package manager). The clean-distro test found
+# this on an Ubuntu image that ships neither.
+# NOTE: RELEASE_MODE is already resolved by this point ("1" for the tarball,
+# "download" when a release exists). What matters is whether the tools will
+# be FETCHED, not whether they are already here.
+if [ "$RELEASE_MODE" != "1" ] && [ -n "$RELEASE_BASE" ] \
+   && ! have curl && ! have wget; then
+  BUILD_EXTRA="$BUILD_EXTRA curl"
 fi
 
-if ! have git; then die "git não encontrado." "$(install_hint git)"; fi
+# ------------------------------------------------------- 0. basic checks
+step "Checking the essentials"
+
+if [ "$(uname -s)" != "Linux" ]; then
+  warn "This project only works on Linux so far (you are on $(uname -s))."
+  warn "Windows and Android are planned."
+fi
+
+if ! have git; then die "git not found." "$(install_hint git)"; fi
 ok "git $(git --version | awk '{print $3}')"
 
 CC_BIN=""
 for c in cc gcc clang; do if have "$c"; then CC_BIN="$c"; break; fi; done
-[ -n "$CC_BIN" ] || die "nenhum compilador C encontrado." "$(install_hint)"
+[ -n "$CC_BIN" ] || die "no C compiler found." "$(install_hint)"
 CXX_BIN=""
 for c in c++ g++ clang++; do if have "$c"; then CXX_BIN="$c"; break; fi; done
-[ -n "$CXX_BIN" ] || die "nenhum compilador C++ encontrado." "$(install_hint)"
-ok "compilador: $CC_BIN / $CXX_BIN"
+[ -n "$CXX_BIN" ] || die "no C++ compiler found." "$(install_hint)"
+ok "compiler: $CC_BIN / $CXX_BIN"
 
 if ! have make; then
-  warn "make não encontrado — só é necessário se você compilar a partir do fonte."
+  warn "make not found - only needed if you compile from source."
 else
   ok "make $(make --version | head -1 | awk '{print $3}')"
 fi
 
 # ------------------------------------------------------- 1. SDL2 headers
-step "Checando o SDL2"
+step "Checking SDL2"
 
 SDL_CFLAGS=""; SDL_LIBS=""; SDL_VER=""
 if have pkg-config && pkg-config --exists sdl2 2>/dev/null; then
@@ -155,166 +169,168 @@ elif have sdl2-config; then
 fi
 
 if [ -z "$SDL_VER" ]; then
-  die "headers de desenvolvimento do SDL2 não encontrados.
-É o único pacote extra: ele traz os arquivos .h usados na compilação." \
+  die "SDL2 development headers not found.
+This is the only extra package: it carries the .h files used when compiling." \
       "$(install_hint)"
 fi
 
-# compara versões sem depender de "sort -V" (nem sempre presente)
+# Version comparison without depending on "sort -V" (not always present).
 ver_ge() { [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V 2>/dev/null | head -1)" = "$2" ]; }
 if ! ver_ge "$SDL_VER" "$SDL2_MIN"; then
-  die "SDL2 $SDL_VER encontrado, mas este projeto precisa de $SDL2_MIN ou superior." \
+  die "found SDL2 $SDL_VER, but this project needs $SDL2_MIN or newer." \
       "$(install_hint)"
 fi
-ok "SDL2 $SDL_VER (mínimo $SDL2_MIN)"
+ok "SDL2 $SDL_VER (minimum $SDL2_MIN)"
 printf '%s\n' "SDL_CFLAGS=$SDL_CFLAGS" >> "$TOOLS_DIR/env"
 
-# ------------------------------------------------- 2. engine (patch pinado)
+# ------------------------------------------------- 2. engine (pinned patch)
 #
-# Quem baixou o tarball do release não precisa do clone: o gbrecomp embute o
-# runtime no projeto gerado, e o Makefile usa os headers de lá. O clone só é
-# necessário para COMPILAR as ferramentas — e nesse caso já vieram prontas.
+# Whoever downloaded the release tarball does not need the clone: gbrecomp
+# embeds the runtime in the generated project, and the Makefile uses the
+# headers from there. The clone is only needed to COMPILE the tools - and in
+# that case they already arrived ready-made.
 ENGINE_DIR="$TOOLS_DIR/engine"
 if [ "$RELEASE_MODE" = "1" ]; then
-  # Tarball: as ferramentas já estão aqui, não há nada a buscar.
-  step "Ferramentas do release"
-  ok "gbrecomp e runtime já vêm prontos: nada a compilar"
-  ok "os headers do runtime vêm junto com o C gerado"
+  # Tarball: the tools are already here, nothing to fetch.
+  step "Release tools"
+  ok "gbrecomp and the runtime are ready: nothing to compile"
+  ok "the runtime headers come with the generated C"
   mkdir -p "$TOOLS_DIR"
   printf '%s\n' "GBRECOMP=$TOOLS_DIR/gbrecomp" >> "$TOOLS_DIR/env"
-  printf '\n%s%sPronto!%s\n' "$C_OK" "" "$C_RESET"
-  printf '\n  Próximo passo:\n\n      ./build.sh /caminho/para/sua/rom.gbc\n\n'
+  printf '\n%s%sDone!%s\n' "$C_OK" "" "$C_RESET"
+  printf '\n  Next step:\n\n      ./build.sh /path/to/your/rom.gbc\n\n'
   exit 0
 fi
-# Sem release, o motor e clonado e as ferramentas sao compiladas a partir
-# dele. Com release (tarball ou download) nada disso e preciso: os headers
-# vem embutidos no projeto gerado, e as ferramentas ja vem prontas. Por
-# isso o bloco inteiro do motor e pulado, e nao apenas anunciado.
+# Without a release the engine is cloned and the tools compiled from it. With
+# a release (tarball or download) none of that is needed: the headers are
+# embedded in the generated project and the tools arrive ready-made. That is
+# why the whole engine block is skipped, not merely announced.
 if [ -z "$RELEASE_MODE" ]; then
 
-step "Baixando o motor (versão fixada)"
+step "Downloading the engine (pinned version)"
 
 if [ -d "$ENGINE_DIR/.git" ]; then
-  ok "já está em .tools/engine"
+  ok "already in .tools/engine"
 else
-  info "clonando $ENGINE_URL"
+  info "cloning $ENGINE_URL"
   log "clone $ENGINE_URL"
   rm -rf "$ENGINE_DIR"
-  have git || die "git não encontrado."
+  have git || die "git not found."
   git clone -q --filter=blob:none "$ENGINE_URL" "$ENGINE_DIR" \
-    || die "não consegui baixar o motor. Sem internet?" "git clone $ENGINE_URL $ENGINE_DIR"
+    || die "could not download the engine. No internet?" "git clone $ENGINE_URL $ENGINE_DIR"
   log "checkout $ENGINE_COMMIT"
   git -C "$ENGINE_DIR" checkout -q "$ENGINE_COMMIT" \
-    || die "não achei a versão fixada do motor ($ENGINE_COMMIT)." \
-       "Isso normalmente significa que o upstream removeu o commit. Reporte no GitHub."
+    || die "the pinned engine commit ($ENGINE_COMMIT) was not found." \
+       "This usually means upstream removed the commit. Please report it on GitHub."
   ok "commit $ENGINE_COMMIT"
 fi
 
-# integridade do patch
+# patch integrity
 PATCH_FILE="$REPO_DIR/$ENGINE_PATCH"
-[ -f "$PATCH_FILE" ] || die "patch do motor ausente: $ENGINE_PATCH" "git clone <este-repo> novamente"
+[ -f "$PATCH_FILE" ] || die "engine patch missing: $ENGINE_PATCH" "git clone <this repo> again"
 if have sha256sum; then
   GOT="$(sha256sum "$PATCH_FILE" | awk '{print $1}')"
   [ "$GOT" = "$ENGINE_PATCH_SHA" ] \
-    || die "o patch do motor não confere com o pin (sha256 diferente).
-Isso normalmente significa arquivo corrompido na clonagem." "rm -rf .tools && git clone <este-repo> novamente"
+    || die "the engine patch does not match its pin (different sha256).
+This usually means a corrupted file." "rm -rf .tools && git clone <this repo> again"
 fi
 
 if [ -d "$ENGINE_DIR/.git/rebase-apply" ] || [ -d "$ENGINE_DIR/.git/rebase-merge" ]; then
-  ok "patch já aplicado"
+  ok "patch already applied"
 else
-  info "aplicando o patch do motor"
+  info "applying the engine patch"
   log "git am $ENGINE_PATCH"
   git -C "$ENGINE_DIR" am -q "$PATCH_FILE" \
-    || die "o patch do motor não aplicou limpo.
-Isso é um defeito nosso, não seu — por favor reporte no GitHub com a saída acima." \
+    || die "the engine patch did not apply cleanly.
+This is our bug, not yours - please report it on GitHub with the output above." \
        "cd .tools/engine && git am --abort"
-  ok "patch aplicado"
+  ok "patch applied"
 fi
 
 TREE_NOW="$(git -C "$ENGINE_DIR" rev-parse HEAD^{tree} 2>/dev/null)"
 if [ -n "$ENGINE_TREE" ] && [ "$TREE_NOW" != "$ENGINE_TREE" ]; then
-  die "o motor ficou diferente do esperado após o patch.
-Esperava a árvore $ENGINE_TREE, obtive $TREE_NOW." \
+  die "the engine came out different from expected after the patch.
+Expected tree $ENGINE_TREE, got $TREE_NOW." \
       "cd .tools && rm -rf engine && ../bootstrap.sh"
 fi
-ok "integridade do motor conferida"
+ok "engine integrity checked"
 
-fi   # fim: sem release, clona e compila o motor
+fi   # end: without a release, clone and compile the engine
 
 if [ -n "$RELEASE_MODE" ]; then
-  step "Motor"
+  step "Engine"
   if [ "$RELEASE_MODE" = "1" ]; then
-    ok "as ferramentas ja vem prontas: nem motor, nem compilacao"
+    ok "the tools arrive ready: no engine, no compiling"
   else
-    ok "pulando o motor: os headers vem junto com o C gerado"
-    info "e as ferramentas vem prontas do release (sem cmake, sem ninja)"
+    ok "skipping the engine: the headers come with the generated C"
+    info "and the tools arrive ready from the release (no cmake, no ninja)"
   fi
 fi
 
-# --------------------------------------------- 3. ferramentas (gbrecomp)
-step "Preparando as ferramentas"
+# --------------------------------------------- 3. the tools (gbrecomp)
+step "Preparing the tools"
 
 GBRECOMP="$TOOLS_DIR/gbrecomp"
 if [ -x "$GBRECOMP" ]; then
-  ok "gbrecomp já pronto"
+  ok "gbrecomp already ready"
 elif [ -n "$RELEASE_BASE" ]; then
-  info "baixando ferramentas pré-compiladas (v$TOOLS_VERSION)"
+  info "downloading prebuilt tools (v$TOOLS_VERSION)"
   ARCH="$(uname -m)"
   case "$ARCH" in x86_64) PLAT=linux-x86_64 ;; aarch64|arm64) PLAT=linux-arm64 ;;
     *) PLAT="linux-$ARCH" ;; esac
   TARBALL="$RELEASE_BASE/ghost-babel-tools-$PLAT-$TOOLS_VERSION.tar.gz"
   if have curl; then curl -fsSL "$TARBALL" -o "$TOOLS_DIR/tools.tar.gz"
   elif have wget; then wget -q "$TARBALL" -O "$TOOLS_DIR/tools.tar.gz"
-  else die "preciso de curl ou wget para baixar as ferramentas." "$(install_hint curl)"
+  else die "I need curl or wget to download the tools." "$(install_hint curl)"
   fi
-  # --strip-components=1: o tarball tem um diretorio ghost-babel-tools/ na
-  # raiz, e aqui queremos bin/ e lib/ direto dentro de .tools/.
+  # --strip-components=1: the tarball has a ghost-babel-tools/ directory at
+  # the root, and we want bin/ and lib/ straight inside .tools/.
   tar -xzf "$TOOLS_DIR/tools.tar.gz" -C "$TOOLS_DIR" --strip-components=1 \
-    || die "não consegui descompactar as ferramentas baixadas." "rm -f .tools/tools.tar.gz && ./bootstrap.sh"
-  # O tarball traz bin/gbrecomp e lib/libgbrt.a; o resto do script espera
-  # os dois em .tools/. Sem esta copia, o passo seguinte tentaria compilar
-  # um runtime que nem existe (o motor nao foi clonado).
+    || die "could not unpack the downloaded tools." "rm -f .tools/tools.tar.gz && ./bootstrap.sh"
+  # The tarball carries bin/gbrecomp and lib/libgbrt.a; the rest of the script
+  # expects both in .tools/. Without this copy, the next step would try to
+  # compile a runtime that does not exist (the engine was never cloned).
   [ -f "$TOOLS_DIR/bin/gbrecomp" ] \
-    || die "o pacote baixado não trouxe o gbrecomp." "$TARBALL"
+    || die "the downloaded package did not include gbrecomp." "$TARBALL"
   cp "$TOOLS_DIR/bin/gbrecomp" "$GBRECOMP" && chmod +x "$GBRECOMP"
   [ -f "$TOOLS_DIR/lib/libgbrt.a" ] \
-    || die "o pacote baixado não trouxe a biblioteca de runtime." "$TARBALL"
+    || die "the downloaded package did not include the runtime library." "$TARBALL"
   cp "$TOOLS_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
-  # O runtime entra num lugar só, <repo>/runtime, seja ele vindo do motor
-  # clonado (.tools/engine/runtime) ou do pacote (.tools/runtime). Assim o
-  # build e o empacotamento tem um caminho unico em que procurar.
+  # The runtime lands in one place, <repo>/runtime, whether it came from the
+  # cloned engine (.tools/engine/runtime) or from the package
+  # (.tools/runtime). That way the build and the packager have a single path
+  # to look in.
   if [ -d "$TOOLS_DIR/runtime" ] && [ ! -d "$REPO_DIR/runtime" ]; then
     mv "$TOOLS_DIR/runtime" "$REPO_DIR/runtime"
   fi
-  ok "ferramentas prontas (gbrecomp + runtime, do release v$TOOLS_VERSION)"
+  ok "tools ready (gbrecomp + runtime, from release v$TOOLS_VERSION)"
 else
-  warn "ainda não há release com ferramentas prontas — vou compilar a partir do fonte."
-  warn "isso precisa de cmake e ninja (é uma etapa só, ~2 minutos)."
-  have cmake || die "para compilar as ferramentas do zero é preciso cmake." "$(install_hint cmake ninja-build)"
-  have ninja || warn "sem ninja: o cmake vai usar make (mais lento)."
+  warn "no release with ready tools yet - building from source."
+  warn "this needs cmake and ninja (one step, ~2 minutes)."
+  have cmake || die "building the tools from scratch needs cmake." "$(install_hint cmake ninja-build)"
+  have ninja || warn "no ninja: cmake will use make (slower)."
   CMAKE_G="Ninja" ; have ninja || CMAKE_G="Unix Makefiles"
   log "cmake -S $ENGINE_DIR -B $ENGINE_DIR/build -G $CMAKE_G"
   cmake -G "$CMAKE_G" -S "$ENGINE_DIR" -B "$ENGINE_DIR/build" \
         -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF >/dev/null \
-    || die "cmake falhou ao configurar o motor." "cmake -S .tools/engine -B .tools/engine/build"
+    || die "cmake failed to configure the engine." "cmake -S .tools/engine -B .tools/engine/build"
   cmake --build "$ENGINE_DIR/build" --target gbrecomp -j "$(nproc 2>/dev/null || echo 4)" >/dev/null \
-    || die "cmake falhou ao compilar o gbrecomp." "cmake --build .tools/engine/build --target gbrecomp"
+    || die "cmake failed to compile gbrecomp." "cmake --build .tools/engine/build --target gbrecomp"
   cp "$ENGINE_DIR/build/bin/gbrecomp" "$GBRECOMP" 2>/dev/null \
     || find "$ENGINE_DIR/build" -name gbrecomp -type f -exec cp {} "$GBRECOMP" \; \
-    || die "compilei mas não achei o binário do gbrecomp." "ls .tools/engine/build/bin"
-  ok "gbrecomp compilado do fonte"
+    || die "built it but could not find the gbrecomp binary." "ls .tools/engine/build/bin"
+  ok "gbrecomp compiled from source"
 fi
 printf '%s\n' "GBRECOMP=$GBRECOMP" >> "$TOOLS_DIR/env"
 
-# --------------------------------------------- 4. runtime pré-compilado
-step "Preparando o runtime (a biblioteca que faz o jogo rodar)"
+# --------------------------------------------- 4. prebuilt runtime library
+step "Preparing the runtime (the library that makes the game run)"
 
 LIB="$TOOLS_DIR/libgbrt.a"
 RT="$ENGINE_DIR/runtime"
 
 if [ -f "$LIB" ] && [ "$LIB" -nt "$ENGINE_DIR/.git/HEAD" ] 2>/dev/null; then
-  ok "libgbrt.a já pronta"
+  ok "libgbrt.a already built"
 else
   log "build libgbrt.a"
   OBJ="$TOOLS_DIR/.obj"; rm -rf "$OBJ"; mkdir -p "$OBJ"
@@ -323,12 +339,12 @@ else
     b="$(basename "${f%.c}")"
     [ "$b" = "gbrt_gameplay_mutation" ] && continue
     [ "$b" = "gbrt_native_patch" ] && continue
-    [ -f "$f" ] || die "faltou o código-fonte do runtime ($f).
-Esperava compilá-lo a partir do motor clonado, mas ele não está em $RT." \
+    [ -f "$f" ] || die "missing runtime source ($f).
+It was supposed to be compiled from the cloned engine, but it is not in $RT." \
       "rm -rf .tools && ./bootstrap.sh"
     $CC_BIN -std=gnu11 -O3 -DGB_HAS_SDL2 -DGB_PLATFORM_LINUX \
       -I"$RT/include" $SDL_CFLAGS -c "$f" -o "$OBJ/$b.o" \
-      || die "falha ao compilar $b.c" "$CC_BIN --version"
+      || die "failed to compile $b.c" "$CC_BIN --version"
   done
   # C++ runtime (SDL + Dear ImGui)
   CXXF="-std=c++20 -O3 -DGB_HAS_SDL2 -DGB_PLATFORM_LINUX -I$RT/include -I$RT/vendor/imgui -I$RT/vendor/imgui/backends $SDL_CFLAGS"
@@ -338,33 +354,33 @@ Esperava compilá-lo a partir do motor clonado, mas ele não está em $RT." \
            "$RT"/vendor/imgui/backends/imgui_impl_sdl2.cpp \
            "$RT"/vendor/imgui/backends/imgui_impl_sdlrenderer2.cpp; do
     b="$(basename "${f%.*}")"
-    $CXX_BIN $CXXF -c "$f" -o "$OBJ/$b.o" || die "falha ao compilar $b.cpp" "$CXX_BIN --version"
+    $CXX_BIN $CXXF -c "$f" -o "$OBJ/$b.o" || die "failed to compile $b.cpp" "$CXX_BIN --version"
   done
-  ar rcs "$LIB" "$OBJ"/*.o || die "falha ao montar a biblioteca estática." "ar --version"
+  ar rcs "$LIB" "$OBJ"/*.o || die "failed to assemble the static library." "ar --version"
   rm -rf "$OBJ"
   ok "libgbrt.a ($(du -h "$LIB" | cut -f1))"
 fi
 
-# --------------------------------------------------- 5. checagem real
-step "Conferindo que dá para rodar"
+# --------------------------------------------------- 5. real check
+step "Checking that it runs"
 
 if [ -x "$TOOLS_DIR/selftest" ]; then
   "$TOOLS_DIR/selftest" >/dev/null 2>&1 \
-    && ok "runtime responde" \
-    || die "o runtime foi compilado mas não responde." "$LOG_FILE"
+    && ok "the runtime responds" \
+    || die "the runtime was compiled but does not respond." "$LOG_FILE"
 else
-  ok "runtime pronto (o teste de rodar vem no primeiro build)"
+  ok "runtime ready (running it is checked on the first build)"
 fi
 
-printf '\n%s%s%s\n' "$C_OK" "Tudo pronto." "$C_RESET"
+printf '\n%s%sAll set.%s\n' "$C_OK" "" "$C_RESET"
 cat <<EOF
 
-  Próximo passo:
+  Next step:
 
-      ./build.sh /caminho/para/sua/rom.gbc
+      ./build.sh /path/to/your/rom.gbc
 
-  (ou rode ./run.sh --gui para escolher a ROM por uma janela)
+  (or run ./run.sh --gui to pick the ROM in a window)
 
-  Log desta execução: $LOG_FILE
+  Log of this run: $LOG_FILE
 
 EOF

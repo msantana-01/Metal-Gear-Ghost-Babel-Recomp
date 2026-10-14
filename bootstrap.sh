@@ -186,11 +186,11 @@ if [ "$RELEASE_MODE" = "1" ]; then
   printf '\n  Próximo passo:\n\n      ./build.sh /caminho/para/sua/rom.gbc\n\n'
   exit 0
 fi
-if [ "$RELEASE_MODE" = "download" ]; then
-  step "Motor"
-  ok "pulando o motor: os headers do runtime vêm junto com o C gerado"
-  info "e as ferramentas vêm prontas do release (sem cmake, sem ninja)"
-fi
+# Sem release, o motor e clonado e as ferramentas sao compiladas a partir
+# dele. Com release (tarball ou download) nada disso e preciso: os headers
+# vem embutidos no projeto gerado, e as ferramentas ja vem prontas. Por
+# isso o bloco inteiro do motor e pulado, e nao apenas anunciado.
+if [ -z "$RELEASE_MODE" ]; then
 
 step "Baixando o motor (versão fixada)"
 
@@ -240,6 +240,18 @@ Esperava a árvore $ENGINE_TREE, obtive $TREE_NOW." \
 fi
 ok "integridade do motor conferida"
 
+fi   # fim: sem release, clona e compila o motor
+
+if [ -n "$RELEASE_MODE" ]; then
+  step "Motor"
+  if [ "$RELEASE_MODE" = "1" ]; then
+    ok "as ferramentas ja vem prontas: nem motor, nem compilacao"
+  else
+    ok "pulando o motor: os headers vem junto com o C gerado"
+    info "e as ferramentas vem prontas do release (sem cmake, sem ninja)"
+  fi
+fi
+
 # --------------------------------------------- 3. ferramentas (gbrecomp)
 step "Preparando as ferramentas"
 
@@ -251,7 +263,7 @@ elif [ -n "$RELEASE_BASE" ]; then
   ARCH="$(uname -m)"
   case "$ARCH" in x86_64) PLAT=linux-x86_64 ;; aarch64|arm64) PLAT=linux-arm64 ;;
     *) PLAT="linux-$ARCH" ;; esac
-  TARBALL="$RELEASE_BASE/ghost-babel-tools-$PLAT.tar.gz"
+  TARBALL="$RELEASE_BASE/ghost-babel-tools-$PLAT-$TOOLS_VERSION.tar.gz"
   if have curl; then curl -fsSL "$TARBALL" -o "$TOOLS_DIR/tools.tar.gz"
   elif have wget; then wget -q "$TARBALL" -O "$TOOLS_DIR/tools.tar.gz"
   else die "preciso de curl ou wget para baixar as ferramentas." "$(install_hint curl)"

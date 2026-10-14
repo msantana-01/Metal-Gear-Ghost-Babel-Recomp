@@ -119,9 +119,9 @@ The keyboard is the controller. There is no mouse, because the game had none.
 | `F1` / `F2` | diagnostics overlay / UI |
 | `F5` / `F8` | save / load state |
 | `M` | mute |
-| `Esc` | quit |
+| `Esc` | menu |
 
-A USB gamepad works too.
+A gamepad works too.
 
 ---
 

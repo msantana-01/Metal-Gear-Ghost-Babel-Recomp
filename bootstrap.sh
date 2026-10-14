@@ -21,6 +21,11 @@ pin() { # pin <secao> <chave>
   sed -n "/^\[$1\]/,/^\[/s/^$2[[:space:]]*=[[:space:]]*//p" "$REPO_DIR/pins.lock" | head -1
 }
 
+# Release (tarball) ou build a partir do fonte. Precisa existir vazia: com
+# `set -u`, referenciar uma variável nunca atribuída aborta o script — e o
+# caminho de quem clonou o repo é justamente o que não atribui.
+RELEASE_MODE=""
+
 ENGINE_URL="$(pin engine url)"
 ENGINE_COMMIT="$(pin engine commit)"
 ENGINE_PATCH="$(pin engine patch)"
@@ -53,18 +58,35 @@ mkdir -p "$TOOLS_DIR"
 DISTRO="$(. /etc/os-release 2>/dev/null && echo "${ID:-unknown}")"
 DISTRO_LIKE="$(. /etc/os-release 2>/dev/null && echo "${ID_LIKE:-}")"
 
+# Enquanto não houver release publicado, as ferramentas são compiladas a
+# partir do fonte — e isso exige cmake e ninja. Dá para saber isso ANTES da
+# primeira instalação: sem isto o usuário instala o básico, roda o bootstrap
+# de novo, e só então descobre que precisa de cmake (duas idas ao apt).
+BUILD_EXTRA=""
+if [ -z "$RELEASE_BASE" ]; then
+  case "$DISTRO" in
+    debian|ubuntu|linuxmint|pop|elementary|zorin) BUILD_EXTRA="cmake ninja-build" ;;
+    arch|manjaro|endeavours|cachyos|garuda)        BUILD_EXTRA="cmake ninja" ;;
+    fedora)                                       BUILD_EXTRA="cmake ninja-build" ;;
+    opensuse*|sles)                               BUILD_EXTRA="cmake ninja" ;;
+  esac
+fi
+
 install_hint() { # install_hint <pacotes...>
   case "$DISTRO" in
     arch|manjaro|endeavours|cachyos|garuda)
-      printf 'sudo pacman -S --needed base-devel pkgconf sdl2 %s\n' "${1:-}" ;;
+      printf 'sudo pacman -S --needed base-devel pkgconf sdl2 %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     debian|ubuntu|linuxmint|pop|elementary|zorin)
-      printf 'sudo apt-get install -y build-essential pkg-config libsdl2-dev %s\n' "${1:-}" ;;
+      # O `update` não é enfeite: numa máquina recém-instalada, ou com a lista
+      # de pacotes velha, `apt-get install` sozinho falha com "Unable to
+      # locate package". Foi o teste em distro limpa que revelou isso.
+      printf 'sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     fedora)
-      printf 'sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel %s\n' "${1:-}" ;;
+      printf 'sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     opensuse*|sles)
-      printf 'sudo zypper install -y gcc-c++ make pkg-config libSDL2-devel %s\n' "${1:-}" ;;
+      printf 'sudo zypper install -y gcc-c++ make pkg-config libSDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     *)
-      printf '# instale: compilador C/C++, make, pkg-config e os headers de desenvolvimento do SDL2\n' ;;
+      printf '# instale: compilador C/C++, make, pkg-config, cmake e os headers do SDL2\n' ;;
   esac
 }
 

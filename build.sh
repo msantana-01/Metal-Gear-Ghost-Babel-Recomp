@@ -109,15 +109,34 @@ ok "binário: $BUILD_DIR/ghost-babel ($(du -h "$BUILD_DIR/ghost-babel" | cut -f1
 # --------------------------------------------------------------- 4. smoke
 # Compilar não basta: se a define do runtime faltar, o binário linka mas
 # nasce sem vídeo e sem input. Só rodando dá para saber.
+#
+# O timeout não é paranoia: uma ROM cujo emulador nunca chega a produzir
+# frame deixava o build pendurado para sempre, e quem espera acha que ainda
+# está compilando. (Foi o teste em distro limpa que descobriu isso, com uma
+# ROM sintética mínima.)
 step "Testando o resultado"
-if "$BUILD_DIR/ghost-babel" --headless --limit-frames 120 >/dev/null 2>&1; then
-  ok "o jogo rodou 120 frames sem erro"
-else
-  printf '\n%sO jogo compilou mas não rodou.%s\n' "$C_ERR" "$C_RESET" >&2
-  printf 'Isso é um defeito nosso. Reporte no GitHub com o log:\n\n' >&2
-  printf '    %s\n\n' "$LOG_FILE" >&2
-  exit 1
-fi
+SMOKE_TIMEOUT="${SMOKE_TIMEOUT:-120}"
+timeout "$SMOKE_TIMEOUT" "$BUILD_DIR/ghost-babel" --headless --limit-frames 120 >/dev/null 2>&1
+SMOKE_RC=$?
+
+case "$SMOKE_RC" in
+  0)
+    ok "o jogo rodou 120 frames sem erro" ;;
+  124)
+    printf '\n%sO jogo compilou, mas não produziu imagem em %ss.%s\n' \
+      "$C_ERR" "$SMOKE_TIMEOUT" "$C_RESET" >&2
+    printf 'Isso acontece com ROMs que o analisador não cobre por completo —\n' >&2
+    printf 'o executável pode até funcionar. Para pular esta verificação:\n\n' >&2
+    printf '    SMOKE_TIMEOUT=1 ./build.sh %s\n\n' "$ROM" >&2
+    printf 'Se você acha que a ROM é válida, abra um issue no GitHub com o log:\n' >&2
+    printf '    %s\n' "$LOG_FILE" >&2
+    exit 1 ;;
+  *)
+    printf '\n%sO jogo compilou mas não rodou (código %s).%s\n' "$C_ERR" "$SMOKE_RC" "$C_RESET" >&2
+    printf 'Isso é um defeito nosso. Reporte no GitHub com o log:\n\n' >&2
+    printf '    %s\n\n' "$LOG_FILE" >&2
+    exit 1 ;;
+esac
 
 printf '\n%s%sPronto!%s\n\n' "$C_OK" "" "$C_RESET"
 cat <<EOF

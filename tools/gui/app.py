@@ -54,42 +54,18 @@ class App(tk.Tk):
     # opaque on every desktop.
     BG = "#f4f4f5"
 
+    # Sized for a 1080p screen, which is still what most people have: about
+    # three quarters of the height, leaving room for a taskbar and a terminal
+    # without covering the desktop. Taller screens are fine with this, and the
+    # window is resizable for anyone who wants more.
+    WIDTH, HEIGHT = 680, 800
+
     def __init__(self) -> None:
         super().__init__()
         self.title(TITLE)
         self.configure(padx=20, pady=16, background=self.BG)
-        self.resizable(True, False)
+        self.resizable(True, True)
         self._fit_to_screen()
-
-    def _fit_to_screen(self) -> None:
-        """Size the window as a share of the screen, with sane bounds.
-
-        The numbers below are in X pixels, which is what Tk asks for - and it
-        is NOT what the eye measures: on a scaled desktop (Hyprland at 1.25
-        here) the compositor shrinks the window for display, so asking for
-        660x820 shows up as 528x656. That is why a fixed size looked small
-        on a 4K monitor. Asking for a share of the screen with a floor and a
-        ceiling adapts to both a scaled 4K and a plain 1080p laptop.
-        """
-        sw, sh = self.winfo_screenwidth(), self.winfo_screenheight()
-        # Width stays form-sized: a 1300px window with a 500px form in the
-        # corner looks broken. Height takes whatever room is going spare.
-        width = max(600, min(int(sw * 0.16), 880))
-        height = max(600, min(int(sh * 0.55), 1010))
-        # sh here is the whole virtual desktop, which on a multi-monitor
-        # setup can be twice the tall monitor: keep it inside one screen.
-        height = min(height, sh - 100)
-        self._place(width, height)
-
-    def _place(self, width: int, height: int) -> None:
-        """Ask for a size only and let the window manager place it.
-
-        No coordinates: the manager centres the window, and asking for a
-        position put it off-screen, because the screen size Tk reports (the
-        summed physical width of two monitors) does not match how they are
-        actually arranged (stacked, not side by side).
-        """
-        self.geometry(f"{width}x{height}")
 
         self._q: queue.Queue[tuple[str, object]] = queue.Queue()
         self._proc: subprocess.Popen | None = None
@@ -98,6 +74,20 @@ class App(tk.Tk):
         self._build_widgets()
         self.after(100, self._drain)
         self._check_prereqs()
+
+    def _fit_to_screen(self) -> None:
+        """Ask for a comfortable size, only smaller if the screen is small.
+
+        No arithmetic on the screen beyond that, and no coordinates: window
+        managers on tiled desktops (Hyprland with XWayland, for one) decide
+        where a window goes and how big it ends up, whatever the client asked
+        for. A sensible default the user can drag beats trying to outsmart
+        the compositor - which is what the previous three attempts did.
+        """
+        sw, sh = self.winfo_screenwidth(), self.winfo_screenheight()
+        width = min(self.WIDTH, max(480, sw - 80))
+        height = min(self.HEIGHT, max(420, sh - 120))
+        self.geometry(f"{width}x{height}")
 
     # ------------------------------------------------------------------ ui
     def _build_widgets(self) -> None:
@@ -176,7 +166,7 @@ class App(tk.Tk):
         # instead of leaving the bottom half empty.
         self.rowconfigure(9, weight=1)
 
-        self.log = tk.Text(log_frame, height=14, width=88, wrap="none",
+        self.log = tk.Text(log_frame, height=18, width=86, wrap="none",
                            font=("monospace", 9), background="#111111",
                            foreground="#dddddd", insertbackground="#dddddd",
                            relief="flat", padx=8, pady=6)

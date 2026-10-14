@@ -1,7 +1,7 @@
-From 31f7144cef62d922611701737a594085ed68bd67 Mon Sep 17 00:00:00 2001
-From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
-Date: Tue, 13 Oct 2026 23:28:43 -0300
-Subject: [PATCH] engine: CGB/DMG hardware accuracy (IO readback gates,
+From b35a85e1d562afd4b55549bde474a75f30e3fc8b Mon Sep 17 00:00:00 2001
+From: Ghost Babel Recomp <noreply@users.noreply.github.com>
+Date: Tue, 13 Oct 2026 19:51:43 -0300
+Subject: [PATCH 1/2] engine: CGB/DMG hardware accuracy (IO readback gates,
  boot-ROM DIV)
 
 Three emulated-hardware fixes needed so DMG-era cartridges behave per
@@ -198,6 +198,52 @@ index cb01b84..be62b88 100644
                  sc |= 0x02;
              }
              ctx->io[0x02] = sc;
+-- 
+2.55.0
+
+
+From 6b05c4964c49a903caa3f7b6272891e97c870c14 Mon Sep 17 00:00:00 2001
+From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
+Date: Wed, 14 Oct 2026 12:54:56 -0300
+Subject: [PATCH 2/2] platform: show the blank shade while the LCD is off
+
+gb_platform_render_lcd_off_frame() preferred g_last_guest_framebuffer once
+any frame had been presented, so a guest that switched the LCD off left the
+previous picture frozen on screen for the whole period. In Ghost Babel that
+is ~294 ms per occurrence, at frames 90, 474, 1694 and 2034 of a scripted
+run: it reads as a hitch, not as a transition.
+
+With LCDC bit 7 clear the DMG panel loses its bias and shows a uniform blank
+shade, which ensure_lcd_off_framebuffer() already builds. Render that.
+
+Measured with tools/frame_pacing.py: the LCD-off calls happen on the exact
+frames that showed the 318 ms intervals (lcd_off_cycles is zero in 99% of
+frames and non-zero in the stalled ones), and the runtime was already pacing
+those cycles in real time, which is what the hardware does. Nothing about the
+timing changes; only what is displayed during it.
+---
+ runtime/src/platform_sdl.cpp | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 9e4eeb7..db0462d 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -3613,8 +3613,12 @@ void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
+ 
+ void gb_platform_render_lcd_off_frame(void) {
+     ensure_lcd_off_framebuffer();
+-    const uint32_t* stable_framebuffer = g_last_guest_framebuffer_valid ? g_last_guest_framebuffer : g_lcd_off_framebuffer;
+-    render_frame_internal(stable_framebuffer, false);
++    /* With LCDC bit 7 clear the panel loses its bias and shows the blank
++     * shade, not the last picture. Holding the previous guest frame here
++     * hid that, and on a real title transition it read as a freeze: the
++     * guest spends ~294 ms with the LCD off and the screen stood still.
++     * Render the hardware's blank shade instead. */
++    render_frame_internal(g_lcd_off_framebuffer, false);
+ }
+ 
+ void gb_platform_get_timing_info(GBPlatformTimingInfo* out) {
 -- 
 2.55.0
 

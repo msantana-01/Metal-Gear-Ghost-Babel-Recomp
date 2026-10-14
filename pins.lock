@@ -11,10 +11,10 @@ name         = gb-recompiled
 url          = https://github.com/arcanite24/gb-recompiled.git
 commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
 patch        = patches/gb-recompiled-ghost-babel.patch
-patch_sha256 = 35421d5bca3a986fc823c5716023ab9b59584c8d5a0a4d9ea25e85ce0d123930
+patch_sha256 = a4346c45a18431950c031418bbaec0d09d0b3c252587dbb2ca5275bade10405c
 # Expected source tree AFTER applying the patch. The bootstrap fails if it
 # does not match: that is what guarantees the patch still applies cleanly.
-tree_after   = 5f9e3311dae4283803f59422e7fe95b998e3e1ef
+tree_after   = 149dbc13494e487a3f23cb8178188d05bb7a2c4e
 
 [build]
 # Lowest SDL2 tested. The runtime has a single SDL_VERSION_ATLEAST(2,0,12).

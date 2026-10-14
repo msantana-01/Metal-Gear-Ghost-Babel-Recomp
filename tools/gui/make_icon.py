@@ -20,13 +20,13 @@ import zlib
 from pathlib import Path
 
 GRID = 32       # desenho em 32x32, como pixel art de verdade
-SCALE = 4       # ampliação nearest-neighbor
+SCALE = 4       # nearest-neighbor upscale
 OUT = 128       # GRID * SCALE
 
 TRANSPARENT = (0, 0, 0, 0)
 INK = (26, 28, 38, 255)        # contorno escuro
-SHELL = (74, 80, 96, 255)      # plástico do cartucho
-SHELL_HI = (108, 116, 136, 255)  # luz no plástico
+SHELL = (74, 80, 96, 255)      # cartridge plastic
+SHELL_HI = (108, 116, 136, 255)  # highlight on the plastic
 LABEL = (238, 240, 246, 255)   # etiqueta
 ACCENT = (59, 111, 212, 255)   # faixa azul
 WARM = (224, 160, 32, 255)     # detalhe âmbar

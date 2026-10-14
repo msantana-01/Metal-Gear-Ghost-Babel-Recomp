@@ -26,9 +26,9 @@ runtime_define = GB_HAS_SDL2
 [tools]
 # Tool version. One line across platforms: the same ROM and the same tool
 # version produce the same output everywhere.
-version = 0.1
+version = 0.2
 # Where the prebuilt tools live. With this filled in, bootstrap downloads
 # gbrecomp and the runtime instead of compiling them, and the user never
 # needs cmake or ninja. Empty means "compile from source" - which is what
 # a clone straight from git does.
-release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.1
+release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.2

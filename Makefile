@@ -63,7 +63,7 @@ GEN_TOTAL := $(words $(GEN_SRC))
 # over the generated code. Override with JOBS=16 if your machine takes it.
 JOBS ?= $(shell n=$(nproc 2>/dev/null || echo 4); [ "$n" -gt 8 ] && echo 8 || echo $$n)
 
-.PHONY: all clean check-tools
+.PHONY: all clean distclean check-tools
 all: check-tools $(OUT)
 
 check-tools:
@@ -89,5 +89,14 @@ $(OUT): $(GEN_OBJ) $(LIB)
 	@strip $@ 2>/dev/null || true
 	@echo "built: $@ ($$(du -h $@ | cut -f1))"
 
+# Frees the ~600 MB of generated C and object files while KEEPING the game.
+# The executable does not read any of it: it links only against system
+# libraries. Regenerating costs one build (a few minutes).
 clean:
-	rm -rf $(WORK) $(OUT)
+	rm -rf build/work build/project
+	@echo "removed the generated code; build/ghost-babel and your saves are still there"
+
+# Removes everything build/ holds, including the game and its save files.
+distclean:
+	rm -rf build
+	@echo "removed build/ entirely, including the game and its saves"

@@ -168,9 +168,30 @@ esac
 
 echo "GBPHASE done"
 
+# ------------------------------------------------------ 5. reclaim the disk
+# The generated C and the object files add up to hundreds of megabytes, and
+# the game never reads them: the executable links only against system
+# libraries. So we can offer to delete them - after the build worked, never
+# before, and never without asking.
+GEN_KB="$(du -sk "$BUILD_DIR/project" "$BUILD_DIR/work" 2>/dev/null | awk '{s+=$1} END {print s+0}')"
+if [ "${GEN_KB:-0}" -gt 51200 ] && [ -t 0 ] && [ -t 1 ]; then
+  printf '\n'
+  printf '  The generated code and the build files take %s MB on disk.\n' "$((GEN_KB / 1024))"
+  printf '  The game does not need them; it only needs build/ghost-babel.\n'
+  printf '  Your save file (build/baserom.sav) is not touched.\n'
+  printf '  Delete them now? [Y/n] '
+  read -r answer || answer=""
+  case "$answer" in
+    [nN]*|"no"*|"No"*) ;;
+    *) rm -rf "$BUILD_DIR/project" "$BUILD_DIR/work"
+       printf '  Removed. Free space; rebuild with ./build.sh if you want them back.\n' ;;
+  esac
+fi
+
 printf '\n%s%sDone!%s\n\n' "$C_OK" "" "$C_RESET"
 cat <<EOF
   To play:   ./run.sh
   To rebuild with another ROM: ./build.sh <other-rom>
+  To free this space later:    make clean
 
 EOF

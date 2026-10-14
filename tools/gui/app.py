@@ -11,6 +11,7 @@ say what to do next.
 from __future__ import annotations
 
 import queue
+import shutil
 import subprocess
 import sys
 import threading
@@ -153,6 +154,13 @@ class App(tk.Tk):
         self.play_btn = ttk.Button(btns, text="Play", command=self._play,
                                    state="disabled")
         self.play_btn.pack(side="left", padx=6)
+        # The build leaves hundreds of megabytes of generated C behind and the
+        # game never reads them. The command line asks whether to delete them;
+        # there is no terminal to ask on here, so it is a button that appears
+        # once there is something to clean.
+        self.clean_btn = ttk.Button(btns, text="Free build space",
+                                    command=self._clean, state="disabled")
+        self.clean_btn.pack(side="left", padx=6)
 
         # --- step 3
         tk.Label(self, text="3.  What is happening", font=("", 10, "bold"),
@@ -339,6 +347,8 @@ class App(tk.Tk):
         self._proc = None
         if rc == 0:
             self.play_btn.configure(state="normal")
+            if (REPO / "build" / "project").exists():
+                self.clean_btn.configure(state="normal")
             self.progress_label.configure(text="Ready.")
             self._status("Done. You can play it now.", "#2e7d32")
         else:
@@ -347,6 +357,22 @@ class App(tk.Tk):
                 "The build failed. The reason is in the log above, and kept "
                 "in .build.log.", "#b5651d",
             )
+
+    def _clean(self) -> None:
+        # Delete the generated code and the object files, keeping the game
+        # and the save file. The executable links only against system
+        # libraries, so it runs perfectly well without them.
+        build = REPO / "build"
+        freed = 0
+        for name in ("project", "work"):
+            path = build / name
+            if path.exists():
+                freed += sum(f.stat().st_size for f in path.rglob("*") if f.is_file())
+                shutil.rmtree(path, ignore_errors=True)
+        self.clean_btn.configure(state="disabled")
+        self.progress_label.configure(text="Build space freed.")
+        self._say(f"Removed the generated code: about {freed / (1024 * 1024):.0f} MB "
+                  f"freed. The game and your saves are still there.")
 
     def _play(self) -> None:
         if GAME.exists():

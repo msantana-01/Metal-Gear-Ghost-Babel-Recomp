@@ -102,6 +102,21 @@ The game opens.
 Prefer a window to typing paths? `./run.sh --gui` opens the same flow
 graphically, with the build progress on screen.
 
+### 5. Free the disk, if you want to
+
+Translating the ROM leaves a few hundred megabytes behind: the generated C and
+the object files. The game never reads them - the executable links only
+against system libraries - so they can go:
+
+```bash
+make clean       # deletes the generated code, keeps the game and your saves
+make distclean   # deletes build/ entirely, game and saves included
+```
+
+After a build the command line asks whether to do it, and the window shows a
+**Free build space** button. Deleting them costs nothing but a rebuild if you
+ever want them back.
+
 ---
 
 ## How to play
@@ -165,12 +180,45 @@ game. This repository ships tools only.
 
 ---
 
+## Keeping it up to date
+
+Two different things can change, and they need two different actions.
+
+**A new version of these tools.** Download the new release, drop it in place
+and rebuild:
+
+```bash
+./build.sh ~/my-rom.gbc
+```
+
+That is the whole update. Your ROM is untouched, nothing about your own copy
+of the game changes, and you reinstall nothing - the tools are a folder you
+replace. Watch the Releases page on GitHub to know when there is a new one.
+
+**A new ROM dump.** Point `build.sh` at the new file:
+
+```bash
+./build.sh ~/other-dump.gbc
+```
+
+Your saves live in `build/`, so keep that folder if you care about them.
+
+**What never changes:** your ROM. Nothing here ever modifies it, and no
+version of these tools will. If the same ROM ever produced different output,
+that is a bug worth reporting.
+
+Every version is pinned in [`pins.lock`](pins.lock) and checked by hash during
+setup, so a tool version cannot quietly change under you: what you build with
+today is what you keep, until you choose to update.
+
+---
+
 ## How it works
 
 ```
 your-rom.gbc
    │
-   ├─ gbrecomp ............. ROM → 283 C files (~270 MB of code)
+   ├─ gbrecomp ............. ROM → 283 C files (~385 MB on disk)
    │
    ├─ make ................. compiles the generated C
    │

@@ -21,11 +21,12 @@ gbrecomp-contract.json
 
 # Logs e artefatos de teste
 *.log
-.bstrap.log
 .bootstrap.log
 .build.log
 *.ppm
+# Capturas ficam de fora, mas o icone da interface e nosso e versionado.
 *.png
+!tools/gui/icon.png
 captures/
 
 # Ferramentas compiladas aqui

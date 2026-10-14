@@ -270,7 +270,16 @@ elif [ -n "$RELEASE_BASE" ]; then
   fi
   tar -xzf "$TOOLS_DIR/tools.tar.gz" -C "$TOOLS_DIR" \
     || die "não consegui descompactar as ferramentas baixadas." "rm -f .tools/tools.tar.gz && ./bootstrap.sh"
-  ok "ferramentas prontas"
+  # O tarball traz bin/gbrecomp e lib/libgbrt.a; o resto do script espera
+  # os dois em .tools/. Sem esta copia, o passo seguinte tentaria compilar
+  # um runtime que nem existe (o motor nao foi clonado).
+  [ -f "$TOOLS_DIR/bin/gbrecomp" ] \
+    || die "o pacote baixado não trouxe o gbrecomp." "$TARBALL"
+  cp "$TOOLS_DIR/bin/gbrecomp" "$GBRECOMP" && chmod +x "$GBRECOMP"
+  [ -f "$TOOLS_DIR/lib/libgbrt.a" ] \
+    || die "o pacote baixado não trouxe a biblioteca de runtime." "$TARBALL"
+  cp "$TOOLS_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
+  ok "ferramentas prontas (gbrecomp + runtime, do release v$TOOLS_VERSION)"
 else
   warn "ainda não há release com ferramentas prontas — vou compilar a partir do fonte."
   warn "isso precisa de cmake e ninja (é uma etapa só, ~2 minutos)."
@@ -306,6 +315,9 @@ else
     b="$(basename "${f%.c}")"
     [ "$b" = "gbrt_gameplay_mutation" ] && continue
     [ "$b" = "gbrt_native_patch" ] && continue
+    [ -f "$f" ] || die "faltou o código-fonte do runtime ($f).
+Esperava compilá-lo a partir do motor clonado, mas ele não está em $RT." \
+      "rm -rf .tools && ./bootstrap.sh"
     $CC_BIN -std=gnu11 -O3 -DGB_HAS_SDL2 -DGB_PLATFORM_LINUX \
       -I"$RT/include" $SDL_CFLAGS -c "$f" -o "$OBJ/$b.o" \
       || die "falha ao compilar $b.c" "$CC_BIN --version"

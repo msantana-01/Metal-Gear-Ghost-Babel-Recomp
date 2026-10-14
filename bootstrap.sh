@@ -276,8 +276,18 @@ if [ -x "$GBRECOMP" ]; then
 elif [ -n "$RELEASE_BASE" ]; then
   info "downloading prebuilt tools (v$TOOLS_VERSION)"
   ARCH="$(uname -m)"
-  case "$ARCH" in x86_64) PLAT=linux-x86_64 ;; aarch64|arm64) PLAT=linux-arm64 ;;
-    *) PLAT="linux-$ARCH" ;; esac
+  case "$ARCH" in
+    x86_64) PLAT=linux-x86_64 ;;
+    *)
+      # The published artifact is an x86_64 binary. Until an arm64 build
+      # exists, the honest move is to say so here: a 404 from the download URL
+      # looks like a broken project, and "works on my machine" is not it.
+      # Building from source works on any Linux arch and needs only a C/C++
+      # compiler and the SDL2 headers, which this script already checks for.
+      die "the prebuilt tools are x86_64 only, and this machine reports '$ARCH'." \
+        "sed -i 's|^release_base = .*|release_base =|' pins.lock && ./bootstrap.sh"
+      ;;
+  esac
   TARBALL="$RELEASE_BASE/ghost-babel-tools-$PLAT-$TOOLS_VERSION.tar.gz"
   if have curl; then curl -fsSL "$TARBALL" -o "$TOOLS_DIR/tools.tar.gz"
   elif have wget; then wget -q "$TARBALL" -O "$TOOLS_DIR/tools.tar.gz"

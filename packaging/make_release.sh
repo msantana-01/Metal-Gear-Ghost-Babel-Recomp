@@ -75,6 +75,11 @@ mkdir -p "$OUT/ghost-babel-tools/tools/gui"
 cp tools/gui/app.py "$OUT/ghost-babel-tools/tools/gui/"
 cp -r profiles "$OUT/ghost-babel-tools/profiles"
 
+# KNOWN GAP: x86_64 only. bootstrap.sh maps every other architecture to a
+# clear error rather than a download URL that would 404, so the two stay in
+# agreement: this file publishes one platform, and bootstrap admits it.
+# Shipping linux-arm64 means cross-compiling gbrecomp and libgbrt.a for
+# aarch64, which needs an aarch64 toolchain and aarch64 SDL2 headers.
 TARBALL="$OUT/ghost-babel-tools-linux-x86_64-$VERSION.tar.gz"
 # --owner/--group/--numeric-owner: an archive that carries the uid/gid of
 # whoever built it fails to unpack where that uid does not exist - extracting

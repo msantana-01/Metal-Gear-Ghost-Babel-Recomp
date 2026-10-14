@@ -31,7 +31,6 @@ CXX     ?= c++
 # da plataforma: o binário linka, mas nasce sem vídeo, sem input e sem
 # salvar progresso. O CMake do upstream passa essa define; aqui é explícita.
 DEFINES := -DGB_HAS_SDL2
-WARN    := -Wall
 
 # SDL2: resolvido pelo pkg-config, com sdl2-config como reserva.
 SDL_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null || sdl2-config --cflags 2>/dev/null)
@@ -40,8 +39,24 @@ SDL_LIBS   := $(shell pkg-config --libs sdl2 2>/dev/null || sdl2-config --libs 2
 CFLAGS   ?= -std=gnu11 -O2 -ffunction-sections -fdata-sections
 LDFLAGS  ?= -Wl,--gc-sections
 
+# Sem warnings por padrão. O código gerado tem 283 arquivos e sempre produz
+# avisos que não significam nada para quem está usando a ferramenta — eles
+# entulham o log da interface e escondem o que importa. Para depurar:
+#     make WARN="-Wall -Wextra" ...
+WARN     ?=
+
 GEN_SRC := $(wildcard $(ROM_SRC)/*.c)
 GEN_OBJ := $(patsubst $(ROM_SRC)/%.c,$(WORK)/%.o,$(GEN_SRC))
+GEN_TOTAL := $(words $(GEN_SRC))
+
+# Silencioso por padrão: 283 linhas de comando de compilador viram muro no
+# log da interface. Para depurar, rode com V=1 e as linhas voltam.
+V ?= 0
+ifeq ($(V),1)
+  Q :=
+else
+  Q := @
+endif
 
 # Paralelismo: o gargalo é CPU e são ~283 arquivos. O upstream também limita
 # a 8 compilações simultâneas, porque cada cc segura bastante memória sobre o
@@ -62,13 +77,15 @@ $(WORK):
 
 # Compilação paralela: o gargalo é CPU, e são ~283 arquivos.
 $(WORK)/%.o: $(ROM_SRC)/%.c | $(WORK)
-	$(CC) $(CFLAGS) $(WARN) $(DEFINES) $(SDL_CFLAGS) \
+	$(Q)$(CC) $(CFLAGS) $(WARN) $(DEFINES) $(SDL_CFLAGS) \
 	  -I$(ROM_SRC) -I$(GBRT)/include -I$(GBRT)/vendor/imgui -c $< -o $@
+	$(Q)echo "GBPROGRESS $$(ls $(WORK)/*.o 2>/dev/null | wc -l) $(GEN_TOTAL)"
 
 # O link usa o driver C++ porque a biblioteca tem partes C++ (SDL/ImGui)
 # e depende de libstdc++.
 $(OUT): $(GEN_OBJ) $(LIB)
-	$(CXX) $(GEN_OBJ) $(LIB) -o $@ $(SDL_LIBS) -lm -ldl -lpthread $(LDFLAGS)
+	@echo "GBPHASE link"
+	$(Q)$(CXX) $(GEN_OBJ) $(LIB) -o $@ $(SDL_LIBS) -lm -ldl -lpthread $(LDFLAGS)
 	@strip $@ 2>/dev/null || true
 	@echo "gerado: $@ ($$(du -h $@ | cut -f1))"
 

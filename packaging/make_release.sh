@@ -33,8 +33,12 @@ FILES=(
   tools/validate_rom.py
   tools/pick_profile.py
   tools/guard_copyright.sh
+  tools/gui/app.py
+  tools/gui/icon.png
+  tools/gui/make_icon.py
   tests/make_test_rom.py
   tests/smoke.sh
+  tests/container.sh
 )
 
 for f in "${FILES[@]}"; do

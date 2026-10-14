@@ -42,7 +42,9 @@ PHASES = ("emu", "render", "upload", "compose", "present")
 FRAME_RE = re.compile(
     r"\[FRAME\] #(\d+) emu=([\d.]+)ms render=([\d.]+)ms upload=([\d.]+)ms "
     r"compose=([\d.]+)ms present=([\d.]+)ms cycles=(\d+) fallbacks=(\d+) "
-    r"interp_instr=(\d+) interp_cycles=(\d+)"
+    r"interp_instr=(\d+) interp_cycles=(\d+) "
+    r"first=([0-9A-Fa-f]+:[0-9A-Fa-f]+) last=([0-9A-Fa-f]+:[0-9A-Fa-f]+) "
+    r"total_fallbacks=(\d+) lcd_off_cycles=(\d+) lcd_transitions=(\d+)"
 )
 VSYNC_RE = re.compile(r"\[VSYNC\] #(\d+) wait=([\d.]+)ms")
 
@@ -95,6 +97,9 @@ def collect(
                 phases[n] = {name: float(m.group(i + 2)) for i, name in enumerate(PHASES)}
                 phases[n]["fallbacks"] = float(m.group(8))
                 phases[n]["interp_instr"] = float(m.group(9))
+                phases[n]["last_pc"] = float(int(m.group(12).replace(":", ""), 16))
+                phases[n]["lcd_off"] = float(m.group(14))
+                phases[n]["lcd_trans"] = float(m.group(15))
                 if n >= frames:
                     break
             elif m := VSYNC_RE.search(line):
@@ -165,7 +170,13 @@ def main() -> int:
     print()
     fb = sum(phases[n]["fallbacks"] for n in ids)
     instr = sum(phases[n]["interp_instr"] for n in ids)
-    print(f"interpreter fallbacks: {int(fb)}  interpreter instructions: {int(instr)}")
+    per_frame = [phases[n]["fallbacks"] for n in ids]
+    hit = sum(1 for f in per_frame if f > 0)
+    print(f"interpreter fallbacks: {int(fb)} total, {hit} of {len(ids)} frames "
+          f"({100.0 * hit / len(ids):.1f}%)")
+    print(f"interpreter instructions: {int(instr)} total")
+    print(f"  fallbacks per frame: p50 {percentile(per_frame, 50):.0f}  "
+          f"p99 {percentile(per_frame, 99):.0f}  max {max(per_frame):.0f}")
     print()
     print("worst intervals, with time no phase timer accounts for")
     pairs = sorted(zip(intervals, ids), reverse=True)[:5]
@@ -175,6 +186,17 @@ def main() -> int:
         parts = " ".join(f"{p}={phases[n + 1][p]:.2f}" for p in PHASES)
         print(f"  #{n}->#{n + 1}: {gap:8.2f} ms = wait {waits[n]:.2f} + {parts} "
               f"+ unaccounted {unaccounted:.2f}")
+        print(f"      fallbacks {int(phases[n + 1]['fallbacks'])} "
+              f"(p50 {percentile(per_frame, 50):.0f}), "
+              f"interp_instr {int(phases[n + 1]['interp_instr'])}, "
+              f"last_pc {int(phases[n + 1]['last_pc']):06X}, "
+              f"lcd_off {int(phases[n + 1]['lcd_off'])}, "
+              f"lcd_trans {int(phases[n + 1]['lcd_trans'])}")
+    lcd = [phases[n]["lcd_off"] for n in ids]
+    print(f"  lcd_off per frame: p50 {percentile(lcd, 50):.0f}  p99 {percentile(lcd, 99):.0f}  "
+          f"max {max(lcd):.0f}")
+    pcs = [phases[n]["last_pc"] for n in ids]
+    print(f"  distinct last_pc values across {len(ids)} frames: {len(set(pcs))}")
     return 0
 
 

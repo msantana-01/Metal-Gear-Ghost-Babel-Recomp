@@ -56,8 +56,14 @@ head_ "3. Gerar e compilar (Makefile do usuário)"
 [ -x .tools/gbrecomp ] || { bad "ferramentas ausentes: rode ./bootstrap.sh"; exit 1; }
 
 PROJ="$WORK/proj"
-.tools/gbrecomp "$ROM" -o "$PROJ" > "$WORK/gbrecomp.log" 2>&1
-check $? "gbrecomp gera o projeto"
+if ! .tools/gbrecomp "$ROM" -o "$PROJ" > "$WORK/gbrecomp.log" 2>&1; then
+  # Falhar sem dizer o porquê é a pior forma de falhar: quem lê o log do CI
+  # precisa ver o que o gbrecomp respondeu.
+  bad "gbrecomp gera o projeto (saida abaixo)"
+  tail -15 "$WORK/gbrecomp.log" | sed 's/^/         /'
+else
+  ok "gbrecomp gera o projeto"
+fi
 
 N_C="$(ls "$PROJ"/*.c 2>/dev/null | wc -l)"
 [ "$N_C" -ge 3 ]

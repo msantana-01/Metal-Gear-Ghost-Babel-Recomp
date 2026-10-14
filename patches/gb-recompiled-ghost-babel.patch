@@ -1,6 +1,6 @@
-From b859d74f4e03d126dec63cec52c0b7246ae41978 Mon Sep 17 00:00:00 2001
-From: Ghost Babel Recomp <noreply@users.noreply.github.com>
-Date: Tue, 13 Oct 2026 19:51:43 -0300
+From 31f7144cef62d922611701737a594085ed68bd67 Mon Sep 17 00:00:00 2001
+From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
+Date: Tue, 13 Oct 2026 23:28:43 -0300
 Subject: [PATCH] engine: CGB/DMG hardware accuracy (IO readback gates,
  boot-ROM DIV)
 

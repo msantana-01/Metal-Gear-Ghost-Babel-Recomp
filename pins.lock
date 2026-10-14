@@ -11,7 +11,7 @@ name         = gb-recompiled
 url          = https://github.com/arcanite24/gb-recompiled.git
 commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
 patch        = patches/gb-recompiled-ghost-babel.patch
-patch_sha256 = a3b2fd68c183c559b36209cc25bc65e23cbd33ab5e171091909d4b2be57974b2
+patch_sha256 = 35421d5bca3a986fc823c5716023ab9b59584c8d5a0a4d9ea25e85ce0d123930
 # Árvore de fontes esperada DEPOIS de aplicar o patch. O bootstrap falha
 # se não bater: é a garantia de que o patch continua aplicando limpo.
 tree_after   = 5f9e3311dae4283803f59422e7fe95b998e3e1ef

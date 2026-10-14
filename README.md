@@ -1,75 +1,79 @@
 # Metal Gear Ghost Babel Recomp
 
-Roda **Metal Gear Solid: Ghost Babel** (Game Boy Color) como programa nativo
-no seu PC — com as mesmas entradas e a mesma emulação de hardware, sem
-emulador por cima e sem nada do jogo dentro do repositório. A ROM é a sua.
+Runs **Metal Gear Solid: Ghost Babel** (Game Boy Color) as a native program
+on your computer — same inputs, same hardware emulation, no emulator sitting
+in the hot path. No game data is downloaded or shipped here: you use your own
+ROM.
 
-```
-git clone https://github.com/<seu-usuario>/Metal-Gear-Ghost-Babel-Recomp.git
+```bash
+git clone https://github.com/<owner>/Metal-Gear-Ghost-Babel-Recomp.git
 cd Metal-Gear-Ghost-Babel-Recomp
 ./bootstrap.sh
-./build.sh ~/minha-rom.gbc
+./build.sh ~/my-rom.gbc
 ./run.sh
 ```
 
-Só isso. Três comandos.
+Three commands. Or two, if you prefer a window: `./run.sh --gui`.
 
 ---
 
-## O que este projeto faz (e o que não faz)
+## What this is, and what it is not
 
-A Game Boy original roda a 4,19 MHz num processador de 8 bits com 8 KiB de
-memória. Emuladores reimplementam esse processador e o *interpretam*. Aqui
-fazemos o contrário: a ROM é **traduzida uma vez para código C nativo**, e o
-programa resultante roda direto na sua máquina, sem interpretador no caminho
-quente.
+The Game Boy ran a 4.19 MHz 8-bit processor with 8 KiB of RAM. Emulators
+rebuild that processor and *interpret* the ROM. This does the opposite: the ROM
+is translated **once** into native C, and the resulting program runs directly
+on your machine with no interpreter in the loop.
 
-| | emulador comum | aqui |
+| | a typical emulator | here |
 |---|---|---|
-| como roda | interpreta a ROM a cada frame | a ROM vira C, o C roda nativo |
-| velocidade | depende de quanto a emulação é boa | folgado acima de 60 fps (medido ~2700 fps sem janela) |
-| precisa de ROM na execução | precisa | **não** — vira executável |
+| how it runs | interprets the ROM every frame | the ROM becomes C, the C runs natively |
+| speed | however good the emulation is | comfortable above 60 fps (measured ~2700 fps with no window) |
+| needs the ROM at run time | yes | **no** — it becomes an executable |
 
-O que **não** vem aqui: a ROM, o código do jogo, os gráficos, a trilha. Nada
-disso é nosso para distribuir. O que vem são as **ferramentas** — o tradutor e
-o runtime — que qualquer pessoa usa com a própria cópia do jogo.
+**Not included, ever:** the ROM, the game's code, graphics, or audio. Those are
+not ours to distribute. What is included is the *tooling* — the translator and
+the runtime — which anyone can run against their own copy of the game.
 
-> Você precisa ter uma cópia legítima do jogo. Este projeto não baixa, não
-> vende e não inclui nada do jogo — nem a ROM, nem o resultado de compilar a
-> ROM. É a mesma situação de qualquer emulador.
+> You need a legitimate copy of the game. This project does not download, sell
+> or include any part of it — not the ROM, not the executable produced from
+> the ROM. This is the same situation as any emulator.
 
 ---
 
-## O que você precisa ter antes
+## What you need first
 
-Quatro coisas, todas de installs de uma linha:
+Four things, each one a single install command:
 
-| precisa | já vem na maioria dos sistemas? |
+| needs | usually already there? |
 |---|---|
-| `git` | sim |
-| compilador C/C++ | às vezes (`build-essential` no Debian, `base-devel` no Arch) |
-| `make` | às vezes (vem com o compilador) |
-| headers do SDL2 | não — é o único pacote a instalar |
-| Python 3 | sim |
+| `git` | yes |
+| a C/C++ compiler | sometimes (`build-essential` on Debian, `base-devel` on Arch) |
+| `make` | sometimes (it comes with the compiler) |
+| SDL2 development headers | no — this is the one package to install |
+| Python 3 | yes |
 
-Se você usa Arch, Debian/Ubuntu, Fedora, Linux Mint ou openSUSE, o
-`./bootstrap.sh` detecta e **imprime o comando exato** do que falta. Você não
-precisa adivinhar nome de pacote.
+On Arch, Debian/Ubuntu, Fedora, Linux Mint or openSUSE, `./bootstrap.sh`
+detects your system and **prints the exact command** for anything missing.
+You do not have to look up package names.
+
+The graphical window additionally needs the Tk library
+(`python3-tk` on Debian/Ubuntu, `tk` on Arch, `python3-tkinter` on Fedora).
+The command line does not need it.
 
 ---
 
-## Passo a passo
+## Step by step
 
-### 1. Instalar o que falta (só se aparecer aviso)
+### 1. Install what is missing (only if you see a warning)
 
-O `bootstrap.sh` diz o que instalar. O comando também é:
+`./bootstrap.sh` tells you. The commands are:
 
 ```bash
 # Arch / Omarchy
 sudo pacman -S --needed base-devel pkgconf sdl2
 
 # Debian / Ubuntu / Mint
-sudo apt-get install -y build-essential pkg-config libsdl2-dev
+sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev
 
 # Fedora
 sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
@@ -77,112 +81,188 @@ sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
 
 ### 2. `./bootstrap.sh`
 
-Baixa o motor (versão fixada por hash, com um patch versionado que audita
-linha a linha), compila as ferramentas e a biblioteca de execução. **Uns 30
-segundos** na primeira vez. É só rodar de novo uma vez instalado.
+Downloads the translator (pinned by commit hash plus a versioned patch you can
+read line by line) and builds the tools. About 30 seconds the first time,
+seconds after that.
 
-### 3. `./build.sh caminho/da/rom.gbc`
+### 3. `./build.sh path/to/rom.gbc`
 
-- confere se o arquivo é mesmo uma ROM de Game Boy;
-- traduz a ROM para ~283 arquivos de C;
-- compila e linka;
-- **roda o jogo por 120 frames** para garantir que nasceu vivo.
+- checks the file really is a Game Boy ROM;
+- translates it into ~283 C files;
+- compiles and links them;
+- **runs the game for 120 frames** to prove it was born alive.
 
-Uns 3 a 4 minutos. É o preço de traduzir 2 MB de ROM para código nativo — não
-é um travamento, é compilação de verdade.
+Three to four minutes. That is the price of turning 2 MB of ROM into native
+code; it is not a hang.
 
 ### 4. `./run.sh`
 
-Abre o jogo.
+The game opens.
 
-Preferir uma janela em vez de digitar caminho? `./run.sh --gui` faz o mesmo
-passo por uma interface gráfica, com o log sempre à vista.
+Prefer a window to typing paths? `./run.sh --gui` opens the same flow
+graphically, with the build progress on screen.
 
 ---
 
-## Como se joga
+## How to play
 
-O teclado é o controle. Não há mouse, porque o jogo não tinha.
+The keyboard is the controller. There is no mouse, because the game had none.
 
-| tecla | ação |
+| key | action |
 |---|---|
-| setas ou `WASD` | movimento e mira |
-| `Z` ou `J` | botão A |
-| `X` ou `K` | botão B |
+| arrows or `WASD` | movement and aiming |
+| `Z` or `J` | A button |
+| `X` or `K` | B button |
 | `Enter` | Start |
-| `Backspace` ou `Shift` direito | Select |
-| `Tab` | turbo (pula as esperas) |
-| `F1` / `F2` | overlay de diagnóstico / UI |
-| `F5` / `F8` | salvar / carregar posição |
-| `M` | mudo |
-| `Esc` | sair |
+| `Backspace` or right `Shift` | Select |
+| `Tab` | fast-forward (skips waiting) |
+| `F1` / `F2` | diagnostics overlay / UI |
+| `F5` / `F8` | save / load state |
+| `M` | mute |
+| `Esc` | quit |
 
-Controle de videogame USB funciona normalmente.
+A USB gamepad works too.
 
 ---
 
-## Se algo der errado
+## If something goes wrong
 
-Cada mensagem de erro deste projeto diz **o que fazer**, não só o que houve.
-Se aparecer algo que não resolve sozinho:
+Every message this project prints says **what to do**, not just what happened.
+If you hit something the message does not solve, the full log is kept in the
+project folder:
 
 ```bash
-cat .build.log        # log da última compilação
-cat .bootstrap.log    # log da preparação
+cat .build.log        # last build
+cat .bootstrap.log    # last setup
 ```
 
-E, se for bug nosso, reporte no GitHub com o log. Log vale mais que descrição.
+If it is our bug, open an issue with that log attached. A log is worth far
+more than a description.
 
 ---
 
-## Perguntas honestas
+## Honest answers
 
-**Funciona igual ao original?**
-Nos testes de hardware do GB (Blargg e Mooneye) o runtime passa 75 de 75, e a
-comparação frame a frame com um emulador de referência coincide. Onde ainda há
-diferença de 3–4 pixels em cenas específicas, ela é documentada e conhecida.
+**Is it frame-accurate?**
+The runtime passes 75 of 75 Game Boy hardware test ROMs (Blargg and Mooneye),
+and its output matches a cycle-accurate reference emulator frame for frame on
+the material we measured. Where a 3–4 pixel difference survives in specific
+scenes, that is documented rather than hidden.
 
-**Preciso de uma ROM específica?**
-Não. A ferramenta funciona com qualquer ROM de Game Boy. Para o Ghost Babel
-existe um perfil de análise (`profiles/ghost-babel.json`) com três endereços
-de entrada que o analisador não descobre sozinho — só endereços, nenhum dado
-do jogo.
+**Does it need my exact ROM?**
+No. The tools work with any Game Boy ROM. Ghost Babel has an analysis profile
+([`profiles/ghost-babel.json`](profiles/ghost-babel.json)) listing three entry
+points the analyzer does not find on its own — addresses only, no game data.
 
-**Vai ter jogável no futuro?**
-Android e Windows estão planejados. Linux primeiro, porque é o único caminho
-testado de verdade.
+**Will this run on my machine?**
+Linux today. Tested on Arch/Omarchy and Ubuntu 24.04 from scratch, including
+a machine with nothing installed. Windows and Android are planned; they are not
+finished, and this README will not pretend otherwise.
 
-**Posso redistribuir o executável que ele gera?**
-Não — e nem tentamos. O executável gerado *é o jogo*. Este repositório
-distribui só ferramentas.
+**Can I share the executable it produces?**
+No — and we do not try to help with that. The generated executable *is* the
+game. This repository ships tools only.
 
 ---
 
-## Como funciona por dentro
+## How it works
 
 ```
-sua-rom.gbc
+your-rom.gbc
    │
-   ├─ gbrecomp ............. ROM → 283 arquivos C (~270 MB de código)
+   ├─ gbrecomp ............. ROM → 283 C files (~270 MB of code)
    │
-   ├─ make ................. compila o C gerado
+   ├─ make ................. compiles the generated C
    │
    └─ libgbrt.a ............ runtime: CPU, PPU, timers, APU, MBC5, SDL
                  │
                  ▼
-          build/ghost-babel        ← executável nativo, ~75 MB
+          build/ghost-babel        ← native executable, ~75 MB
 ```
 
-O `gbrecomp` é o [`gb-recompiled`](https://github.com/arcanite24/gb-recompiled)
-(MIT), com um patch deste repositório
-([`patches/`](patches/gb-recompiled-ghost-babel.patch)) que corrige o
-comportamento de hardware em CGB e o DIV pós-boot por revisão de boot-ROM.
-As versões ficam fixadas em [`pins.lock`](pins.lock) e a integridade é conferida
-por hash — o motor não muda por baixo dos panos.
+The translator is [`gb-recompiled`](https://github.com/arcanite24/gb-recompiled)
+(MIT), plus one patch from this repository
+([`patches/`](patches/gb-recompiled-ghost-babel.patch)) fixing CGB hardware
+behaviour and post-boot DIV per boot-ROM revision. Every version is pinned in
+[`pins.lock`](pins.lock) and checked by hash, so the engine cannot change
+underneath you.
 
-## Licença
+Build output is reproducible: the same ROM and the same tool version produce
+the same binary, whatever path you took to build it.
 
-Ferramentas: MIT. Veja [LICENSE](LICENSE).
+---
 
-O jogo não tem licença nossa. O que é do jogo é de quem o fez — aqui só
-ferramentas.
+## Translations
+
+The interface is English only. For the commands and package names:
+
+<details>
+<summary><b>Português do Brasil</b></summary>
+
+### O que você precisa
+
+`git`, um compilador C/C++, `make`, os headers de desenvolvimento do SDL2 e
+Python 3. Um comando instala tudo:
+
+```bash
+# Arch / Omarchy
+sudo pacman -S --needed base-devel pkgconf sdl2
+# Debian / Ubuntu / Mint
+sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev
+# Fedora
+sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
+```
+
+A interface gráfica também precisa do Tk: `python3-tk` (Debian/Ubuntu),
+`tk` (Arch) ou `python3-tkinter` (Fedora). A linha de comando não precisa.
+
+### Os três comandos
+
+```bash
+git clone https://github.com/<owner>/Metal-Gear-Ghost-Babel-Recomp.git
+cd Metal-Gear-Ghost-Babel-Recomp
+./bootstrap.sh                  # prepara tudo (~30s)
+./build.sh /caminho/da/rom.gbc  # compila (~3 a 4 minutos)
+./run.sh                        # joga
+```
+
+Ou, preferindo janela: `./run.sh --gui`.
+
+### Se der problema
+
+`./bootstrap.sh` e `build.sh` dizem o que fazer a cada falha. O log completo
+fica em `.build.log` e `.bootstrap.log`, na pasta do projeto — vale anexá-lo
+a um issue.
+
+</details>
+
+<details>
+<summary><b>Deutsch</b></summary>
+
+Benötigt werden `git`, ein C/C++-Compiler, `make`, die SDL2-Entwicklerheader
+und Python 3. Alles installiert ein einziger Befehl:
+
+```bash
+# Debian / Ubuntu
+sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev
+# Arch
+sudo pacman -S --needed base-devel pkgconf sdl2
+# Fedora
+sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
+```
+
+Dann `./bootstrap.sh` (Vorbereitung), `./build.sh rom.gbc` (übersetzen und
+bauen) und `./run.sh` (spielen). Die grafische Oberfläche braucht zusätzlich Tk
+(`python3-tk` bzw. `tk`); die Kommandozeile kommt ohne aus.
+
+</details>
+
+## License
+
+The tools in this repository are MIT — see [LICENSE](LICENSE).
+
+Metal Gear Solid: Ghost Babel is a work of Konami / Nintendo. This project
+does not include, distribute or obtain the ROM, the game's source, its
+graphics, its music, or the executable generated from the ROM. Building that
+executable from your own ROM is a derivative work and your responsibility on
+your own computer.

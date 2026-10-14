@@ -10,7 +10,6 @@ say what to do next.
 
 from __future__ import annotations
 
-import os
 import queue
 import subprocess
 import sys
@@ -58,8 +57,39 @@ class App(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title(TITLE)
-        self.configure(padx=18, pady=14, background=self.BG)
+        self.configure(padx=20, pady=16, background=self.BG)
         self.resizable(True, False)
+        self._fit_to_screen()
+
+    def _fit_to_screen(self) -> None:
+        """Size the window as a share of the screen, with sane bounds.
+
+        The numbers below are in X pixels, which is what Tk asks for - and it
+        is NOT what the eye measures: on a scaled desktop (Hyprland at 1.25
+        here) the compositor shrinks the window for display, so asking for
+        660x820 shows up as 528x656. That is why a fixed size looked small
+        on a 4K monitor. Asking for a share of the screen with a floor and a
+        ceiling adapts to both a scaled 4K and a plain 1080p laptop.
+        """
+        sw, sh = self.winfo_screenwidth(), self.winfo_screenheight()
+        # Width stays form-sized: a 1300px window with a 500px form in the
+        # corner looks broken. Height takes whatever room is going spare.
+        width = max(600, min(int(sw * 0.16), 880))
+        height = max(600, min(int(sh * 0.55), 1010))
+        # sh here is the whole virtual desktop, which on a multi-monitor
+        # setup can be twice the tall monitor: keep it inside one screen.
+        height = min(height, sh - 100)
+        self._place(width, height)
+
+    def _place(self, width: int, height: int) -> None:
+        """Ask for a size only and let the window manager place it.
+
+        No coordinates: the manager centres the window, and asking for a
+        position put it off-screen, because the screen size Tk reports (the
+        summed physical width of two monitors) does not match how they are
+        actually arranged (stacked, not side by side).
+        """
+        self.geometry(f"{width}x{height}")
 
         self._q: queue.Queue[tuple[str, object]] = queue.Queue()
         self._proc: subprocess.Popen | None = None
@@ -142,8 +172,11 @@ class App(tk.Tk):
         log_frame.grid(row=9, column=0, columnspan=3, sticky="nsew")
         log_frame.columnconfigure(0, weight=1)
         log_frame.rowconfigure(0, weight=1)
+        # Row 9 takes all the spare height, so the log fills the window
+        # instead of leaving the bottom half empty.
+        self.rowconfigure(9, weight=1)
 
-        self.log = tk.Text(log_frame, height=13, width=74, wrap="none",
+        self.log = tk.Text(log_frame, height=14, width=88, wrap="none",
                            font=("monospace", 9), background="#111111",
                            foreground="#dddddd", insertbackground="#dddddd",
                            relief="flat", padx=8, pady=6)
@@ -155,9 +188,10 @@ class App(tk.Tk):
         self.log.tag_configure("ok", foreground="#7bd88f")
         self.log.configure(state="disabled")
 
-        ttk.Button(self, text="Open full log", command=self._open_log).grid(
-            row=10, column=0, columnspan=3, sticky="w", pady=(8, 0)
-        )
+        # The on-screen log is the log. There is no "open full log" button:
+        # the detail already lives here, and a button that opens a second
+        # window with the same text is just one more thing to click.
+        # build.sh still writes .build.log, which is what bug reports want.
 
     # ------------------------------------------------------------- helpers
     def _say(self, msg: str, tag: str = "") -> None:
@@ -184,19 +218,6 @@ class App(tk.Tk):
         # "Play" button with no explanation.
         if GAME.exists():
             self.play_btn.configure(state="normal")
-
-    def _open_log(self) -> None:
-        for candidate in (REPO / ".build.log", REPO / ".bootstrap.log"):
-            if candidate.exists():
-                if sys.platform.startswith("linux"):
-                    subprocess.Popen(["xdg-open", str(candidate)])
-                elif sys.platform == "darwin":
-                    subprocess.Popen(["open", str(candidate)])
-                else:  # pragma: no cover
-                    os.startfile(candidate)  # type: ignore[attr-defined]
-                return
-        from tkinter import messagebox
-        messagebox.showinfo("Log", "There is no log yet: no build has been attempted.")
 
     # -------------------------------------------------------------- actions
     def _browse(self) -> None:

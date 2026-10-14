@@ -27,12 +27,19 @@ on your machine with no interpreter in the loop.
 | | a typical emulator | here |
 |---|---|---|
 | how it runs | interprets the ROM every frame | the ROM becomes C, the C runs natively |
-| speed | however good the emulation is | comfortable above 60 fps (measured ~2700 fps with no window) |
+| speed | however good the emulation is | the Game Boy's own 59.7 fps, using ~7% of each frame |
 | needs the ROM at run time | yes | **no** — it becomes an executable |
 
 **Not included, ever:** the ROM, the game's code, graphics, or audio. Those are
 not ours to distribute. What is included is the *tooling* — the translator and
 the runtime — which anyone can run against their own copy of the game.
+
+The 59.7 fps figure is not a round number chosen to look good: the runtime
+paces itself against the Game Boy's real frame length, so it cannot run faster
+than the hardware did without changing how the game plays. Measured over 2500
+frames with a window open: p50 16.743 ms, p95 16.945 ms, p99 17.059 ms, and 6.5%
+of the frame budget spent producing a frame. `tools/frame_pacing.py` reproduces
+it. With no window and no pacing at all the same build runs ~2700 fps.
 
 > You need a legitimate copy of the game. This project does not download, sell
 > or include any part of it — not the ROM, not the executable produced from
@@ -134,7 +141,7 @@ The keyboard is the controller. There is no mouse, because the game had none.
 | `F1` / `F2` | diagnostics overlay / UI |
 | `F5` / `F8` | save / load state |
 | `M` | mute |
-| `Esc` | menu |
+| `Esc` | configuration menu |
 
 A gamepad works too.
 

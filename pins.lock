@@ -11,10 +11,10 @@ name         = gb-recompiled
 url          = https://github.com/arcanite24/gb-recompiled.git
 commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
 patch        = patches/gb-recompiled-ghost-babel.patch
-patch_sha256 = 110dee52d48f42cc181e347b297e596c4b8da3fa83d9dfc3ea2274ae07620baf
+patch_sha256 = 198a54860b6985c5549a0b2d256b31463fe93d77549a794bd49a1d759e32326f
 # Expected source tree AFTER applying the patch. The bootstrap fails if it
 # does not match: that is what guarantees the patch still applies cleanly.
-tree_after   = f5705364f5305ad85314f9eca48b47d681e0407c
+tree_after   = 4ce1d218041106d362bc15c720b6ed557a8af69b
 
 [build]
 # Lowest SDL2 tested. The runtime has a single SDL_VERSION_ATLEAST(2,0,12).
@@ -26,9 +26,9 @@ runtime_define = GB_HAS_SDL2
 [tools]
 # Tool version. One line across platforms: the same ROM and the same tool
 # version produce the same output everywhere.
-version = 0.4
+version = 0.5
 # Where the prebuilt tools live. With this filled in, bootstrap downloads
 # gbrecomp and the runtime instead of compiling them, and the user never
 # needs cmake or ninja. Empty means "compile from source" - which is what
 # a clone straight from git does.
-release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.4
+release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.5

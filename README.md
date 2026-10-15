@@ -140,10 +140,27 @@ The keyboard is the controller. There is no mouse, because the game had none.
 | `Tab` | fast-forward (skips waiting) |
 | `F1` / `F2` | diagnostics overlay / UI |
 | `F5` / `F8` | save / load state |
+| `F9` | next screen effect (scanlines, LCD grid, CRT) |
+| `F4` | toggle LCD response (panel trail) |
 | `M` | mute |
 | `Esc` | configuration menu |
 
 A gamepad works too.
+
+### Screen effects
+
+The settings menu has a **Screen Effect** selector — Off, Scanlines, LCD Grid or
+CRT — plus a strength percentage. These draw over the finished image only; they
+never touch the ROM or the emulated hardware, so frame-accurate comparisons are
+unaffected.
+
+**LCD Response** (`F4`) makes the screen lag the way a handheld panel does, with
+a response time in milliseconds. It is off by default and remembered across
+restarts.
+
+The gap between simulated pixels is sized against the current window, so the
+same setting holds from a small window up to 4K instead of aliasing at one size
+and disappearing at another.
 
 ---
 

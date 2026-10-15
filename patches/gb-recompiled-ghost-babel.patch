@@ -1,11 +1,11 @@
-From fce8b1f0ce6e7198d2e5a91040baec8999dd48e3 Mon Sep 17 00:00:00 2001
+From 1b887d8f3eb0e5d3ad4d8808598351bbb31a6600 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
-Date: Wed, 14 Oct 2026 22:33:39 -0300
+Date: Thu, 15 Oct 2026 12:59:54 -0300
 Subject: [PATCH 1/2] engine: CGB/DMG hardware accuracy (IO readback gates,
  boot-ROM DIV)
 
 Two emulated-hardware fixes needed so DMG-era cartridges behave per spec on
-Game Boy Color hardware, carried over unchanged from v0.3.
+Game Boy Color hardware, carried over unchanged from v0.3 and v0.4.
 ---
  RUNTIME.md                           |  4 +--
  recompiler/src/codegen/c_emitter.cpp | 10 +++++--
@@ -182,43 +182,74 @@ index cb01b84..be62b88 100644
                  sc |= 0x02;
              }
              ctx->io[0x02] = sc;
-From fd8c5e83632ad5f0ac3c94fa4b603e86384e45f4 Mon Sep 17 00:00:00 2001
+From eaadea3ec62f079a3636268889c8c75fcf12e4da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
-Date: Wed, 14 Oct 2026 22:34:15 -0300
-Subject: [PATCH 2/2] platform: name the host after the cartridge and give the
- settings menu shape
+Date: Thu, 15 Oct 2026 12:59:54 -0300
+Subject: [PATCH 2/2] platform: panel effects for the presented image
 
-Seven changes to the SDL host. None of them reach the guest framebuffer, which
-is what keeps the oracle comparisons meaningful - frame dumps at frames 400, 700,
-1000, 1100 and 1200 are byte-identical to a build from before any of this, and
-the gates are unchanged at 75/75, SameBoy 3 EXACT + 2 NEAR 0.004, PyBoy 5/5.
+Three commits' worth of host-side presentation, none of which reaches the guest
+framebuffer. Guest frame dumps at frames 400, 700, 1000, 1100 and 1200 are
+byte-identical to a build from before any of it.
 
-The window and the settings menu both opened as "GameBoy Recompiled", the
-upstream engine's own product name, applied to every ROM the user supplies.
-gbrt_get_rom_title() already existed and was only naming the save file; it is
-now exported and reads the cartridge header at 0x134.
+Screen Effect (Off, Scanlines, LCD Grid, CRT) draws a multiply mask over the
+finished image using the same destination rect as the guest, so it lands on the
+guest pixels without any coordinate arithmetic. Effect Strength sets the depth.
 
-The menu had controls spanning the whole window - a 1900 px "Speed %" slider on
-a 4K display - with each label stranded against the far edge because widgets
-carry their label as their last argument. The content is now bounded and
-centred, sections got a rule and the accent colour, and the default Dear ImGui
-blue gave way to the greens of a DMG palette.
+Making one setting hold across window sizes took three attempts, and each
+failure is the reason the code looks the way it does. A mask on a fixed guest
+multiple snapped the gap to whole sub-columns. Rasterising at the window scale
+fixed that but exposed the real limit: one screen pixel cannot be antialiased
+into anything visible, because the ramp consumes the band and the peak coverage
+collapses. Widening the ramp to fill the lattice made it worse, because a ramp
+centred on an edge bleeds past it. What works is rasterising at the on-screen
+scale, holding the gap to two screen pixels, and covering each band with a
+trapezoid that stops at its edge. The grid draws half a gap per side so
+neighbouring borders meet.
 
-Host actions had no feedback at all: fast forward, save/load state, state slot
-and mute all changed state silently. They now confirm in a bottom-right toast
-for 1.5 s. It is a sibling if rather than another else if, because the menu and
-the debug overlay are mutually exclusive and a toast in that chain would vanish
-exactly when the player opens the menu.
+CRT adds a phosphor glow to the scanlines. It cannot go in the multiply mask: a
+halo is brighter than its source and a multiplier can only darken, so it is a
+separate texture composited with SDL_BLENDMODE_ADD. The blur is normalised by
+its kernel sum to preserve DC gain; normalising by the kernel peak looks better
+on an isolated pixel and multiplies every flat area by the square of that sum,
+which blows the screen to white.
 
-The audio section no longer dumps ring buffer occupancy and device buffer
-geometry into the settings flow as if they were options; those moved to the
-debug overlay, which already reported ring fill and underruns.
+LCD Response (F4) gives the panel a response time. One exponential step per
+guest frame, coefficient derived from elapsed wall time rather than a per-frame
+constant, darkening faster than lightening. Off by default, persisted.
+
+Settings persist on release rather than during a drag, and the strength selector
+actually saves - it never did before this.
 ---
- runtime/include/gbrt.h       |   9 +
- runtime/src/gbrt.c           |   4 +
- runtime/src/platform_sdl.cpp | 333 +++++++++++++++++++++++++++++------
- 3 files changed, 295 insertions(+), 51 deletions(-)
+ RUNTIME.md                     |   5 +
+ runtime/include/gbrt.h         |   9 +
+ runtime/include/platform_sdl.h |  11 +
+ runtime/src/gbrt.c             |   4 +
+ runtime/src/platform_sdl.cpp   | 945 +++++++++++++++++++++++++++++++--
+ 5 files changed, 922 insertions(+), 52 deletions(-)
 
+diff --git a/RUNTIME.md b/RUNTIME.md
+index cbbaadd..7acc231 100644
+--- a/RUNTIME.md
++++ b/RUNTIME.md
+@@ -28,6 +28,7 @@ The default desktop controls are:
+ | Native port UI | F2 | Controller R3 |
+ | Encounter Lens extension | F3 | — |
+ | Mute | M | — |
++| Next screen effect | F9 | — |
+ | Settings menu | F10 or Escape | — |
+ 
+ Controllers are enabled automatically. The default mapping uses the D-pad or left stick, physical south/east face buttons for Game Boy B/A, and Start/Back for Start/Select. Guide/Home or L3 opens the settings menu; R3 opens the native game panel when the exact-ROM port supplies one. Escape and Android Back also open the settings menu. While a native panel captures input, its D-pad/left-stick and A/B actions do not reach the guest game.
+@@ -36,6 +37,10 @@ The settings menu can remap keyboard and controller gameplay actions and shortcu
+ 
+ The Palette selector changes DMG display colors to green, black and white, or amber. It affects the displayed image; diagnostic frame dumps retain the PPU's original colors. CGB games and DMG games running in CGB compatibility mode keep their hardware color palettes, so the selector is disabled in those modes.
+ 
++Screen Effect draws a panel over the finished image: Off, Scanlines, LCD Grid, or CRT. It is separate from Scale Filter, which chooses how the guest texture is interpolated while being scaled. Effect Strength sets the depth as a percentage. The gap between pixels is sized against the current window scale, holding it to at least two screen pixels so it neither aliases nor disappears at small window sizes, and the effect fades out entirely below 2x where there is no room for a gap. CRT adds a phosphor glow to the scanlines: whatever sits above the bloom threshold is blurred into a halo and added back, so bright areas bleed the way a phosphor does. It is drawn without curvature or vignette, since this is a handheld screen rather than a tube. These effects change the presented image only: diagnostic frame dumps and every differential or oracle comparison are unaffected.
++
++LCD Response (F4) makes the panel lag the light it emits, as a real twisted nematic screen does. Response ms sets how long the trail lasts; darkening runs faster than lightening, which is what leaves a dark smear behind a moving sprite rather than a symmetric blur. It is off by default because the trail costs some readability on a map. It applies to the emitted colour after the palette, once per guest frame, and loading a savestate drops the trail because it belongs to the state that produced it.
++
+ ## Saves and savestates
+ 
+ Battery-backed RAM and MBC3 RTC data are loaded and saved by the SDL platform layer. Savestates provide ten slots per game and are checked against the ROM and state-format version before loading.
 diff --git a/runtime/include/gbrt.h b/runtime/include/gbrt.h
 index 685f6a3..c44f8f9 100644
 --- a/runtime/include/gbrt.h
@@ -239,6 +270,28 @@ index 685f6a3..c44f8f9 100644
  #ifdef GBRT_ENABLE_PERFORMANCE_COUNTERS
  void gbrt_profile_generated_safepoint(GBContext* ctx);
  #endif
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 504e246..0af912f 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -193,6 +193,17 @@ void gb_platform_set_title(const char* title);
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+                                          int palette_idx, const GBContext* ctx);
++void gb_platform_test_compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
++                                                    int effect, int intensity_percent,
++                                                    float scale_factor);
++void gb_platform_test_apply_lcd_response(const uint32_t* prev, uint32_t* dst,
++                                         int pitch_bytes, int width, int height,
++                                         float dark_alpha, float light_alpha);
++void gb_platform_test_compute_phosphor_glow(const uint32_t* src, int src_pitch_bytes,
++                                            uint32_t* dst, uint32_t* scratch,
++                                            int width, int height, int threshold,
++                                            int amount);
++float gb_platform_test_lcd_response_alpha(float dt_ms, float tau_ms);
+ 
+ typedef struct GBAudioStressResult {
+     uint64_t frames_enqueued;
 diff --git a/runtime/src/gbrt.c b/runtime/src/gbrt.c
 index be62b88..f20ac1e 100644
 --- a/runtime/src/gbrt.c
@@ -255,10 +308,122 @@ index be62b88..f20ac1e 100644
      if (!save_id) {
          return;
 diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
-index 9e4eeb7..6444c4b 100644
+index 9e4eeb7..033bf79 100644
 --- a/runtime/src/platform_sdl.cpp
 +++ b/runtime/src/platform_sdl.cpp
-@@ -189,6 +189,18 @@ static GBInputAction g_binding_capture_action = GB_INPUT_ACTION_RIGHT;
+@@ -43,6 +43,25 @@ namespace fs = std::filesystem;
+ static SDL_Window* g_window = NULL;
+ static SDL_Renderer* g_renderer = NULL;
+ static SDL_Texture* g_texture = NULL;
++/* Panel effect mask, drawn over the guest with the same destination rect so the
++ * alignment is exact by construction rather than computed. */
++static SDL_Texture* g_screen_effect_texture = NULL;
++static bool g_screen_effect_dirty = true;
++static int g_screen_effect_lattice = 0;
++/* Phosphor glow, added on top rather than multiplied into the image: a halo is
++ * brighter than its source, which the multiply mask cannot express at all. */
++static SDL_Texture* g_glow_texture = NULL;
++/* Guest resolution: 160x144 is two 92 KB buffers and lets the upscale do the
++ * spreading, which is the cheapest correct place for a halo. */
++static uint32_t g_glow_buffer[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
++static uint32_t g_glow_scratch[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
++static bool g_glow_buffer_valid = true;
++/* Above the lightest shade the palette uses, so ordinary art does not lift,
++ * while an isolated bright pixel still gets enough excess to halo visibly.
++ * Normalising the blur for DC gain attenuates a lone pixel hard - at a near
++ * white threshold it came out at six percent of its own excess, which is not a
++ * glow - so the threshold has to leave real energy in the highlights. */
++#define GB_GLOW_THRESHOLD 128
+ static int g_scale = 5;
+ static int g_windowed_width = GB_SCREEN_WIDTH * 5;
+ static int g_windowed_height = GB_SCREEN_HEIGHT * 5;
+@@ -89,6 +108,35 @@ typedef enum GBRenderFilterMode {
+     GB_RENDER_FILTER_NEAREST = 0,
+     GB_RENDER_FILTER_LINEAR = 1,
+ } GBRenderFilterMode;
++
++/* Panel effects. Distinct from GBRenderFilterMode, which chooses how the guest
++ * texture is interpolated while it is being scaled: these are drawn on top of
++ * the finished image, and composing with a setting already called "Scale
++ * Filter" would be a naming trap. */
++typedef enum GBScreenEffect {
++    GB_SCREEN_EFFECT_OFF = 0,
++    GB_SCREEN_EFFECT_SCANLINES = 1,
++    GB_SCREEN_EFFECT_LCD_GRID = 2,
++    GB_SCREEN_EFFECT_CRT = 3,
++    GB_SCREEN_EFFECT_COUNT = 4,
++} GBScreenEffect;
++
++/* Mask pixels per guest pixel: the on-screen scale factor, bounded. Below the
++ * floor there is no room to resolve a gap; above the ceiling the mask would be
++ * a 14 MB texture regenerated on every window drag for detail nobody can see. */
++#define GB_SCREEN_EFFECT_MIN_LATTICE 4
++#define GB_SCREEN_EFFECT_MAX_LATTICE 12
++#define GB_SCREEN_EFFECT_GAP_GUEST 0.22f
++#define GB_SCREEN_EFFECT_MAX_GAP_GUEST 0.50f
++/* Two screen pixels, not one. A one pixel gap cannot be antialiased into
++ * anything visible: the ramp takes most of it and the plateau disappears, so
++ * the grid vanishes instead of reading as a line. The cost of asking for two
++ * is that the low end needs a wider gap in guest pixels, which is capped so the
++ * lit cell never drops below half a pixel. */
++#define GB_SCREEN_EFFECT_MIN_GAP_SCREEN 2.0f
++#define GB_SCREEN_EFFECT_INTENSITY_DEFAULT 45
++#define GB_SCREEN_EFFECT_INTENSITY_MIN 10
++#define GB_SCREEN_EFFECT_INTENSITY_MAX 100
+ typedef enum GBControllerLabelProfile {
+     GB_CONTROLLER_LABEL_GENERIC = 0,
+     GB_CONTROLLER_LABEL_XBOX = 1,
+@@ -114,7 +162,9 @@ typedef enum GBInputAction {
+     GB_INPUT_ACTION_TOGGLE_MUTE = 15,
+     GB_INPUT_ACTION_TOGGLE_MENU = 16,
+     GB_INPUT_ACTION_TOGGLE_PORT_UI = 17,
+-    GB_INPUT_ACTION_COUNT = 18,
++    GB_INPUT_ACTION_NEXT_SCREEN_EFFECT = 18,
++    GB_INPUT_ACTION_TOGGLE_LCD_RESPONSE = 19,
++    GB_INPUT_ACTION_COUNT = 20,
+ } GBInputAction;
+ typedef enum GBInputBindingKind {
+     GB_INPUT_BINDING_NONE = 0,
+@@ -134,6 +184,25 @@ typedef struct GBInputBinding {
+ } GBInputBinding;
+ static GBRenderScalingMode g_render_scaling_mode = GB_RENDER_SCALING_PIXEL_PERFECT;
+ static GBRenderFilterMode g_render_filter_mode = GB_RENDER_FILTER_NEAREST;
++static GBScreenEffect g_screen_effect = GB_SCREEN_EFFECT_OFF;
++static int g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
++
++/* LCD response. Off by default: the trail is authentic and the first time
++ * someone sees it they should have turned it on deliberately, because it does
++ * cost some readability on a map. Persisted, so the choice survives a restart. */
++static bool g_lcd_response_enabled = false;
++static int g_lcd_response_ms = 45;
++#define GB_LCD_RESPONSE_MS_MAX 200
++/* A twisted nematic panel realigns faster under one bias than the other. That
++ * asymmetry is what separates an LCD trail from a generic blur: the smear that
++ * lingers is the dark one, left behind as a moving sprite lights up. */
++#define GB_LCD_RESPONSE_DARK_RATIO 0.65f
++#define GB_LCD_RESPONSE_LIGHT_RATIO 1.45f
++/* A stall must not teleport the image; cap the step so a hitch relaxes once. */
++#define GB_LCD_RESPONSE_MAX_STEP_MS 100
++static uint32_t g_lcd_response_prev[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
++static bool g_lcd_response_valid = false;
++static uint32_t g_lcd_response_last_ms = 0;
+ static SDL_GameControllerType g_controller_type = SDL_CONTROLLER_TYPE_UNKNOWN;
+ static GBControllerLabelProfile g_controller_label_profile = GB_CONTROLLER_LABEL_GENERIC;
+ static std::string g_controller_name;
+@@ -163,6 +232,12 @@ static const char* g_render_filter_names[] = {
+     "Nearest",
+     "Linear",
+ };
++static const char* g_screen_effect_names[] = {
++    "Off",
++    "Scanlines",
++    "LCD Grid",
++    "CRT",
++};
+ static const uint32_t g_palettes[][4] = {
+     { 0xFFE0F8D0, 0xFF88C070, 0xFF346856, 0xFF081820 }, // Original
+     { 0xFFFFFFFF, 0xFFAAAAAA, 0xFF555555, 0xFF000000 }, // B&W
+@@ -189,6 +264,18 @@ static GBInputAction g_binding_capture_action = GB_INPUT_ACTION_RIGHT;
  static int g_binding_capture_slot = 0;
  static bool g_fast_forward_active = false;
  static bool g_max_speed_mode = false;
@@ -277,7 +442,79 @@ index 9e4eeb7..6444c4b 100644
  static const char* g_input_action_names[GB_INPUT_ACTION_COUNT] = {
      "Right",
      "Left",
-@@ -1203,6 +1215,8 @@ static void save_runtime_preferences(void) {
+@@ -208,6 +295,8 @@ static const char* g_input_action_names[GB_INPUT_ACTION_COUNT] = {
+     "Toggle Mute",
+     "Toggle Menu",
+     "Toggle Game Panel",
++    "Next Screen Effect",
++    "Toggle LCD Response",
+ };
+ 
+ static bool has_interpreter_activity(const GBContext* ctx) {
+@@ -839,6 +928,8 @@ static const char* input_action_config_name(GBInputAction action) {
+         case GB_INPUT_ACTION_TOGGLE_MUTE: return "toggle_mute";
+         case GB_INPUT_ACTION_TOGGLE_MENU: return "toggle_menu";
+         case GB_INPUT_ACTION_TOGGLE_PORT_UI: return "toggle_port_ui";
++        case GB_INPUT_ACTION_NEXT_SCREEN_EFFECT: return "next_screen_effect";
++        case GB_INPUT_ACTION_TOGGLE_LCD_RESPONSE: return "toggle_lcd_response";
+         case GB_INPUT_ACTION_COUNT:
+         default:
+             return "unknown";
+@@ -943,6 +1034,9 @@ static void set_default_input_bindings(void) {
+     g_keyboard_bindings[GB_INPUT_ACTION_TOGGLE_MUTE][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_M);
+     g_keyboard_bindings[GB_INPUT_ACTION_TOGGLE_MENU][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F10);
+     g_keyboard_bindings[GB_INPUT_ACTION_TOGGLE_PORT_UI][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F2);
++    /* F3 through F8 and F10 are spoken for; F9 was the one gap in the row. */
++    g_keyboard_bindings[GB_INPUT_ACTION_NEXT_SCREEN_EFFECT][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F9);
++    g_keyboard_bindings[GB_INPUT_ACTION_TOGGLE_LCD_RESPONSE][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F4);
+ 
+     g_controller_bindings[GB_INPUT_ACTION_UP][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP);
+     g_controller_bindings[GB_INPUT_ACTION_UP][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_NEGATIVE, SDL_CONTROLLER_AXIS_LEFTY);
+@@ -1043,6 +1137,32 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
++                if (strcmp(key, "screen.effect") == 0) {
++                    long parsed = strtol(value, NULL, 10);
++                    if (parsed >= 0 && parsed < GB_SCREEN_EFFECT_COUNT) {
++                        g_screen_effect = (GBScreenEffect)parsed;
++                    }
++                    continue;
++                }
++                if (strcmp(key, "screen.effect_intensity") == 0) {
++                    long parsed = strtol(value, NULL, 10);
++                    if (parsed >= GB_SCREEN_EFFECT_INTENSITY_MIN &&
++                        parsed <= GB_SCREEN_EFFECT_INTENSITY_MAX) {
++                        g_screen_effect_intensity = (int)parsed;
++                    }
++                    continue;
++                }
++                if (strcmp(key, "screen.lcd_response_enabled") == 0) {
++                    g_lcd_response_enabled = (strcmp(value, "0") != 0);
++                    continue;
++                }
++                if (strcmp(key, "screen.lcd_response_ms") == 0) {
++                    long parsed = strtol(value, NULL, 10);
++                    if (parsed > 0 && parsed <= GB_LCD_RESPONSE_MS_MAX) {
++                        g_lcd_response_ms = (int)parsed;
++                    }
++                    continue;
++                }
+ 
+                 bool is_keyboard = strncmp(key, "keyboard.", 9) == 0;
+                 bool is_controller = strncmp(key, "controller.", 11) == 0;
+@@ -1183,6 +1303,10 @@ static void save_runtime_preferences(void) {
+             g_audio_volume_percent.load(std::memory_order_relaxed));
+     fprintf(file, "audio.device_name=%s\n", g_audio_target_device_name.c_str());
+     fprintf(file, "savestate.slot=%d\n", g_savestate_slot);
++    fprintf(file, "screen.effect=%d\n", (int)g_screen_effect);
++    fprintf(file, "screen.effect_intensity=%d\n", g_screen_effect_intensity);
++    fprintf(file, "screen.lcd_response_enabled=%d\n", g_lcd_response_enabled ? 1 : 0);
++    fprintf(file, "screen.lcd_response_ms=%d\n", g_lcd_response_ms);
+ 
+     for (int action = 0; action < GB_INPUT_ACTION_COUNT; action++) {
+         for (int slot = 0; slot < 2; slot++) {
+@@ -1203,6 +1327,8 @@ static void save_runtime_preferences(void) {
      fclose(file);
  }
  
@@ -286,7 +523,7 @@ index 9e4eeb7..6444c4b 100644
  static void set_savestate_status(const char* action, int slot, bool success, const char* detail) {
      char message[512];
      snprintf(message,
-@@ -1214,6 +1228,23 @@ static void set_savestate_status(const char* action, int slot, bool success, con
+@@ -1214,6 +1340,23 @@ static void set_savestate_status(const char* action, int slot, bool success, con
               (detail && detail[0]) ? ": " : "",
               (detail && detail[0]) ? detail : "");
      g_savestate_status = message;
@@ -310,7 +547,7 @@ index 9e4eeb7..6444c4b 100644
  }
  
  static bool recreate_streaming_texture(void);
-@@ -1276,6 +1307,7 @@ static void update_runtime_action_state(GBContext* ctx) {
+@@ -1276,6 +1419,7 @@ static void update_runtime_action_state(GBContext* ctx) {
              switch ((GBInputAction)action) {
                  case GB_INPUT_ACTION_TOGGLE_MAX_SPEED:
                      g_max_speed_mode = !g_max_speed_mode;
@@ -318,7 +555,7 @@ index 9e4eeb7..6444c4b 100644
                      break;
  
                  case GB_INPUT_ACTION_SAVE_STATE:
-@@ -1289,22 +1321,26 @@ static void update_runtime_action_state(GBContext* ctx) {
+@@ -1289,22 +1433,42 @@ static void update_runtime_action_state(GBContext* ctx) {
                  case GB_INPUT_ACTION_PREVIOUS_STATE_SLOT:
                      g_savestate_slot = (g_savestate_slot + GB_SAVESTATE_SLOT_COUNT - 1) % GB_SAVESTATE_SLOT_COUNT;
                      g_savestate_status = "Selected slot " + std::to_string(g_savestate_slot + 1);
@@ -336,6 +573,22 @@ index 9e4eeb7..6444c4b 100644
                  case GB_INPUT_ACTION_TOGGLE_OVERLAY:
                      g_show_overlay = !g_show_overlay;
 +                    show_toast("DEBUG OVERLAY", g_show_overlay ? "ON" : "OFF");
++                    break;
++
++                case GB_INPUT_ACTION_NEXT_SCREEN_EFFECT:
++                    g_screen_effect = (GBScreenEffect)(
++                        ((int)g_screen_effect + 1) % GB_SCREEN_EFFECT_COUNT);
++                    g_screen_effect_dirty = true;
++                    show_toast("SCREEN EFFECT", g_screen_effect_names[g_screen_effect]);
++                    save_runtime_preferences();
++                    break;
++
++                case GB_INPUT_ACTION_TOGGLE_LCD_RESPONSE:
++                    g_lcd_response_enabled = !g_lcd_response_enabled;
++                    g_lcd_response_valid = false;
++                    g_lcd_response_last_ms = 0;
++                    show_toast("LCD RESPONSE", g_lcd_response_enabled ? "ON" : "OFF");
++                    save_runtime_preferences();
                      break;
  
                  case GB_INPUT_ACTION_TOGGLE_MUTE:
@@ -345,7 +598,7 @@ index 9e4eeb7..6444c4b 100644
                      save_runtime_preferences();
                      break;
  
-@@ -1338,7 +1374,16 @@ static void update_runtime_action_state(GBContext* ctx) {
+@@ -1338,7 +1502,16 @@ static void update_runtime_action_state(GBContext* ctx) {
          g_runtime_action_pressed[action] = pressed;
      }
  
@@ -363,7 +616,7 @@ index 9e4eeb7..6444c4b 100644
  
      if (effective_speed_percent() != previous_effective_speed) {
          reset_audio_output_buffer(true);
-@@ -1708,6 +1753,27 @@ static double sdl_now_ms(void) {
+@@ -1708,10 +1881,97 @@ static double sdl_now_ms(void) {
      return freq ? ((double)ticks * 1000.0) / (double)freq : 0.0;
  }
  
@@ -391,7 +644,87 @@ index 9e4eeb7..6444c4b 100644
  static int round_to_int(double value) {
      return (int)(value + 0.5);
  }
-@@ -1995,23 +2061,54 @@ static void render_binding_editor(const char* section_label,
+ 
++static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
++                                          int effect, int intensity_percent,
++                                          float scale_factor);
++
++/* (Re)builds the panel effect mask. Regenerating costs ~200k pixels and only
++ * happens when the effect, the intensity or the on-screen scale changes. */
++static void update_screen_effect_texture(void) {
++    g_screen_effect_dirty = false;
++    if (!g_renderer) {
++        return;
++    }
++
++    if (g_screen_effect == GB_SCREEN_EFFECT_OFF) {
++        if (g_screen_effect_texture) {
++            SDL_DestroyTexture(g_screen_effect_texture);
++            g_screen_effect_texture = NULL;
++        }
++        return;
++    }
++
++    /* Rasterise the mask at the on-screen scale: one mask pixel per screen
++     * pixel keeps the gap the width it was asked for at every window size. */
++    const float scale_factor = (g_game_viewport.w > 0)
++        ? ((float)g_game_viewport.w / (float)GB_SCREEN_WIDTH)
++        : 1.0f;
++    int lattice = (int)lrintf(scale_factor);
++    if (lattice < GB_SCREEN_EFFECT_MIN_LATTICE) lattice = GB_SCREEN_EFFECT_MIN_LATTICE;
++    if (lattice > GB_SCREEN_EFFECT_MAX_LATTICE) lattice = GB_SCREEN_EFFECT_MAX_LATTICE;
++
++    if (!g_screen_effect_texture || g_screen_effect_lattice != lattice) {
++        if (g_screen_effect_texture) {
++            SDL_DestroyTexture(g_screen_effect_texture);
++            g_screen_effect_texture = NULL;
++        }
++        g_screen_effect_lattice = lattice;
++        g_screen_effect_texture = SDL_CreateTexture(g_renderer,
++                                                    SDL_PIXELFORMAT_ARGB8888,
++                                                    SDL_TEXTUREACCESS_STREAMING,
++                                                    GB_SCREEN_WIDTH * lattice,
++                                                    GB_SCREEN_HEIGHT * lattice);
++        if (!g_screen_effect_texture) {
++            fprintf(stderr, "[SDL] Failed to create the screen effect texture: %s\n",
++                    SDL_GetError());
++            return;
++        }
++        /* The mask is a multiplier: white leaves the guest alone, grey darkens
++         * it. Nearest keeps the gap crisp - smoothing it would blur the very
++         * grid this is drawing. */
++        SDL_SetTextureScaleMode(g_screen_effect_texture, SDL_ScaleModeNearest);
++        SDL_SetTextureBlendMode(g_screen_effect_texture, SDL_BLENDMODE_MUL);
++    }
++
++    void* pixels = NULL;
++    int pitch = 0;
++    if (SDL_LockTexture(g_screen_effect_texture, NULL, &pixels, &pitch) != 0) {
++        fprintf(stderr, "[SDL] Failed to lock the screen effect texture: %s\n",
++                SDL_GetError());
++        return;
++    }
++    compute_screen_effect_overlay((uint32_t*)pixels, GB_SCREEN_WIDTH * lattice,
++                                  GB_SCREEN_HEIGHT * lattice,
++                                  (int)g_screen_effect, g_screen_effect_intensity,
++                                  scale_factor);
++    SDL_UnlockTexture(g_screen_effect_texture);
++}
++
+ static void update_render_filter(void) {
+     if (!g_renderer) {
+         return;
+@@ -1796,6 +2056,9 @@ static void update_game_viewport(void) {
+     g_game_viewport.h = viewport_h;
+     g_game_viewport.x = (window_w - viewport_w) / 2;
+     g_game_viewport.y = (window_h - viewport_h) / 2;
++    /* The gap is sized against the on-screen scale factor, so a new viewport
++     * size means the mask has to be re-derived. */
++    g_screen_effect_dirty = true;
+ }
+ 
+ static void apply_window_scale_preset(void) {
+@@ -1995,23 +2258,54 @@ static void render_binding_editor(const char* section_label,
                                    GBInputAction action_end) {
      ImGui::TextDisabled("%s", section_label);
      const ImGuiStyle& style = ImGui::GetStyle();
@@ -456,7 +789,313 @@ index 9e4eeb7..6444c4b 100644
  
              for (int slot = 0; slot < 2; slot++) {
                  std::string label;
-@@ -2199,18 +2296,19 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2113,12 +2407,305 @@ static void copy_display_frame(void* pixels, int pitch, const uint32_t* framebuf
+     }
+ }
+ 
++static float clampf(float value, float low, float high) {
++    return value < low ? low : (value > high ? high : value);
++}
++
++static float smooth_ramp(float t) {
++    const float v = clampf(t, 0.0f, 1.0f);
++    return v * v * (3.0f - 2.0f * v);
++}
++
++/* Antialiased coverage of the band [lo,hi] at position t: a trapezoid that
++ * ramps over `soft` at each end and stops at `hi`. The stopping is the point -
++ * a ramp centred on the edge bleeds `soft` past it, and two bleeding edges
++ * widen a 0.22 pixel gap into nearly 0.4, which is the difference between an
++ * LCD panel and a dot matrix. */
++static float band_coverage(float t, float lo, float hi, float soft) {
++    if (hi <= lo || soft <= 0.0f) {
++        return 0.0f;
++    }
++    return smooth_ramp((t - lo) / soft) * smooth_ramp((hi - t) / soft);
++}
++
++/* Builds the multiply mask drawn over the presented guest image.
++ *
++ * White leaves the guest untouched, grey darkens it, so the mask is composited
++ * with SDL_BLENDMODE_MUL and a single percent controls the strength of every
++ * effect.
++ *
++ * The mask is rasterised at `lattice` mask pixels per guest pixel, where the
++ * caller passes the on-screen scale factor. That coupling is the whole design:
++ * a gap of a fifth of a guest pixel is barely one screen pixel at 480p and
++ * several at 4K, so a mask on a fixed guest multiple either snaps the gap to
++ * whole sub-columns (and the grid reads as a dot matrix) or blurs it. Rasterised
++ * at the destination, one mask pixel is one screen pixel and the gap comes out
++ * the width it was asked for at every window size. dst_w must be an exact
++ * multiple of GB_SCREEN_WIDTH.
++ *
++ * scale_factor is that same on-screen scale, kept separate because the gap also
++ * has to survive the low end: 0.22 guest pixels is 0.66 screen pixels at 480p
++ * (3x), which aliases into shimmering noise rather than reading as a line.
++ * Holding the gap to at least one screen pixel is what lets one setting hold up
++ * at both ends, and it is why the effect stays visible at 480p instead of
++ * fading out there.
++ */
++static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
++                                          int effect, int intensity_percent,
++                                          float scale_factor) {
++    const float amount = clampf((float)intensity_percent / 100.0f, 0.0f, 1.0f);
++    /* Below 2x there is no room for a gap that reads as a line instead of as
++     * shading, so the effect fades out rather than turning the screen muddy. */
++    const float usable = clampf(scale_factor - 1.0f, 0.0f, 1.0f);
++    const float strength = amount * usable;
++
++    const float one_screen_pixel = (scale_factor > 1.0f) ? (1.0f / scale_factor) : 1.0f;
++    const float gap = clampf(fmaxf(GB_SCREEN_EFFECT_GAP_GUEST,
++                                   GB_SCREEN_EFFECT_MIN_GAP_SCREEN * one_screen_pixel),
++                             0.0f, GB_SCREEN_EFFECT_MAX_GAP_GUEST);
++
++    const int lattice = (dst_w > 0) ? (dst_w / GB_SCREEN_WIDTH) : 1;
++    const int steps = (lattice > 0) ? lattice : 1;
++    /* Half a mask pixel: the standard analytic coverage ramp. Anything steeper
++     * stops resolving the gap and snaps it to whole samples. */
++    float soft = 0.5f / (float)steps;
++    /* The grid draws half a gap on each side, so its border has to stay wider
++     * than the ramp or the plateau between the two shoulders disappears. */
++    const float border = gap * 0.5f;
++    if (soft > border * 0.9f) {
++        soft = border * 0.9f;
++    }
++
++    float fx_lut[GB_SCREEN_EFFECT_MAX_LATTICE];
++    float fy_lut[GB_SCREEN_EFFECT_MAX_LATTICE];
++    if (steps > GB_SCREEN_EFFECT_MAX_LATTICE) {
++        return;
++    }
++    for (int i = 0; i < steps; ++i) {
++        fx_lut[i] = ((float)i + 0.5f) / (float)steps;
++        fy_lut[i] = fx_lut[i];
++    }
++
++    for (int y = 0; y < dst_h; ++y) {
++        const float fy = fy_lut[y % steps];
++        uint32_t* row = dst + (size_t)y * (size_t)dst_w;
++        for (int x = 0; x < dst_w; ++x) {
++            float darkness = 0.0f;
++            if (effect == GB_SCREEN_EFFECT_SCANLINES || effect == GB_SCREEN_EFFECT_CRT) {
++                /* Trailing edge only: the classic scanline, not a shaded cell. */
++                darkness = band_coverage(fy, 1.0f - gap, 1.0f, soft);
++            } else if (effect == GB_SCREEN_EFFECT_LCD_GRID) {
++                /* Half a gap on every side, so that two neighbouring borders meet
++                 * to form one gap of the requested width: a lit square framed by
++                 * darkness, which is what an LCD cell looks like. */
++                const float fx = fx_lut[x % steps];
++                const float vertical = fmaxf(band_coverage(fy, 0.0f, border, soft),
++                                             band_coverage(fy, 1.0f - border, 1.0f, soft));
++                const float horizontal = fmaxf(band_coverage(fx, 0.0f, border, soft),
++                                               band_coverage(fx, 1.0f - border, 1.0f, soft));
++                darkness = fmaxf(vertical, horizontal);
++            }
++            darkness *= strength;
++            const uint32_t level = (uint32_t)lrintf(255.0f * (1.0f - clampf(darkness, 0.0f, 1.0f)));
++            row[x] = 0xFF000000u | (level << 16) | (level << 8) | level;
++        }
++    }
++}
++
++/* One step of the panel relaxing toward `target`, in place.
++ *
++ * Exponential rather than linear, with the coefficient derived from the elapsed
++ * wall time rather than from a per-frame constant. That is what keeps the trail
++ * the same length at 30 fps, 60 and 144: a fixed per-frame alpha halves the
++ * trail at double the rate and disappears entirely on a fast display.
++ *
++ * The coefficient is "how much of the new target has arrived": 1 reproduces the
++ * target exactly, 0 freezes the panel on what it was already showing. The
++ * feature being off costs nothing because the caller skips the call entirely,
++ * not because of any value of alpha.
++ */
++static void apply_lcd_response(const uint32_t* prev, uint32_t* dst, int pitch_bytes,
++                               int width, int height, float dark_alpha,
++                               float light_alpha) {
++    for (int y = 0; y < height; ++y) {
++        uint32_t* row = (uint32_t*)((uint8_t*)dst + (size_t)y * (size_t)pitch_bytes);
++        const uint32_t* prev_row = prev + (size_t)y * (size_t)width;
++        for (int x = 0; x < width; ++x) {
++            const uint32_t previous = prev_row[x];
++            const uint32_t target = row[x];
++            uint32_t out = target & 0xFF000000u;
++            for (int shift = 16; shift >= 0; shift -= 8) {
++                const uint32_t from = (previous >> shift) & 0xFFu;
++                const uint32_t to = (target >> shift) & 0xFFu;
++                /* Falling luminance is the fast direction on the real panel. */
++                const float alpha = (to < from) ? dark_alpha : light_alpha;
++                float value = (float)from + ((float)to - (float)from) * alpha;
++                /* Snap once the remainder is under a level. Without this a
++                 * one-level difference never closes - the step is smaller than
++                 * the rounding - and the panel settles a shade below the guest
++                 * colour for good, which is a permanent brightness bias nobody
++                 * would notice and everybody would inherit. */
++                if (fabsf((float)to - value) < 1.0f) {
++                    value = (float)to;
++                }
++                out |= ((uint32_t)lrintf(clampf(value, 0.0f, 255.0f)) & 0xFFu) << shift;
++            }
++            row[x] = out;
++        }
++    }
++}
++
++/* Phosphor glow: what is above a threshold, blurred into a halo, scaled back.
++ *
++ * Written as an add rather than folded into the multiply mask because a halo is
++ * brighter than the pixel that produced it, and a multiplier can only ever
++ * darken. Working at guest resolution and letting the upscale spread it means
++ * the glow scales with the image the way the LCD grid does, and the linear
++ * filtering on the texture is what turns each pixel into a soft blob instead of
++ * a block at 4K.
++ *
++ * Separable tent kernel, edges replicated. Replicating rather than zeroing
++ * matters: a zeroed edge would darken the halo along the screen border into a
++ * visible vignette that has nothing to do with the effect.
++ */
++#define GB_GLOW_RADIUS 3
++static const int g_glow_tent[GB_GLOW_RADIUS + 1] = {4, 3, 2, 1};
++/* 1+2+3+4+3+2+1 from the tent above. Tied to that array deliberately: a wrong
++ * sum does not crash or look obviously wrong, it just quietly scales the whole
++ * effect, and two passes compound it into a square. */
++#define GB_GLOW_TENT_SUM 16
++
++static void compute_phosphor_glow(const uint32_t* src, int src_pitch_bytes,
++                                  uint32_t* dst, uint32_t* scratch, int width,
++                                  int height, int threshold, int amount) {
++    const int centre = GB_GLOW_RADIUS;
++    /* Threshold into scratch, then blur each axis in turn: separable, so the
++     * halo costs 2 passes of 7 taps instead of a 7x7 kernel. */
++    for (int y = 0; y < height; ++y) {
++        const uint32_t* row =
++            (const uint32_t*)((const uint8_t*)src + (size_t)y * (size_t)src_pitch_bytes);
++        for (int x = 0; x < width; ++x) {
++            uint32_t out = 0xFF000000u;
++            for (int shift = 16; shift >= 0; shift -= 8) {
++                const uint32_t level = (row[x] >> shift) & 0xFFu;
++                const uint32_t excess =
++                    (level > (uint32_t)threshold) ? (level - (uint32_t)threshold) : 0u;
++                out |= (excess & 0xFFu) << shift;
++            }
++            scratch[(size_t)y * (size_t)width + x] = out;
++        }
++    }
++    for (int y = 0; y < height; ++y) {
++        uint32_t* out_row = dst + (size_t)y * (size_t)width;
++        for (int x = 0; x < width; ++x) {
++            uint32_t out = 0xFF000000u;
++            for (int shift = 16; shift >= 0; shift -= 8) {
++                int total = 0;
++                for (int d = -centre; d <= centre; ++d) {
++                    int sx = x + d;
++                    if (sx < 0) sx = 0;
++                    if (sx >= width) sx = width - 1;
++                    total += (int)((scratch[(size_t)y * (size_t)width + sx] >> shift) & 0xFFu) *
++                             g_glow_tent[(d < 0) ? -d : d];
++                }
++                out |= ((uint32_t)(total / GB_GLOW_TENT_SUM) & 0xFFu) << shift;
++            }
++            out_row[x] = out;
++        }
++    }
++    for (int y = 0; y < height; ++y) {
++        uint32_t* out_row = dst + (size_t)y * (size_t)width;
++        for (int x = 0; x < width; ++x) {
++            uint32_t out = 0xFF000000u;
++            for (int shift = 16; shift >= 0; shift -= 8) {
++                int total = 0;
++                for (int d = -centre; d <= centre; ++d) {
++                    int sy = y + d;
++                    if (sy < 0) sy = 0;
++                    if (sy >= height) sy = height - 1;
++                    total += (int)((dst[(size_t)sy * (size_t)width + x] >> shift) & 0xFFu) *
++                             g_glow_tent[(d < 0) ? -d : d];
++                }
++                out |= ((uint32_t)(total / GB_GLOW_TENT_SUM) & 0xFFu) << shift;
++            }
++            out_row[x] = out;
++        }
++    }
++    if (amount != 100) {
++        for (int i = 0; i < width * height; ++i) {
++            const uint32_t v = dst[i];
++            uint32_t out = 0xFF000000u;
++            for (int shift = 16; shift >= 0; shift -= 8) {
++                int scaled = (int)(((v >> shift) & 0xFFu) * amount) / 100;
++                if (scaled > 255) scaled = 255;
++                out |= ((uint32_t)scaled & 0xFFu) << shift;
++            }
++            dst[i] = out;
++        }
++    }
++}
++
++/* The glow lives in its own texture because it has to be composited with
++ * SDL_BLENDMODE_ADD, and a texture carries one blend mode. */
++static bool ensure_glow_texture(void) {
++    if (g_glow_texture || !g_renderer) {
++        return g_glow_texture != NULL;
++    }
++    g_glow_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888,
++                                       SDL_TEXTUREACCESS_STREAMING, GB_SCREEN_WIDTH,
++                                       GB_SCREEN_HEIGHT);
++    if (!g_glow_texture) {
++        fprintf(stderr, "[SDL] Failed to create the glow texture: %s\n", SDL_GetError());
++        return false;
++    }
++    /* Linear, and deliberately so while the guest texture may be Nearest: the
++     * point of the upscale is to turn each pixel into a soft blob. Nearest here
++     * would give hard blocks at 4K. */
++    SDL_SetTextureScaleMode(g_glow_texture, SDL_ScaleModeLinear);
++    SDL_SetTextureBlendMode(g_glow_texture, SDL_BLENDMODE_ADD);
++    return true;
++}
++
++/* alpha for a given elapsed time and response time constant: the exact
++ * solution of du/dt = (u_target - u)/tau, sampled at dt. */
++static float lcd_response_alpha(float dt_ms, float tau_ms) {
++    if (tau_ms <= 0.0f) {
++        return 1.0f;
++    }
++    return 1.0f - expf(-(dt_ms / tau_ms));
++}
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+                                          int palette_idx, const GBContext* ctx) {
+     copy_display_frame(pixels, pitch, framebuffer, palette_idx, ctx);
+ }
++
++void gb_platform_test_apply_lcd_response(const uint32_t* prev, uint32_t* dst,
++                                         int pitch_bytes, int width, int height,
++                                         float dark_alpha, float light_alpha) {
++    apply_lcd_response(prev, dst, pitch_bytes, width, height, dark_alpha, light_alpha);
++}
++
++void gb_platform_test_compute_phosphor_glow(const uint32_t* src, int src_pitch_bytes,
++                                            uint32_t* dst, uint32_t* scratch,
++                                            int width, int height, int threshold,
++                                            int amount) {
++    compute_phosphor_glow(src, src_pitch_bytes, dst, scratch, width, height, threshold,
++                          amount);
++}
++
++float gb_platform_test_lcd_response_alpha(float dt_ms, float tau_ms) {
++    return lcd_response_alpha(dt_ms, tau_ms);
++}
++
++void gb_platform_test_compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
++                                                    int effect, int intensity_percent,
++                                                    float scale_factor) {
++    compute_screen_effect_overlay(dst, dst_w, dst_h, effect, intensity_percent,
++                                  scale_factor);
++}
+ #endif
+ 
+ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_frame) {
+@@ -2199,18 +2786,19 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
                    g_frame_count, has_content, framebuffer[0]);
      }
  
@@ -480,7 +1119,79 @@ index 9e4eeb7..6444c4b 100644
          }
          SDL_SetWindowTitle(g_window, title);
      }
-@@ -2243,6 +2341,19 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2223,6 +2811,49 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+ 
+     copy_display_frame(pixels, pitch, framebuffer, g_palette_idx, g_registered_ctx);
+ 
++    /* Panel response, applied to the emitted colour rather than to the PPU's:
++     * a real panel lags the light it puts out, not the signal driving it. Once
++     * per guest frame, so fast forward stretches the trail in wall-clock time
++     * the way the hardware would, and never on a repeated present. */
++    if (g_lcd_response_enabled && count_guest_frame) {
++        const uint32_t now = sdl_now_ms();
++        const uint32_t step_ms =
++            g_lcd_response_last_ms ? (now - g_lcd_response_last_ms) : 0;
++        g_lcd_response_last_ms = now;
++        if (!g_lcd_response_valid) {
++            /* Seed from the target so enabling never flashes from black. */
++            for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
++                memcpy(&g_lcd_response_prev[y * GB_SCREEN_WIDTH],
++                       (uint8_t*)pixels + (size_t)y * (size_t)pitch,
++                       GB_SCREEN_WIDTH * sizeof(uint32_t));
++            }
++            g_lcd_response_valid = true;
++        } else {
++            const float dt = (float)((step_ms > GB_LCD_RESPONSE_MAX_STEP_MS)
++                                         ? GB_LCD_RESPONSE_MAX_STEP_MS
++                                         : step_ms);
++            const float base = (float)g_lcd_response_ms;
++            apply_lcd_response(g_lcd_response_prev, (uint32_t*)pixels, pitch,
++                               GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT,
++                               lcd_response_alpha(dt, base * GB_LCD_RESPONSE_DARK_RATIO),
++                               lcd_response_alpha(dt, base * GB_LCD_RESPONSE_LIGHT_RATIO));
++            for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
++                memcpy(&g_lcd_response_prev[y * GB_SCREEN_WIDTH],
++                       (uint8_t*)pixels + (size_t)y * (size_t)pitch,
++                       GB_SCREEN_WIDTH * sizeof(uint32_t));
++            }
++        }
++    }
++    /* Phosphor glow, computed from the colour that is actually being shown -
++     * after the panel response, so the halo trails with the image. */
++    if (g_screen_effect == GB_SCREEN_EFFECT_CRT && ensure_glow_texture() &&
++        g_glow_buffer_valid) {
++        compute_phosphor_glow((const uint32_t*)pixels, pitch, g_glow_buffer,
++                              g_glow_scratch, GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT,
++                              GB_GLOW_THRESHOLD, g_screen_effect_intensity);
++        SDL_UpdateTexture(g_glow_texture, NULL, g_glow_buffer,
++                          GB_SCREEN_WIDTH * (int)sizeof(uint32_t));
++    }
+     SDL_UnlockTexture(g_texture);
+     g_last_timing.upload_ms = sdl_now_ms() - upload_start_ms;
+ 
+@@ -2231,6 +2862,21 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
+     SDL_RenderClear(g_renderer);
+     SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
++    /* Panel effect, drawn over the guest with the same destination rect so the
++     * mask lines up with the guest pixels without any coordinate arithmetic. */
++    if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++        if (g_screen_effect_dirty) {
++            update_screen_effect_texture();
++        }
++        if (g_screen_effect_texture) {
++            SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
++        }
++        if (g_screen_effect == GB_SCREEN_EFFECT_CRT && g_glow_texture) {
++            /* Same destination rect again, so the halo is anchored to the
++             * image rather than floating over the letterbox. */
++            SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
++        }
++    }
+ 
+     ImGui_ImplSDLRenderer2_NewFrame();
+     ImGui_ImplSDL2_NewFrame();
+@@ -2243,6 +2889,19 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
          const float footer_height = ImGui::GetFrameHeightWithSpacing() *
                                      (g_launcher_return_enabled ? 3.8f : 3.0f);
  
@@ -500,7 +1211,7 @@ index 9e4eeb7..6444c4b 100644
          ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
          ImGui::SetNextWindowSize(imgui_io.DisplaySize, ImGuiCond_Always);
          ImGui::SetNextWindowBgAlpha(0.96f);
-@@ -2252,6 +2363,30 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2252,6 +2911,30 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
          ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(14.0f * ui_scale, 10.0f * ui_scale));
          ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(10.0f * ui_scale, 10.0f * ui_scale));
          ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarSize, 18.0f * ui_scale);
@@ -531,7 +1242,7 @@ index 9e4eeb7..6444c4b 100644
          ImGui::Begin("GameBoy Recompiled",
                       &g_show_menu,
                       ImGuiWindowFlags_NoDecoration |
-@@ -2259,29 +2394,57 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2259,29 +2942,57 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
                           ImGuiWindowFlags_NoResize |
                           ImGuiWindowFlags_NoSavedSettings |
                           ImGuiWindowFlags_NoCollapse);
@@ -603,7 +1314,63 @@ index 9e4eeb7..6444c4b 100644
          ImGui::Text("Window: %d x %d", window_w, window_h);
          ImGui::Text("Viewport: %d x %d (%.2fx)",
                      g_game_viewport.w,
-@@ -2324,8 +2487,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2311,6 +3022,55 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             update_render_filter();
+         }
+ 
++        int screen_effect = (int)g_screen_effect;
++        bool lcd_response = g_lcd_response_enabled;
++        if (ImGui::Checkbox("LCD Response", &lcd_response)) {
++            g_lcd_response_enabled = lcd_response;
++            /* Reseed either way: turning it on must not flash, and turning it
++             * off must not leave a stale trail to resume from. */
++            g_lcd_response_valid = false;
++            g_lcd_response_last_ms = 0;
++            show_toast("LCD RESPONSE", lcd_response ? "ON" : "OFF");
++            save_runtime_preferences();
++        }
++        if (ImGui::Combo("Screen Effect",
++                         &screen_effect,
++                         g_screen_effect_names,
++                         IM_ARRAYSIZE(g_screen_effect_names))) {
++            g_screen_effect = (GBScreenEffect)screen_effect;
++            g_screen_effect_dirty = true;
++            show_toast("SCREEN EFFECT", g_screen_effect_names[screen_effect]);
++            save_runtime_preferences();
++        }
++
++        if (g_lcd_response_enabled) {
++            if (ImGui::SliderInt("Response ms",
++                                 &g_lcd_response_ms,
++                                 1,
++                                 GB_LCD_RESPONSE_MS_MAX)) {
++                /* The history holds colours, not times: a different response
++                 * time only changes the coefficients, so it needs no reseed. */
++            }
++            if (ImGui::IsItemDeactivatedAfterEdit()) {
++                save_runtime_preferences();
++            }
++        }
++
++        if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++            if (ImGui::SliderInt("Effect Strength %",
++                                 &g_screen_effect_intensity,
++                                 GB_SCREEN_EFFECT_INTENSITY_MIN,
++                                 GB_SCREEN_EFFECT_INTENSITY_MAX)) {
++                g_screen_effect_dirty = true;
++            }
++            /* Saving from inside the drag would rewrite the prefs file sixty
++             * times a second. Persist on release instead: the value is already
++             * live in memory, and the file only matters across a restart. */
++            if (ImGui::IsItemDeactivatedAfterEdit()) {
++                save_runtime_preferences();
++            }
++        }
++
+         if (!g_fullscreen) {
+             int scale_idx = g_scale - 1;
+             if (ImGui::Combo("Window Size",
+@@ -2324,8 +3084,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
              ImGui::TextDisabled("Window Size is disabled while fullscreen is active.");
          }
  
@@ -613,7 +1380,7 @@ index 9e4eeb7..6444c4b 100644
          if (ImGui::Checkbox("V-Sync", &g_vsync)) {
              SDL_RenderSetVSync(g_renderer, g_vsync ? 1 : 0);
          }
-@@ -2355,8 +2517,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2355,8 +3114,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
              ImGui::TextDisabled("Game Boy Color uses the game's color palettes.");
          }
  
@@ -623,7 +1390,7 @@ index 9e4eeb7..6444c4b 100644
          if (ImGui::Checkbox("Enable Audio Output", &g_audio_output_enabled)) {
              reset_audio_output_buffer(true);
              save_runtime_preferences();
-@@ -2415,17 +2576,16 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2415,17 +3173,16 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
          if (ImGui::Button("Clear Audio Buffer")) {
              reset_audio_output_buffer(true);
          }
@@ -646,7 +1413,7 @@ index 9e4eeb7..6444c4b 100644
          if (effective_speed_percent() != 100) {
              ImGui::TextDisabled("Audio output pauses while Speed %% is not 100.");
          }
-@@ -2433,8 +2593,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2433,8 +3190,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
              reset_runtime_audio_defaults();
          }
  
@@ -656,7 +1423,7 @@ index 9e4eeb7..6444c4b 100644
          int savestate_slot = g_savestate_slot + 1;
          if (ImGui::SliderInt("Active Slot", &savestate_slot, 1, GB_SAVESTATE_SLOT_COUNT)) {
              g_savestate_slot = savestate_slot - 1;
-@@ -2461,8 +2620,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2461,8 +3217,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
              ImGui::TextWrapped("%s", g_savestate_status.c_str());
          }
  
@@ -666,7 +1433,7 @@ index 9e4eeb7..6444c4b 100644
          if (!g_controller_name.empty()) {
              ImGui::Text("Detected Controller: %s", g_controller_name.c_str());
              ImGui::TextDisabled("Profile: %s", controller_type_name(g_controller_type));
-@@ -2546,18 +2704,40 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2546,18 +3301,40 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
                              g_registered_ctx->last_unimplemented_addr);
              }
          }
@@ -710,7 +1477,7 @@ index 9e4eeb7..6444c4b 100644
          if (g_launcher_return_enabled) {
              ImGui::SameLine();
              if (ImGui::Button("Return to Launcher", ImVec2(footer_button_width, 0.0f))) {
-@@ -2576,6 +2756,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2576,6 +3353,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
              SDL_PushEvent(&quit_event);
          }
          ImGui::End();
@@ -718,7 +1485,7 @@ index 9e4eeb7..6444c4b 100644
          ImGui::PopStyleVar(6);
      } else if (g_show_overlay) {
          ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
-@@ -2601,6 +2782,11 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2601,6 +3379,11 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
                              current_audio_ring_fill_samples(),
                              current_audio_ring_capacity(),
                              current_audio_underruns());
@@ -730,7 +1497,7 @@ index 9e4eeb7..6444c4b 100644
                  ImGui::Text("Smooth Slow Frames: %s", g_smooth_lcd_transitions ? "On" : "Off");
                  ImGui::TextUnformatted(audio_stats_get_summary());
                  if (has_interpreter_activity(g_registered_ctx)) {
-@@ -2622,6 +2808,44 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+@@ -2622,6 +3405,44 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
          }
      }
  
@@ -775,7 +1542,30 @@ index 9e4eeb7..6444c4b 100644
      if (g_port_frame_valid &&
          g_port_frame.abi_version == GB_PORT_ABI_VERSION &&
          g_port_frame.canvas_width > 0 &&
-@@ -3177,8 +3401,7 @@ bool gb_platform_init(int scale) {
+@@ -2660,6 +3481,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     g_last_timing.compose_ms = sdl_now_ms() - compose_start_ms;
+ 
+     double present_start_ms = sdl_now_ms();
++
+     SDL_RenderPresent(g_renderer);
+     g_last_timing.present_ms = sdl_now_ms() - present_start_ms;
+     g_last_timing.total_render_ms = sdl_now_ms() - total_render_start_ms;
+@@ -2691,6 +3513,14 @@ void gb_platform_shutdown(void) {
+         SDL_DestroyTexture(g_texture);
+         g_texture = NULL;
+     }
++    if (g_screen_effect_texture) {
++        SDL_DestroyTexture(g_screen_effect_texture);
++        g_screen_effect_texture = NULL;
++    }
++    if (g_glow_texture) {
++        SDL_DestroyTexture(g_glow_texture);
++        g_glow_texture = NULL;
++    }
+     if (g_renderer) {
+         SDL_DestroyRenderer(g_renderer);
+         g_renderer = NULL;
+@@ -3177,8 +4007,7 @@ bool gb_platform_init(int scale) {
          fprintf(stderr, "[SDL] SDL_Init failed: %s\n", SDL_GetError());
          return false;
      }
@@ -785,7 +1575,7 @@ index 9e4eeb7..6444c4b 100644
  
  #if defined(__ANDROID__)
      SDL_SetHint(SDL_HINT_ANDROID_TRAP_BACK_BUTTON, "1");
-@@ -3192,8 +3415,12 @@ bool gb_platform_init(int scale) {
+@@ -3192,8 +4021,12 @@ bool gb_platform_init(int scale) {
      reopen_audio_output_device(false);
      
      fprintf(stderr, "[SDL] Creating window...\n");
@@ -799,7 +1589,7 @@ index 9e4eeb7..6444c4b 100644
          SDL_WINDOWPOS_CENTERED,
          SDL_WINDOWPOS_CENTERED,
          g_windowed_width,
-@@ -3613,8 +3840,12 @@ void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
+@@ -3613,8 +4446,12 @@ void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
  
  void gb_platform_render_lcd_off_frame(void) {
      ensure_lcd_off_framebuffer();
@@ -814,3 +1604,14 @@ index 9e4eeb7..6444c4b 100644
  }
  
  void gb_platform_get_timing_info(GBPlatformTimingInfo* out) {
+@@ -3860,6 +4697,10 @@ static bool load_savestate_slot(GBContext* ctx, int slot) {
+     if (success) {
+         reset_audio_output_buffer(true);
+         g_last_guest_framebuffer_valid = false;
++        /* The trail belongs to the state that produced it: carrying it across a
++         * load would smear one scene's motion into another. */
++        g_lcd_response_valid = false;
++        g_lcd_response_last_ms = 0;
+         g_present_count = ctx->completed_frames;
+         g_last_frame_time = SDL_GetTicks();
+     }

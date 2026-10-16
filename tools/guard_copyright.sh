@@ -22,7 +22,11 @@ note() { printf '  %s\n' "$1"; }
 fail() { printf '\033[31m  FAILED\033[0m %s\n' "$1"; FAIL=1; }
 
 # Patterns for files derived from a ROM.
-PATTERNS='\.(gbc|gb|sav|rtc|bin)$|baserom.*\.(c|h|json)$|gbrecomp-contract\.json$|ghost-babel(_[a-z]+)?$'
+# The executable is named here on purpose (\.exe$ and friends). It was reachable
+# before only through the size rule below, which is luck: the size rule exists to
+# catch a ROM, and it happened to also catch an 80 MB binary. A guard that
+# protects by coincidence is not a guard. See ADR-005.
+PATTERNS='\.(gbc|gb|sav|rtc|bin)$|\.(exe|elf|so|dylib|apk|msi)$|baserom.*\.(c|h|json)$|gbrecomp-contract\.json$|ghost-babel(_[a-z]+)?$'
 
 if [ "${1:-}" = "--staged" ]; then
   FILES="$(git diff --cached --name-only --diff-filter=ACM)"

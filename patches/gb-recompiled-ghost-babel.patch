@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/19] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/20] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -22,11 +22,10 @@ index 9ad196d..6963fcd 100644
 -- 
 2.55.0
 
-
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/19] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/20] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -138,11 +137,10 @@ index cb01b84..236f173 100644
 -- 
 2.55.0
 
-
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/19] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/20] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -301,11 +299,10 @@ index 8c765d3..f850acc 100755
 -- 
 2.55.0
 
-
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/19] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/20] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -467,11 +464,10 @@ index 236f173..be62b88 100644
 -- 
 2.55.0
 
-
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/19] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/20] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -524,11 +520,10 @@ index f850acc..efa6972 100755
 -- 
 2.55.0
 
-
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/19] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/20] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -654,11 +649,10 @@ index 7cc75b8..f4f492a 100644
 -- 
 2.55.0
 
-
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/19] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/20] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -717,11 +711,10 @@ index 0864938..23a4c0f 100644
 -- 
 2.55.0
 
-
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/19] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/20] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -766,11 +759,10 @@ index 9e4eeb7..db0462d 100644
 -- 
 2.55.0
 
-
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/19] platform: confirm host actions with a transient
+Subject: [PATCH 09/20] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -988,11 +980,10 @@ index db0462d..77da61a 100644
 -- 
 2.55.0
 
-
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/19] platform: name the host after the cartridge and give
+Subject: [PATCH 10/20] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1302,11 +1293,10 @@ index 77da61a..2e3951f 100644
 -- 
 2.55.0
 
-
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/19] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/20] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1420,11 +1410,10 @@ index 2e3951f..22f4081 100644
 -- 
 2.55.0
 
-
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/19] platform: centre the footer buttons on the content
+Subject: [PATCH 12/20] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1465,11 +1454,10 @@ index 22f4081..dcbfa38 100644
 -- 
 2.55.0
 
-
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/19] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/20] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1627,11 +1615,10 @@ index dcbfa38..cfb4f53 100644
 -- 
 2.55.0
 
-
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/19] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/20] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1747,11 +1734,10 @@ index cfb4f53..6444c4b 100644
 -- 
 2.55.0
 
-
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/19] platform: panel effects for the presented image, one
+Subject: [PATCH 15/20] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2449,11 +2435,10 @@ index 0000000..97c9335
 -- 
 2.55.0
 
-
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/19] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/20] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2956,11 +2941,10 @@ index 0000000..82bb705
 -- 
 2.55.0
 
-
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/19] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/20] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3397,11 +3381,10 @@ index 0000000..8379338
 -- 
 2.55.0
 
-
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/19] runtime: include math.h for the panel effects
+Subject: [PATCH 18/20] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3432,11 +3415,10 @@ index 033bf79..7ff35ca 100644
 -- 
 2.55.0
 
-
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/19] platform: make the presented surface width a runtime
+Subject: [PATCH 19/20] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3860,6 +3842,693 @@ index 7ff35ca..0a577d1 100644
  void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
      (void)framebuffer;
  }
+-- 
+2.55.0
+
+From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Fri, 16 Oct 2026 13:23:19 -0300
+Subject: [PATCH 20/20] audio: a mastering chain for the remaster, measured
+ rather than assumed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Three stages in the SDL callback, after volume and before the device: a DC
+blocker, a compressor linked across channels, and a soft clip. Off by default
+and a checkbox in the Esc menu, because this is an opinion about how the game
+should sound and someone who came for the 1998 mix should hear the 1998 mix.
+
+The compressor is linked rather than per-side on purpose. The APU pans the
+channels itself, so compressing each side independently would move the stereo
+image every time one side got quieter - the image is a fixed fact of the
+hardware and has to survive. One envelope on the louder channel, one gain for
+both.
+
+Real-time safe by construction: no allocation, no locks, no unbounded loops,
+fixed state, and the envelope coefficients are derived once per block instead of
+per sample. The callback is the one place where a surprise is an audible glitch
+rather than a slow leak.
+
+tests/test_audio_mastering.cpp measures the four claims the chain makes -
+offset gone, peaks rounded rather than clipped, loud material eased and quiet
+material untouched, panning intact - plus that a long constant input does not
+make the feedback filter diverge. Writing it found three bugs, all of the same
+kind:
+
+The soft clip was fed a Padé approximant of tanh unclamped, and that rational
+form only matches tanh near zero and diverges upward beyond |y| = 3. A
+saturation curve that amplifies is a distortion generator: a constant input came
+out louder than it went in.
+
+Then the whole chain was operating on raw int16 samples while comparing them
+against normalised thresholds, so every sample looked like a peak. Nothing
+crashed and it was not obviously wrong on a colourful screen - the same shape of
+mistake this runtime already documents for RGB555 being handed to an ARGB
+buffer. Units now convert once, at the edges.
+
+Then the curve was replaced by one that reaches its asymptote quickly, which
+made it exceed its own input just below that asymptote: 30000 measured 31708.
+The shape now used has derivative at most 1 at the knee, falling to zero at the
+ceiling, so touching the signal without expanding it and staying bounded are
+properties of the formula rather than of a guard.
+
+Two judgement calls worth recording. The soft clip sits below full scale rather
+than at it, because a clipper mapping 1.0 to 1.0 is an identity at the one value
+it exists to catch. And the DC test asserts on the settled tail rather than the
+block mean: the filter's time constant is about 2000 samples, and the mean of a
+decaying step response is dominated by the transient rather than by how the
+filter ends up - which is how a correctly working filter first measured 488
+instead of zero.
+
+Pre-existing failures in ctest, unchanged by this: crystal_release_package_is_
+deterministic_and_relocatable, crystal_standalone_contract_is_versioned_and_
+fail_closed, screenshot_prefix_preserves_long_evidence_path (segfaults). All
+three fail on the tree before this commit too.
+---
+ runtime/include/platform_sdl.h |  17 +++
+ runtime/src/platform_sdl.cpp   | 247 +++++++++++++++++++++++++++++++--
+ tests/CMakeLists.txt           |   4 +
+ tests/test_audio_mastering.cpp | 238 +++++++++++++++++++++++++++++++
+ 4 files changed, 497 insertions(+), 9 deletions(-)
+ create mode 100644 tests/test_audio_mastering.cpp
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 8ae6fd1..95605a1 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -225,6 +225,23 @@ typedef struct GBAudioStressResult {
+  */
+ bool gb_platform_test_audio_concurrency(uint32_t frames,
+                                         GBAudioStressResult* out_result);
++
++/**
++ * @brief Reset the mastering chain's filter state.
++ */
++void gb_platform_test_audio_master_reset(void);
++
++/**
++ * @brief Run the mastering chain over one interleaved stereo block, in place.
++ *
++ * The chain makes four claims - the DC offset is gone, peaks are rounded rather
++ * than clipped, loud passages are eased down and quiet ones are not, and the
++ * hardware's channel panning survives. A pair of ears cannot measure any of
++ * them, and "it compiles" is not evidence that a feedback filter is stable, so
++ * the chain is driven from a test over signals chosen to break it.
++ */
++void gb_platform_test_audio_master_block(int16_t* frames, uint32_t frame_count,
++                                         float volume_scale);
+ #endif
+ 
+ #ifdef __cplusplus
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 0a577d1..8a85f93 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -230,6 +230,7 @@ static bool g_audio_output_enabled = true;
+ static std::atomic<bool> g_audio_muted{false};
+ static uint32_t g_audio_latency_ms = 80;
+ static std::atomic<uint32_t> g_audio_volume_percent{100};
++static std::atomic<bool> g_audio_mastering_enabled{false};
+ static uint32_t g_audio_low_watermark = 0;
+ static uint32_t g_audio_device_sample_rate = 44100;
+ static uint32_t g_audio_device_buffer_samples = 0;
+@@ -339,6 +340,7 @@ static void close_audio_output_device(void);
+ static bool reopen_audio_output_device(bool preserve_stats);
+ static void update_controller_axis_binding_state(void);
+ static void recompute_audio_targets(void);
++static void audio_master_reset(void);
+ static void refresh_audio_device_pause_state(void);
+ static void reset_audio_output_buffer(bool preserve_stats);
+ static char* trim_ascii(char* text);
+@@ -1021,6 +1023,7 @@ static void set_default_audio_preferences(void) {
+     g_audio_output_enabled = true;
+     g_audio_muted.store(false, std::memory_order_relaxed);
+     g_audio_latency_ms = 80;
++    g_audio_mastering_enabled.store(false, std::memory_order_relaxed);
+     g_audio_volume_percent.store(100, std::memory_order_relaxed);
+     g_audio_target_device_name.clear();
+ }
+@@ -1138,6 +1141,10 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
++                if (strcmp(key, "audio.mastering") == 0) {
++                    g_audio_mastering_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
++                    continue;
++                }
+                 if (strcmp(key, "audio.volume_percent") == 0) {
+                     long parsed = strtol(value, NULL, 10);
+                     if (parsed >= 0) {
+@@ -1319,6 +1326,8 @@ static void save_runtime_preferences(void) {
+     fprintf(file, "audio.muted=%d\n",
+             g_audio_muted.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.latency_ms=%u\n", g_audio_latency_ms);
++    fprintf(file, "audio.mastering=%d\n",
++            g_audio_mastering_enabled.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.volume_percent=%u\n",
+             g_audio_volume_percent.load(std::memory_order_relaxed));
+     fprintf(file, "audio.device_name=%s\n", g_audio_target_device_name.c_str());
+@@ -3191,6 +3200,22 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+             reset_audio_output_buffer(true);
+             save_runtime_preferences();
+         }
++        /* Mastering is the remaster's opinion about how this should sound, not
++         * a fix for a defect, so it is a toggle the player chooses rather than
++         * something the runtime applies. Off by default: the 1998 mix is the
++         * mix the game shipped, and someone who came for it should hear it. */
++        bool audio_mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
++        if (ImGui::Checkbox("Audio Mastering (DC, soft clip, compressor)", &audio_mastering)) {
++            g_audio_mastering_enabled.store(audio_mastering, std::memory_order_relaxed);
++            audio_master_reset();
++            save_runtime_preferences();
++        }
++        if (ImGui::IsItemHovered()) {
++            ImGui::SetTooltip(
++                "Removes DC offset, rounds off peaks instead of clipping them, and\n"
++                "eases down loud passages so quiet ones can be turned up.\n"
++                "Off gives the original mix unchanged.");
++        }
+         if (ImGui::Button("Refresh Devices")) {
+             refresh_audio_output_devices();
+         }
+@@ -3816,6 +3841,166 @@ static void reset_audio_output_buffer(bool preserve_stats) {
+     }
+ }
+ 
++
++/* ============================================================================
++ * Audio mastering
++ *
++ * A 1998 handheld soundtrack is not a problem of loudness, it is a problem of
++ * range: the APU mixes four channels of very different levels, the pulse pair
++ * are hard panned by the hardware, and the result is a signal whose quiet
++ * passages sit well below its peaks. Turning that up clips the peaks. This
++ * chain fixes the range without touching the mix.
++ *
++ * Three stages, in the order that matters:
++ *
++ *   1. DC blocker. A bias anywhere in the signal wastes headroom on both sides
++ *      of zero. The one-pole form y[n] = x[n] - x[n-1] + R*y[n-1] removes it
++ *      below a corner near 20Hz, which is far under anything the Game Boy can
++ *      produce and far above the DC it is cancelling.
++ *   2. Compressor, linked across channels. The Game Boy's channels are panned
++ *      by the APU, so compressing each side on its own would move the stereo
++ *      image whenever one side got quieter. One envelope on the louder of the
++ *      two and one gain for both keeps the image exactly where the hardware put
++ *      it. That is the whole reason this stage is linked rather than per-side.
++ *   3. Soft clip. Last, so that anything the compressor did not catch still
++ *      arrives as a rounded edge instead of a hard corner. Hard clipping a
++ *      square wave is audible as fizz; rounding it is not.
++ *
++ * Real-time safe by construction: no allocation, no locks, no unbounded loops,
++ * fixed state, and no libm in the per-sample path. The compressor's coefficients
++ * are computed once per callback from the sample rate rather than per sample,
++ * and tanh is a Padé rational so the soft clip is four multiplies and no call.
++ * The callback is the one place in the runtime where a surprise becomes an
++ * audible glitch rather than a slow leak.
++ *
++ * Off by default. This is the remaster's opinion about how the game should
++ * sound, and a player who came for the 1998 mix should hear the 1998 mix.
++ */
++
++#define AUDIO_MASTER_DC_R 0.9995f
++#define AUDIO_MASTER_THRESHOLD 0.25f   /* about -12 dBFS, in normalised units */
++#define AUDIO_MASTER_KNEE 0.70f        /* below this the soft clip is the identity */
++#define AUDIO_MASTER_CEILING 0.97f      /* about -0.26 dBFS: peaks round off, never pin */
++#define AUDIO_MASTER_ATTACK_MS 10.0f
++#define AUDIO_MASTER_RELEASE_MS 150.0f
++
++typedef struct AudioMasterState {
++    /* The DC blocker is a feedback filter, so each channel needs both its own
++     * input history and its own output history. Sharing them across channels
++     * would make the correction a function of the other channel, which is a
++     * different filter and a cross-coupled one. */
++    float dc_in_left;
++    float dc_in_right;
++    float dc_out_left;
++    float dc_out_right;
++    float envelope;
++    float gain;
++} AudioMasterState;
++
++static AudioMasterState g_audio_master = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
++
++/* Reset so toggling the chain mid-song cannot click: the DC blocker's history
++ * and the compressor's gain are both states that only make sense for the signal
++ * they have been following. */
++static void audio_master_reset(void) {
++    g_audio_master.dc_in_left = 0.0f;
++    g_audio_master.dc_in_right = 0.0f;
++    g_audio_master.dc_out_left = 0.0f;
++    g_audio_master.dc_out_right = 0.0f;
++    g_audio_master.envelope = 0.0f;
++    g_audio_master.gain = 1.0f;
++}
++
++/* Saturate below full scale, never at it, and never louder than it was.
++ *
++ * Two properties matter and the obvious curves fail one of them.
++ *
++ * A clipper that maps 1.0 to 1.0 is an identity at the one value it exists to
++ * catch, and still pins samples to 32767 - the hard clip it replaced. So the
++ * asymptote sits under full scale.
++ *
++ * A curve that reaches that asymptote quickly is then free to *exceed its input*
++ * just below it, which is not a limiter but a distortion generator: the first
++ * version raised 30000 to 31708. So the shape is
++ *
++ *     out = KNEE + excess / (1 + excess / span),   excess = magnitude - KNEE
++ *
++ * whose derivative is 1/(1 + excess/span)^2 - at most one at the knee, falling
++ * to zero at the ceiling. It touches the signal at the knee, never expands it,
++ * and is bounded. No clamp is needed to keep those true, which is the point:
++ * the properties come from the shape rather than from a guard that catches the
++ * cases the shape was supposed to handle.
++ *
++ * `x` is normalised to roughly -1..1. Every stage of this chain works in that
++ * range and the conversion happens once, at the edges - see the note on units
++ * in audio_master_process. */
++static inline int16_t audio_master_soft_clip(float x) {
++    const float magnitude = x < 0.0f ? -x : x;
++    float shaped = x;
++    if (magnitude > AUDIO_MASTER_KNEE) {
++        const float excess = magnitude - AUDIO_MASTER_KNEE;
++        const float span = AUDIO_MASTER_CEILING - AUDIO_MASTER_KNEE;
++        const float bounded = AUDIO_MASTER_KNEE + excess / (1.0f + excess / span);
++        shaped = (x < 0.0f ? -bounded : bounded);
++    }
++    const float value = shaped * 32767.0f;
++    const int32_t rounded = (int32_t)(value + (value >= 0.0f ? 0.5f : -0.5f));
++    if (rounded > 32767) return 32767;
++    if (rounded < -32768) return -32768;
++    return (int16_t)rounded;
++}
++
++/* One block, in place.
++ *
++ * Units, stated once because getting them wrong is invisible and expensive:
++ * everything inside this function is normalised to roughly -1..1, and the
++ * conversion to and from int16 happens only at the two ends. The first version
++ * left the samples as raw int16 and compared them against the 0.7 knee and the
++ * 0.25 threshold, so every sample looked like a peak and a loud one: a constant
++ * input at 4000 measured 32767 out of a chain whose whole job was to reduce it.
++ * Nothing crashed and it was not obviously wrong on a colourful screen - the
++ * same failure this file already documents for RGB555 being fed to an ARGB
++ * buffer. */
++static void audio_master_process(int16_t* out, uint32_t frames,
++                                 float volume_scale, float attack, float release) {
++    const float to_unit = volume_scale / 32768.0f;
++    for (uint32_t i = 0; i < frames; ++i) {
++        float left = (float)out[i * 2] * to_unit;
++        float right = (float)out[i * 2 + 1] * to_unit;
++
++        /* 1. DC blocker: y[n] = x[n] - x[n-1] + R*y[n-1], per channel. */
++        const float left_dc = left - g_audio_master.dc_in_left +
++                              AUDIO_MASTER_DC_R * g_audio_master.dc_out_left;
++        const float right_dc = right - g_audio_master.dc_in_right +
++                               AUDIO_MASTER_DC_R * g_audio_master.dc_out_right;
++        g_audio_master.dc_in_left = left;
++        g_audio_master.dc_in_right = right;
++        g_audio_master.dc_out_left = left_dc;
++        g_audio_master.dc_out_right = right_dc;
++        left = left_dc;
++        right = right_dc;
++
++        /* 2. Linked compressor: one envelope on the louder channel, one gain
++         * for both, so the hardware's channel panning survives. */
++        const float louder = (left > right ? left : right);
++        const float level = louder < 0.0f ? -louder : louder;
++        const float smoothing = level > g_audio_master.envelope ? attack : release;
++        g_audio_master.envelope += (level - g_audio_master.envelope) * smoothing;
++        if (g_audio_master.envelope > AUDIO_MASTER_THRESHOLD) {
++            const float target = AUDIO_MASTER_THRESHOLD / g_audio_master.envelope;
++            g_audio_master.gain += (target - g_audio_master.gain) * smoothing;
++        } else {
++            g_audio_master.gain += (1.0f - g_audio_master.gain) * release;
++        }
++        left *= g_audio_master.gain;
++        right *= g_audio_master.gain;
++
++        /* 3. Soft clip. */
++        out[i * 2] = audio_master_soft_clip(left);
++        out[i * 2 + 1] = audio_master_soft_clip(right);
++    }
++}
++
+ /* SDL callback - pulls samples from ring buffer */
+ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     (void)userdata;
+@@ -3831,6 +4016,26 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     const uint32_t samples_to_copy = available < samples_needed ? available : samples_needed;
+     uint32_t copied = 0;
+ 
++    const bool mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
++    if (mastering) {
++        /* One reset per callback when the chain was off, so switching it on
++         * starts from a clean state instead of from whatever the filters were
++         * left holding. */
++        static bool mastering_was_on = false;
++        if (!mastering_was_on) {
++            audio_master_reset();
++            mastering_was_on = true;
++        }
++    }
++    /* Envelope smoothing for this block. Derived once from the sample rate
++     * rather than per sample: expf in the audio thread is avoidable, and a
++     * 512-frame block does not need a different curve on each of its samples. */
++    const float sample_rate = (float)(g_audio_device_sample_rate ? g_audio_device_sample_rate
++                                                                 : AUDIO_SAMPLE_RATE);
++    const float attack = 1.0f - expf(-1000.0f / (AUDIO_MASTER_ATTACK_MS * sample_rate));
++    const float release = 1.0f - expf(-1000.0f / (AUDIO_MASTER_RELEASE_MS * sample_rate));
++    const float volume_scale = (float)volume_percent / 100.0f;
++
+     while (copied < samples_to_copy) {
+         uint32_t contiguous = AUDIO_RING_SIZE - read_pos;
+         const uint32_t remaining = samples_to_copy - copied;
+@@ -3838,7 +4043,10 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+ 
+         if (muted || volume_percent == 0) {
+             memset(out + copied * 2, 0, (size_t)contiguous * 2u * sizeof(int16_t));
+-        } else if (volume_percent == 100) {
++            if (mastering) {
++                audio_master_reset();
++            }
++        } else if (!mastering && volume_percent == 100) {
+             memcpy(out + copied * 2,
+                    g_audio_ring + read_pos * 2,
+                    (size_t)contiguous * 2u * sizeof(int16_t));
+@@ -3846,14 +4054,22 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+             for (uint32_t i = 0; i < contiguous; ++i) {
+                 int32_t left = g_audio_ring[(read_pos + i) * 2];
+                 int32_t right = g_audio_ring[(read_pos + i) * 2 + 1];
+-                left = (left * (int32_t)volume_percent) / 100;
+-                right = (right * (int32_t)volume_percent) / 100;
+-                if (left < -32768) left = -32768;
+-                if (left > 32767) left = 32767;
+-                if (right < -32768) right = -32768;
+-                if (right > 32767) right = 32767;
+-                out[(copied + i) * 2] = (int16_t)left;
+-                out[(copied + i) * 2 + 1] = (int16_t)right;
++                if (!mastering) {
++                    left = (left * (int32_t)volume_percent) / 100;
++                    right = (right * (int32_t)volume_percent) / 100;
++                    if (left < -32768) left = -32768;
++                    if (left > 32767) left = 32767;
++                    if (right < -32768) right = -32768;
++                    if (right > 32767) right = 32767;
++                    out[(copied + i) * 2] = (int16_t)left;
++                    out[(copied + i) * 2 + 1] = (int16_t)right;
++                } else {
++                    out[(copied + i) * 2] = (int16_t)left;
++                    out[(copied + i) * 2 + 1] = (int16_t)right;
++                }
++            }
++            if (mastering) {
++                audio_master_process(out + copied * 2, contiguous, volume_scale, attack, release);
+             }
+         }
+ 
+@@ -3928,6 +4144,19 @@ static void reset_audio_test_ring(void) {
+     audio_stats_init();
+ }
+ 
++void gb_platform_test_audio_master_reset(void) {
++    audio_master_reset();
++}
++
++void gb_platform_test_audio_master_block(int16_t* frames, uint32_t frame_count,
++                                         float volume_scale) {
++    const float sample_rate = (float)(g_audio_device_sample_rate ? g_audio_device_sample_rate
++                                                                 : AUDIO_SAMPLE_RATE);
++    const float attack = 1.0f - expf(-1000.0f / (AUDIO_MASTER_ATTACK_MS * sample_rate));
++    const float release = 1.0f - expf(-1000.0f / (AUDIO_MASTER_RELEASE_MS * sample_rate));
++    audio_master_process(frames, frame_count, volume_scale, attack, release);
++}
++
+ bool gb_platform_test_audio_concurrency(uint32_t frames,
+                                         GBAudioStressResult* out_result) {
+     if (!out_result || frames < AUDIO_WRITE_BATCH_FRAMES * 4u) return false;
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index d1f4b20..ffb4972 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -427,6 +427,10 @@ if(TARGET gbrt)
+         target_link_libraries(test_audio_callback_concurrency PRIVATE gbrt)
+         add_test(NAME audio_callback_uses_race_free_batched_ring COMMAND test_audio_callback_concurrency)
+ 
++        add_executable(test_audio_mastering test_audio_mastering.cpp)
++        target_link_libraries(test_audio_mastering PRIVATE gbrt)
++        add_test(NAME audio_mastering_measures_its_own_claims COMMAND test_audio_mastering)
++
+         add_executable(test_input_script test_input_script.cpp)
+         target_link_libraries(test_input_script PRIVATE gbrt)
+         add_test(NAME input_script_rejects_malformed_tokens COMMAND test_input_script)
+diff --git a/tests/test_audio_mastering.cpp b/tests/test_audio_mastering.cpp
+new file mode 100644
+index 0000000..727d938
+--- /dev/null
++++ b/tests/test_audio_mastering.cpp
+@@ -0,0 +1,238 @@
++/* Measure what the audio mastering chain claims about itself.
++ *
++ * The chain makes four claims and none of them is about taste: the DC offset is
++ * gone, peaks are rounded rather than clipped, loud passages are eased down
++ * while quiet ones are left alone, and the hardware's channel panning survives.
++ * A pair of ears cannot measure any of those, and "it compiles" is not evidence
++ * that a feedback filter stays stable - a DC blocker with the wrong sign goes to
++ * infinity and sounds like a pop, not like a filter. So the chain is driven from
++ * here over signals chosen to break it.
++ *
++ * Run:
++ *   cmake -G Ninja -B build . -DBUILD_TESTS=ON && ninja -C build
++ *   ctest --test-dir build -R audio_mastering --output-on-failure
++ */
++
++#include "platform_sdl.h"
++
++#include <cmath>
++#include <cstdint>
++#include <cstdio>
++#include <vector>
++
++namespace {
++
++int failures = 0;
++
++void check(bool condition, const char* what) {
++    if (!condition) {
++        std::printf("FAIL %s\n", what);
++        failures++;
++    }
++}
++
++void check_near(double got, double want, double tolerance, const char* what) {
++    const double delta = std::fabs(got - want);
++    if (!(delta <= tolerance)) {
++        std::printf("FAIL %s: got %.6f, want %.6f +/- %.6f\n", what, got, want, tolerance);
++        failures++;
++    }
++}
++
++constexpr uint32_t kBlock = 512;
++
++/* The DC blocker is a one-pole high-pass with a corner near 3.5Hz, which is a
++ * time constant of roughly 45ms - about 2000 samples. It cancels a bias, but it
++ * cancels it over that time and not instantly, so testing it on a single
++ * 512-frame block measures the filter's settling rather than its result. These
++ * tests use a block long enough for the bias to be gone, and say why. */
++constexpr uint32_t kLongBlock = 16384;
++
++/* Mean of the left channel over the settled tail, which is where a filter's
++ * result lives and where its transient does not. */
++double tail_mean(const std::vector<int16_t>& frames, uint32_t block_frames,
++                 uint32_t tail_frames) {
++    double total = 0.0;
++    for (uint32_t f = block_frames - tail_frames; f < block_frames; ++f) {
++        total += (double)frames[f * 2];
++    }
++    return total / (double)tail_frames;
++}
++
++int32_t peak(const std::vector<int16_t>& frames) {
++    int32_t highest = 0;
++    for (int16_t sample : frames) {
++        const int32_t magnitude = sample < 0 ? -(int32_t)sample : (int32_t)sample;
++        if (magnitude > highest) highest = magnitude;
++    }
++    return highest;
++}
++
++/* The DC blocker's job is a bias sitting on the signal. A constant offset with
++ * no signal in it is the cleanest possible probe: the whole thing must go. */
++void dc_offset_is_removed() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> frames(kLongBlock * 2, 4000);
++    gb_platform_test_audio_master_block(frames.data(), kLongBlock, 1.0f);
++    /* The settled tail, not the whole block. The filter's time constant is
++     * about 2000 samples, so the block opens with a step response that decays
++     * across it - and the mean of a decaying exponential is dominated by
++     * exactly that opening, not by how the filter ends up. Averaging the whole
++     * block measures the transient and calls it the result. */
++    check_near(tail_mean(frames, kLongBlock, 512), 0.0, 20.0,
++               "a constant DC offset is cancelled");
++
++    /* The harder case is an offset riding on a signal, because a filter that
++     * merely fades a constant to zero has not removed anything. The pulse pair
++     * the Game Boy produces is a square wave, so a square wave with a bias is
++     * what the chain actually sees. */
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> biased(kLongBlock * 2);
++    for (uint32_t i = 0; i < kLongBlock; ++i) {
++        const int16_t square = ((i / 32) % 2) ? 12000 : -12000;
++        biased[i * 2] = (int16_t)(square + 4000);
++        biased[i * 2 + 1] = (int16_t)(square + 4000);
++    }
++    gb_platform_test_audio_master_block(biased.data(), kLongBlock, 1.0f);
++    check_near(tail_mean(biased, kLongBlock, 512), 0.0, 600.0,
++               "a DC bias riding on a signal is cancelled");
++}
++
++/* Peaks must arrive rounded. A sample sitting exactly on 32767 is a hard clip
++ * and is audible as fizz; the chain's whole claim is that it does not do that. */
++void peaks_are_rounded_not_clipped() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> full(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        full[i * 2] = ((i / 16) % 2) ? 32767 : -32767;
++        full[i * 2 + 1] = full[i * 2];
++    }
++    gb_platform_test_audio_master_block(full.data(), kBlock, 1.0f);
++
++    int32_t saturated = 0;
++    for (int16_t sample : full) {
++        if (sample == 32767 || sample == -32768) saturated++;
++    }
++    check(saturated == 0, "no sample is pinned to full scale after soft clipping");
++
++    /* And the curve must stay inside the input's range: a saturation curve that
++     * overshoots is a distortion generator wearing a limiter's name. */
++    int32_t worst = 0;
++    for (int16_t sample : full) {
++        const int32_t magnitude = sample < 0 ? -(int32_t)sample : (int32_t)sample;
++        if (magnitude > worst) worst = magnitude;
++    }
++    check(worst <= 32767, "the soft clip never exceeds full scale");
++}
++
++/* Gentle means the quiet part of the music is not the casualty. A compressor
++ * that squares off everything is not mastering, it is one more distortion. */
++void quiet_material_is_left_alone() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> quiet(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        /* -34 dBFS: far below the -12 dBFS threshold. */
++        const double phase = (double)i / 40.0;
++        const int16_t value = (int16_t)(1500.0 * std::sin(phase));
++        quiet[i * 2] = value;
++        quiet[i * 2 + 1] = value;
++    }
++    const int32_t before = peak(quiet);
++    gb_platform_test_audio_master_block(quiet.data(), kBlock, 1.0f);
++    const int32_t after = peak(quiet);
++    check_near((double)after, (double)before, (double)before * 0.05,
++               "material well under the threshold passes through unchanged");
++}
++
++/* And the loud part is the part that moves. Without this the "gentle" test above
++ * would be satisfied by a chain that does nothing at all. */
++void loud_material_is_eased_down() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> loud(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        loud[i * 2] = ((i / 16) % 2) ? 30000 : -30000;
++        loud[i * 2 + 1] = loud[i * 2];
++    }
++    gb_platform_test_audio_master_block(loud.data(), kBlock, 1.0f);
++    check(peak(loud) < 30000, "material above the threshold comes out quieter");
++}
++
++/* The Game Boy's channels are panned by the APU, not by this chain. Compressing
++ * the two sides independently would move the stereo image every time one side
++ * got quieter - the pulse channels are hard panned, so the image is a fixed
++ * fact of the hardware and must survive. */
++void channel_panning_survives() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> panned(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        const int16_t square = ((i / 16) % 2) ? 30000 : -30000;
++        panned[i * 2] = square;
++        panned[i * 2 + 1] = (int16_t)-square;
++    }
++    gb_platform_test_audio_master_block(panned.data(), kBlock, 1.0f);
++
++    int32_t worst_asymmetry = 0;
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        const int32_t left = panned[i * 2] < 0 ? -(int32_t)panned[i * 2] : (int32_t)panned[i * 2];
++        const int32_t right =
++            panned[i * 2 + 1] < 0 ? -(int32_t)panned[i * 2 + 1] : (int32_t)panned[i * 2 + 1];
++        const int32_t asymmetry = left - right;
++        if (asymmetry < 0 ? -asymmetry : asymmetry > worst_asymmetry) {
++            worst_asymmetry = asymmetry < 0 ? -asymmetry : asymmetry;
++        }
++    }
++    check(worst_asymmetry == 0, "a hard-panned pair stays hard panned");
++}
++
++/* The chain filters, so it carries state. Run twice from the same state on the
++ * same input and get the same answer - and make sure the test itself is not
++ * depending on a previous case having run. */
++void the_chain_is_deterministic() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> first(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        const int16_t square = ((i / 8) % 2) ? 28000 : -28000;
++        first[i * 2] = square;
++        first[i * 2 + 1] = (int16_t)(square / 3);
++    }
++    gb_platform_test_audio_master_block(first.data(), kBlock, 1.0f);
++
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> second = first;
++    /* Put the original signal back and run it again. */
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        const int16_t square = ((i / 8) % 2) ? 28000 : -28000;
++        second[i * 2] = square;
++        second[i * 2 + 1] = (int16_t)(square / 3);
++    }
++    gb_platform_test_audio_master_block(second.data(), kBlock, 1.0f);
++
++    check(first == second, "the same signal from the same state gives the same output");
++
++    /* And a long run must not drift: the filter is a feedback loop, so the
++     * failure mode of getting it wrong is divergence, not a wrong constant. */
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> long_run(4096 * 2);
++    for (uint32_t i = 0; i < 4096; ++i) {
++        long_run[i * 2] = 20000;
++        long_run[i * 2 + 1] = -20000;
++    }
++    gb_platform_test_audio_master_block(long_run.data(), 4096, 1.0f);
++    check(peak(long_run) <= 32767, "a long constant input does not make the filter diverge");
++}
++
++}  // namespace
++
++int main() {
++    dc_offset_is_removed();
++    peaks_are_rounded_not_clipped();
++    quiet_material_is_left_alone();
++    loud_material_is_eased_down();
++    channel_panning_survives();
++    the_chain_is_deterministic();
++
++    if (failures == 0) {
++        std::printf("audio mastering: every claim holds\n");
++    }
++    return failures == 0 ? 0 : 1;
++}
+\ No newline at end of file
 -- 
 2.55.0
 

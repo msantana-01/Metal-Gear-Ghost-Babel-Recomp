@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/18] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/19] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/18] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/19] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/18] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/19] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/18] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/19] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/18] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/19] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/18] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/19] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/18] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/19] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/18] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/19] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/18] platform: confirm host actions with a transient
+Subject: [PATCH 09/19] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/18] platform: name the host after the cartridge and give
+Subject: [PATCH 10/19] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/18] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/19] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/18] platform: centre the footer buttons on the content
+Subject: [PATCH 12/19] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/18] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/19] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/18] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/19] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/18] platform: panel effects for the presented image, one
+Subject: [PATCH 15/19] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/18] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/19] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/18] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/19] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/18] runtime: include math.h for the panel effects
+Subject: [PATCH 18/19] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3429,6 +3429,437 @@ index 033bf79..7ff35ca 100644
  #include <filesystem>
  #include <string>
  #if defined(_WIN32)
+-- 
+2.55.0
+
+
+From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Fri, 16 Oct 2026 10:37:33 -0300
+Subject: [PATCH 19/19] platform: make the presented surface width a runtime
+ value
+
+The guest is always 160 pixels wide and that does not change. What changes is
+how wide the picture we present is: a remaster builds a tile renderer covering
+more than the original viewport, and the platform had no way to be told.
+
+gb_platform_present_framebuffer took a bare pointer and every buffer, texture
+and scaling term below it was hardcoded to GB_SCREEN_WIDTH. A wider surface
+either could not be presented or could only be presented by lying about its
+width.
+
+The width now defaults to GB_SCREEN_WIDTH and the buffers are sized for the
+maximum, so at the default each loop runs the same iterations over the same
+addresses as before and the authentic path is unchanged. Setting a new width
+destroys the textures that bake in a size and drops the persistence buffers
+rather than reinterpreting them under a new stride: their contents are not the
+previous frame any more, and forgetting costs one frame of response instead of
+shearing one.
+---
+ runtime/include/platform_sdl.h |   9 ++
+ runtime/src/platform_sdl.cpp   | 156 +++++++++++++++++++++++++--------
+ 2 files changed, 128 insertions(+), 37 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 0af912f..8ae6fd1 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -91,6 +91,15 @@ void gb_platform_render_frame(const uint32_t* framebuffer);
+  */
+ void gb_platform_present_framebuffer(const uint32_t* framebuffer);
+ 
++/* Width of the surface handed to gb_platform_present_framebuffer().
++ *
++ * The guest is always GB_SCREEN_WIDTH. This is the width of the picture being
++ * presented, which a remaster may make wider than the original viewport. It
++ * defaults to GB_SCREEN_WIDTH, and at that default every presentation path is
++ * unchanged. Values outside [GB_SCREEN_WIDTH, 256] are refused. */
++int gb_platform_get_present_width(void);
++bool gb_platform_set_present_width(int width);
++
+ /**
+  * @brief Render a blank LCD-off presentation frame without advancing guest frame counters
+  */
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 7ff35ca..0a577d1 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -55,10 +55,26 @@ static int g_screen_effect_lattice = 0;
+ /* Phosphor glow, added on top rather than multiplied into the image: a halo is
+  * brighter than its source, which the multiply mask cannot express at all. */
+ static SDL_Texture* g_glow_texture = NULL;
++static int g_glow_texture_width = 0;
+ /* Guest resolution: 160x144 is two 92 KB buffers and lets the upscale do the
+  * spreading, which is the cheapest correct place for a halo. */
+-static uint32_t g_glow_buffer[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
+-static uint32_t g_glow_scratch[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
++/* Presentation width.
++ *
++ * The guest is always 160 pixels wide; that is the hardware and nothing here
++ * changes it. What can change is how wide the surface we *present* is: a
++ * remaster builds a tile renderer that covers more than the original viewport.
++ *
++ * So the width is a runtime value defaulting to GB_SCREEN_WIDTH, and every
++ * buffer below is sized for the maximum instead of the default. At the default
++ * each loop runs the same number of iterations over the same addresses as
++ * before, which is what keeps the authentic artifact bit-for-bit unchanged.
++ * Statically reallocating per width would be the other option and it would mean
++ * the glow and response buffers moved under code that is timing sensitive. */
++#define GB_PRESENT_MAX_WIDTH 256
++static int g_present_width = GB_SCREEN_WIDTH;
++
++static uint32_t g_glow_buffer[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
++static uint32_t g_glow_scratch[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+ static bool g_glow_buffer_valid = true;
+ /* Above the lightest shade the palette uses, so ordinary art does not lift,
+  * while an isolated bright pixel still gets enough excess to halo visibly.
+@@ -204,7 +220,7 @@ static int g_lcd_response_ms = 45;
+ #define GB_LCD_RESPONSE_LIGHT_RATIO 1.45f
+ /* A stall must not teleport the image; cap the step so a hitch relaxes once. */
+ #define GB_LCD_RESPONSE_MAX_STEP_MS 100
+-static uint32_t g_lcd_response_prev[GB_SCREEN_HEIGHT * GB_SCREEN_WIDTH];
++static uint32_t g_lcd_response_prev[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+ static bool g_lcd_response_valid = false;
+ static uint32_t g_lcd_response_last_ms = 0;
+ static SDL_GameControllerType g_controller_type = SDL_CONTROLLER_TYPE_UNKNOWN;
+@@ -248,7 +264,7 @@ static const uint32_t g_palettes[][4] = {
+     { 0xFFFFB000, 0xFFCB4F0E, 0xFF800000, 0xFF330000 }  // Amber
+ };
+ static uint32_t g_lcd_off_framebuffer[GB_FRAMEBUFFER_SIZE];
+-static uint32_t g_last_guest_framebuffer[GB_FRAMEBUFFER_SIZE];
++static uint32_t g_last_guest_framebuffer[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+ static bool g_lcd_off_framebuffer_initialized = false;
+ static bool g_last_guest_framebuffer_valid = false;
+ static uint64_t g_present_count = 0;
+@@ -1933,7 +1949,7 @@ static void update_screen_effect_texture(void) {
+     /* Rasterise the mask at the on-screen scale: one mask pixel per screen
+      * pixel keeps the gap the width it was asked for at every window size. */
+     const float scale_factor = (g_game_viewport.w > 0)
+-        ? ((float)g_game_viewport.w / (float)GB_SCREEN_WIDTH)
++        ? ((float)g_game_viewport.w / (float)g_present_width)
+         : 1.0f;
+     int lattice = (int)lrintf(scale_factor);
+     if (lattice < GB_SCREEN_EFFECT_MIN_LATTICE) lattice = GB_SCREEN_EFFECT_MIN_LATTICE;
+@@ -1948,7 +1964,7 @@ static void update_screen_effect_texture(void) {
+         g_screen_effect_texture = SDL_CreateTexture(g_renderer,
+                                                     SDL_PIXELFORMAT_ARGB8888,
+                                                     SDL_TEXTUREACCESS_STREAMING,
+-                                                    GB_SCREEN_WIDTH * lattice,
++                                                    g_present_width * lattice,
+                                                     GB_SCREEN_HEIGHT * lattice);
+         if (!g_screen_effect_texture) {
+             fprintf(stderr, "[SDL] Failed to create the screen effect texture: %s\n",
+@@ -1969,7 +1985,7 @@ static void update_screen_effect_texture(void) {
+                 SDL_GetError());
+         return;
+     }
+-    compute_screen_effect_overlay((uint32_t*)pixels, GB_SCREEN_WIDTH * lattice,
++    compute_screen_effect_overlay((uint32_t*)pixels, g_present_width * lattice,
+                                   GB_SCREEN_HEIGHT * lattice,
+                                   (int)g_screen_effect, g_screen_effect_intensity,
+                                   scale_factor);
+@@ -1998,7 +2014,7 @@ static void update_game_viewport(void) {
+     if (!g_window) {
+         g_game_viewport.x = 0;
+         g_game_viewport.y = 0;
+-        g_game_viewport.w = GB_SCREEN_WIDTH * g_scale;
++        g_game_viewport.w = g_present_width * g_scale;
+         g_game_viewport.h = GB_SCREEN_HEIGHT * g_scale;
+         return;
+     }
+@@ -2006,7 +2022,7 @@ static void update_game_viewport(void) {
+     int window_w = 0;
+     int window_h = 0;
+     SDL_GetWindowSize(g_window, &window_w, &window_h);
+-    if (window_w <= 0) window_w = GB_SCREEN_WIDTH;
++    if (window_w <= 0) window_w = g_present_width;
+     if (window_h <= 0) window_h = GB_SCREEN_HEIGHT;
+ 
+     int viewport_w = window_w;
+@@ -2014,35 +2030,35 @@ static void update_game_viewport(void) {
+ 
+     switch (g_render_scaling_mode) {
+         case GB_RENDER_SCALING_PIXEL_PERFECT: {
+-            int scale_x = window_w / GB_SCREEN_WIDTH;
++            int scale_x = window_w / g_present_width;
+             int scale_y = window_h / GB_SCREEN_HEIGHT;
+             int integer_scale = (scale_x < scale_y) ? scale_x : scale_y;
+             if (integer_scale < 1) {
+                 integer_scale = 1;
+             }
+-            viewport_w = GB_SCREEN_WIDTH * integer_scale;
++            viewport_w = g_present_width * integer_scale;
+             viewport_h = GB_SCREEN_HEIGHT * integer_scale;
+             break;
+         }
+         case GB_RENDER_SCALING_ASPECT_FIT: {
+-            double scale_x = (double)window_w / (double)GB_SCREEN_WIDTH;
++            double scale_x = (double)window_w / (double)g_present_width;
+             double scale_y = (double)window_h / (double)GB_SCREEN_HEIGHT;
+             double scale = (scale_x < scale_y) ? scale_x : scale_y;
+             if (scale <= 0.0) {
+                 scale = 1.0;
+             }
+-            viewport_w = round_to_int((double)GB_SCREEN_WIDTH * scale);
++            viewport_w = round_to_int((double)g_present_width * scale);
+             viewport_h = round_to_int((double)GB_SCREEN_HEIGHT * scale);
+             break;
+         }
+         case GB_RENDER_SCALING_ASPECT_FILL: {
+-            double scale_x = (double)window_w / (double)GB_SCREEN_WIDTH;
++            double scale_x = (double)window_w / (double)g_present_width;
+             double scale_y = (double)window_h / (double)GB_SCREEN_HEIGHT;
+             double scale = (scale_x > scale_y) ? scale_x : scale_y;
+             if (scale <= 0.0) {
+                 scale = 1.0;
+             }
+-            viewport_w = round_to_int((double)GB_SCREEN_WIDTH * scale);
++            viewport_w = round_to_int((double)g_present_width * scale);
+             viewport_h = round_to_int((double)GB_SCREEN_HEIGHT * scale);
+             break;
+         }
+@@ -2066,7 +2082,7 @@ static void update_game_viewport(void) {
+ }
+ 
+ static void apply_window_scale_preset(void) {
+-    g_windowed_width = GB_SCREEN_WIDTH * g_scale;
++    g_windowed_width = g_present_width * g_scale;
+     g_windowed_height = GB_SCREEN_HEIGHT * g_scale;
+ 
+     if (g_window && !g_fullscreen) {
+@@ -2111,7 +2127,7 @@ static bool recreate_streaming_texture(void) {
+         g_renderer,
+         SDL_PIXELFORMAT_ARGB8888,
+         SDL_TEXTUREACCESS_STREAMING,
+-        GB_SCREEN_WIDTH,
++        g_present_width,
+         GB_SCREEN_HEIGHT
+     );
+     if (!g_texture) {
+@@ -2391,13 +2407,13 @@ static void copy_display_frame(void* pixels, int pitch, const uint32_t* framebuf
+         }
+     }
+     for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
+-        const uint32_t* src = framebuffer + y * GB_SCREEN_WIDTH;
++        const uint32_t* src = framebuffer + y * g_present_width;
+         uint32_t* dst = (uint32_t*)((uint8_t*)pixels + y * pitch);
+         if (!recolor) {
+-            memcpy(dst, src, GB_SCREEN_WIDTH * sizeof(uint32_t));
++            memcpy(dst, src, (size_t)g_present_width * sizeof(uint32_t));
+             continue;
+         }
+-        for (int x = 0; x < GB_SCREEN_WIDTH; ++x) {
++        for (int x = 0; x < g_present_width; ++x) {
+             dst[x] = src[x];
+             for (int shade = 0; shade < 4; ++shade) {
+                 // Completed frames use the PPU's RGB555-expanded colors;
+@@ -2468,7 +2484,7 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+                                    GB_SCREEN_EFFECT_MIN_GAP_SCREEN * one_screen_pixel),
+                              0.0f, GB_SCREEN_EFFECT_MAX_GAP_GUEST);
+ 
+-    const int lattice = (dst_w > 0) ? (dst_w / GB_SCREEN_WIDTH) : 1;
++    const int lattice = (dst_w > 0) ? (dst_w / g_present_width) : 1;
+     const int steps = (lattice > 0) ? lattice : 1;
+     /* Half a mask pixel: the standard analytic coverage ramp. Anything steeper
+      * stops resolving the gap and snaps it to whole samples. */
+@@ -2652,11 +2668,19 @@ static void compute_phosphor_glow(const uint32_t* src, int src_pitch_bytes,
+ /* The glow lives in its own texture because it has to be composited with
+  * SDL_BLENDMODE_ADD, and a texture carries one blend mode. */
+ static bool ensure_glow_texture(void) {
+-    if (g_glow_texture || !g_renderer) {
+-        return g_glow_texture != NULL;
++    if (g_glow_texture && g_glow_texture_width == g_present_width) {
++        return true;
++    }
++    if (g_glow_texture) {
++        /* Created for the previous width; a texture carries its own size. */
++        SDL_DestroyTexture(g_glow_texture);
++        g_glow_texture = NULL;
++    }
++    if (!g_renderer) {
++        return false;
+     }
+     g_glow_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888,
+-                                       SDL_TEXTUREACCESS_STREAMING, GB_SCREEN_WIDTH,
++                                       SDL_TEXTUREACCESS_STREAMING, g_present_width,
+                                        GB_SCREEN_HEIGHT);
+     if (!g_glow_texture) {
+         fprintf(stderr, "[SDL] Failed to create the glow texture: %s\n", SDL_GetError());
+@@ -2667,6 +2691,7 @@ static bool ensure_glow_texture(void) {
+      * would give hard blocks at 4K. */
+     SDL_SetTextureScaleMode(g_glow_texture, SDL_ScaleModeLinear);
+     SDL_SetTextureBlendMode(g_glow_texture, SDL_BLENDMODE_ADD);
++    g_glow_texture_width = g_present_width;
+     return true;
+ }
+ 
+@@ -2731,7 +2756,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             char suffix[32];
+             snprintf(suffix, sizeof(suffix), "_%05d.ppm", g_frame_count);
+             const std::string filename = g_screenshot_prefix + suffix;
+-            save_ppm(filename.c_str(), framebuffer, GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT, g_frame_count);
++            save_ppm(filename.c_str(), framebuffer, (uint32_t)g_present_width, GB_SCREEN_HEIGHT, g_frame_count);
+         }
+     }
+ 
+@@ -2743,7 +2768,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                  g_frame_count,
+                  (unsigned long long)g_present_count);
+         const std::string filename = g_screenshot_prefix + suffix;
+-        save_ppm(filename.c_str(), framebuffer, GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT, g_frame_count);
++        save_ppm(filename.c_str(), framebuffer, (uint32_t)g_present_width, GB_SCREEN_HEIGHT, g_frame_count);
+     }
+ 
+     if (g_benchmark_mode) {
+@@ -2780,7 +2805,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     if (count_guest_frame && g_frame_count <= 3) {
+         bool has_content = false;
+         uint32_t white = 0xFFE0F8D0;
+-        for (int i = 0; i < GB_SCREEN_WIDTH * GB_SCREEN_HEIGHT; i++) {
++        for (int i = 0; i < g_present_width * GB_SCREEN_HEIGHT; i++) {
+             if (framebuffer[i] != white) {
+                 has_content = true;
+                 break;
+@@ -2827,9 +2852,9 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         if (!g_lcd_response_valid) {
+             /* Seed from the target so enabling never flashes from black. */
+             for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
+-                memcpy(&g_lcd_response_prev[y * GB_SCREEN_WIDTH],
++                memcpy(&g_lcd_response_prev[y * g_present_width],
+                        (uint8_t*)pixels + (size_t)y * (size_t)pitch,
+-                       GB_SCREEN_WIDTH * sizeof(uint32_t));
++                       (size_t)g_present_width * sizeof(uint32_t));
+             }
+             g_lcd_response_valid = true;
+         } else {
+@@ -2838,13 +2863,13 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                                          : step_ms);
+             const float base = (float)g_lcd_response_ms;
+             apply_lcd_response(g_lcd_response_prev, (uint32_t*)pixels, pitch,
+-                               GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT,
++                               g_present_width, GB_SCREEN_HEIGHT,
+                                lcd_response_alpha(dt, base * GB_LCD_RESPONSE_DARK_RATIO),
+                                lcd_response_alpha(dt, base * GB_LCD_RESPONSE_LIGHT_RATIO));
+             for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
+-                memcpy(&g_lcd_response_prev[y * GB_SCREEN_WIDTH],
++                memcpy(&g_lcd_response_prev[y * g_present_width],
+                        (uint8_t*)pixels + (size_t)y * (size_t)pitch,
+-                       GB_SCREEN_WIDTH * sizeof(uint32_t));
++                       (size_t)g_present_width * sizeof(uint32_t));
+             }
+         }
+     }
+@@ -2853,10 +2878,10 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     if (g_screen_effect == GB_SCREEN_EFFECT_CRT && ensure_glow_texture() &&
+         g_glow_buffer_valid) {
+         compute_phosphor_glow((const uint32_t*)pixels, pitch, g_glow_buffer,
+-                              g_glow_scratch, GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT,
++                              g_glow_scratch, g_present_width, GB_SCREEN_HEIGHT,
+                               GB_GLOW_THRESHOLD, g_screen_effect_intensity);
+         SDL_UpdateTexture(g_glow_texture, NULL, g_glow_buffer,
+-                          GB_SCREEN_WIDTH * (int)sizeof(uint32_t));
++                          g_present_width * (int)sizeof(uint32_t));
+     }
+     SDL_UnlockTexture(g_texture);
+     g_last_timing.upload_ms = sdl_now_ms() - upload_start_ms;
+@@ -3001,7 +3026,7 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         ImGui::Text("Viewport: %d x %d (%.2fx)",
+                     g_game_viewport.w,
+                     g_game_viewport.h,
+-                    (double)g_game_viewport.w / (double)GB_SCREEN_WIDTH);
++                    (double)g_game_viewport.w / (double)g_present_width);
+ 
+         bool fullscreen = g_fullscreen;
+         if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
+@@ -3965,7 +3990,7 @@ bool gb_platform_init(int scale) {
+     g_scale = scale;
+     if (g_scale < 1) g_scale = 1;
+     if (g_scale > 8) g_scale = 8;
+-    g_windowed_width = GB_SCREEN_WIDTH * g_scale;
++    g_windowed_width = g_present_width * g_scale;
+     g_windowed_height = GB_SCREEN_HEIGHT * g_scale;
+     g_game_viewport = {0, 0, g_windowed_width, g_windowed_height};
+     g_exit_action = GB_PLATFORM_EXIT_QUIT;
+@@ -4045,7 +4070,7 @@ bool gb_platform_init(int scale) {
+         return false;
+     }
+     fprintf(stderr, "[SDL] Window created.\n");
+-    SDL_SetWindowMinimumSize(g_window, GB_SCREEN_WIDTH, GB_SCREEN_HEIGHT);
++    SDL_SetWindowMinimumSize(g_window, g_present_width, GB_SCREEN_HEIGHT);
+     
+     fprintf(stderr, "[SDL] Creating renderer...\n");
+     /* 
+@@ -4448,6 +4473,50 @@ void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
+     render_frame_internal(stable_framebuffer, false);
+ }
+ 
++int gb_platform_get_present_width(void) {
++    return g_present_width;
++}
++
++bool gb_platform_set_present_width(int width) {
++    if (width < GB_SCREEN_WIDTH || width > GB_PRESENT_MAX_WIDTH) {
++        return false;
++    }
++    if (width == g_present_width) {
++        return true;
++    }
++    g_present_width = width;
++
++    /* Every surface and buffer that bakes in a width has to be rebuilt, and the
++     * persistence buffers have to be dropped rather than reinterpreted: their
++     * stride changed, so the old contents are not the previous frame any more.
++     * Forgetting them costs one frame of response, which is cheaper than
++     * showing a sheared one. */
++    if (g_texture) {
++        SDL_DestroyTexture(g_texture);
++        g_texture = NULL;
++    }
++    if (g_glow_texture) {
++        SDL_DestroyTexture(g_glow_texture);
++        g_glow_texture = NULL;
++        g_glow_texture_width = 0;
++    }
++    g_lcd_response_valid = false;
++    g_last_guest_framebuffer_valid = false;
++    memset(g_lcd_response_prev, 0, sizeof(g_lcd_response_prev));
++    memset(g_glow_buffer, 0, sizeof(g_glow_buffer));
++
++    g_windowed_width = g_present_width * g_scale;
++    g_game_viewport.w = g_windowed_width;
++    if (g_window) {
++        SDL_SetWindowMinimumSize(g_window, g_present_width, GB_SCREEN_HEIGHT);
++        SDL_SetWindowSize(g_window, g_windowed_width, g_windowed_height);
++    }
++    if (!recreate_streaming_texture()) {
++        return false;
++    }
++    return true;
++}
++
+ void gb_platform_render_lcd_off_frame(void) {
+     ensure_lcd_off_framebuffer();
+     /* With LCDC bit 7 clear the panel loses its bias and shows the blank
+@@ -5020,6 +5089,19 @@ void gb_platform_render_frame(const uint32_t* framebuffer) {
+     (void)framebuffer;
+ }
+ 
++int gb_platform_get_present_width(void) {
++    return g_present_width;
++}
++
++bool gb_platform_set_present_width(int width) {
++    /* Headless: nothing is rasterised, so the width only needs to be legal. */
++    if (width < GB_SCREEN_WIDTH || width > GB_PRESENT_MAX_WIDTH) {
++        return false;
++    }
++    g_present_width = width;
++    return true;
++}
++
+ void gb_platform_present_framebuffer(const uint32_t* framebuffer) {
+     (void)framebuffer;
+ }
 -- 
 2.55.0
 

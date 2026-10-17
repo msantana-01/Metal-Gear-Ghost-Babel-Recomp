@@ -6,7 +6,7 @@
   "type": "recomp",
   "original": { "region": "USA" },
   "project": "Metal Gear Ghost Babel Recomp",
-  "status": "released",
+  "status": "in-progress",
   "targets": ["Linux"],
   "toolchain": "Gb-recompiled",
   "approach": "Static recompilation of the game into native C, plus a runtime that reproduces the hardware, so no interpreter sits in the hot path.",
@@ -14,8 +14,9 @@
   "help": [
     "Widescreen margin fidelity",
     "Audio accuracy",
-    "Reverse engineering the room and object system"
+    "Reverse engineering the room and object system",
+    "Playtesting the widescreen build"
   ],
   "tags": ["widescreen", "gbc", "recomp"],
-  "notes": "Public builds for Linux x86_64 since v0.1, toolchain only: the user supplies their own copy of the game and no game data is distributed. Boot and gameplay match a cycle-accurate reference frame for frame on what was measured, and the runtime passes 75 of 75 Blargg and Mooneye hardware tests. In progress: a widescreen remaster that composes a 256px surface out of the guest's own framebuffer, revealing the room beyond the original 160 columns in outdoor areas. Windows and Android are planned, not built."
+  "notes": "Public builds for Linux x86_64 since v0.1, toolchain only: you supply your own copy of the game and no game data is distributed. Frame-exact against a cycle-accurate reference; 75 of 75 Blargg and Mooneye tests pass. The goal is a true widescreen remaster: a 256px surface out of the guest's own framebuffer, the room's real scene on both sides instead of bars, the guest's own soldiers alive in the extended area, mastered audio, a presentation shader. The authentic 160px build stays for purists. Next: margin fidelity, audio, then the shader. Windows and Android are planned, not built."
 }

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "Metal Gear Solid: Ghost Babel",
+  "wikidata": "Q2600361",
+  "system": "GBC",
+  "type": "recomp",
+  "original": { "region": "USA" },
+  "project": "Metal Gear Ghost Babel Recomp",
+  "status": "released",
+  "targets": ["Linux"],
+  "toolchain": "Gb-recompiled",
+  "approach": "Static recompilation of the game into native C, plus a runtime that reproduces the hardware, so no interpreter sits in the hot path.",
+  "maintainers": [{ "name": "msantana-01", "link": "https://github.com/msantana-01" }],
+  "help": [
+    "Widescreen margin fidelity",
+    "Audio accuracy",
+    "Reverse engineering the room and object system"
+  ],
+  "tags": ["widescreen", "gbc", "recomp"],
+  "notes": "Public builds for Linux x86_64 since v0.1, toolchain only: the user supplies their own copy of the game and no game data is distributed. Boot and gameplay match a cycle-accurate reference frame for frame on what was measured, and the runtime passes 75 of 75 Blargg and Mooneye hardware tests. In progress: a widescreen remaster that composes a 256px surface out of the guest's own framebuffer, revealing the room beyond the original 160 columns in outdoor areas. Windows and Android are planned, not built."
+}

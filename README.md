@@ -204,6 +204,32 @@ game. This repository ships tools only.
 
 ---
 
+## What's next
+
+The tools work. The next thing is the one that makes this more than a faithful
+port: a **widescreen remaster**.
+
+The hardware never drew a pixel outside 160 wide, but the picture here is
+composed on the host rather than shown raw, so the frame can be wider than the
+screen the game was written for. The plan is a 256-pixel surface:
+
+- the game's own 160 columns, copied from the emulated hardware pixel for
+  pixel — not reconstructed, because Ghost Babel rewrites video memory *during*
+  a frame and any single snapshot of it is wrong;
+- the room's real scene on both sides, so the view is centred instead of
+  letterboxed, outdoor areas first;
+- the game's own soldiers kept alive in the extended area;
+- mastered audio, and a presentation shader over the finished image.
+
+**The authentic 160-pixel build stays exactly as it is.** The remaster is an
+option, not a replacement: if you want the original picture, it is still there.
+
+None of this is in the released build yet. It runs from the development tree,
+where the rough edges are, and the order of work is margin fidelity, then
+audio, then the shader.
+
+---
+
 ## Keeping it up to date
 
 Two different things can change, and they need two different actions.

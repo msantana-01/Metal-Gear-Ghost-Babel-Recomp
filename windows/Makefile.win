@@ -22,7 +22,11 @@ DEFINES := -DGB_HAS_SDL2 -DGB_PLATFORM_WINDOWS
 
 SDL_CFLAGS := -I$(SDL2_DIR)/include/SDL2 -I$(SDL2_DIR)/include
 WINPTHREAD_PATH := $(shell $(CXX) -print-file-name=libwinpthread.a 2>/dev/null)
-THREAD_LIBS := $(if $(filter-out libwinpthread.a,$(WINPTHREAD_PATH)),-Wl,-Bstatic -lwinpthread -Wl,-Bdynamic,)
+ifeq ($(notdir $(WINPTHREAD_PATH)),$(WINPTHREAD_PATH))
+  THREAD_LIBS :=
+else
+  THREAD_LIBS := -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic
+endif
 SDL_LIBS   := -L$(SDL2_DIR)/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
 
 WORK := build/work

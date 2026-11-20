@@ -26,7 +26,7 @@ fail() { printf '\033[31m  FAILED\033[0m %s\n' "$1"; FAIL=1; }
 # before only through the size rule below, which is luck: the size rule exists to
 # catch a ROM, and it happened to also catch an 80 MB binary. A guard that
 # protects by coincidence is not a guard. See ADR-005.
-PATTERNS='\.(gbc|gb|sav|rtc|bin)$|\.(exe|elf|so|dylib|apk|msi)$|baserom.*\.(c|h|json)$|gbrecomp-contract\.json$|ghost-babel(_[a-z]+)?$'
+PATTERNS='\.(gbc|gb|sav|rtc|bin)$|\.(exe|dll|elf|so|dylib|apk|msi)$|baserom.*\.(c|h|json)$|gbrecomp-contract\.json$|ghost-babel([-_][a-z]+)?(\.exe)?$'
 
 if [ "${1:-}" = "--staged" ]; then
   FILES="$(git diff --cached --name-only --diff-filter=ACM)"
@@ -51,7 +51,7 @@ fi
 # packaging/dist/ is here because make_release.sh assembles a copy of all the
 # tools there: tracking it looks harmless (it is only our own code), but it
 # duplicates the repository and the next edit never reaches the copy.
-DIRS="$(printf '%s\n' "$FILES" | grep -E '^(build|\.tools|output|rom|roms|runtime|packaging/dist)/' || true)"
+DIRS="$(printf '%s\n' "$FILES" | grep -E '^(build|\.tools|output|rom|roms|runtime|sdl2|packaging/dist)/' || true)"
 if [ -n "$DIRS" ]; then
   fail "content that must never be tracked, $SCOPE:"
   printf '%s\n' "$DIRS" | head -5 | sed 's/^/         /'

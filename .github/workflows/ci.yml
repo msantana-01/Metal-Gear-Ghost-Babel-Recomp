@@ -6,9 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test:
-    # The job runs on a clean machine: the same test a user does the first
-    # time, with nothing inherited from the developer.
+  linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,23 +20,114 @@ jobs:
       - name: Copyright guard
         run: ./tools/guard_copyright.sh
 
-      - name: bootstrap
+      - name: Bootstrap tools from pinned source
+        env:
+          GB_BUILD_FROM_SOURCE: "1"
         run: ./bootstrap.sh
 
-      - name: Smoke test (synthetic ROM, no third-party material)
+      - name: Smoke test (authentic + remaster on synthetic ROM)
         run: ./tests/smoke.sh
 
-      - name: Guarda de copyright (depois do build)
-        # The build produces artifacts; none of them may have leaked into git.
+      - name: Copyright guard (post-build)
         run: ./tools/guard_copyright.sh
 
-      - name: Check that the build did not dirty the repository
+      - name: Check that build did not dirty tracked tree
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "::error::the build created tracked files:"
+            echo "::error::the build modified tracked files:"
             git status --porcelain
             exit 1
           fi
 
-      - name: Release artifact builds and checks itself
+      - name: Package Linux release tarball
         run: ./packaging/make_release.sh 0.0.0-ci
+
+      - name: Test unpacked release tarball offline
+        run: |
+          rm -rf /tmp/linux-pkg-smoke
+          mkdir -p /tmp/linux-pkg-smoke
+          tar -xzf packaging/dist/ghost-babel-tools-linux-x86_64-0.0.0-ci.tar.gz -C /tmp/linux-pkg-smoke
+          cd /tmp/linux-pkg-smoke/ghost-babel-tools
+          ./bootstrap.sh
+          ./tests/smoke.sh
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate PowerShell script syntax
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem -Path windows,packaging -Filter *.ps1 -Recurse
+          foreach ($f in $files) {
+              $tokens = $null; $errs = $null
+              [void][System.Management.Automation.Language.Parser]::ParseFile($f.FullName, [ref]$tokens, [ref]$errs)
+              if ($errs -and $errs.Count -gt 0) {
+                  $errs | ForEach-Object { Write-Error "$($f.FullName): $($_.Message)" }
+                  exit 1
+              }
+              Write-Host "syntax ok: $($f.Name)"
+          }
+
+      - name: Copyright guard
+        shell: bash
+        run: ./tools/guard_copyright.sh
+
+      - name: Bootstrap Windows toolchain from pinned source
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File windows/bootstrap.ps1 -FromSource
+
+      - name: Package Windows release archive
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File packaging/make_release_windows.ps1 -Version 0.0.0-ci
+
+      - name: Test unpacked Windows release archive end-to-end
+        shell: pwsh
+        run: |
+          $smokeRoot = Join-Path $env:RUNNER_TEMP "win-pkg-smoke"
+          if (Test-Path $smokeRoot) { Remove-Item -Recurse -Force $smokeRoot }
+          New-Item -ItemType Directory -Force -Path $smokeRoot | Out-Null
+
+          Expand-Archive -Path "packaging/dist/ghost-babel-tools-windows-x86_64-0.0.0-ci.zip" -DestinationPath $smokeRoot -Force
+          $pkgDir = Join-Path $smokeRoot "ghost-babel-tools"
+          $romPath = Join-Path $smokeRoot "testrom.gbc"
+          python tests/make_test_rom.py $romPath
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+          pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $pkgDir "windows/build.ps1") `
+              -RomPath $romPath -NoPrompt -ForceRemaster -SyntheticSmoke
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+          $authExe   = Join-Path $pkgDir "build/ghost-babel-authentic.exe"
+          $remastExe = Join-Path $pkgDir "build/ghost-babel-remaster.exe"
+          $sdlDll    = Join-Path $pkgDir "build/SDL2.dll"
+          foreach ($req in @($authExe, $remastExe, $sdlDll)) {
+              if (-not (Test-Path $req)) { throw "Missing build output: $req" }
+          }
+
+          $objdump = Join-Path $pkgDir ".tools/w64devkit/bin/objdump.exe"
+          foreach ($exe in @($authExe, $remastExe)) {
+              $imports = & $objdump -p $exe | Select-String "DLL Name:"
+              Write-Host "`nImports for $(Split-Path -Leaf $exe):"
+              $imports | ForEach-Object { Write-Host "  $_" }
+              $bad = $imports | Where-Object { $_ -match 'libgcc|libstdc\+\+|winpthread' }
+              if ($bad) { throw "Forbidden compiler runtime DLL import in $exe`: $bad" }
+              if (-not ($imports | Where-Object { $_ -match 'SDL2\.dll' })) {
+                  throw "Missing SDL2.dll import in $exe"
+              }
+          }
+
+      - name: Copyright guard (post-build)
+        shell: bash
+        run: ./tools/guard_copyright.sh
+
+      - name: Check that build did not dirty tracked tree
+        shell: bash
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::the build modified tracked files:"
+            git status --porcelain
+            exit 1
+          fi

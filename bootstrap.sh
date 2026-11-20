@@ -37,6 +37,10 @@ SDL2_MIN="$(pin build sdl2_min)"
 TOOLS_VERSION="$(pin tools version)"
 RELEASE_BASE="$(pin tools release_base)"
 
+if [ "${GB_BUILD_FROM_SOURCE:-0}" = "1" ]; then
+  RELEASE_BASE=""
+fi
+
 C_RESET=$'\033[0m'; C_OK=$'\033[32m'; C_WARN=$'\033[33m'; C_ERR=$'\033[31m'; C_HDR=$'\033[1;36m'
 [ -t 1 ] || { C_RESET=; C_OK=; C_WARN=; C_ERR=; C_HDR=; }
 
@@ -55,14 +59,15 @@ die() { # die <what is missing> <the command that fixes it>
 
 mkdir -p "$TOOLS_DIR"
 : > "$LOG_FILE"
+: > "$TOOLS_DIR/env"
+VER_INSTALLED="$(cat "$TOOLS_DIR/VERSION" 2>/dev/null || true)"
 
 # ---------------------------------------------------------------- distro
 DISTRO="$(. /etc/os-release 2>/dev/null && echo "${ID:-unknown}")"
 
-# While no release is published, the tools are compiled from source, which
-# needs cmake and ninja. That can be known BEFORE the first install: without
-# it, the user installs the basics, runs bootstrap again, and only then finds
-# out cmake is needed (two trips to the package manager).
+# While compiling from source (or when no release tarball matches), we need
+# cmake and ninja. Knowing BEFORE the first install avoids two trips to the
+# package manager.
 BUILD_EXTRA=""
 if [ -z "$RELEASE_BASE" ]; then
   case "$DISTRO" in
@@ -78,16 +83,13 @@ install_hint() { # install_hint <packages...>
     arch|manjaro|endeavours|cachyos|garuda)
       printf 'sudo pacman -S --needed base-devel pkgconf sdl2 %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     debian|ubuntu|linuxmint|pop|elementary|zorin)
-      # The `update` is not decoration: on a freshly installed machine, or
-      # with a stale package list, `apt-get install` on its own fails with
-      # "Unable to locate package". The clean-distro test found this.
       printf 'sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     fedora)
       printf 'sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     opensuse*|sles)
       printf 'sudo zypper install -y gcc-c++ make pkg-config libSDL2-devel %s %s\n' "$BUILD_EXTRA" "${1:-}" ;;
     *)
-      printf '# install: a C/C++ compiler, make, pkg-config, cmake and the SDL2 headers\n' ;;
+      printf '# install: a C/C++ compiler, make, pkg-config and the SDL2 headers\n' ;;
   esac
 }
 
@@ -96,34 +98,33 @@ have() { command -v "$1" >/dev/null 2>&1; }
 # --------------------------------------------- 0.5 tools already shipped
 #
 # Whoever downloaded the release gets the compiled tools (bin/ and lib/) and
-# needs no cmake, no ninja and no network. Copy them into the layout the
-# build expects and carry on as if bootstrap had compiled them.
-if [ -f "$REPO_DIR/bin/gbrecomp" ] && [ -f "$REPO_DIR/lib/libgbrt.a" ] \
-   && [ ! -x "$TOOLS_DIR/gbrecomp" ]; then
-  mkdir -p "$TOOLS_DIR"
-  cp "$REPO_DIR/bin/gbrecomp" "$TOOLS_DIR/gbrecomp"
-  cp "$REPO_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
-  chmod +x "$TOOLS_DIR/gbrecomp"
-  info "release tools detected (nothing to compile)"
+# needs no cmake, no ninja and no network. Re-copy whenever .tools/gbrecomp is
+# missing or an upgrade changed pins.lock's tools version.
+if [ "${GB_BUILD_FROM_SOURCE:-0}" != "1" ] \
+   && [ -f "$REPO_DIR/bin/gbrecomp" ] && [ -f "$REPO_DIR/lib/libgbrt.a" ]; then
+  if [ ! -x "$TOOLS_DIR/gbrecomp" ] || [ ! -f "$TOOLS_DIR/libgbrt.a" ] \
+     || [ "$VER_INSTALLED" != "$TOOLS_VERSION" ]; then
+    mkdir -p "$TOOLS_DIR"
+    cp "$REPO_DIR/bin/gbrecomp" "$TOOLS_DIR/gbrecomp"
+    cp "$REPO_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
+    chmod +x "$TOOLS_DIR/gbrecomp"
+    printf '%s\n' "$TOOLS_VERSION" > "$TOOLS_DIR/VERSION"
+    VER_INSTALLED="$TOOLS_VERSION"
+    info "release tools v$TOOLS_VERSION installed into .tools/"
+  else
+    info "release tools v$TOOLS_VERSION detected (nothing to compile)"
+  fi
   RELEASE_MODE=1
 fi
 
 # With a published release, whoever cloned from git can download the ready
-# tools instead of compiling them. In that case the engine (16 MB of
-# third-party source nobody asked for) is unnecessary: the headers the build
-# needs are embedded in the project gbrecomp generates.
+# tools instead of compiling them.
 if [ -z "$RELEASE_MODE" ] && [ -n "$RELEASE_BASE" ]; then
   RELEASE_MODE=download
 fi
 
 # With a published release the tools arrive by download, which needs curl or
-# wget. That has to be in the FIRST install hint: otherwise the user installs
-# the basics, runs bootstrap again, and only then finds out they need a
-# downloader (two trips to the package manager). The clean-distro test found
-# this on an Ubuntu image that ships neither.
-# NOTE: RELEASE_MODE is already resolved by this point ("1" for the tarball,
-# "download" when a release exists). What matters is whether the tools will
-# be FETCHED, not whether they are already here.
+# wget. Put it in the first install hint so users make one trip.
 if [ "$RELEASE_MODE" != "1" ] && [ -n "$RELEASE_BASE" ] \
    && ! have curl && ! have wget; then
   BUILD_EXTRA="$BUILD_EXTRA curl"
@@ -133,12 +134,16 @@ fi
 step "Checking the essentials"
 
 if [ "$(uname -s)" != "Linux" ]; then
-  warn "This project only works on Linux so far (you are on $(uname -s))."
-  warn "Windows and Android are planned."
+  warn "This shell bootstrap is for Linux (you are on $(uname -s))."
+  warn "On Windows, use GhostBabelRecomp.bat or windows/build.ps1."
 fi
 
-if ! have git; then die "git not found." "$(install_hint git)"; fi
-ok "git $(git --version | awk '{print $3}')"
+if [ -z "$RELEASE_MODE" ] && ! have git; then
+  die "git not found." "$(install_hint git)"
+fi
+if have git; then
+  ok "git $(git --version | awk '{print $3}')"
+fi
 
 CC_BIN=""
 for c in cc gcc clang; do if have "$c"; then CC_BIN="$c"; break; fi; done
@@ -149,7 +154,7 @@ for c in c++ g++ clang++; do if have "$c"; then CXX_BIN="$c"; break; fi; done
 ok "compiler: $CC_BIN / $CXX_BIN"
 
 if ! have make; then
-  warn "make not found - only needed if you compile from source."
+  die "make not found." "$(install_hint)"
 else
   ok "make $(make --version | head -1 | awk '{print $3}')"
 fi
@@ -184,27 +189,17 @@ ok "SDL2 $SDL_VER (minimum $SDL2_MIN)"
 printf '%s\n' "SDL_CFLAGS=$SDL_CFLAGS" >> "$TOOLS_DIR/env"
 
 # ------------------------------------------------- 2. engine (pinned patch)
-#
-# Whoever downloaded the release tarball does not need the clone: gbrecomp
-# embeds the runtime in the generated project, and the Makefile uses the
-# headers from there. The clone is only needed to COMPILE the tools - and in
-# that case they already arrived ready-made.
 ENGINE_DIR="$TOOLS_DIR/engine"
 if [ "$RELEASE_MODE" = "1" ]; then
-  # Tarball: the tools are already here, nothing to fetch.
   step "Release tools"
-  ok "gbrecomp and the runtime are ready: nothing to compile"
-  ok "the runtime headers come with the generated C"
-  mkdir -p "$TOOLS_DIR"
+  ok "gbrecomp and the runtime are ready (v$TOOLS_VERSION): nothing to compile"
+  ok "the runtime headers come with the release package"
   printf '%s\n' "GBRECOMP=$TOOLS_DIR/gbrecomp" >> "$TOOLS_DIR/env"
-  printf '\n%s%sDone!%s\n' "$C_OK" "" "$C_RESET"
+  printf '\n%sDone!%s\n' "$C_OK" "$C_RESET"
   printf '\n  Next step:\n\n      ./build.sh /path/to/your/rom.gbc\n\n'
   exit 0
 fi
-# Without a release the engine is cloned and the tools compiled from it. With
-# a release (tarball or download) none of that is needed: the headers are
-# embedded in the generated project and the tools arrive ready-made. That is
-# why the whole engine block is skipped, not merely announced.
+
 if [ -z "$RELEASE_MODE" ]; then
 
 step "Downloading the engine (pinned version)"
@@ -235,9 +230,14 @@ if have sha256sum; then
 This usually means a corrupted file." "rm -rf .tools && git clone <this repo> again"
 fi
 
-if [ -d "$ENGINE_DIR/.git/rebase-apply" ] || [ -d "$ENGINE_DIR/.git/rebase-merge" ]; then
+TREE_NOW="$(git -C "$ENGINE_DIR" rev-parse HEAD^{tree} 2>/dev/null || true)"
+if [ -n "$ENGINE_TREE" ] && [ "$TREE_NOW" = "$ENGINE_TREE" ]; then
   ok "patch already applied"
 else
+  if [ "$(git -C "$ENGINE_DIR" rev-parse HEAD 2>/dev/null)" != "$ENGINE_COMMIT" ]; then
+    git -C "$ENGINE_DIR" am --abort >/dev/null 2>&1 || true
+    git -C "$ENGINE_DIR" reset -q --hard "$ENGINE_COMMIT"
+  fi
   info "applying the engine patch"
   log "git am $ENGINE_PATCH"
   git -C "$ENGINE_DIR" am -q "$PATCH_FILE" \
@@ -259,64 +259,50 @@ fi   # end: without a release, clone and compile the engine
 
 if [ -n "$RELEASE_MODE" ]; then
   step "Engine"
-  if [ "$RELEASE_MODE" = "1" ]; then
-    ok "the tools arrive ready: no engine, no compiling"
-  else
-    ok "skipping the engine: the headers come with the generated C"
-    info "and the tools arrive ready from the release (no cmake, no ninja)"
-  fi
+  ok "skipping the engine clone: prebuilt runtime arrives from release v$TOOLS_VERSION"
+  info "the tools arrive ready from the release (no cmake, no ninja)"
 fi
 
 # --------------------------------------------- 3. the tools (gbrecomp)
 step "Preparing the tools"
 
 GBRECOMP="$TOOLS_DIR/gbrecomp"
-if [ -x "$GBRECOMP" ]; then
-  ok "gbrecomp already ready"
+if [ -x "$GBRECOMP" ] && [ -f "$TOOLS_DIR/libgbrt.a" ] && [ "$VER_INSTALLED" = "$TOOLS_VERSION" ]; then
+  ok "gbrecomp already ready (v$TOOLS_VERSION)"
 elif [ -n "$RELEASE_BASE" ]; then
   info "downloading prebuilt tools (v$TOOLS_VERSION)"
   ARCH="$(uname -m)"
   case "$ARCH" in
     x86_64) PLAT=linux-x86_64 ;;
     *)
-      # The published artifact is an x86_64 binary. Until an arm64 build
-      # exists, the honest move is to say so here: a 404 from the download URL
-      # looks like a broken project, and "works on my machine" is not it.
-      # Building from source works on any Linux arch and needs only a C/C++
-      # compiler and the SDL2 headers, which this script already checks for.
       die "the prebuilt tools are x86_64 only, and this machine reports '$ARCH'." \
-        "sed -i 's|^release_base = .*|release_base =|' pins.lock && ./bootstrap.sh"
+        "GB_BUILD_FROM_SOURCE=1 ./bootstrap.sh"
       ;;
   esac
   TARBALL="$RELEASE_BASE/ghost-babel-tools-$PLAT-$TOOLS_VERSION.tar.gz"
+  rm -rf "$TOOLS_DIR/runtime" "$TOOLS_DIR/bin" "$TOOLS_DIR/lib" "$TOOLS_DIR/tools.tar.gz"
   if have curl; then curl -fsSL "$TARBALL" -o "$TOOLS_DIR/tools.tar.gz"
   elif have wget; then wget -q "$TARBALL" -O "$TOOLS_DIR/tools.tar.gz"
   else die "I need curl or wget to download the tools." "$(install_hint curl)"
   fi
-  # --strip-components=1: the tarball has a ghost-babel-tools/ directory at
-  # the root, and we want bin/ and lib/ straight inside .tools/.
   tar -xzf "$TOOLS_DIR/tools.tar.gz" -C "$TOOLS_DIR" --strip-components=1 \
     || die "could not unpack the downloaded tools." "rm -f .tools/tools.tar.gz && ./bootstrap.sh"
-  # The tarball carries bin/gbrecomp and lib/libgbrt.a; the rest of the script
-  # expects both in .tools/. Without this copy, the next step would try to
-  # compile a runtime that does not exist (the engine was never cloned).
   [ -f "$TOOLS_DIR/bin/gbrecomp" ] \
     || die "the downloaded package did not include gbrecomp." "$TARBALL"
   cp "$TOOLS_DIR/bin/gbrecomp" "$GBRECOMP" && chmod +x "$GBRECOMP"
   [ -f "$TOOLS_DIR/lib/libgbrt.a" ] \
     || die "the downloaded package did not include the runtime library." "$TARBALL"
   cp "$TOOLS_DIR/lib/libgbrt.a" "$TOOLS_DIR/libgbrt.a"
-  # The runtime lands in one place, <repo>/runtime, whether it came from the
-  # cloned engine (.tools/engine/runtime) or from the package
-  # (.tools/runtime). That way the build and the packager have a single path
-  # to look in.
-  if [ -d "$TOOLS_DIR/runtime" ] && [ ! -d "$REPO_DIR/runtime" ]; then
+  if [ -d "$TOOLS_DIR/runtime" ]; then
+    rm -rf "$REPO_DIR/runtime"
     mv "$TOOLS_DIR/runtime" "$REPO_DIR/runtime"
   fi
+  rm -f "$TOOLS_DIR/tools.tar.gz"
+  printf '%s\n' "$TOOLS_VERSION" > "$TOOLS_DIR/VERSION"
+  VER_INSTALLED="$TOOLS_VERSION"
   ok "tools ready (gbrecomp + runtime, from release v$TOOLS_VERSION)"
 else
-  warn "no release with ready tools yet - building from source."
-  warn "this needs cmake and ninja (one step, ~2 minutes)."
+  warn "building tools from source (cmake + ninja)."
   have cmake || die "building the tools from scratch needs cmake." "$(install_hint cmake ninja-build)"
   have ninja || warn "no ninja: cmake will use make (slower)."
   CMAKE_G="Ninja" ; have ninja || CMAKE_G="Unix Makefiles"
@@ -329,6 +315,7 @@ else
   cp "$ENGINE_DIR/build/bin/gbrecomp" "$GBRECOMP" 2>/dev/null \
     || find "$ENGINE_DIR/build" -name gbrecomp -type f -exec cp {} "$GBRECOMP" \; \
     || die "built it but could not find the gbrecomp binary." "ls .tools/engine/build/bin"
+  chmod +x "$GBRECOMP"
   ok "gbrecomp compiled from source"
 fi
 printf '%s\n' "GBRECOMP=$GBRECOMP" >> "$TOOLS_DIR/env"
@@ -339,7 +326,9 @@ step "Preparing the runtime (the library that makes the game run)"
 LIB="$TOOLS_DIR/libgbrt.a"
 RT="$ENGINE_DIR/runtime"
 
-if [ -f "$LIB" ] && [ "$LIB" -nt "$ENGINE_DIR/.git/HEAD" ] 2>/dev/null; then
+if [ -n "$RELEASE_MODE" ] && [ -f "$LIB" ]; then
+  ok "libgbrt.a ready (v$TOOLS_VERSION)"
+elif [ -f "$LIB" ] && [ "$LIB" -nt "$ENGINE_DIR/.git/HEAD" ] && [ "$VER_INSTALLED" = "$TOOLS_VERSION" ] 2>/dev/null; then
   ok "libgbrt.a already built"
 else
   log "build libgbrt.a"
@@ -368,6 +357,7 @@ It was supposed to be compiled from the cloned engine, but it is not in $RT." \
   done
   ar rcs "$LIB" "$OBJ"/*.o || die "failed to assemble the static library." "ar --version"
   rm -rf "$OBJ"
+  printf '%s\n' "$TOOLS_VERSION" > "$TOOLS_DIR/VERSION"
   ok "libgbrt.a ($(du -h "$LIB" | cut -f1))"
 fi
 
@@ -382,7 +372,7 @@ else
   ok "runtime ready (running it is checked on the first build)"
 fi
 
-printf '\n%s%sAll set.%s\n' "$C_OK" "" "$C_RESET"
+printf '\n%sAll set.%s\n' "$C_OK" "$C_RESET"
 cat <<EOF
 
   Next step:

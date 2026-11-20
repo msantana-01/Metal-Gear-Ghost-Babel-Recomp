@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/20] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/30] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -20,12 +20,13 @@ index 9ad196d..6963fcd 100644
  #ifndef _WIN32
  #include <unistd.h>
 -- 
-2.55.0
+2.56.0
+
 
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/20] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/30] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -135,12 +136,13 @@ index cb01b84..236f173 100644
              }
              ctx->io[0x02] = sc;
 -- 
-2.55.0
+2.56.0
+
 
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/20] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/30] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -297,12 +299,13 @@ index 8c765d3..f850acc 100755
  - **Shared implementation**: Generated-vs-interpreter differential checks are valuable additional evidence, but both paths share runtime devices and are not an independent hardware oracle.
  
 -- 
-2.55.0
+2.56.0
+
 
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/20] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/30] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -462,12 +465,13 @@ index 236f173..be62b88 100644
              ctx->af = 0x01B0;
              ctx->bc = 0x0013;
 -- 
-2.55.0
+2.56.0
+
 
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/20] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/30] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -518,12 +522,13 @@ index f850acc..efa6972 100755
  ### bits
  | Test | Result | Notes |
 -- 
-2.55.0
+2.56.0
+
 
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/20] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/30] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -647,12 +652,13 @@ index 7cc75b8..f4f492a 100644
  - [ ] Complete KEY0/PGB edge behavior and the remaining undocumented CGB I/O
    masks.
 -- 
-2.55.0
+2.56.0
+
 
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/20] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/30] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -709,12 +715,13 @@ index 0864938..23a4c0f 100644
  
      if (strcmp(
 -- 
-2.55.0
+2.56.0
+
 
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/20] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/30] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -757,12 +764,13 @@ index 9e4eeb7..db0462d 100644
  
  void gb_platform_get_timing_info(GBPlatformTimingInfo* out) {
 -- 
-2.55.0
+2.56.0
+
 
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/20] platform: confirm host actions with a transient
+Subject: [PATCH 09/30] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -978,12 +986,13 @@ index db0462d..77da61a 100644
          g_port_frame.abi_version == GB_PORT_ABI_VERSION &&
          g_port_frame.canvas_width > 0 &&
 -- 
-2.55.0
+2.56.0
+
 
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/20] platform: name the host after the cartridge and give
+Subject: [PATCH 10/30] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1291,12 +1300,13 @@ index 77da61a..2e3951f 100644
          SDL_WINDOWPOS_CENTERED,
          g_windowed_width,
 -- 
-2.55.0
+2.56.0
+
 
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/20] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/30] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1408,12 +1418,13 @@ index 2e3951f..22f4081 100644
              ImGui::SameLine();
              if (ImGui::Button("Return to Launcher", ImVec2(footer_button_width, 0.0f))) {
 -- 
-2.55.0
+2.56.0
+
 
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/20] platform: centre the footer buttons on the content
+Subject: [PATCH 12/30] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1452,12 +1463,13 @@ index 22f4081..dcbfa38 100644
              reset_runtime_display_defaults();
          }
 -- 
-2.55.0
+2.56.0
+
 
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/20] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/30] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1613,12 +1625,13 @@ index dcbfa38..cfb4f53 100644
  #if defined(__ANDROID__)
      SDL_SetHint(SDL_HINT_ANDROID_TRAP_BACK_BUTTON, "1");
 -- 
-2.55.0
+2.56.0
+
 
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/20] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/30] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1732,12 +1745,13 @@ index cfb4f53..6444c4b 100644
          ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
          ImGui::SetNextWindowSize(imgui_io.DisplaySize, ImGuiCond_Always);
 -- 
-2.55.0
+2.56.0
+
 
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/20] platform: panel effects for the presented image, one
+Subject: [PATCH 15/30] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2433,12 +2447,13 @@ index 0000000..97c9335
 +}
 \ No newline at end of file
 -- 
-2.55.0
+2.56.0
+
 
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/20] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/30] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2939,12 +2954,13 @@ index 0000000..82bb705
 +}
 \ No newline at end of file
 -- 
-2.55.0
+2.56.0
+
 
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/20] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/30] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3379,12 +3395,13 @@ index 0000000..8379338
 +}
 \ No newline at end of file
 -- 
-2.55.0
+2.56.0
+
 
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/20] runtime: include math.h for the panel effects
+Subject: [PATCH 18/30] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3413,12 +3430,13 @@ index 033bf79..7ff35ca 100644
  #include <string>
  #if defined(_WIN32)
 -- 
-2.55.0
+2.56.0
+
 
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/20] platform: make the presented surface width a runtime
+Subject: [PATCH 19/30] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3843,12 +3861,13 @@ index 7ff35ca..0a577d1 100644
      (void)framebuffer;
  }
 -- 
-2.55.0
+2.56.0
+
 
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/20] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/30] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4530,5 +4549,1828 @@ index 0000000..727d938
 +}
 \ No newline at end of file
 -- 
-2.55.0
+2.56.0
+
+
+From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 18 Oct 2026 01:46:28 -0300
+Subject: [PATCH 21/30] platform: the audio valve shortens the frame wait
+ instead of dropping it
+
+When the ring fell below its low watermark the vsync served no wait at all, and
+the performance document recorded what that costs: a bang-bang controller around
+a threshold, with the cadence as its victim. The valve now scales the wait by how
+full the ring is relative to the watermark - an empty ring runs free, a ring at
+the watermark gets a full frame, which is the 60 fps the APU's rate is matched
+to - so the equilibrium is the watermark itself rather than the ring's ceiling.
+
+The other half is what the schedule does with a wait that was not served. The
+old code advanced next_frame_time by the whole frame however little of it it
+served, so every starved frame moved the target ten milliseconds further ahead
+and the ring's recovery was paid out as one stall. The schedule now advances by
+the wait the frame actually served. It is never pulled forward, so a frame that
+overslept keeps its debt and later frames repay it by serving a shorter wait -
+that repayment is why the cadence reaches 1.0x at all.
+
+Measured on a 7000-frame windowed run, same binary and same instrument before and
+after (--perf-report, real window):
+
+                     before                  after
+  cadence (7000 fr)  0.985x                  0.986x
+  frame wait         0.001 ms .. 32.333 ms   10.060 ms .. 10.867 ms
+  ring               288 .. 3616 (6.5..82 ms)  2304 .. 4576 (52..104 ms)
+  underruns          32801                   30721
+  dropped            35828                   35828
+  produced           44113 Hz                44081 Hz
+
+The cumulative cadence is unchanged because its deficit is the startup burst -
+the window and the CRT shader take 1.2 s and the ring drains while they are
+built - and not the valve. What changes is the steady state: the wait stops
+alternating between nothing and a stall, and the ring stops swinging to within
+6.5 ms of empty. Underruns fall by about 6% and the dropped count is identical,
+which is the check that the guest's own audio production was not touched: only
+the host's waiting changed.
+---
+ runtime/src/platform_sdl.cpp | 42 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 38 insertions(+), 4 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 8a85f93..26962aa 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -4802,13 +4802,47 @@ void gb_platform_vsync(uint32_t frame_cycles) {
+     }
+ 
+     frame_remainder = frame_ticks_num % frame_ticks_den;
+-    next_frame_time += frame_ticks;
+-    uint64_t target_frame_time = next_frame_time;
+ 
+     uint32_t audio_fill = audio_ring_fill_samples();
+-    bool audio_starved = audio_output_should_run() && g_audio_started && audio_fill < g_audio_low_watermark;
++    bool audio_starved = audio_output_should_run() && g_audio_started &&
++                         g_audio_low_watermark > 0u && audio_fill < g_audio_low_watermark;
+ 
+-    if (!audio_starved && now < target_frame_time) {
++    /*
++     * Ring-short case: shorten this frame's wait instead of dropping it.
++     *
++     * The old rule was "ring below the low watermark, do not sleep at all". It
++     * is a bang-bang controller around a threshold, and it costs more cadence
++     * than it buys audio: the free-running frame fills the ring, the next frame
++     * sleeps the banked wait, the ring drains, and the cycle repeats. Measured
++     * on a 7000-frame windowed run: the cadence climbed 0.870x to 0.986x while
++     * the per-frame wait alternated between 0.001 ms and 32.3 ms and the ring
++     * swung between 6.5 ms and 82 ms.
++     *
++     * The wait is instead scaled by how full the ring is relative to the
++     * watermark. An empty ring means run free - the guest has produced and the
++     * device has taken everything - and a ring at the watermark means a full
++     * frame, which is the 60 fps the APU's rate is matched to. The equilibrium
++     * becomes the watermark itself rather than the ring's ceiling.
++     *
++     * The schedule advances by the wait the frame actually served, so the
++     * skipped portion is not banked. Banking is what turned the old valve into
++     * the second half of the cycle: frames that served nothing left the target
++     * ten milliseconds further ahead each frame, and the ring's recovery was
++     * paid out as one 32 ms stall.
++     *
++     * The schedule is still never pulled forward, so a frame that overslept
++     * keeps its debt and later frames repay it by serving a shorter wait. That
++     * repayment is why the cadence reaches 1.0x at all.
++     */
++    uint64_t frame_wait_ticks = frame_ticks;
++    if (audio_starved) {
++        frame_wait_ticks = (frame_ticks * (uint64_t)audio_fill) / (uint64_t)g_audio_low_watermark;
++    }
++
++    next_frame_time += frame_wait_ticks;
++    uint64_t target_frame_time = next_frame_time;
++
++    if (now < target_frame_time) {
+         for (;;) {
+             uint64_t wait_ticks = target_frame_time - now;
+             uint32_t wait_us = (uint32_t)((wait_ticks * 1000000) / freq);
+-- 
+2.56.0
+
+
+From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 18 Oct 2026 02:09:46 -0300
+Subject: [PATCH 22/30] presentation: export LCDC per scanline and raise the
+ ABI to 2
+
+The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
+row the guest assembled from another background map: Ghost Babel selects the
+second map for its bottom HUD band and restores the register at vblank, so the
+band's rows are invisible to a frontend that reads the register once per frame.
+
+The PPU records LCDC at the start of each visible scanline's dot transfer,
+which is the value that row draws with (the live register, not the latch), and
+the presentation ABI exports the 144-byte record.
+
+The record lives in GBContext rather than in GBPPU on purpose: the savestate
+serializes the PPU struct and validates its size, so a field there would make
+every state written before it unreadable. Per-frame telemetry has no business
+invalidating saved games.
+---
+ runtime/include/gbrt.h              | 12 ++++++++++++
+ runtime/include/gbrt_presentation.h | 11 ++++++++++-
+ runtime/src/gbrt_presentation.c     |  7 +++++++
+ runtime/src/ppu.c                   |  9 ++++++++-
+ 4 files changed, 37 insertions(+), 2 deletions(-)
+
+diff --git a/runtime/include/gbrt.h b/runtime/include/gbrt.h
+index c44f8f9..d78a70c 100644
+--- a/runtime/include/gbrt.h
++++ b/runtime/include/gbrt.h
+@@ -422,6 +422,18 @@ typedef struct GBContext {
+     
+     /* Hardware components (opaque pointers) */
+     void* ppu;            /**< Pixel Processing Unit */
++    /* LCDC as it stood when each visible scanline began its dot transfer, in
++     * LY order (GB_SCREEN_HEIGHT entries; ppu.h owns that constant and cannot
++     * be included here). The guest may rewrite LCDC between lines - Ghost Babel
++     * selects the second background map for its bottom HUD band and restores
++     * the register at vblank - so the register alone describes only the rows
++     * that were still drawing when the frame ended. A row that switched maps
++     * during its dot transfer is recorded with the value it started with.
++     *
++     * Per-frame telemetry, not state: the savestate carries the PPU struct and
++     * deliberately not this, so states written before this record existed still
++     * load, and a state that omits it costs one frame of the record. */
++    uint8_t ppu_scanline_lcdc[144];
+     void* apu;            /**< Audio Processing Unit */
+     void* timer;          /**< Timer unit */
+     void* serial;         /**< Serial port */
+diff --git a/runtime/include/gbrt_presentation.h b/runtime/include/gbrt_presentation.h
+index ea3d6d4..f4f20cf 100644
+--- a/runtime/include/gbrt_presentation.h
++++ b/runtime/include/gbrt_presentation.h
+@@ -11,7 +11,7 @@
+ extern "C" {
+ #endif
+ 
+-#define GB_PRESENTATION_ABI_VERSION 1u
++#define GB_PRESENTATION_ABI_VERSION 2u
+ #define GB_PRESENTATION_ROM_SHA256_CAPACITY 65u
+ #define GB_PRESENTATION_MAX_MAP_REGIONS 9u
+ #define GB_PRESENTATION_MAX_MAP_BLOCKS 4096u
+@@ -189,6 +189,15 @@ typedef struct GBPresentationHardwareSnapshot {
+     uint8_t background_palettes[0x40];
+     uint8_t object_palettes[0x40];
+     uint16_t accurate_pixels[GB_PRESENTATION_ACCURATE_PIXEL_COUNT];
++    /* LCDC as each visible scanline began drawing it, in LY order. `lcdc` is
++     * the register as the frame ended, which is what the rows still on the
++     * first background map used; a row whose background-map bit differs from
++     * this snapshot's was assembled from the other map. Ghost Babel's bottom
++     * HUD band is the case that made this necessary: the game selects the
++     * second map for the band and restores the register at vblank, so the
++     * end-of-frame register cannot see that the band's rows came from
++     * elsewhere. */
++    uint8_t scanline_lcdc[GB_PRESENTATION_ACCURATE_HEIGHT];
+ } GBPresentationHardwareSnapshot;
+ 
+ typedef struct GBPresentationTiming {
+diff --git a/runtime/src/gbrt_presentation.c b/runtime/src/gbrt_presentation.c
+index d3d2c31..bcdf55b 100644
+--- a/runtime/src/gbrt_presentation.c
++++ b/runtime/src/gbrt_presentation.c
+@@ -414,5 +414,12 @@ GBPresentationStatus gbrt_presentation_capture(
+         hardware->accurate_pixels,
+         ppu->color_framebuffer,
+         sizeof(hardware->accurate_pixels));
++    /* Per-row LCDC, so a frontend can tell which rows the guest assembled from
++     * the other background map instead of assuming the end-of-frame register
++     * covers the whole picture. */
++    memcpy(
++        hardware->scanline_lcdc,
++        context->ppu_scanline_lcdc,
++        sizeof(hardware->scanline_lcdc));
+     return GB_PRESENTATION_OK;
+ }
+diff --git a/runtime/src/ppu.c b/runtime/src/ppu.c
+index d3f7060..3e39613 100644
+--- a/runtime/src/ppu.c
++++ b/runtime/src/ppu.c
+@@ -1096,8 +1096,15 @@ static void ppu_select_line_sprites(GBPPU* ppu, const GBContext* ctx) {
+     }
+ }
+ 
+-static void ppu_begin_dot_transfer(GBPPU* ppu, const GBContext* ctx) {
++static void ppu_begin_dot_transfer(GBPPU* ppu, GBContext* ctx) {
+     latch_scanline_registers(ppu);
++    /* What this line draws with, recorded per row. The visible pixels come
++     * from the live register, not the latch, and this sample is taken at the
++     * same instant - before any of the row's dots - so it is the value the
++     * row was assembled from. */
++    if (ppu->ly < GB_SCREEN_HEIGHT) {
++        ctx->ppu_scanline_lcdc[ppu->ly] = ppu->lcdc;
++    }
+     ppu_select_line_sprites(ppu, ctx);
+     ppu->mode_cycles = 0;
+     ppu->mode3_length = 0;
+-- 
+2.56.0
+
+
+From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 18 Oct 2026 02:45:39 -0300
+Subject: [PATCH 23/30] tests: cover the per-scanline LCDC record
+
+The ABI-2 signal drives real PPU pixels: this drives real dots through a
+frame, switches the background map at LY=3 the way Ghost Babel's HUD band
+does, and checks what each row recorded. It also proves the record is the
+frame's, not the session's - a frame that does not switch re-records every
+row.
+---
+ tests/CMakeLists.txt           |   4 +
+ tests/test_ppu_scanline_lcdc.c | 135 +++++++++++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
+ create mode 100644 tests/test_ppu_scanline_lcdc.c
+
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index ffb4972..64bae97 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -448,6 +448,10 @@ if(TARGET gbrt)
+     target_link_libraries(test_ppu_dot_timing PRIVATE gbrt)
+     add_test(NAME ppu_uses_dot_aware_pixel_transfer COMMAND test_ppu_dot_timing)
+ 
++    add_executable(test_ppu_scanline_lcdc test_ppu_scanline_lcdc.c)
++    target_link_libraries(test_ppu_scanline_lcdc PRIVATE gbrt)
++    add_test(NAME ppu_records_lcdc_per_scanline COMMAND test_ppu_scanline_lcdc)
++
+     add_executable(test_runtime_bus_phase test_runtime_bus_phase.c)
+     target_link_libraries(test_runtime_bus_phase PRIVATE gbrt)
+     add_test(NAME ram_stub_places_memory_access_in_final_mcycle COMMAND test_runtime_bus_phase)
+diff --git a/tests/test_ppu_scanline_lcdc.c b/tests/test_ppu_scanline_lcdc.c
+new file mode 100644
+index 0000000..b7010cb
+--- /dev/null
++++ b/tests/test_ppu_scanline_lcdc.c
+@@ -0,0 +1,135 @@
++/* The presentation ABI exports LCDC per visible scanline because a guest may
++ * change background maps between rows. Ghost Babel does: it selects the second
++ * map for the bottom HUD band and restores the register at vblank, so the
++ * register alone describes only the rows that were still drawing when the frame
++ * ended and the band is invisible to a frontend that samples it once per frame.
++ *
++ * This drives real PPU dots through a frame, switches the map the way the game
++ * does, and checks what each row recorded. */
++
++#include "gbrt.h"
++#include "ppu.h"
++
++#include <stdio.h>
++#include <string.h>
++
++#define FRAME_CYCLES 70224u
++
++static GBContext* make_context(void) {
++    GBConfig config;
++    memset(&config, 0, sizeof(config));
++    config.model = GB_MODEL_DMG;
++
++    GBContext* ctx = gb_context_create(&config);
++    if (!ctx) {
++        return NULL;
++    }
++
++    uint8_t rom[32u * 1024u];
++    memset(rom, 0, sizeof(rom));
++    if (!gb_context_load_rom(ctx, rom, sizeof(rom))) {
++        gb_context_destroy(ctx);
++        return NULL;
++    }
++    gb_context_reset(ctx, true);
++    memset(ctx->oam, 0, OAM_SIZE);
++    memset(ctx->vram, 0, VRAM_SIZE * 2u);
++    return ctx;
++}
++
++/* One frame of dots. The register is switched at LY=3 and restored at LY=144,
++ * which is where a band that owns the bottom rows would do it. */
++static void run_switching_frame(GBContext* ctx, uint8_t scene, uint8_t band) {
++    GBPPU* ppu = (GBPPU*)ctx->ppu;
++    ppu_write_register(ppu, ctx, 0xFF40, scene);
++    for (uint32_t cycle = 0; cycle < FRAME_CYCLES; ++cycle) {
++        if (ppu->ly == 3u && ppu->mode != PPU_MODE_VBLANK && ppu->lcdc == scene) {
++            ppu_write_register(ppu, ctx, 0xFF40, band);
++        } else if (ppu->ly == 144u && ppu->lcdc == band) {
++            ppu_write_register(ppu, ctx, 0xFF40, scene);
++        }
++        ppu_tick(ppu, ctx, 1u);
++    }
++}
++
++static void run_quiet_frame(GBContext* ctx, uint8_t lcdc) {
++    GBPPU* ppu = (GBPPU*)ctx->ppu;
++    ppu_write_register(ppu, ctx, 0xFF40, lcdc);
++    for (uint32_t cycle = 0; cycle < FRAME_CYCLES; ++cycle) {
++        ppu_tick(ppu, ctx, 1u);
++    }
++}
++
++int main(void) {
++    GBContext* ctx = make_context();
++    if (!ctx) {
++        fprintf(stderr, "scanline LCDC: could not build a context\n");
++        return 1;
++    }
++
++    const uint8_t scene =
++        LCDC_LCD_ENABLE | LCDC_BG_ENABLE | LCDC_OBJ_ENABLE | LCDC_TILE_DATA;
++    const uint8_t band = (uint8_t)(scene | LCDC_BG_TILEMAP);
++
++    int failures = 0;
++    run_switching_frame(ctx, scene, band);
++
++    for (uint32_t y = 0; y < 3u; ++y) {
++        if (ctx->ppu_scanline_lcdc[y] != scene) {
++            fprintf(
++                stderr,
++                "scanline LCDC: row %u recorded 0x%02X, expected the scene map 0x%02X\n",
++                y,
++                ctx->ppu_scanline_lcdc[y],
++                scene);
++            failures++;
++        }
++    }
++    /* The write lands between two rows, so row 3 is whichever side of the dot
++     * transfer it caught - the record keeps the value that row began with. */
++    if (ctx->ppu_scanline_lcdc[3] != scene && ctx->ppu_scanline_lcdc[3] != band) {
++        fprintf(
++            stderr,
++            "scanline LCDC: row 3 recorded 0x%02X, expected one of 0x%02X/0x%02X\n",
++            ctx->ppu_scanline_lcdc[3],
++            scene,
++            band);
++        failures++;
++    }
++    for (uint32_t y = 4u; y < GB_SCREEN_HEIGHT; ++y) {
++        if (ctx->ppu_scanline_lcdc[y] != band) {
++            fprintf(
++                stderr,
++                "scanline LCDC: row %u recorded 0x%02X, expected the band's map 0x%02X\n",
++                y,
++                ctx->ppu_scanline_lcdc[y],
++                band);
++            failures++;
++            break;
++        }
++    }
++
++    /* A frame that does not switch re-records every row: the record is the
++     * frame's, not the session's. */
++    run_quiet_frame(ctx, scene);
++    for (uint32_t y = 0; y < GB_SCREEN_HEIGHT; ++y) {
++        if (ctx->ppu_scanline_lcdc[y] != scene) {
++            fprintf(
++                stderr,
++                "scanline LCDC: quiet frame left row %u at 0x%02X, expected 0x%02X\n",
++                y,
++                ctx->ppu_scanline_lcdc[y],
++                scene);
++            failures++;
++            break;
++        }
++    }
++
++    gb_context_destroy(ctx);
++    if (failures != 0) {
++        fprintf(stderr, "scanline LCDC: %d failure(s)\n", failures);
++        return 1;
++    }
++    printf("scanline LCDC: rows 0-2 scene, 4-143 the band's map, both re-recorded\n");
++    return 0;
++}
+-- 
+2.56.0
+
+
+From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 20 Oct 2026 10:17:22 -0300
+Subject: [PATCH 24/30] audio: let the host choose the mastering default
+
+The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
+
+A saved audio.mastering preference in runtime_prefs.ini still wins, so a player who chose raw audio keeps that choice across launches. gb_platform_get_audio_mastering() exposes the effective state for the performance report.
+---
+ runtime/include/platform_sdl.h | 15 +++++++++++++++
+ runtime/src/platform_sdl.cpp   | 14 +++++++++++++-
+ 2 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 95605a1..b3eab6e 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -198,6 +198,21 @@ void gb_platform_set_smooth_lcd_transitions(bool enabled);
+  */
+ void gb_platform_set_title(const char* title);
+ 
++/**
++ * @brief Choose the mastering default used when preferences are loaded.
++ *
++ * The remaster host sets this before gb_platform_init so a fresh profile
++ * starts mastered, while the authentic host keeps the 1998 mix. A saved
++ * preference in runtime_prefs.ini still wins: this is the artifact's default,
++ * not a forced setting.
++ */
++void gb_platform_set_audio_mastering_default(bool enabled);
++
++/**
++ * @brief Current mastering state, after preferences and menu toggles.
++ */
++bool gb_platform_get_audio_mastering(void);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 26962aa..1225ee9 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -231,6 +231,10 @@ static std::atomic<bool> g_audio_muted{false};
+ static uint32_t g_audio_latency_ms = 80;
+ static std::atomic<uint32_t> g_audio_volume_percent{100};
+ static std::atomic<bool> g_audio_mastering_enabled{false};
++/* The artifact's opinion, not the user's: the remaster host sets this before
++ * gb_platform_init so a fresh profile starts mastered. A saved preference still
++ * wins when runtime_prefs.ini names audio.mastering. */
++static bool g_audio_mastering_default = false;
+ static uint32_t g_audio_low_watermark = 0;
+ static uint32_t g_audio_device_sample_rate = 44100;
+ static uint32_t g_audio_device_buffer_samples = 0;
+@@ -1023,7 +1027,7 @@ static void set_default_audio_preferences(void) {
+     g_audio_output_enabled = true;
+     g_audio_muted.store(false, std::memory_order_relaxed);
+     g_audio_latency_ms = 80;
+-    g_audio_mastering_enabled.store(false, std::memory_order_relaxed);
++    g_audio_mastering_enabled.store(g_audio_mastering_default, std::memory_order_relaxed);
+     g_audio_volume_percent.store(100, std::memory_order_relaxed);
+     g_audio_target_device_name.clear();
+ }
+@@ -4901,6 +4905,14 @@ void gb_platform_set_title(const char* title) {
+     }
+ }
+ 
++void gb_platform_set_audio_mastering_default(bool enabled) {
++    g_audio_mastering_default = enabled;
++}
++
++bool gb_platform_get_audio_mastering(void) {
++    return g_audio_mastering_enabled.load(std::memory_order_relaxed);
++}
++
+ /* ============================================================================
+  * Save Data
+  * ========================================================================== */
+-- 
+2.56.0
+
+
+From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 20 Oct 2026 10:36:04 -0300
+Subject: [PATCH 25/30] preferences: give each artifact its own identity keys
+
+Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
+
+gb_platform_set_preference_scope() names the artifact. An identity key is then stored per scope (audio.mastering.remaster) and the bare name belongs to the unscoped build. The player's environment - bindings, device, volume - stays shared, because configuring the gamepad twice is a tax, not a feature.
+
+A scoped artifact writes the whole file back when a setting changes, so the other artifact's identity key is read and written back untouched. Without that, saving in the remaster would silently rewrite the authentic's identity.
+---
+ runtime/include/platform_sdl.h | 12 ++++++++
+ runtime/src/platform_sdl.cpp   | 51 ++++++++++++++++++++++++++++++++--
+ 2 files changed, 61 insertions(+), 2 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index b3eab6e..7234c4a 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -213,6 +213,18 @@ void gb_platform_set_audio_mastering_default(bool enabled);
+  */
+ bool gb_platform_get_audio_mastering(void);
+ 
++/**
++ * @brief Name the artifact's preference scope.
++ *
++ * Two artifacts that share one core must not share the settings that carry
++ * their identity: with a scope, "audio.mastering" is stored per artifact
++ * (audio.mastering.<scope>) and one artifact's choice does not become the
++ * other's. The settings that are the player's environment - bindings, device,
++ * volume - stay shared. An empty scope keeps the bare key names, which is
++ * what every build before this change read and wrote.
++ */
++void gb_platform_set_preference_scope(const char* scope);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 1225ee9..765c0fe 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -235,6 +235,13 @@ static std::atomic<bool> g_audio_mastering_enabled{false};
+  * gb_platform_init so a fresh profile starts mastered. A saved preference still
+  * wins when runtime_prefs.ini names audio.mastering. */
+ static bool g_audio_mastering_default = false;
++/* The artifact's preference scope. Two artifacts share one core, and they must
++ * not share the settings that carry their identity: a player who turns the
++ * mastering off in the remaster keeps the authentic raw, and the other way
++ * around. The settings that are the player's environment - bindings, device,
++ * volume - stay shared, because configuring the gamepad twice is a tax, not a
++ * feature. */
++static std::string g_preference_scope;
+ static uint32_t g_audio_low_watermark = 0;
+ static uint32_t g_audio_device_sample_rate = 44100;
+ static uint32_t g_audio_device_buffer_samples = 0;
+@@ -1099,6 +1106,31 @@ static std::string runtime_preferences_path(void) {
+     return fs::path("runtime_prefs.ini").lexically_normal().string();
+ }
+ 
++/* The keys that carry an artifact's identity rather than the player's
++ * environment. These are stored per scope, so the two artifacts cannot
++ * overwrite each other's opinion of what they are. */
++static bool pref_key_is_artifact_identity(const char* key) {
++    return strcmp(key, "audio.mastering") == 0;
++}
++
++/* The name a key is stored under in this artifact's scope. An artifact with no
++ * scope keeps the bare name, which is what every build before this change
++ * wrote and still reads. */
++static std::string scoped_pref_key(const char* key) {
++    if (g_preference_scope.empty() || !pref_key_is_artifact_identity(key)) {
++        return key;
++    }
++    return std::string(key) + "." + g_preference_scope;
++}
++
++/* An identity key that belongs to another artifact. A scoped artifact writes
++ * the whole file back when the player changes a setting, and a save that drops
++ * the other artifact's value would silently rewrite the other artifact's
++ * identity. The foreign value is kept as it was read and written back
++ * untouched. */
++static std::string g_foreign_identity_key;
++static std::string g_foreign_identity_value;
++
+ static void load_runtime_preferences(void) {
+     set_default_audio_preferences();
+     set_default_input_bindings();
+@@ -1145,10 +1177,17 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
+-                if (strcmp(key, "audio.mastering") == 0) {
++                if (strcmp(key, scoped_pref_key("audio.mastering").c_str()) == 0) {
+                     g_audio_mastering_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
+                     continue;
+                 }
++                if (pref_key_is_artifact_identity(key) && !g_preference_scope.empty()) {
++                    /* Another artifact's identity. Remember it so saving this
++                     * artifact does not erase it. */
++                    g_foreign_identity_key = key;
++                    g_foreign_identity_value = value;
++                    continue;
++                }
+                 if (strcmp(key, "audio.volume_percent") == 0) {
+                     long parsed = strtol(value, NULL, 10);
+                     if (parsed >= 0) {
+@@ -1330,7 +1369,11 @@ static void save_runtime_preferences(void) {
+     fprintf(file, "audio.muted=%d\n",
+             g_audio_muted.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.latency_ms=%u\n", g_audio_latency_ms);
+-    fprintf(file, "audio.mastering=%d\n",
++    if (!g_foreign_identity_key.empty()) {
++        fprintf(file, "%s=%s\n", g_foreign_identity_key.c_str(),
++                g_foreign_identity_value.c_str());
++    }
++    fprintf(file, "%s=%d\n", scoped_pref_key("audio.mastering").c_str(),
+             g_audio_mastering_enabled.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.volume_percent=%u\n",
+             g_audio_volume_percent.load(std::memory_order_relaxed));
+@@ -4913,6 +4956,10 @@ bool gb_platform_get_audio_mastering(void) {
+     return g_audio_mastering_enabled.load(std::memory_order_relaxed);
+ }
+ 
++void gb_platform_set_preference_scope(const char* scope) {
++    g_preference_scope = (scope && scope[0]) ? scope : "";
++}
++
+ /* ============================================================================
+  * Save Data
+  * ========================================================================== */
+-- 
+2.56.0
+
+
+From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 20 Oct 2026 11:06:09 -0300
+Subject: [PATCH 26/30] presentation: the artifact chooses the panel effect,
+ and the effect keys are identity
+
+The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
+
+gb_platform_set_screen_effect_default() gives the host that say. GBScreenEffect moves to the header, because a host that chooses an effect needs its name, not its number.
+
+The screen effect keys join audio.mastering as artifact identity keys, so they are stored per scope and preserved when the other artifact saves. The loader now applies the identity keys in one place: the key this artifact owns is applied, the others are kept verbatim.
+---
+ runtime/include/platform_sdl.h |  25 +++++
+ runtime/src/platform_sdl.cpp   | 179 +++++++++++++++++++++------------
+ 2 files changed, 141 insertions(+), 63 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 7234c4a..f371aea 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -34,6 +34,17 @@ typedef enum GBPlatformExitAction {
+     GB_PLATFORM_EXIT_RETURN_TO_LAUNCHER = 1,
+ } GBPlatformExitAction;
+ 
++/* Panel effects. Distinct from the render filter, which chooses how the guest
++ * texture is interpolated while it is being scaled: these are drawn on top of
++ * the finished image. */
++typedef enum GBScreenEffect {
++    GB_SCREEN_EFFECT_OFF = 0,
++    GB_SCREEN_EFFECT_SCANLINES = 1,
++    GB_SCREEN_EFFECT_LCD_GRID = 2,
++    GB_SCREEN_EFFECT_CRT = 3,
++    GB_SCREEN_EFFECT_COUNT = 4,
++} GBScreenEffect;
++
+ enum {
+     GB_PLATFORM_RETURN_TO_LAUNCHER_EXIT_CODE = 64,
+ };
+@@ -225,6 +236,20 @@ bool gb_platform_get_audio_mastering(void);
+  */
+ void gb_platform_set_preference_scope(const char* scope);
+ 
++/**
++ * @brief Choose the panel effect the artifact opens with.
++ *
++ * The host says what its artifact looks like; a saved preference still wins.
++ * The authentic artifact keeps the effect off, because it is the definition
++ * of what was not touched.
++ */
++void gb_platform_set_screen_effect_default(GBScreenEffect effect);
++
++/**
++ * @brief The panel effect in effect, after preferences and menu toggles.
++ */
++GBScreenEffect gb_platform_get_screen_effect(void);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 765c0fe..b25a803 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -22,6 +22,7 @@
+ // GCC 14 happened to pull it in here.
+ #include <math.h>
+ #include <filesystem>
++#include <map>
+ #include <string>
+ #if defined(_WIN32)
+ #include <io.h>
+@@ -129,17 +130,12 @@ typedef enum GBRenderFilterMode {
+     GB_RENDER_FILTER_LINEAR = 1,
+ } GBRenderFilterMode;
+ 
+-/* Panel effects. Distinct from GBRenderFilterMode, which chooses how the guest
+- * texture is interpolated while it is being scaled: these are drawn on top of
+- * the finished image, and composing with a setting already called "Scale
+- * Filter" would be a naming trap. */
+-typedef enum GBScreenEffect {
+-    GB_SCREEN_EFFECT_OFF = 0,
+-    GB_SCREEN_EFFECT_SCANLINES = 1,
+-    GB_SCREEN_EFFECT_LCD_GRID = 2,
+-    GB_SCREEN_EFFECT_CRT = 3,
+-    GB_SCREEN_EFFECT_COUNT = 4,
+-} GBScreenEffect;
++/* Panel effects live in platform_sdl.h: a host that wants to choose the effect
++ * its artifact opens with needs the names, not the numbers. The effect is
++ * distinct from GBRenderFilterMode, which chooses how the guest texture is
++ * interpolated while it is being scaled: these are drawn on top of the
++ * finished image, and composing with a setting already called "Scale Filter"
++ * would be a naming trap. */
+ 
+ /* Mask pixels per guest pixel: the on-screen scale factor, bounded. Below the
+  * floor there is no room to resolve a gap; above the ceiling the mask would be
+@@ -205,6 +201,9 @@ typedef struct GBInputBinding {
+ static GBRenderScalingMode g_render_scaling_mode = GB_RENDER_SCALING_PIXEL_PERFECT;
+ static GBRenderFilterMode g_render_filter_mode = GB_RENDER_FILTER_NEAREST;
+ static GBScreenEffect g_screen_effect = GB_SCREEN_EFFECT_OFF;
++/* The artifact's opinion, like the mastering default: the host says what its
++ * artifact opens with, and a saved preference still wins. */
++static GBScreenEffect g_screen_effect_default = GB_SCREEN_EFFECT_OFF;
+ static int g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
+ 
+ /* LCD response. Off by default: the trail is authentic and the first time
+@@ -1109,27 +1108,89 @@ static std::string runtime_preferences_path(void) {
+ /* The keys that carry an artifact's identity rather than the player's
+  * environment. These are stored per scope, so the two artifacts cannot
+  * overwrite each other's opinion of what they are. */
++static const char* const kIdentityPrefKeys[] = {
++    "audio.mastering",
++    "screen.effect",
++    "screen.effect_intensity",
++    "screen.lcd_response_enabled",
++    "screen.lcd_response_ms",
++};
++
++/* The identity a key belongs to, or NULL when the key is not an identity key.
++ * A scoped key is the identity name plus a scope suffix ("audio.mastering.
++ * remaster"), so the base is the longest identity name the key starts with. */
++static const char* pref_identity_base(const char* key) {
++    for (const char* name : kIdentityPrefKeys) {
++        if (strcmp(key, name) == 0) {
++            return name;
++        }
++    }
++    for (const char* name : kIdentityPrefKeys) {
++        const size_t len = strlen(name);
++        if (strncmp(key, name, len) == 0 && key[len] == '.') {
++            return name;
++        }
++    }
++    return NULL;
++}
++
++/* Whether a key carries an artifact's identity. */
+ static bool pref_key_is_artifact_identity(const char* key) {
+-    return strcmp(key, "audio.mastering") == 0;
++    return pref_identity_base(key) != NULL;
+ }
+ 
+ /* The name a key is stored under in this artifact's scope. An artifact with no
+  * scope keeps the bare name, which is what every build before this change
+  * wrote and still reads. */
+ static std::string scoped_pref_key(const char* key) {
+-    if (g_preference_scope.empty() || !pref_key_is_artifact_identity(key)) {
++    const char* base = pref_identity_base(key);
++    if (g_preference_scope.empty() || base == NULL) {
+         return key;
+     }
+-    return std::string(key) + "." + g_preference_scope;
++    return std::string(base) + "." + g_preference_scope;
+ }
+ 
+-/* An identity key that belongs to another artifact. A scoped artifact writes
+- * the whole file back when the player changes a setting, and a save that drops
+- * the other artifact's value would silently rewrite the other artifact's
+- * identity. The foreign value is kept as it was read and written back
++/* Identity keys that belong to another artifact. A scoped artifact writes the
++ * whole file back when the player changes a setting, and a save that drops the
++ * other artifact's value would silently rewrite the other artifact's
++ * identity. The foreign values are kept as they were read and written back
+  * untouched. */
+-static std::string g_foreign_identity_key;
+-static std::string g_foreign_identity_value;
++static std::map<std::string, std::string> g_foreign_identity_values;
++
++/* Applies one identity preference of this artifact. The identity name is the
++ * bare name, whatever scope the key was stored under. */
++static void apply_identity_preference(const char* identity, const char* value) {
++    if (strcmp(identity, "audio.mastering") == 0) {
++        g_audio_mastering_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
++        return;
++    }
++    if (strcmp(identity, "screen.effect") == 0) {
++        long parsed = strtol(value, NULL, 10);
++        if (parsed >= 0 && parsed < GB_SCREEN_EFFECT_COUNT) {
++            g_screen_effect = (GBScreenEffect)parsed;
++        }
++        return;
++    }
++    if (strcmp(identity, "screen.effect_intensity") == 0) {
++        long parsed = strtol(value, NULL, 10);
++        if (parsed >= GB_SCREEN_EFFECT_INTENSITY_MIN &&
++            parsed <= GB_SCREEN_EFFECT_INTENSITY_MAX) {
++            g_screen_effect_intensity = (int)parsed;
++        }
++        return;
++    }
++    if (strcmp(identity, "screen.lcd_response_enabled") == 0) {
++        g_lcd_response_enabled = (strcmp(value, "0") != 0);
++        return;
++    }
++    if (strcmp(identity, "screen.lcd_response_ms") == 0) {
++        long parsed = strtol(value, NULL, 10);
++        if (parsed > 0 && parsed <= GB_LCD_RESPONSE_MS_MAX) {
++            g_lcd_response_ms = (int)parsed;
++        }
++        return;
++    }
++}
+ 
+ static void load_runtime_preferences(void) {
+     set_default_audio_preferences();
+@@ -1137,6 +1198,10 @@ static void load_runtime_preferences(void) {
+     g_savestate_slot = 0;
+     g_savestate_status.clear();
+     g_max_speed_mode = false;
++    /* The artifact's defaults for the identity keys. A saved preference
++     * replaces them; a missing one leaves them. */
++    g_screen_effect = g_screen_effect_default;
++    g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
+     bool saw_controller_port_ui_binding = false;
+ 
+     const std::string path = runtime_preferences_path();
+@@ -1177,16 +1242,20 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
+-                if (strcmp(key, scoped_pref_key("audio.mastering").c_str()) == 0) {
+-                    g_audio_mastering_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
+-                    continue;
+-                }
+-                if (pref_key_is_artifact_identity(key) && !g_preference_scope.empty()) {
+-                    /* Another artifact's identity. Remember it so saving this
+-                     * artifact does not erase it. */
+-                    g_foreign_identity_key = key;
+-                    g_foreign_identity_value = value;
+-                    continue;
++                {
++                    /* Identity keys belong to an artifact, not to the player.
++                     * The one this artifact owns is applied; the others are
++                     * kept as they were read, so that saving this artifact
++                     * does not erase another artifact's identity. */
++                    const char* identity = pref_identity_base(key);
++                    if (identity != NULL) {
++                        if (strcmp(key, scoped_pref_key(identity).c_str()) == 0) {
++                            apply_identity_preference(identity, value);
++                        } else {
++                            g_foreign_identity_values[key] = value;
++                        }
++                        continue;
++                    }
+                 }
+                 if (strcmp(key, "audio.volume_percent") == 0) {
+                     long parsed = strtol(value, NULL, 10);
+@@ -1207,32 +1276,6 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
+-                if (strcmp(key, "screen.effect") == 0) {
+-                    long parsed = strtol(value, NULL, 10);
+-                    if (parsed >= 0 && parsed < GB_SCREEN_EFFECT_COUNT) {
+-                        g_screen_effect = (GBScreenEffect)parsed;
+-                    }
+-                    continue;
+-                }
+-                if (strcmp(key, "screen.effect_intensity") == 0) {
+-                    long parsed = strtol(value, NULL, 10);
+-                    if (parsed >= GB_SCREEN_EFFECT_INTENSITY_MIN &&
+-                        parsed <= GB_SCREEN_EFFECT_INTENSITY_MAX) {
+-                        g_screen_effect_intensity = (int)parsed;
+-                    }
+-                    continue;
+-                }
+-                if (strcmp(key, "screen.lcd_response_enabled") == 0) {
+-                    g_lcd_response_enabled = (strcmp(value, "0") != 0);
+-                    continue;
+-                }
+-                if (strcmp(key, "screen.lcd_response_ms") == 0) {
+-                    long parsed = strtol(value, NULL, 10);
+-                    if (parsed > 0 && parsed <= GB_LCD_RESPONSE_MS_MAX) {
+-                        g_lcd_response_ms = (int)parsed;
+-                    }
+-                    continue;
+-                }
+ 
+                 bool is_keyboard = strncmp(key, "keyboard.", 9) == 0;
+                 bool is_controller = strncmp(key, "controller.", 11) == 0;
+@@ -1369,9 +1412,8 @@ static void save_runtime_preferences(void) {
+     fprintf(file, "audio.muted=%d\n",
+             g_audio_muted.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.latency_ms=%u\n", g_audio_latency_ms);
+-    if (!g_foreign_identity_key.empty()) {
+-        fprintf(file, "%s=%s\n", g_foreign_identity_key.c_str(),
+-                g_foreign_identity_value.c_str());
++    for (const auto& entry : g_foreign_identity_values) {
++        fprintf(file, "%s=%s\n", entry.first.c_str(), entry.second.c_str());
+     }
+     fprintf(file, "%s=%d\n", scoped_pref_key("audio.mastering").c_str(),
+             g_audio_mastering_enabled.load(std::memory_order_relaxed) ? 1 : 0);
+@@ -1379,10 +1421,13 @@ static void save_runtime_preferences(void) {
+             g_audio_volume_percent.load(std::memory_order_relaxed));
+     fprintf(file, "audio.device_name=%s\n", g_audio_target_device_name.c_str());
+     fprintf(file, "savestate.slot=%d\n", g_savestate_slot);
+-    fprintf(file, "screen.effect=%d\n", (int)g_screen_effect);
+-    fprintf(file, "screen.effect_intensity=%d\n", g_screen_effect_intensity);
+-    fprintf(file, "screen.lcd_response_enabled=%d\n", g_lcd_response_enabled ? 1 : 0);
+-    fprintf(file, "screen.lcd_response_ms=%d\n", g_lcd_response_ms);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.effect").c_str(), (int)g_screen_effect);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.effect_intensity").c_str(),
++            g_screen_effect_intensity);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_enabled").c_str(),
++            g_lcd_response_enabled ? 1 : 0);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_ms").c_str(),
++            g_lcd_response_ms);
+ 
+     for (int action = 0; action < GB_INPUT_ACTION_COUNT; action++) {
+         for (int slot = 0; slot < 2; slot++) {
+@@ -4960,6 +5005,14 @@ void gb_platform_set_preference_scope(const char* scope) {
+     g_preference_scope = (scope && scope[0]) ? scope : "";
+ }
+ 
++void gb_platform_set_screen_effect_default(GBScreenEffect effect) {
++    g_screen_effect_default = effect;
++}
++
++GBScreenEffect gb_platform_get_screen_effect(void) {
++    return g_screen_effect;
++}
++
+ /* ============================================================================
+  * Save Data
+  * ========================================================================== */
+-- 
+2.56.0
+
+
+From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sat, 24 Oct 2026 17:25:01 -0300
+Subject: [PATCH 27/30] audio: start stats at first presented frame, drop
+ startup burst
+
+Issue #7.  The first presented frame ends the window/shader setup and the
+catch-up run that produces a burst of audio into a paused device.  Clear the
+ring and zero the audio-stats counters at that moment so the numbers that
+the remaster prints measure the regime and not the startup transient.
+
+- Reset ring and audio underruns at first present.
+- Zero AudioStats totals and per-second counters.
+- No change to pacing; audibility unchanged, what changes is the measurement.
+
+Tested by dummy run: first 10-s interval drops go to zero.
+---
+ runtime/src/platform_sdl.cpp | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index b25a803..843ed21 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -92,6 +92,7 @@ static SDL_AudioDeviceID g_audio_device = 0;
+ static SDL_GameController* g_controller = NULL;
+ static bool g_vsync = false;  /* VSync OFF - we pace with wall clock for 59.7 FPS */
+ static bool g_audio_started = false;
++static bool g_audio_first_present_pending = true;
+ static uint32_t g_audio_start_threshold = 0;
+ 
+ /* Performance timing diagnostics */
+@@ -2845,6 +2846,13 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         return;
+     }
+     g_present_count++;
++    /* Issue #7: the first presented frame ends the startup transient.  Drop
++     * anything that was produced while the window/shader were being set up,
++     * and start the regime measurement from the first frame on screen. */
++    if (g_audio_first_present_pending) {
++        g_audio_first_present_pending = false;
++        reset_audio_output_buffer(false);
++    }
+     if (count_guest_frame) {
+         g_frame_count++;
+         memcpy(g_last_guest_framebuffer, framebuffer, sizeof(g_last_guest_framebuffer));
+@@ -3930,6 +3938,22 @@ static void reset_audio_output_buffer(bool preserve_stats) {
+         g_audio_reported_underruns = 0;
+         g_audio_samples_written = 0;
+         g_audio_write_publications = 0;
++        /* Reset the audio-stats module counters so the regime is measured
++         * after the first frame, not the startup burst (issue #7). */
++        extern AudioStats g_audio_stats;
++        g_audio_stats.total_samples_generated = 0;
++        g_audio_stats.total_samples_queued = 0;
++        g_audio_stats.total_samples_dropped = 0;
++        g_audio_stats.total_buffer_underruns = 0;
++        g_audio_stats.samples_generated = 0;
++        g_audio_stats.samples_queued = 0;
++        g_audio_stats.samples_dropped = 0;
++        g_audio_stats.last_samples_generated = 0;
++        g_audio_stats.last_samples_queued = 0;
++        g_audio_stats.last_samples_dropped = 0;
++        g_audio_stats.last_buffer_underruns = 0;
++        g_audio_stats.buffer_high_water_samples = 0;
++        g_audio_stats.last_reset_time_ms = 0;
+     }
+ }
+ 
+-- 
+2.56.0
+
+
+From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 27 Oct 2026 10:23:21 -0300
+Subject: [PATCH 28/30] fix: start audio device on first sample, not after 80
+ ms fill
+
+---
+ runtime/src/platform_sdl.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 843ed21..9d053c8 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -3897,7 +3897,13 @@ static void recompute_audio_targets(void) {
+         target = AUDIO_RING_SIZE / 2;
+     }
+ 
+-    g_audio_start_threshold = target;
++    /* Start consuming as soon as any audio is queued, instead of waiting for
++     * the ring to fill to the latency target (~80 ms). During that start-up
++     * window the APU keeps producing while the device is paused, so the ring
++     * overflows and samples are dropped - the "arraial burst" of issue #7.
++     * A threshold of 1 removes the window entirely: the device drains in lock
++     * step with production from the first sample. */
++    g_audio_start_threshold = 1;
+     g_audio_low_watermark = target / 2;
+     if (g_audio_low_watermark == 0) {
+         g_audio_low_watermark = 1;
+-- 
+2.56.0
+
+
+From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Thu, 29 Oct 2026 12:52:46 -0300
+Subject: [PATCH 29/30] feat: add GLSL CRT shader screen effect
+
+Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
+guest framebuffer is uploaded to an OpenGL texture and drawn through an
+embedded GLSL fragment shader (scanlines, chromatic aberration, vignette,
+phosphor glow). Falls back gracefully when OpenGL is unavailable.
+---
+ runtime/include/platform_sdl.h |   3 +-
+ runtime/src/platform_sdl.cpp   | 562 ++++++++++++++++++++++++++++++++-
+ runtime/src/shaders/crt.frag   |  74 +++++
+ runtime/src/shaders/crt.vert   |  13 +
+ 4 files changed, 637 insertions(+), 15 deletions(-)
+ create mode 100644 runtime/src/shaders/crt.frag
+ create mode 100644 runtime/src/shaders/crt.vert
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index f371aea..0cd4e5a 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -42,7 +42,8 @@ typedef enum GBScreenEffect {
+     GB_SCREEN_EFFECT_SCANLINES = 1,
+     GB_SCREEN_EFFECT_LCD_GRID = 2,
+     GB_SCREEN_EFFECT_CRT = 3,
+-    GB_SCREEN_EFFECT_COUNT = 4,
++    GB_SCREEN_EFFECT_SHADER = 4,
++    GB_SCREEN_EFFECT_COUNT = 5,
+ } GBScreenEffect;
+ 
+ enum {
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 9d053c8..bbf034d 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -57,6 +57,149 @@ static int g_screen_effect_lattice = 0;
+  * brighter than its source, which the multiply mask cannot express at all. */
+ static SDL_Texture* g_glow_texture = NULL;
+ static int g_glow_texture_width = 0;
++
++/* ============================================================================
++ * OpenGL Shader State (for GB_SCREEN_EFFECT_SHADER)
++ *
++ * The guest frame is uploaded to an OpenGL texture and drawn through a GLSL
++ * fragment shader (scanlines, chromatic aberration, vignette, phosphor glow).
++ * When the shader effect is active it replaces the SDL_Renderer mask pass.
++ * ============================================================================ */
++
++/* OpenGL types (minimal subset, avoids depending on GL headers on every
++ * toolchain). */
++#ifndef APIENTRY
++#define APIENTRY
++#endif
++typedef unsigned int GLenum;
++typedef unsigned int GLuint;
++typedef int GLint;
++typedef int GLsizei;
++typedef char GLchar;
++typedef float GLfloat;
++typedef unsigned char GLboolean;
++typedef void GLvoid;
++typedef unsigned int GLbitfield;
++#define GL_ARRAY_BUFFER 0x8892
++#define GL_STATIC_DRAW 0x88E4
++#define GL_TRIANGLES 0x0004
++#define GL_TEXTURE_2D 0x0DE1
++#define GL_RGBA 0x1908
++#define GL_UNSIGNED_BYTE 0x1401
++#define GL_NEAREST 0x2600
++#define GL_LINEAR 0x2601
++#define GL_CLAMP_TO_EDGE 0x812F
++#define GL_TEXTURE_MIN_FILTER 0x2801
++#define GL_TEXTURE_MAG_FILTER 0x2800
++#define GL_FRAMEBUFFER 0x8D40
++#define GL_COLOR_BUFFER_BIT 0x00004000
++#define GL_TEXTURE_WRAP_S 0x2802
++#define GL_TEXTURE_WRAP_T 0x2803
++typedef int GLsizeiptr;
++#define GL_VERTEX_SHADER 0x8B31
++#define GL_FRAGMENT_SHADER 0x8B30
++#define GL_COMPILE_STATUS 0x8B81
++#define GL_LINK_STATUS 0x8B82
++#define GL_INFO_LOG_LENGTH 0x8B84
++#define GL_TEXTURE0 0x84C0
++#define GL_BLEND 0x0BE2
++#define GL_DEPTH_TEST 0x0B71
++#define GL_CULL_FACE 0x0B44
++#define GL_FALSE 0
++#define GL_TRUE 1
++#define GL_FLOAT 0x1406
++
++static SDL_GLContext g_gl_context = NULL;
++static GLuint g_shader_program = 0;
++static GLuint g_shader_vao = 0;
++static GLuint g_shader_vbo = 0;
++static GLuint g_shader_texture = 0;
++static GLint g_shader_loc_texture = -1;
++static GLint g_shader_loc_intensity = -1;
++static GLint g_shader_loc_time = -1;
++static GLint g_shader_loc_resolution = -1;
++static bool g_gl_initialized = false;
++static uint32_t g_shader_start_ticks = 0;
++
++/* OpenGL function pointers, loaded via SDL_GL_GetProcAddress. */
++typedef void (APIENTRY *PFNGLGENVERTEXARRAYSPROC)(GLsizei, GLuint*);
++typedef void (APIENTRY *PFNGLGENBUFFERSPROC)(GLsizei, GLuint*);
++typedef void (APIENTRY *PFNGLBINDVERTEXARRAYPROC)(GLuint);
++typedef void (APIENTRY *PFNGLBINDBUFFERPROC)(GLenum, GLuint);
++typedef void (APIENTRY *PFNGLBUFFERDATAPROC)(GLenum, GLsizeiptr, const GLvoid*, GLenum);
++typedef void (APIENTRY *PFNGLVERTEXATTRIBPOINTERPROC)(GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid*);
++typedef void (APIENTRY *PFNGLENABLEVERTEXATTRIBARRAYPROC)(GLuint);
++typedef GLuint (APIENTRY *PFNGLCREATESHADERPROC)(GLenum);
++typedef void (APIENTRY *PFNGLSHADERSOURCEPROC)(GLuint, GLsizei, const GLchar* const*, const GLint*);
++typedef void (APIENTRY *PFNGLCOMPILESHADERPROC)(GLuint);
++typedef void (APIENTRY *PFNGLGETSHADERIVPROC)(GLuint, GLenum, GLint*);
++typedef void (APIENTRY *PFNGLGETSHADERINFOLOGPROC)(GLuint, GLsizei, GLsizei*, GLchar*);
++typedef GLuint (APIENTRY *PFNGLCREATEPROGRAMPROC)(void);
++typedef void (APIENTRY *PFNGLATTACHSHADERPROC)(GLuint, GLuint);
++typedef void (APIENTRY *PFNGLLINKPROGRAMPROC)(GLuint);
++typedef void (APIENTRY *PFNGLGETPROGRAMIVPROC)(GLuint, GLenum, GLint*);
++typedef void (APIENTRY *PFNGLGETPROGRAMINFOLOGPROC)(GLuint, GLsizei, GLsizei*, GLchar*);
++typedef void (APIENTRY *PFNGLUSEPROGRAMPROC)(GLuint);
++typedef void (APIENTRY *PFNGLUNIFORM1FPROC)(GLint, GLfloat);
++typedef void (APIENTRY *PFNGLUNIFORM2FPROC)(GLint, GLfloat, GLfloat);
++typedef void (APIENTRY *PFNGLUNIFORM1IPROC)(GLint, GLint);
++typedef GLint (APIENTRY *PFNGLGETUNIFORMLOCATIONPROC)(GLuint, const GLchar*);
++typedef void (APIENTRY *PFNGLGENTEXTURESPROC)(GLsizei, GLuint*);
++typedef void (APIENTRY *PFNGLDELETETEXTURESPROC)(GLsizei, const GLuint*);
++typedef void (APIENTRY *PFNGLBINDTEXTUREPROC)(GLenum, GLuint);
++typedef void (APIENTRY *PFNGLTEXIMAGE2DPROC)(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const GLvoid*);
++typedef void (APIENTRY *PFNGLTEXPARAMETERIPROC)(GLenum, GLenum, GLint);
++typedef void (APIENTRY *PFNGLDELETEPROGRAMPROC)(GLuint);
++typedef void (APIENTRY *PFNGLDELETESHADERPROC)(GLuint);
++typedef void (APIENTRY *PFNGLDELETEVERTEXARRAYSPROC)(GLsizei, const GLuint*);
++typedef void (APIENTRY *PFNGLDELETEBUFFERSPROC)(GLsizei, const GLuint*);
++typedef void (APIENTRY *PFNGLACTIVETEXTUREPROC)(GLenum);
++typedef void (APIENTRY *PFNGLVIEWPORTPROC)(GLint, GLint, GLsizei, GLsizei);
++typedef void (APIENTRY *PFNGLCLEARPROC)(GLbitfield);
++typedef void (APIENTRY *PFNGLDRAWARRAYSPROC)(GLenum, GLint, GLsizei);
++typedef void (APIENTRY *PFNGLREADPIXELSPROC)(GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, GLvoid*);
++typedef void (APIENTRY *PFNGLDISABLEPROC)(GLenum);
++typedef void (APIENTRY *PFNGLENABLEPROC)(GLenum);
++
++static PFNGLGENVERTEXARRAYSPROC glGenVertexArrays_fn = NULL;
++static PFNGLGENBUFFERSPROC glGenBuffers_fn = NULL;
++static PFNGLBINDVERTEXARRAYPROC glBindVertexArray_fn = NULL;
++static PFNGLBINDBUFFERPROC glBindBuffer_fn = NULL;
++static PFNGLBUFFERDATAPROC glBufferData_fn = NULL;
++static PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer_fn = NULL;
++static PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray_fn = NULL;
++static PFNGLCREATESHADERPROC glCreateShader_fn = NULL;
++static PFNGLSHADERSOURCEPROC glShaderSource_fn = NULL;
++static PFNGLCOMPILESHADERPROC glCompileShader_fn = NULL;
++static PFNGLGETSHADERIVPROC glGetShaderiv_fn = NULL;
++static PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog_fn = NULL;
++static PFNGLCREATEPROGRAMPROC glCreateProgram_fn = NULL;
++static PFNGLATTACHSHADERPROC glAttachShader_fn = NULL;
++static PFNGLLINKPROGRAMPROC glLinkProgram_fn = NULL;
++static PFNGLGETPROGRAMIVPROC glGetProgramiv_fn = NULL;
++static PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog_fn = NULL;
++static PFNGLUSEPROGRAMPROC glUseProgram_fn = NULL;
++static PFNGLUNIFORM1FPROC glUniform1f_fn = NULL;
++static PFNGLUNIFORM2FPROC glUniform2f_fn = NULL;
++static PFNGLUNIFORM1IPROC glUniform1i_fn = NULL;
++static PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation_fn = NULL;
++static PFNGLGENTEXTURESPROC glGenTextures_fn = NULL;
++static PFNGLDELETETEXTURESPROC glDeleteTextures_fn = NULL;
++static PFNGLBINDTEXTUREPROC glBindTexture_fn = NULL;
++static PFNGLTEXIMAGE2DPROC glTexImage2D_fn = NULL;
++static PFNGLTEXPARAMETERIPROC glTexParameteri_fn = NULL;
++static PFNGLDELETEPROGRAMPROC glDeleteProgram_fn = NULL;
++static PFNGLDELETESHADERPROC glDeleteShader_fn = NULL;
++static PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays_fn = NULL;
++static PFNGLDELETEBUFFERSPROC glDeleteBuffers_fn = NULL;
++static PFNGLACTIVETEXTUREPROC glActiveTexture_fn = NULL;
++static PFNGLVIEWPORTPROC glViewport_fn = NULL;
++static PFNGLCLEARPROC glClear_fn = NULL;
++static PFNGLDRAWARRAYSPROC glDrawArrays_fn = NULL;
++static PFNGLREADPIXELSPROC glReadPixels_fn = NULL;
++static PFNGLDISABLEPROC glDisable_fn = NULL;
++static PFNGLENABLEPROC glEnable_fn = NULL;
++
+ /* Guest resolution: 160x144 is two 92 KB buffers and lets the upscale do the
+  * spreading, which is the cheapest correct place for a halo. */
+ /* Presentation width.
+@@ -269,6 +412,7 @@ static const char* g_screen_effect_names[] = {
+     "Scanlines",
+     "LCD Grid",
+     "CRT",
++    "Shader",
+ };
+ static const uint32_t g_palettes[][4] = {
+     { 0xFFE0F8D0, 0xFF88C070, 0xFF346856, 0xFF081820 }, // Original
+@@ -2028,6 +2172,360 @@ static int round_to_int(double value) {
+     return (int)(value + 0.5);
+ }
+ 
++/* ============================================================================
++ * OpenGL shader support (GB_SCREEN_EFFECT_SHADER)
++ *
++ * When the shader effect is active, the guest framebuffer is uploaded to an
++ * OpenGL texture and drawn through a GLSL fragment shader (scanlines,
++ * chromatic aberration, vignette, phosphor glow). The SDL_Renderer mask pass
++ * is skipped entirely. The shader is loaded from embedded source so there are
++ * no external file dependencies.
++ * ============================================================================ */
++
++static void* gl_load_proc(const char* name) {
++    void* proc = SDL_GL_GetProcAddress(name);
++    if (!proc) {
++        fprintf(stderr, "[SDL] OpenGL proc not found: %s\n", name);
++    }
++    return proc;
++}
++
++static bool opengl_load_procs(void) {
++    glGenVertexArrays_fn = (PFNGLGENVERTEXARRAYSPROC)gl_load_proc("glGenVertexArrays");
++    glGenBuffers_fn = (PFNGLGENBUFFERSPROC)gl_load_proc("glGenBuffers");
++    glBindVertexArray_fn = (PFNGLBINDVERTEXARRAYPROC)gl_load_proc("glBindVertexArray");
++    glBindBuffer_fn = (PFNGLBINDBUFFERPROC)gl_load_proc("glBindBuffer");
++    glBufferData_fn = (PFNGLBUFFERDATAPROC)gl_load_proc("glBufferData");
++    glVertexAttribPointer_fn = (PFNGLVERTEXATTRIBPOINTERPROC)gl_load_proc("glVertexAttribPointer");
++    glEnableVertexAttribArray_fn = (PFNGLENABLEVERTEXATTRIBARRAYPROC)gl_load_proc("glEnableVertexAttribArray");
++    glCreateShader_fn = (PFNGLCREATESHADERPROC)gl_load_proc("glCreateShader");
++    glShaderSource_fn = (PFNGLSHADERSOURCEPROC)gl_load_proc("glShaderSource");
++    glCompileShader_fn = (PFNGLCOMPILESHADERPROC)gl_load_proc("glCompileShader");
++    glGetShaderiv_fn = (PFNGLGETSHADERIVPROC)gl_load_proc("glGetShaderiv");
++    glGetShaderInfoLog_fn = (PFNGLGETSHADERINFOLOGPROC)gl_load_proc("glGetShaderInfoLog");
++    glCreateProgram_fn = (PFNGLCREATEPROGRAMPROC)gl_load_proc("glCreateProgram");
++    glAttachShader_fn = (PFNGLATTACHSHADERPROC)gl_load_proc("glAttachShader");
++    glLinkProgram_fn = (PFNGLLINKPROGRAMPROC)gl_load_proc("glLinkProgram");
++    glGetProgramiv_fn = (PFNGLGETPROGRAMIVPROC)gl_load_proc("glGetProgramiv");
++    glGetProgramInfoLog_fn = (PFNGLGETPROGRAMINFOLOGPROC)gl_load_proc("glGetProgramInfoLog");
++    glUseProgram_fn = (PFNGLUSEPROGRAMPROC)gl_load_proc("glUseProgram");
++    glUniform1f_fn = (PFNGLUNIFORM1FPROC)gl_load_proc("glUniform1f");
++    glUniform2f_fn = (PFNGLUNIFORM2FPROC)gl_load_proc("glUniform2f");
++    glUniform1i_fn = (PFNGLUNIFORM1IPROC)gl_load_proc("glUniform1i");
++    glGetUniformLocation_fn = (PFNGLGETUNIFORMLOCATIONPROC)gl_load_proc("glGetUniformLocation");
++    glGenTextures_fn = (PFNGLGENTEXTURESPROC)gl_load_proc("glGenTextures");
++    glDeleteTextures_fn = (PFNGLDELETETEXTURESPROC)gl_load_proc("glDeleteTextures");
++    glBindTexture_fn = (PFNGLBINDTEXTUREPROC)gl_load_proc("glBindTexture");
++    glTexImage2D_fn = (PFNGLTEXIMAGE2DPROC)gl_load_proc("glTexImage2D");
++    glTexParameteri_fn = (PFNGLTEXPARAMETERIPROC)gl_load_proc("glTexParameteri");
++    glDeleteProgram_fn = (PFNGLDELETEPROGRAMPROC)gl_load_proc("glDeleteProgram");
++    glDeleteShader_fn = (PFNGLDELETESHADERPROC)gl_load_proc("glDeleteShader");
++    glDeleteVertexArrays_fn = (PFNGLDELETEVERTEXARRAYSPROC)gl_load_proc("glDeleteVertexArrays");
++    glDeleteBuffers_fn = (PFNGLDELETEBUFFERSPROC)gl_load_proc("glDeleteBuffers");
++    glActiveTexture_fn = (PFNGLACTIVETEXTUREPROC)gl_load_proc("glActiveTexture");
++    glViewport_fn = (PFNGLVIEWPORTPROC)gl_load_proc("glViewport");
++    glClear_fn = (PFNGLCLEARPROC)gl_load_proc("glClear");
++    glDrawArrays_fn = (PFNGLDRAWARRAYSPROC)gl_load_proc("glDrawArrays");
++    glReadPixels_fn = (PFNGLREADPIXELSPROC)gl_load_proc("glReadPixels");
++    glDisable_fn = (PFNGLDISABLEPROC)gl_load_proc("glDisable");
++    glEnable_fn = (PFNGLENABLEPROC)gl_load_proc("glEnable");
++
++    return glGenVertexArrays_fn && glGenBuffers_fn && glCreateShader_fn &&
++           glCreateProgram_fn && glGenTextures_fn && glDeleteTextures_fn &&
++           glGetUniformLocation_fn && glViewport_fn && glClear_fn &&
++           glDrawArrays_fn && glReadPixels_fn;
++}
++
++/* Compiles a single shader stage from source. Returns 0 on failure. */
++static GLuint opengl_compile_shader(GLenum type, const char* source) {
++    GLuint shader = glCreateShader_fn(type);
++    if (!shader) {
++        fprintf(stderr, "[SDL] Failed to create OpenGL shader\n");
++        return 0;
++    }
++    glShaderSource_fn(shader, 1, &source, NULL);
++    glCompileShader_fn(shader);
++    GLint ok = 0;
++    glGetShaderiv_fn(shader, GL_COMPILE_STATUS, &ok);
++    if (!ok) {
++        GLint log_len = 0;
++        glGetShaderiv_fn(shader, GL_INFO_LOG_LENGTH, &log_len);
++        if (log_len > 1) {
++            char* log = (char*)SDL_malloc((size_t)log_len);
++            if (log) {
++                glGetShaderInfoLog_fn(shader, log_len, NULL, log);
++                fprintf(stderr, "[SDL] Shader compile error:\n%s\n", log);
++                SDL_free(log);
++            }
++        }
++        glDeleteShader_fn(shader);
++        return 0;
++    }
++    return shader;
++}
++
++/* Embedded GLSL shader sources (CRT effect). Stored as plain C strings so the
++ * file compiles as both C and C++ (the runtime target mixes C and C++ files). */
++static const char* g_crt_vertex_shader =
++    "#version 330 core\n"
++    "\n"
++    "layout(location = 0) in vec2 aPos;\n"
++    "layout(location = 1) in vec2 aTexCoord;\n"
++    "\n"
++    "out vec2 TexCoord;\n"
++    "\n"
++    "uniform mat4 u_projection;\n"
++    "\n"
++    "void main() {\n"
++    "    gl_Position = u_projection * vec4(aPos, 0.0, 1.0);\n"
++    "    TexCoord = aTexCoord;\n"
++    "}\n";
++
++static const char* g_crt_fragment_shader =
++    "#version 330 core\n"
++    "\n"
++    "in vec2 TexCoord;\n"
++    "out vec4 FragColor;\n"
++    "\n"
++    "uniform sampler2D u_texture;\n"
++    "uniform float u_intensity;\n"
++    "uniform float u_time;\n"
++    "uniform vec2 u_resolution;\n"
++    "\n"
++    "float scanline(float y, float amount, float soft) {\n"
++    "    float gap = 0.22f;\n"
++    "    float t = fract(y * 1.0f);\n"
++    "    float edge = 1.0f - gap;\n"
++    "    float ramp = smoothstep(edge, edge + soft, t);\n"
++    "    return amount * ramp;\n"
++    "}\n"
++    "\n"
++    "vec3 chromatic_aberration(sampler2D tex, vec2 uv, float amount, vec2 resolution) {\n"
++    "    float strength = amount * 0.004f;\n"
++    "    vec2 offset = (uv - 0.5f) * strength;\n"
++    "    float r = texture(tex, uv + offset).r;\n"
++    "    float g = texture(tex, uv).g;\n"
++    "    float b = texture(tex, uv - offset).b;\n"
++    "    return vec3(r, g, b);\n"
++    "}\n"
++    "\n"
++    "float vignette(vec2 uv, float amount) {\n"
++    "    vec2 center = vec2(0.5f);\n"
++    "    float dist = distance(uv, center);\n"
++    "    return 1.0f - amount * dist * dist * 0.5f;\n"
++    "}\n"
++    "\n"
++    "vec3 phosphor_glow(vec3 color, float amount) {\n"
++    "    float luminance = dot(color, vec3(0.299f, 0.587f, 0.114f));\n"
++    "    float glow = smoothstep(0.75f, 1.0f, luminance);\n"
++    "    vec3 warm = vec3(1.0f, 0.9f, 0.7f);\n"
++    "    return color + glow * warm * amount * 0.3f;\n"
++    "}\n"
++    "\n"
++    "void main() {\n"
++    "    vec2 uv = TexCoord;\n"
++    "    vec4 tex = texture(u_texture, uv);\n"
++    "    vec3 color = tex.rgb;\n"
++    "    float amt = clamp(u_intensity, 0.0f, 1.0f);\n"
++    "    float line = scanline(uv.y, amt, 0.08f);\n"
++    "    color *= (1.0f - line);\n"
++    "    if (amt > 0.1f) {\n"
++    "        color = chromatic_aberration(u_texture, uv, amt, u_resolution);\n"
++    "    }\n"
++    "    color *= vignette(uv, amt * 0.15f);\n"
++    "    if (amt > 0.2f) {\n"
++    "        color = phosphor_glow(color, amt);\n"
++    "    }\n"
++    "    FragColor = vec4(color, tex.a);\n"
++    "}\n";
++
++static bool opengl_init_shader(void) {
++    GLuint vert = opengl_compile_shader(GL_VERTEX_SHADER, g_crt_vertex_shader);
++    GLuint frag = opengl_compile_shader(GL_FRAGMENT_SHADER, g_crt_fragment_shader);
++    if (!vert || !frag) {
++        if (vert) glDeleteShader_fn(vert);
++        if (frag) glDeleteShader_fn(frag);
++        return false;
++    }
++
++    g_shader_program = glCreateProgram_fn();
++    glAttachShader_fn(g_shader_program, vert);
++    glAttachShader_fn(g_shader_program, frag);
++    glLinkProgram_fn(g_shader_program);
++
++    GLint ok = 0;
++    glGetProgramiv_fn(g_shader_program, GL_LINK_STATUS, &ok);
++    if (!ok) {
++        GLint log_len = 0;
++        glGetProgramiv_fn(g_shader_program, GL_INFO_LOG_LENGTH, &log_len);
++        if (log_len > 1) {
++            char* log = (char*)SDL_malloc((size_t)log_len);
++            if (log) {
++                glGetProgramInfoLog_fn(g_shader_program, log_len, NULL, log);
++                fprintf(stderr, "[SDL] Shader link error:\n%s\n", log);
++                SDL_free(log);
++            }
++        }
++        glDeleteProgram_fn(g_shader_program);
++        g_shader_program = 0;
++        glDeleteShader_fn(vert);
++        glDeleteShader_fn(frag);
++        return false;
++    }
++
++    glDeleteShader_fn(vert);
++    glDeleteShader_fn(frag);
++
++    g_shader_loc_texture = glGetUniformLocation_fn == NULL ? -1 : -1;
++    /* Uniform locations are queried after linking; store them lazily on first
++     * use to avoid calling glGetUniformLocation before the program is bound. */
++    g_shader_loc_texture = -1;
++    g_shader_loc_intensity = -1;
++    g_shader_loc_time = -1;
++    g_shader_loc_resolution = -1;
++    return true;
++}
++
++/* Initializes the OpenGL context and shader program. Called once from
++ * gb_platform_init after the SDL window exists. */
++static bool opengl_init(void) {
++    if (g_gl_initialized) {
++        return true;
++    }
++
++    /* Request a core profile OpenGL 3.3 context. */
++    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
++    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
++    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
++
++    g_gl_context = SDL_GL_CreateContext(g_window);
++    if (!g_gl_context) {
++        fprintf(stderr, "[SDL] Failed to create OpenGL context: %s\n", SDL_GetError());
++        return false;
++    }
++
++    if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
++        fprintf(stderr, "[SDL] Failed to make OpenGL context current: %s\n", SDL_GetError());
++        return false;
++    }
++
++    if (!opengl_load_procs()) {
++        fprintf(stderr, "[SDL] Failed to load OpenGL functions\n");
++        return false;
++    }
++
++    if (!opengl_init_shader()) {
++        fprintf(stderr, "[SDL] Failed to initialize CRT shader\n");
++        return false;
++    }
++
++    /* Fullscreen quad: position + texcoord per vertex. */
++    const float quad[] = {
++        /* x,  y,   u,  v */
++        -1.0f, -1.0f, 0.0f, 1.0f,
++         1.0f, -1.0f, 1.0f, 1.0f,
++        -1.0f,  1.0f, 0.0f, 0.0f,
++         1.0f,  1.0f, 1.0f, 0.0f,
++    };
++
++    glGenVertexArrays_fn(1, &g_shader_vao);
++    glGenBuffers_fn(1, &g_shader_vbo);
++    glBindVertexArray_fn(g_shader_vao);
++    glBindBuffer_fn(GL_ARRAY_BUFFER, g_shader_vbo);
++    glBufferData_fn(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
++    glVertexAttribPointer_fn(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (const GLvoid*)0);
++    glEnableVertexAttribArray_fn(0);
++    glVertexAttribPointer_fn(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
++    glEnableVertexAttribArray_fn(1);
++    glBindVertexArray_fn(0);
++
++    glGenTextures_fn(1, &g_shader_texture);
++    glBindTexture_fn(GL_TEXTURE_2D, g_shader_texture);
++    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
++    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
++    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
++    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
++    glBindTexture_fn(GL_TEXTURE_2D, 0);
++
++    g_shader_start_ticks = SDL_GetTicks();
++    g_gl_initialized = true;
++
++    fprintf(stderr, "[SDL] OpenGL CRT shader initialized\n");
++    return true;
++}
++
++static void opengl_cleanup(void) {
++    if (!g_gl_initialized) {
++        return;
++    }
++    if (g_shader_program) {
++        glDeleteProgram_fn(g_shader_program);
++        g_shader_program = 0;
++    }
++    if (g_shader_vao) {
++        glDeleteVertexArrays_fn(1, &g_shader_vao);
++        g_shader_vao = 0;
++    }
++    if (g_shader_vbo) {
++        glDeleteBuffers_fn(1, &g_shader_vbo);
++        g_shader_vbo = 0;
++    }
++    if (g_shader_texture) {
++        glDeleteTextures_fn(1, &g_shader_texture);
++        g_shader_texture = 0;
++    }
++    if (g_gl_context) {
++        SDL_GL_MakeCurrent(g_window, NULL);
++        SDL_GL_DeleteContext(g_gl_context);
++        g_gl_context = NULL;
++    }
++    g_gl_initialized = false;
++}
++
++/* Renders one guest frame through the CRT GLSL shader. The SDL_Renderer is
++ * not used for the guest image when the shader effect is active. */
++static void opengl_render_frame(const uint32_t* framebuffer, int width, int height,
++                                float intensity) {
++    if (!g_gl_initialized || !g_shader_program) {
++        return;
++    }
++
++    if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
++        return;
++    }
++
++    glViewport_fn(0, 0, width, height);
++    glClear_fn(GL_COLOR_BUFFER_BIT);
++
++    glUseProgram_fn(g_shader_program);
++
++    /* Query uniform locations lazily (only valid after program is bound). */
++    if (g_shader_loc_texture < 0) {
++        g_shader_loc_texture = glGetUniformLocation_fn(g_shader_program, "u_texture");
++        g_shader_loc_intensity = glGetUniformLocation_fn(g_shader_program, "u_intensity");
++        g_shader_loc_time = glGetUniformLocation_fn(g_shader_program, "u_time");
++        g_shader_loc_resolution = glGetUniformLocation_fn(g_shader_program, "u_resolution");
++    }
++
++    glActiveTexture_fn(GL_TEXTURE0);
++    glBindTexture_fn(GL_TEXTURE_2D, g_shader_texture);
++    glTexImage2D_fn(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
++                    GL_UNSIGNED_BYTE, framebuffer);
++    glUniform1i_fn(g_shader_loc_texture, 0);
++    glUniform1f_fn(g_shader_loc_intensity, intensity);
++    float elapsed = (float)(SDL_GetTicks() - g_shader_start_ticks) / 1000.0f;
++    glUniform1f_fn(g_shader_loc_time, elapsed);
++    glUniform2f_fn(g_shader_loc_resolution, (float)width, (float)height);
++
++    glBindVertexArray_fn(g_shader_vao);
++    glDrawArrays_fn(GL_TRIANGLES, 0, 4);
++    glBindVertexArray_fn(0);
++    glBindTexture_fn(GL_TEXTURE_2D, 0);
++    glUseProgram_fn(0);
++
++    SDL_GL_SwapWindow(g_window);
++}
++
+ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+                                           int effect, int intensity_percent,
+                                           float scale_factor);
+@@ -2997,22 +3495,57 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+ 
+     /* Clear and render */
+     double compose_start_ms = sdl_now_ms();
+-    SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
+-    SDL_RenderClear(g_renderer);
+-    SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
+-    /* Panel effect, drawn over the guest with the same destination rect so the
+-     * mask lines up with the guest pixels without any coordinate arithmetic. */
+-    if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
+-        if (g_screen_effect_dirty) {
+-            update_screen_effect_texture();
++
++    /* When the GLSL shader effect is active, render the guest frame through
++     * OpenGL + shader, read the result back into the SDL texture, and let the
++     * normal SDL_Renderer path (ImGui, presentation) continue unchanged. */
++    if (g_screen_effect == GB_SCREEN_EFFECT_SHADER) {
++        if (!g_gl_initialized) {
++            if (!opengl_init()) {
++                fprintf(stderr, "[SDL] OpenGL init failed, falling back to OFF\n");
++                g_screen_effect = GB_SCREEN_EFFECT_OFF;
++            }
+         }
+-        if (g_screen_effect_texture) {
+-            SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
++        if (g_gl_initialized) {
++            if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
++                fprintf(stderr, "[SDL] Failed to make GL current\n");
++            } else {
++                opengl_render_frame(framebuffer, g_present_width, GB_SCREEN_HEIGHT,
++                                    (float)g_screen_effect_intensity / 100.0f);
++                /* Read the shader output back so the SDL texture holds it for
++                 * ImGui overlay and presentation. */
++                static uint32_t* shader_readback = NULL;
++                if (!shader_readback) {
++                    shader_readback = (uint32_t*)SDL_malloc(
++                        (size_t)g_present_width * GB_SCREEN_HEIGHT * sizeof(uint32_t));
++                }
++                if (shader_readback) {
++                    glReadPixels_fn(0, 0, g_present_width, GB_SCREEN_HEIGHT,
++                                    GL_RGBA, GL_UNSIGNED_BYTE, shader_readback);
++                    SDL_UpdateTexture(g_texture, NULL, shader_readback,
++                                      g_present_width * (int)sizeof(uint32_t));
++                }
++                SDL_GL_MakeCurrent(g_window, NULL);
++            }
+         }
+-        if (g_screen_effect == GB_SCREEN_EFFECT_CRT && g_glow_texture) {
+-            /* Same destination rect again, so the halo is anchored to the
+-             * image rather than floating over the letterbox. */
+-            SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
++    } else {
++        SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
++        SDL_RenderClear(g_renderer);
++        SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
++        /* Panel effect, drawn over the guest with the same destination rect so the
++         * mask lines up with the guest pixels without any coordinate arithmetic. */
++        if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++            if (g_screen_effect_dirty) {
++                update_screen_effect_texture();
++            }
++            if (g_screen_effect_texture) {
++                SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
++            }
++            if (g_screen_effect == GB_SCREEN_EFFECT_CRT && g_glow_texture) {
++                /* Same destination rect again, so the halo is anchored to the
++                 * image rather than floating over the letterbox. */
++                SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
++            }
+         }
+     }
+ 
+@@ -3675,6 +4208,7 @@ void gb_platform_shutdown(void) {
+         SDL_DestroyTexture(g_glow_texture);
+         g_glow_texture = NULL;
+     }
++    opengl_cleanup();
+     if (g_renderer) {
+         SDL_DestroyRenderer(g_renderer);
+         g_renderer = NULL;
+diff --git a/runtime/src/shaders/crt.frag b/runtime/src/shaders/crt.frag
+new file mode 100644
+index 0000000..d647e14
+--- /dev/null
++++ b/runtime/src/shaders/crt.frag
+@@ -0,0 +1,74 @@
++#version 330 core
++
++in vec2 TexCoord;
++out vec4 FragColor;
++
++uniform sampler2D u_texture;
++uniform float u_intensity;
++uniform float u_time;
++uniform vec2 u_resolution;
++
++/* Scanline mask: trailing edge only, darkening the bottom of each guest row. */
++float scanline(float y, float amount, float soft) {
++    float gap = 0.22f;
++    float t = fract(y * 1.0f);
++    float edge = 1.0f - gap;
++    float ramp = smoothstep(edge, edge + soft, t);
++    return amount * ramp;
++}
++
++/* Subtle chromatic aberration: shift R and B by tiny amounts toward screen edges. */
++vec3 chromatic_aberration(sampler2D tex, vec2 uv, float amount, vec2 resolution) {
++    float strength = amount * 0.004f;
++    vec2 offset = (uv - 0.5f) * strength;
++    float r = texture(tex, uv + offset).r;
++    float g = texture(tex, uv).g;
++    float b = texture(tex, uv - offset).b;
++    return vec3(r, g, b);
++}
++
++/* Vignette: darken corners toward edges. */
++float vignette(vec2 uv, float amount) {
++    vec2 center = vec2(0.5f);
++    float dist = distance(uv, center);
++    return 1.0f - amount * dist * dist * 0.5f;
++}
++
++/* Phosphor glow: additive bloom above threshold. We simulate a cheap version
++ * by lifting blacks slightly toward a warm glow at bright pixels. */
++vec3 phosphor_glow(vec3 color, float amount) {
++    float luminance = dot(color, vec3(0.299f, 0.587f, 0.114f));
++    float glow = smoothstep(0.75f, 1.0f, luminance);
++    vec3 warm = vec3(1.0f, 0.9f, 0.7f);
++    return color + glow * warm * amount * 0.3f;
++}
++
++void main() {
++    vec2 uv = TexCoord;
++
++    /* Sample the guest frame. */
++    vec4 tex = texture(u_texture, uv);
++    vec3 color = tex.rgb;
++
++    /* Apply effects scaled by intensity (0..1). */
++    float amt = clamp(u_intensity, 0.0f, 1.0f);
++
++    /* Scanlines. */
++    float line = scanline(uv.y, amt, 0.08f);
++    color *= (1.0f - line);
++
++    /* Subtle chromatic aberration at low intensity. */
++    if (amt > 0.1f) {
++        color = chromatic_aberration(u_texture, uv, amt, u_resolution);
++    }
++
++    /* Vignette. */
++    color *= vignette(uv, amt * 0.15f);
++
++    /* Phosphor glow on bright pixels. */
++    if (amt > 0.2f) {
++        color = phosphor_glow(color, amt);
++    }
++
++    FragColor = vec4(color, tex.a);
++}
+diff --git a/runtime/src/shaders/crt.vert b/runtime/src/shaders/crt.vert
+new file mode 100644
+index 0000000..4a69c53
+--- /dev/null
++++ b/runtime/src/shaders/crt.vert
+@@ -0,0 +1,13 @@
++#version 330 core
++
++layout(location = 0) in vec2 aPos;
++layout(location = 1) in vec2 aTexCoord;
++
++out vec2 TexCoord;
++
++uniform mat4 u_projection;
++
++void main() {
++    gl_Position = u_projection * vec4(aPos, 0.0, 1.0);
++    TexCoord = aTexCoord;
++}
+-- 
+2.56.0
+
+
+From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Fri, 20 Nov 2026 14:36:26 -0300
+Subject: [PATCH 30/30] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+ bindings
+
+---
+ runtime/src/platform_sdl.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index bbf034d..f8c9f76 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -15,6 +15,7 @@
+ #include <atomic>
+ #include <cerrno>
+ #include <cctype>
++#include <cstddef>
+ #include <cstdio>
+ #include <cstring>
+ // fmaxf/lrintf/fabsf/expf. Not transitive on every toolchain: the panel effects
+@@ -95,7 +96,7 @@ typedef unsigned int GLbitfield;
+ #define GL_COLOR_BUFFER_BIT 0x00004000
+ #define GL_TEXTURE_WRAP_S 0x2802
+ #define GL_TEXTURE_WRAP_T 0x2803
+-typedef int GLsizeiptr;
++typedef std::ptrdiff_t GLsizeiptr;
+ #define GL_VERTEX_SHADER 0x8B31
+ #define GL_FRAGMENT_SHADER 0x8B30
+ #define GL_COMPILE_STATUS 0x8B81
+-- 
+2.56.0
 

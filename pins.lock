@@ -1,6 +1,6 @@
 # Pins de dependência — Metal Gear Ghost Babel Recomp
 #
-# Read by bootstrap.sh (format: key = value, per section).
+# Read by bootstrap.sh / windows/bootstrap.ps1 (format: key = value, per section).
 # Do not edit by hand: changing a pin here changes the build output.
 #
 # The engine is never fetched from a private mirror. The tool comes from
@@ -11,10 +11,10 @@ name         = gb-recompiled
 url          = https://github.com/arcanite24/gb-recompiled.git
 commit       = 9150f87d82fa98abcb6ea22329170463f9702eb8
 patch        = patches/gb-recompiled-ghost-babel.patch
-patch_sha256 = aecf1e329a76154d16eb2dd29ff11a899f71e5a825b3242c231fa2a124d5c74d
+patch_sha256 = 84d6b8d3151dd2f6e9b6b4a21f7a16f22d985079ec4c5eee926625eeaeab6d49
 # Expected source tree AFTER applying the patch. The bootstrap fails if it
 # does not match: that is what guarantees the patch still applies cleanly.
-tree_after   = 6da6beea01f388f8fd34050e537c7a9d61e19c4c
+tree_after   = eb97c962137a6a1faec7ff1bf3116789011f5020
 
 [build]
 # Lowest SDL2 tested. The runtime has a single SDL_VERSION_ATLEAST(2,0,12).
@@ -26,9 +26,17 @@ runtime_define = GB_HAS_SDL2
 [tools]
 # Tool version. One line across platforms: the same ROM and the same tool
 # version produce the same output everywhere.
-version = 0.5
+version = 0.6
 # Where the prebuilt tools live. With this filled in, bootstrap downloads
 # gbrecomp and the runtime instead of compiling them, and the user never
 # needs cmake or ninja. Empty means "compile from source" - which is what
 # a clone straight from git does.
-release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.5
+release_base = https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases/download/v0.6
+
+[windows]
+w64devkit_version = 2.11.0
+w64devkit_url     = https://github.com/skeeto/w64devkit/releases/download/v2.11.0/w64devkit-x64-2.11.0.7z.exe
+w64devkit_sha256  = 54c2bb9962e8a30c8270e34c5efc3d5fee579f53087fa7d435b95fbba2af7b2b
+sdl2_version      = 2.32.10
+sdl2_url          = https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-devel-2.32.10-mingw.zip
+sdl2_sha256       = f15cff5fca62ec9381a016ef1d42a95c638cd72d2f226ba5781c76fe43dbd1ac

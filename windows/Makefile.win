@@ -1,0 +1,105 @@
+# Makefile.win - Windows native build driven by build.ps1 via w64devkit make.exe.
+SHELL := sh.exe
+
+ROM_SRC        ?= build/project
+REMASTER_DIR   ?= $(CURDIR)/remaster
+TOOLS_DIR      ?= $(CURDIR)/.tools
+SDL2_DIR       ?= $(if $(wildcard $(CURDIR)/sdl2/include/SDL2/SDL.h),$(CURDIR)/sdl2,$(TOOLS_DIR)/sdl2)
+BUILD_REMASTER ?= 0
+OUT            ?= build/ghost-babel.exe
+OUT_AUTH       ?= build/ghost-babel-authentic.exe
+OUT_REMASTER   ?= build/ghost-babel-remaster.exe
+
+LIB := $(TOOLS_DIR)/libgbrt.a
+
+GBRT ?= $(if $(wildcard $(ROM_SRC)/runtime/include/gbrt.h),\
+             $(ROM_SRC)/runtime,\
+             $(CURDIR)/runtime)
+
+CC      ?= gcc
+CXX     ?= g++
+DEFINES := -DGB_HAS_SDL2 -DGB_PLATFORM_WINDOWS
+
+SDL_CFLAGS := -I$(SDL2_DIR)/include/SDL2 -I$(SDL2_DIR)/include
+WINPTHREAD_PATH := $(shell $(CXX) -print-file-name=libwinpthread.a 2>/dev/null)
+THREAD_LIBS := $(if $(filter-out libwinpthread.a,$(WINPTHREAD_PATH)),-Wl,-Bstatic -lwinpthread -Wl,-Bdynamic,)
+SDL_LIBS   := -L$(SDL2_DIR)/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
+
+WORK := build/work
+
+CFLAGS   ?= -std=gnu11 -O2 -ffunction-sections -fdata-sections
+LDFLAGS  ?= -static-libgcc -static-libstdc++ $(THREAD_LIBS) -Wl,--gc-sections
+WARN     ?=
+
+V ?= 0
+ifeq ($(V),1)
+  Q :=
+else
+  Q := @
+endif
+
+GEN_SRC        := $(wildcard $(ROM_SRC)/*.c)
+GEN_MAIN_SRC   := $(filter %_main.c,$(GEN_SRC))
+GEN_COMMON_SRC := $(filter-out %_main.c %_seeded.c,$(GEN_SRC))
+GEN_COMMON_OBJ := $(patsubst $(ROM_SRC)/%.c,$(WORK)/%.o,$(GEN_COMMON_SRC))
+GEN_MAIN_OBJ   := $(patsubst $(ROM_SRC)/%.c,$(WORK)/%.o,$(GEN_MAIN_SRC))
+
+REMASTER_SRC := $(wildcard $(REMASTER_DIR)/*.c)
+REMASTER_HDR := $(wildcard $(REMASTER_DIR)/*.h)
+REMASTER_OBJ := $(patsubst $(REMASTER_DIR)/%.c,$(WORK)/remaster_%.o,$(REMASTER_SRC))
+
+ifeq ($(BUILD_REMASTER),1)
+  GEN_TOTAL := $(words $(GEN_COMMON_SRC) $(GEN_MAIN_SRC) $(REMASTER_SRC))
+else
+  GEN_TOTAL := $(words $(GEN_COMMON_SRC) $(GEN_MAIN_SRC))
+endif
+
+.PHONY: all check-tools check-remaster
+ifeq ($(BUILD_REMASTER),1)
+all: check-tools check-remaster $(OUT_AUTH) $(OUT_REMASTER)
+else
+all: check-tools $(OUT)
+endif
+
+check-tools:
+	@test -f "$(LIB)" || { \
+	  echo "ERROR: $(LIB) does not exist. Run windows/bootstrap.ps1 first."; exit 1; }
+	@test -f "$(SDL2_DIR)/include/SDL2/SDL.h" || { \
+	  echo "ERROR: SDL2 headers not found in $(SDL2_DIR). Run windows/bootstrap.ps1 first."; exit 1; }
+
+check-remaster:
+	@test -n "$(REMASTER_SRC)" || { \
+	  echo "ERROR: remaster/ sources not found in $(REMASTER_DIR)."; exit 1; }
+
+$(WORK):
+	@mkdir -p $(WORK)
+
+$(WORK)/%.o: $(ROM_SRC)/%.c | $(WORK)
+	$(Q)$(CC) $(CFLAGS) $(WARN) $(DEFINES) $(SDL_CFLAGS) \
+	  -I$(ROM_SRC) -I$(GBRT)/include -I$(GBRT)/vendor/imgui -c $< -o $@
+	$(Q)echo "GBPROGRESS $$(ls $(WORK)/*.o 2>/dev/null | wc -l) $(GEN_TOTAL)"
+
+$(REMASTER_OBJ): $(REMASTER_HDR)
+
+$(WORK)/remaster_%.o: $(REMASTER_DIR)/%.c | $(WORK)
+	$(Q)$(CC) $(CFLAGS) $(WARN) $(DEFINES) $(SDL_CFLAGS) \
+	  -I$(ROM_SRC) -I$(REMASTER_DIR) -I$(GBRT)/include -c $< -o $@
+	$(Q)echo "GBPROGRESS $$(ls $(WORK)/*.o 2>/dev/null | wc -l) $(GEN_TOTAL)"
+
+$(OUT): $(GEN_COMMON_OBJ) $(GEN_MAIN_OBJ) $(LIB)
+	@echo "GBPHASE link"
+	@mkdir -p $(dir $@)
+	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
+	@strip $@ 2>/dev/null || true
+
+$(OUT_AUTH): $(GEN_COMMON_OBJ) $(GEN_MAIN_OBJ) $(LIB)
+	@echo "GBPHASE link"
+	@mkdir -p $(dir $@)
+	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
+	@strip $@ 2>/dev/null || true
+
+$(OUT_REMASTER): $(GEN_COMMON_OBJ) $(REMASTER_OBJ) $(LIB)
+	@echo "GBPHASE link"
+	@mkdir -p $(dir $@)
+	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
+	@strip $@ 2>/dev/null || true

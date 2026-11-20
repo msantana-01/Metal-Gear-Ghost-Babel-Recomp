@@ -1,19 +1,34 @@
 # Metal Gear Ghost Babel Recomp
 
 Runs **Metal Gear Solid: Ghost Babel** (Game Boy Color) as a native program
-on your computer — same inputs, same hardware emulation, no emulator sitting
-in the hot path. No game data is downloaded or shipped here: you use your own
-ROM.
+on **Linux** and **Windows** — same inputs, same hardware emulation, no emulator
+sitting in the hot path. No game data is downloaded or shipped here: you provide
+your own ROM.
+
+For Ghost Babel, `./build.sh` (or `GhostBabelRecomp.bat` on Windows) builds two
+executables sharing the same core and save files (`build/baserom.sav`):
+
+- **`ghost-babel-remaster`** *(default)* — 256 px widescreen view assembled from
+  the cartridge room layers, margin room actors & shadows, sliding 136 px camera
+  framing, centred dialogue/item-pickup overlays, GLSL CRT shader screen
+  effect, LCD response simulation, and audio mastering.
+- **`ghost-babel-authentic`** — original 160×144 hardware frame, unchanged.
 
 ```bash
+# Linux
 git clone https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp.git
 cd Metal-Gear-Ghost-Babel-Recomp
 ./bootstrap.sh
 ./build.sh ~/my-rom.gbc
-./run.sh
+./run.sh            # Widescreen Remaster (use --authentic for 160px, --gui for window)
 ```
 
-Three commands. Or two, if you prefer a window: `./run.sh --gui`.
+On **Windows**: download `ghost-babel-tools-windows-x86_64-0.6.zip` from
+[Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases),
+extract anywhere, and double-click **`GhostBabelRecomp.bat`** (or drag & drop
+your `.gbc` ROM onto **`build.bat`**). No Python, MSYS2, WSL, or administrator
+rights required — the first build automatically downloads and SHA-256 verifies
+the portable `w64devkit` compiler, and `SDL2.dll` is already included.
 
 ---
 
@@ -31,8 +46,9 @@ on your machine with no interpreter in the loop.
 | needs the ROM at run time | yes | **no** — it becomes an executable |
 
 **Not included, ever:** the ROM, the game's code, graphics, or audio. Those are
-not ours to distribute. What is included is the *tooling* — the translator and
-the runtime — which anyone can run against their own copy of the game.
+not ours to distribute. What is included is the *tooling* — the translator, the
+remaster presenter, and the runtime — which anyone can run against their own
+copy of the game.
 
 The 59.7 fps figure is not a round number chosen to look good: the runtime
 paces itself against the Game Boy's real frame length, so it cannot run faster
@@ -47,33 +63,32 @@ it. With no window and no pacing at all the same build runs ~2700 fps.
 
 ---
 
-## What you need first
+## Windows (x86-64, Windows 10 / 11)
 
-Four things, each one a single install command:
+1. Download **`ghost-babel-tools-windows-x86_64-0.6.zip`** from
+   [Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases)
+   and extract it to a folder of your choice.
+2. Double-click **`GhostBabelRecomp.bat`** (graphical window) or drag & drop
+   your `.gbc` ROM onto **`build.bat`**.
+3. On the first run, the tool automatically downloads the pinned portable
+   C/C++ toolchain (`w64devkit` 2.11.0, ~65 MB, verified by SHA-256) into
+   `.tools/`. `SDL2.dll` is already bundled inside the release zip.
+4. Launch the game anytime via **`run-remaster.bat`** (widescreen),
+   **`run-authentic.bat`** (160 px), or the buttons in `GhostBabelRecomp.bat`.
 
-| needs | usually already there? |
-|---|---|
-| `git` | yes |
-| a C/C++ compiler | sometimes (`build-essential` on Debian, `base-devel` on Arch) |
-| `make` | sometimes (it comes with the compiler) |
-| SDL2 development headers | no — this is the one package to install |
-| Python 3 | yes |
-
-On Arch, Debian/Ubuntu, Fedora, Linux Mint or openSUSE, `./bootstrap.sh`
-detects your system and **prints the exact command** for anything missing.
-You do not have to look up package names.
-
-The graphical window additionally needs the Tk library
-(`python3-tk` on Debian/Ubuntu, `tk` on Arch, `python3-tkinter` on Fedora).
-The command line does not need it.
+*(If you cloned directly from Git on Windows instead of downloading the release
+zip, `GhostBabelRecomp.bat` / `windows/bootstrap.ps1` downloads the prebuilt
+`gbrecomp.exe`, runtime, and SDL2 package automatically from Releases — or you
+can pass `-FromSource` with `git` + `cmake` installed.)*
 
 ---
 
-## Step by step
+## Linux (x86-64)
 
-### 1. Install what is missing (only if you see a warning)
+### 1. System packages (only if `./bootstrap.sh` asks)
 
-`./bootstrap.sh` tells you. The commands are:
+`./bootstrap.sh` detects your distro and prints the exact command if anything is
+missing:
 
 ```bash
 # Arch / Omarchy
@@ -86,49 +101,42 @@ sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl
 sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
 ```
 
+The graphical window (`./run.sh --gui`) additionally needs Tk (`python3-tk` on
+Debian/Ubuntu, `tk` on Arch, `python3-tkinter` on Fedora). The command line does
+not need it.
+
 ### 2. `./bootstrap.sh`
 
-Downloads the translator (pinned by commit hash plus a versioned patch you can
-read line by line) and builds the tools. About 30 seconds the first time,
-seconds after that.
+Verifies dependencies and prepares `.tools/gbrecomp` and `.tools/libgbrt.a`
+(from the release tarball when downloaded from Releases, or fetched/compiled
+according to [`pins.lock`](pins.lock)).
 
 ### 3. `./build.sh path/to/rom.gbc`
 
-- checks the file really is a Game Boy ROM;
-- translates it into ~283 C files;
-- compiles and links them;
-- **runs the game for 120 frames** to prove it was born alive.
-
-Three to four minutes. That is the price of turning 2 MB of ROM into native
-code; it is not a hang.
+- checks the file really looks like a Game Boy ROM (no ROM hash published);
+- translates it into C files using `gbrecomp --output-prefix baserom`;
+- compiles and links `build/ghost-babel-remaster` (widescreen) and
+  `build/ghost-babel-authentic` (160 px);
+- **runs both executables for 120 frames** headless to prove they work.
 
 ### 4. `./run.sh`
 
-The game opens.
-
-Prefer a window to typing paths? `./run.sh --gui` opens the same flow
-graphically, with the build progress on screen.
+- `./run.sh` — opens **Widescreen Remaster** (256 px)
+- `./run.sh --authentic` — opens **Authentic** (160 px)
+- `./run.sh --gui` — opens the graphical builder & launcher
 
 ### 5. Free the disk, if you want to
 
-Translating the ROM leaves a few hundred megabytes behind: the generated C and
-the object files. The game never reads them - the executable links only
-against system libraries - so they can go:
-
 ```bash
-make clean       # deletes the generated code, keeps the game and your saves
-make distclean   # deletes build/ entirely, game and saves included
+make clean       # deletes intermediate C/object files, keeps executables and saves
+make distclean   # deletes build/ entirely, executables and saves included
 ```
-
-After a build the command line asks whether to do it, and the window shows a
-**Free build space** button. Deleting them costs nothing but a rebuild if you
-ever want them back.
 
 ---
 
 ## How to play
 
-The keyboard is the controller. There is no mouse, because the game had none.
+The keyboard is the controller. A gamepad works too.
 
 | key | action |
 |---|---|
@@ -140,93 +148,54 @@ The keyboard is the controller. There is no mouse, because the game had none.
 | `Tab` | fast-forward (skips waiting) |
 | `F1` / `F2` | diagnostics overlay / UI |
 | `F5` / `F8` | save / load state |
-| `F9` | next screen effect (scanlines, LCD grid, CRT) |
+| `F9` | next screen effect (Off, Scanlines, LCD Grid, CRT, CRT Shader) |
 | `F4` | toggle LCD response (panel trail) |
 | `M` | mute |
 | `Esc` | configuration menu |
 
-A gamepad works too.
+### Screen effects & remaster features
 
-### Screen effects
-
-The settings menu has a **Screen Effect** selector — Off, Scanlines, LCD Grid or
-CRT — plus a strength percentage. These draw over the finished image only; they
-never touch the ROM or the emulated hardware, so frame-accurate comparisons are
-unaffected.
-
-**LCD Response** (`F4`) makes the screen lag the way a handheld panel does, with
-a response time in milliseconds. It is off by default and remembered across
-restarts.
-
-The gap between simulated pixels is sized against the current window, so the
-same setting holds from a small window up to 4K instead of aliasing at one size
-and disappearing at another.
+- **Screen Effect (`F9`)**: Off, Scanlines, LCD Grid, CRT, or OpenGL **GLSL CRT Shader** (with intensity slider; saved automatically on release).
+- **LCD Response (`F4`)**: asymmetric panel decay simulation, off by default, persisted separately per artifact (`authentic` vs `remaster`).
+- **Audio mastering**: DC blocker + stereo-linked compressor + soft clipper enabled by default in `ghost-babel-remaster` (toggleable in the `Esc` menu).
+- **Widescreen Remaster (256 px)**: reconstructs continuous room flanks from the cartridge layers (`RoomMap`), decodes culled margin room actors and oval shadows without mutating guest state (`guest_writeback_allowed = false`), slides the active 136 px frame at room boundaries, and centres in-scene codec/item-pickup overlays.
 
 ---
 
 ## If something goes wrong
 
-Every message this project prints says **what to do**, not just what happened.
-If you hit something the message does not solve, the full log is kept in the
-project folder:
+Full logs are written in the project folder:
 
-```bash
-cat .build.log        # last build
-cat .bootstrap.log    # last setup
+```text
+.build.log       # last build (Linux & Windows)
+.bootstrap.log   # last setup (Linux & Windows)
 ```
 
-If it is our bug, open an issue with that log attached. A log is worth far
-more than a description.
+If it is our bug, open an issue with that log attached.
 
 ---
 
 ## Honest answers
 
 **Is it frame-accurate?**
-The runtime passes 75 of 75 Game Boy hardware test ROMs (Blargg and Mooneye),
-and its output matches a cycle-accurate reference emulator frame for frame on
-the material we measured. Where a 3–4 pixel difference survives in specific
-scenes, that is documented rather than hidden.
+The core runtime passes 75 of 75 Game Boy hardware test ROMs (Blargg and
+Mooneye) and matches cycle-accurate reference emulators on `ghost-babel-authentic`.
+The remaster is read-only over the same emulated machine and never alters guest
+execution or saves.
 
 **Does it need my exact ROM?**
-No. The tools work with any Game Boy ROM. Ghost Babel has an analysis profile
-([`profiles/ghost-babel.json`](profiles/ghost-babel.json)) listing three entry
-points the analyzer does not find on its own — addresses only, no game data.
+The toolchain works with any Game Boy ROM (`build/ghost-babel` for generic ROMs).
+Ghost Babel has an analysis profile ([`profiles/ghost-babel.json`](profiles/ghost-babel.json))
+listing three jump-table entry points so both `ghost-babel-remaster` and
+`ghost-babel-authentic` build automatically.
 
 **Will this run on my machine?**
-Linux today. Tested on Arch/Omarchy and Ubuntu 24.04 from scratch, including
-a machine with nothing installed. Windows and Android are planned; they are not
-finished, and this README will not pretend otherwise.
+**Linux x86-64** and **Windows x86-64** (Windows 10/11). Both are built and
+smoke-tested automatically in CI on every release.
 
-**Can I share the executable it produces?**
+**Can I share the `.exe` or executable it produces?**
 No — and we do not try to help with that. The generated executable *is* the
 game. This repository ships tools only.
-
----
-
-## What's next
-
-The tools work. The next thing is the one that makes this more than a faithful
-port: a **widescreen remaster**.
-
-The hardware never drew a pixel outside 160 wide, but the picture here is
-composed on the host rather than shown raw, so the frame can be wider than the
-screen the game was written for. The plan is a 256-pixel surface:
-
-- the game's own 160 columns, copied from the emulated hardware pixel for
-  pixel — not reconstructed, because Ghost Babel rewrites video memory *during*
-  a frame and any single snapshot of it is wrong;
-- the room's real scene on both sides, so the view is centred instead of
-  letterboxed, outdoor areas first;
-- the game's own soldiers kept alive in the extended area;
-- mastered audio, and a presentation shader over the finished image.
-
-**The authentic 160-pixel build stays exactly as it is.** The remaster is an
-option, not a replacement: if you want the original picture, it is still there.
-
-None of this is in the released build yet. It runs from the development tree,
-where the rough edges are, and the order of work is margin fidelity, then
-audio, then the shader.
 
 ---
 
@@ -234,59 +203,30 @@ audio, then the shader.
 
 Two different things can change, and they need two different actions.
 
-**A new version of these tools.** Download the new release, drop it in place
-and rebuild:
+**A new version of these tools.** Download the new release, drop it in place (or
+extract to a new folder) and rebuild:
 
 ```bash
-./build.sh ~/my-rom.gbc
+./build.sh ~/my-rom.gbc   # Linux (or GhostBabelRecomp.bat / build.bat on Windows)
 ```
 
-That is the whole update. Your ROM is untouched, nothing about your own copy
-of the game changes, and you reinstall nothing - the tools are a folder you
-replace. Watch the Releases page on GitHub to know when there is a new one.
+That is the whole update. Your ROM is untouched, your saves in `build/` stay
+intact (`build/baserom.sav`), and `.tools/` refreshes automatically against
+[`pins.lock`](pins.lock).
 
-**A new ROM dump.** Point `build.sh` at the new file:
-
-```bash
-./build.sh ~/other-dump.gbc
-```
-
-Your saves live in `build/`, so keep that folder if you care about them.
-
-**What never changes:** your ROM. Nothing here ever modifies it, and no
-version of these tools will. If the same ROM ever produced different output,
-that is a bug worth reporting.
-
-Every version is pinned in [`pins.lock`](pins.lock) and checked by hash during
-setup, so a tool version cannot quietly change under you: what you build with
-today is what you keep, until you choose to update.
+**A new ROM dump.** Point `./build.sh` (or `build.bat`) at the new file.
 
 ---
 
-## How it works
+## What's next
 
-```
-your-rom.gbc
-   │
-   ├─ gbrecomp ............. ROM → 283 C files (~385 MB on disk)
-   │
-   ├─ make ................. compiles the generated C
-   │
-   └─ libgbrt.a ............ runtime: CPU, PPU, timers, APU, MBC5, SDL
-                 │
-                 ▼
-          build/ghost-babel        ← native executable, ~75 MB
-```
+As of **v0.6**, both **`ghost-babel-remaster`** (256 px widescreen, cartridge
+`RoomMap` margins, margin room actors and shadows, centred overlays, GLSL CRT
+shader, audio mastering) and **`ghost-babel-authentic`** (160 px hardware-exact)
+are part of the public Linux and Windows x86-64 releases.
 
-The translator is [`gb-recompiled`](https://github.com/arcanite24/gb-recompiled)
-(MIT), plus one patch from this repository
-([`patches/`](patches/gb-recompiled-ghost-babel.patch)) fixing CGB hardware
-behaviour and post-boot DIV per boot-ROM revision. Every version is pinned in
-[`pins.lock`](pins.lock) and checked by hash, so the engine cannot change
-underneath you.
-
-Build output is reproducible: the same ROM and the same tool version produce
-the same binary, whatever path you took to build it.
+Ongoing work covers margin polish across later areas and future Android build
+support.
 
 ---
 
@@ -297,11 +237,15 @@ The interface is English only. For the commands and package names:
 <details>
 <summary><b>Português do Brasil</b></summary>
 
-### O que você precisa
+### Windows
+Baixe `ghost-babel-tools-windows-x86_64-0.6.zip` em **Releases**, extraia em
+uma pasta e dê duplo-clique em **`GhostBabelRecomp.bat`** (ou arraste sua ROM
+`.gbc` sobre **`build.bat`**). Não precisa instalar Python, MSYS2 nem WSL: na
+primeira execução o script baixa automaticamente o compilador portátil
+`w64devkit` (verificado por SHA-256), e a `SDL2.dll` já vai inclusa. Use
+**`run-remaster.bat`** (widescreen 256 px) ou **`run-authentic.bat`** (160 px).
 
-`git`, um compilador C/C++, `make`, os headers de desenvolvimento do SDL2 e
-Python 3. Um comando instala tudo:
-
+### Linux
 ```bash
 # Arch / Omarchy
 sudo pacman -S --needed base-devel pkgconf sdl2
@@ -310,36 +254,26 @@ sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl
 # Fedora
 sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
 ```
-
-A interface gráfica também precisa do Tk: `python3-tk` (Debian/Ubuntu),
-`tk` (Arch) ou `python3-tkinter` (Fedora). A linha de comando não precisa.
-
-### Os três comandos
-
+Depois:
 ```bash
-git clone https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp.git
-cd Metal-Gear-Ghost-Babel-Recomp
-./bootstrap.sh                  # prepara tudo (~30s)
-./build.sh /caminho/da/rom.gbc  # compila (~3 a 4 minutos)
-./run.sh                        # joga
+./bootstrap.sh
+./build.sh /caminho/da/sua-rom.gbc
+./run.sh               # Remaster widescreen (--authentic para 160px, --gui para janela)
 ```
-
-Ou, preferindo janela: `./run.sh --gui`.
-
-### Se der problema
-
-`./bootstrap.sh` e `build.sh` dizem o que fazer a cada falha. O log completo
-fica em `.build.log` e `.bootstrap.log`, na pasta do projeto — vale anexá-lo
-a um issue.
 
 </details>
 
 <details>
 <summary><b>Deutsch</b></summary>
 
-Benötigt werden `git`, ein C/C++-Compiler, `make`, die SDL2-Entwicklerheader
-und Python 3. Alles installiert ein einziger Befehl:
+### Windows
+Lade `ghost-babel-tools-windows-x86_64-0.6.zip` von **Releases** herunter,
+entpacke es und starte **`GhostBabelRecomp.bat`** per Doppelklick (oder ziehe
+deine `.gbc`-ROM auf **`build.bat`**). Es werden weder Python noch MSYS2
+benötigt — der portable Compiler (`w64devkit`) wird beim ersten Start
+automatisch mit SHA-256-Prüfung eingerichtet, `SDL2.dll` liegt bei.
 
+### Linux
 ```bash
 # Debian / Ubuntu
 sudo apt-get update && sudo apt-get install -y build-essential pkg-config libsdl2-dev
@@ -348,10 +282,7 @@ sudo pacman -S --needed base-devel pkgconf sdl2
 # Fedora
 sudo dnf install -y gcc-c++ make pkgconf-pkg-config SDL2-devel
 ```
-
-Dann `./bootstrap.sh` (Vorbereitung), `./build.sh rom.gbc` (übersetzen und
-bauen) und `./run.sh` (spielen). Die grafische Oberfläche braucht zusätzlich Tk
-(`python3-tk` bzw. `tk`); die Kommandozeile kommt ohne aus.
+Danach `./bootstrap.sh`, `./build.sh rom.gbc` und `./run.sh` (oder `./run.sh --authentic` / `./run.sh --gui`).
 
 </details>
 

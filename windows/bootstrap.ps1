@@ -324,7 +324,7 @@ if ($treeNow -ne $engineTreeWant) {
         [void](Invoke-Logged "git" @("-C", $engineDir, "am", "--abort"))
         [void](Invoke-Logged "git" @("-C", $engineDir, "reset", "-q", "--hard", $engineCommit))
     }
-    if ((Invoke-Logged "git" @("-C", $engineDir, "am", "-q", $patchFile)) -ne 0) {
+    if ((Invoke-Logged "git" @("-C", $engineDir, "-c", "user.name=Ghost Babel Recomp", "-c", "user.email=build@localhost", "am", "-q", $patchFile)) -ne 0) {
         throw "git am failed on $patchFile (see $LogFile)"
     }
     $treeNow = (& git -C $engineDir rev-parse "HEAD^{tree}")

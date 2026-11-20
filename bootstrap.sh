@@ -240,7 +240,7 @@ else
   fi
   info "applying the engine patch"
   log "git am $ENGINE_PATCH"
-  git -C "$ENGINE_DIR" am -q "$PATCH_FILE" \
+  git -C "$ENGINE_DIR" -c user.name="Ghost Babel Recomp" -c user.email="build@localhost" am -q "$PATCH_FILE" \
     || die "the engine patch did not apply cleanly.
 This is our bug, not yours - please report it on GitHub with the output above." \
        "cd .tools/engine && git am --abort"

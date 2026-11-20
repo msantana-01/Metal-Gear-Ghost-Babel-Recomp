@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/30] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/31] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/30] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/31] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/30] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/31] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/30] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/31] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/30] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/31] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/30] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/31] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/30] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/31] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/30] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/31] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/30] platform: confirm host actions with a transient
+Subject: [PATCH 09/31] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/30] platform: name the host after the cartridge and give
+Subject: [PATCH 10/31] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/30] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/31] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/30] platform: centre the footer buttons on the content
+Subject: [PATCH 12/31] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/30] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/31] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/30] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/31] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/30] platform: panel effects for the presented image, one
+Subject: [PATCH 15/31] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/30] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/31] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/30] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/31] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/30] runtime: include math.h for the panel effects
+Subject: [PATCH 18/31] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/30] platform: make the presented surface width a runtime
+Subject: [PATCH 19/31] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/30] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/31] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/30] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/31] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/30] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/31] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/30] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/31] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/30] audio: let the host choose the mastering default
+Subject: [PATCH 24/31] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/30] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/31] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/30] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/31] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/30] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/31] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/30] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/31] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/30] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/31] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/30] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/31] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6371,6 +6371,80 @@ index bbf034d..f8c9f76 100644
  #define GL_VERTEX_SHADER 0x8B31
  #define GL_FRAGMENT_SHADER 0x8B30
  #define GL_COMPILE_STATUS 0x8B81
+-- 
+2.56.0
+
+
+From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Fri, 20 Nov 2026 15:56:01 -0300
+Subject: [PATCH 31/31] fix(platform): bound framebuffer copies to active
+ present width
+
+---
+ runtime/src/platform_sdl.cpp | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index f8c9f76..b612cf8 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -420,7 +420,7 @@ static const uint32_t g_palettes[][4] = {
+     { 0xFFFFFFFF, 0xFFAAAAAA, 0xFF555555, 0xFF000000 }, // B&W
+     { 0xFFFFB000, 0xFFCB4F0E, 0xFF800000, 0xFF330000 }  // Amber
+ };
+-static uint32_t g_lcd_off_framebuffer[GB_FRAMEBUFFER_SIZE];
++static uint32_t g_lcd_off_framebuffer[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+ static uint32_t g_last_guest_framebuffer[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+ static bool g_lcd_off_framebuffer_initialized = false;
+ static bool g_last_guest_framebuffer_valid = false;
+@@ -2989,7 +2989,7 @@ static void ensure_lcd_off_framebuffer(void) {
+         return;
+     }
+ 
+-    for (int i = 0; i < GB_FRAMEBUFFER_SIZE; i++) {
++    for (int i = 0; i < GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH; i++) {
+         g_lcd_off_framebuffer[i] = 0xFFE0F8D0;
+     }
+ 
+@@ -3354,7 +3354,13 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     }
+     if (count_guest_frame) {
+         g_frame_count++;
+-        memcpy(g_last_guest_framebuffer, framebuffer, sizeof(g_last_guest_framebuffer));
++        const size_t copy_bytes =
++            (size_t)g_present_width * (size_t)GB_SCREEN_HEIGHT * sizeof(uint32_t);
++        memcpy(g_last_guest_framebuffer,
++               framebuffer,
++               copy_bytes <= sizeof(g_last_guest_framebuffer)
++                   ? copy_bytes
++                   : sizeof(g_last_guest_framebuffer));
+         g_last_guest_framebuffer_valid = true;
+     }
+ 
+@@ -3515,17 +3521,11 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                                     (float)g_screen_effect_intensity / 100.0f);
+                 /* Read the shader output back so the SDL texture holds it for
+                  * ImGui overlay and presentation. */
+-                static uint32_t* shader_readback = NULL;
+-                if (!shader_readback) {
+-                    shader_readback = (uint32_t*)SDL_malloc(
+-                        (size_t)g_present_width * GB_SCREEN_HEIGHT * sizeof(uint32_t));
+-                }
+-                if (shader_readback) {
+-                    glReadPixels_fn(0, 0, g_present_width, GB_SCREEN_HEIGHT,
+-                                    GL_RGBA, GL_UNSIGNED_BYTE, shader_readback);
+-                    SDL_UpdateTexture(g_texture, NULL, shader_readback,
+-                                      g_present_width * (int)sizeof(uint32_t));
+-                }
++                static uint32_t shader_readback[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
++                glReadPixels_fn(0, 0, g_present_width, GB_SCREEN_HEIGHT,
++                                GL_RGBA, GL_UNSIGNED_BYTE, shader_readback);
++                SDL_UpdateTexture(g_texture, NULL, shader_readback,
++                                  g_present_width * (int)sizeof(uint32_t));
+                 SDL_GL_MakeCurrent(g_window, NULL);
+             }
+         }
 -- 
 2.56.0
 

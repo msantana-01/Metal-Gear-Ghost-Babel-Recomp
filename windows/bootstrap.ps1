@@ -107,6 +107,17 @@ function Invoke-Logged([string]$exe, [string[]]$argList, [string]$workDir = $Rep
     return $p.ExitCode
 }
 
+function Throw-WithLogTail([string]$prefix) {
+    $tail = ""
+    if (Test-Path $LogFile) {
+        $lines = Get-Content -Path $LogFile -Tail 40 -ErrorAction SilentlyContinue
+        if ($lines) {
+            $tail = "`n" + ($lines -join "`n")
+        }
+    }
+    throw "$prefix (see $LogFile)$tail"
+}
+
 $pins = Read-Pins $PinsPath
 $toolsVersion   = $pins["tools.version"]
 $releaseBase    = $pins["tools.release_base"]
@@ -340,7 +351,7 @@ $makeExe = (Join-Path $w64Bin "make.exe").Replace('\', '/')
 $engBuild = Join-Path $engineDir "build-win"
 if (Test-Path $engBuild) { Remove-Item -Recurse -Force $engBuild }
 
-$gen = "MinGW Makefiles"
+$gen = if (Get-Command ninja -ErrorAction SilentlyContinue) { "Ninja" } else { "MSYS Makefiles" }
 $genArgs = @("-G", $gen, "-S", $engineDir, "-B", $engBuild,
     "-DCMAKE_BUILD_TYPE=Release",
     "-DBUILD_TESTS=OFF",
@@ -348,12 +359,9 @@ $genArgs = @("-G", $gen, "-S", $engineDir, "-B", $engBuild,
     "-DCMAKE_CXX_COMPILER=$gxxExe",
     "-DCMAKE_MAKE_PROGRAM=$makeExe",
     "-DCMAKE_EXE_LINKER_FLAGS=-static -static-libgcc -static-libstdc++")
-if (Get-Command ninja -ErrorAction SilentlyContinue) {
-    $genArgs[1] = "Ninja"
-}
-if ((Invoke-Logged "cmake" $genArgs) -ne 0) { throw "cmake configure failed (see $LogFile)" }
+if ((Invoke-Logged "cmake" $genArgs) -ne 0) { Throw-WithLogTail "cmake configure failed" }
 if ((Invoke-Logged "cmake" @("--build", $engBuild, "--target", "gbrecomp", "-j", $env:NUMBER_OF_PROCESSORS)) -ne 0) {
-    throw "cmake build gbrecomp failed (see $LogFile)"
+    Throw-WithLogTail "cmake build gbrecomp failed"
 }
 
 $builtExe = Get-ChildItem -Path $engBuild -Filter "gbrecomp.exe" -Recurse -File | Select-Object -First 1
@@ -381,7 +389,7 @@ foreach ($f in Get-ChildItem -Path (Join-Path $rtDir "src") -Filter "*.c") {
     $rc = Invoke-Logged $gccExe @("-std=gnu11", "-O3", "-ffunction-sections", "-fdata-sections",
         "-DGB_HAS_SDL2", "-DGB_PLATFORM_WINDOWS", "-I$rtInc", "-I$sdlInc1", "-I$sdlInc2",
         "-c", $f.FullName, "-o", $obj)
-    if ($rc -ne 0) { throw "gcc failed on $($f.Name) (see $LogFile)" }
+    if ($rc -ne 0) { Throw-WithLogTail "gcc failed on $($f.Name)" }
 }
 
 $cppFiles = @(
@@ -399,7 +407,7 @@ foreach ($cf in $cppFiles) {
     $rc = Invoke-Logged $gxxExe @("-std=c++20", "-O3", "-ffunction-sections", "-fdata-sections",
         "-DGB_HAS_SDL2", "-DGB_PLATFORM_WINDOWS", "-I$rtInc", "-I$imguiD", "-I$imguiB",
         "-I$sdlInc1", "-I$sdlInc2", "-c", $cf, "-o", $obj)
-    if ($rc -ne 0) { throw "g++ failed on $cf (see $LogFile)" }
+    if ($rc -ne 0) { Throw-WithLogTail "g++ failed on $cf" }
 }
 
 if (Test-Path $libDst) { Remove-Item -Force $libDst }

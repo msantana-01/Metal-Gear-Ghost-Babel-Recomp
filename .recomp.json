@@ -7,16 +7,15 @@
   "original": { "region": "USA" },
   "project": "Metal Gear Ghost Babel Recomp",
   "status": "in-progress",
-  "targets": ["Linux"],
+  "targets": ["Linux", "Windows"],
   "toolchain": "Gb-recompiled",
   "approach": "Static recompilation of the game into native C, plus a runtime that reproduces the hardware, so no interpreter sits in the hot path.",
   "maintainers": [{ "name": "msantana-01", "link": "https://github.com/msantana-01" }],
   "help": [
-    "Widescreen margin fidelity",
-    "Audio accuracy",
-    "Reverse engineering the room and object system",
-    "Playtesting the widescreen build"
+    "Widescreen margin fidelity across later areas",
+    "Reverse engineering additional room and object systems",
+    "Playtesting Linux and Windows widescreen builds"
   ],
   "tags": ["widescreen", "gbc", "recomp"],
-  "notes": "Public builds for Linux x86_64 since v0.1, toolchain only: you supply your own copy of the game and no game data is distributed. Frame-exact against a cycle-accurate reference; 75 of 75 Blargg and Mooneye tests pass. The goal is a true widescreen remaster: a 256px surface out of the guest's own framebuffer, the room's real scene on both sides instead of bars, the guest's own soldiers alive in the extended area, mastered audio, a presentation shader. The authentic 160px build stays for purists. Next: margin fidelity, audio, then the shader. Windows and Android are planned, not built."
+  "notes": "Public builds for Linux x86_64 and Windows x86_64 (v0.6+), toolchain only: you supply your own copy of the game and no game data is distributed. Frame-exact against a cycle-accurate reference; 75 of 75 Blargg and Mooneye tests pass. Ships both the 256px widescreen remaster (cartridge RoomMap margins, margin room actors and shadows, centred overlays, mastered audio, GLSL CRT shader) and the authentic 160px build. Android is planned."
 }

@@ -143,7 +143,7 @@ try {
 }
 
 $hash = (Get-FileHash -Algorithm SHA256 -Path $zipPath).Hash.ToLowerInvariant()
-Set-Content -Path "$zipPath.sha256" -Value "$hash  $zipName" -Encoding ASCII
+[System.IO.File]::WriteAllText("$zipPath.sha256", "$hash  $zipName`n", (New-Object System.Text.UTF8Encoding($false)))
 Write-Host "artifact:  $zipPath"
 Write-Host "sha256:    $hash"
 Write-Host "ok: tools only (ADR-005 verified)." -ForegroundColor Green

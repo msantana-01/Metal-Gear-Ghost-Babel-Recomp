@@ -393,7 +393,7 @@ foreach ($f in Get-ChildItem -Path (Join-Path $rtDir "src") -Filter "*.c") {
     $base = [System.IO.Path]::GetFileNameWithoutExtension($f.Name)
     if ($base -eq "gbrt_gameplay_mutation" -or $base -eq "gbrt_native_patch") { continue }
     $obj = Join-Path $objDir "$base.o"
-    $rc = Invoke-Logged $gccExe @("-std=gnu11", "-O3", "-ffunction-sections", "-fdata-sections",
+    $rc = Invoke-Logged $gccExe @("-std=gnu11", "-O3",
         "-DGB_HAS_SDL2", "-DGB_PLATFORM_WINDOWS", "-I$rtInc", "-I$sdlInc1", "-I$sdlInc2",
         "-c", $f.FullName, "-o", $obj)
     if ($rc -ne 0) { Throw-WithLogTail "gcc failed on $($f.Name)" }
@@ -411,7 +411,7 @@ $cppFiles = @(
 foreach ($cf in $cppFiles) {
     $base = [System.IO.Path]::GetFileNameWithoutExtension($cf)
     $obj = Join-Path $objDir "$base.o"
-    $rc = Invoke-Logged $gxxExe @("-std=c++20", "-O3", "-ffunction-sections", "-fdata-sections",
+    $rc = Invoke-Logged $gxxExe @("-std=c++17", "-O3",
         "-DGB_HAS_SDL2", "-DGB_PLATFORM_WINDOWS", "-I$rtInc", "-I$imguiD", "-I$imguiB",
         "-I$sdlInc1", "-I$sdlInc2", "-c", $cf, "-o", $obj)
     if ($rc -ne 0) { Throw-WithLogTail "g++ failed on $cf" }

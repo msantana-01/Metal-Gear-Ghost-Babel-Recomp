@@ -123,6 +123,56 @@ jobs:
               }
           }
 
+      - name: Diagnose Windows smoke failure
+        if: failure()
+        shell: pwsh
+        run: |
+          $pkgDir = Join-Path $env:RUNNER_TEMP "win-pkg-smoke/ghost-babel-tools"
+          if (-not (Test-Path $pkgDir)) { exit 0 }
+          $logFile = Join-Path $pkgDir ".build.log"
+          if (Test-Path $logFile) {
+              Write-Host "=== .build.log (tail 80) ==="
+              Get-Content $logFile -Tail 80
+          }
+          $w64Bin  = Join-Path $pkgDir ".tools/w64devkit/bin"
+          $objdump = Join-Path $w64Bin "objdump.exe"
+          $gdb     = Join-Path $w64Bin "gdb.exe"
+          $make    = Join-Path $w64Bin "make.exe"
+          $authExe   = Join-Path $pkgDir "build/ghost-babel-authentic.exe"
+          $remastExe = Join-Path $pkgDir "build/ghost-babel-remaster.exe"
+          if (Test-Path $objdump) {
+              foreach ($exe in @($authExe, $remastExe)) {
+                  if (Test-Path $exe) {
+                      Write-Host "`n=== objdump -p $(Split-Path -Leaf $exe) ==="
+                      & $objdump -p $exe | Select-String "DLL Name:"
+                  }
+              }
+          }
+          if (Test-Path $remastExe) {
+              Write-Host "`n=== remaster --help ==="
+              $env:PATH = "$w64Bin;$env:PATH"
+              & $remastExe --help
+              Write-Host "remaster --help exit: $LASTEXITCODE"
+          }
+          if ((Test-Path $make) -and (Test-Path $gdb) -and (Test-Path (Join-Path $pkgDir "build/work"))) {
+              Write-Host "`n=== Re-linking unstripped authentic exe for GDB ==="
+              $env:PATH = "$w64Bin;$env:PATH"
+              Push-Location $pkgDir
+              try {
+                  $dbgExe = "build/ghost-babel-authentic-dbg.exe"
+                  if (Test-Path $dbgExe) { Remove-Item -Force $dbgExe }
+                  & $make -f windows/Makefile.win BUILD_REMASTER=0 OUT=$dbgExe STRIP=: `
+                      ROM_SRC=build/project TOOLS_DIR=.tools SDL2_DIR=sdl2
+                  if (Test-Path $dbgExe) {
+                      Write-Host "`n=== GDB backtrace ==="
+                      & $gdb -batch -ex "set pagination off" -ex "run --headless --limit 200000" `
+                          -ex "bt" -ex "info registers rip rsp rax rcx rdx" $dbgExe
+                  }
+              } finally {
+                  Pop-Location
+              }
+          }
+
       - name: Copyright guard (post-build)
         shell: bash
         run: ./tools/guard_copyright.sh

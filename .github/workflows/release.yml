@@ -188,8 +188,8 @@ jobs:
             dist/release-windows/*.zip
             dist/release-windows/*.zip.sha256
           )
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "${FILES[@]}" --clobber
+          if gh release view "$TAG" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${FILES[@]}" --repo "${GITHUB_REPOSITORY}" --clobber
           else
-            gh release create "$TAG" "${FILES[@]}" --title "$TAG" --generate-notes
+            gh release create "$TAG" "${FILES[@]}" --repo "${GITHUB_REPOSITORY}" --title "$TAG" --generate-notes
           fi

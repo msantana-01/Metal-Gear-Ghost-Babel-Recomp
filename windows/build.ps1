@@ -159,7 +159,17 @@ function Invoke-TimedExe([string]$exePath, [string[]]$argList, [int]$timeoutSec,
     if ($stdout) { Add-Content -Path $LogFile -Value $stdout }
     if ($stderr) { Add-Content -Path $LogFile -Value $stderr }
     if ($proc.ExitCode -ne 0) {
-        throw "$label failed with exit code $($proc.ExitCode) (see $LogFile)"
+        $tailLines = @()
+        foreach ($chunk in @($stdout, $stderr)) {
+            if ($chunk) {
+                $tailLines += ($chunk -split "`r?`n" | Where-Object { $_ -ne "" })
+            }
+        }
+        if ($tailLines.Count -gt 20) {
+            $tailLines = $tailLines[($tailLines.Count - 20)..($tailLines.Count - 1)]
+        }
+        $tailText = if ($tailLines.Count -gt 0) { "`n" + ($tailLines -join "`n") } else { "" }
+        throw "$label failed with exit code $($proc.ExitCode) (see $LogFile)$tailText"
     }
 }
 

@@ -31,9 +31,10 @@ SDL_LIBS   := -L$(SDL2_DIR)/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
 
 WORK := build/work
 
-CFLAGS   ?= -std=gnu11 -O2 -ffunction-sections -fdata-sections
-LDFLAGS  ?= -static-libgcc -static-libstdc++ $(THREAD_LIBS) -Wl,--gc-sections
+CFLAGS   ?= -std=gnu11 -O2
+LDFLAGS  ?= -static-libgcc -static-libstdc++ $(THREAD_LIBS)
 WARN     ?=
+STRIP    ?= strip
 
 V ?= 0
 ifeq ($(V),1)
@@ -94,16 +95,16 @@ $(OUT): $(GEN_COMMON_OBJ) $(GEN_MAIN_OBJ) $(LIB)
 	@echo "GBPHASE link"
 	@mkdir -p $(dir $@)
 	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
-	@strip $@ 2>/dev/null || true
+	@$(STRIP) $@ 2>/dev/null || true
 
 $(OUT_AUTH): $(GEN_COMMON_OBJ) $(GEN_MAIN_OBJ) $(LIB)
 	@echo "GBPHASE link"
 	@mkdir -p $(dir $@)
 	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
-	@strip $@ 2>/dev/null || true
+	@$(STRIP) $@ 2>/dev/null || true
 
 $(OUT_REMASTER): $(GEN_COMMON_OBJ) $(REMASTER_OBJ) $(LIB)
 	@echo "GBPHASE link"
 	@mkdir -p $(dir $@)
 	$(Q)$(CXX) $^ -o $@ $(SDL_LIBS) $(LDFLAGS)
-	@strip $@ 2>/dev/null || true
+	@$(STRIP) $@ 2>/dev/null || true

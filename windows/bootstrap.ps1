@@ -351,13 +351,20 @@ $makeExe = (Join-Path $w64Bin "make.exe").Replace('\', '/')
 $engBuild = Join-Path $engineDir "build-win"
 if (Test-Path $engBuild) { Remove-Item -Recurse -Force $engBuild }
 
-$gen = if (Get-Command ninja -ErrorAction SilentlyContinue) { "Ninja" } else { "MSYS Makefiles" }
+$ninjaCmd = Get-Command ninja -ErrorAction SilentlyContinue
+if ($ninjaCmd) {
+    $gen = "Ninja"
+    $makeProg = $ninjaCmd.Source.Replace('\', '/')
+} else {
+    $gen = "MSYS Makefiles"
+    $makeProg = $makeExe
+}
 $genArgs = @("-G", $gen, "-S", $engineDir, "-B", $engBuild,
     "-DCMAKE_BUILD_TYPE=Release",
     "-DBUILD_TESTS=OFF",
     "-DCMAKE_C_COMPILER=$gccExe",
     "-DCMAKE_CXX_COMPILER=$gxxExe",
-    "-DCMAKE_MAKE_PROGRAM=$makeExe",
+    "-DCMAKE_MAKE_PROGRAM=$makeProg",
     "-DCMAKE_EXE_LINKER_FLAGS=-static -static-libgcc -static-libstdc++")
 if ((Invoke-Logged "cmake" $genArgs) -ne 0) { Throw-WithLogTail "cmake configure failed" }
 if ((Invoke-Logged "cmake" @("--build", $engBuild, "--target", "gbrecomp", "-j", $env:NUMBER_OF_PROCESSORS)) -ne 0) {

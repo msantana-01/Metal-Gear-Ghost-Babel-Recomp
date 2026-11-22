@@ -545,7 +545,11 @@ static const char* screen_effect_name(GBScreenEffect effect) {
         case GB_SCREEN_EFFECT_CRT:
             return "crt";
         case GB_SCREEN_EFFECT_SHADER:
-            return "shader";
+            return "crt-trinitron";
+        case GB_SCREEN_EFFECT_CRT_CURVED:
+            return "crt-curved";
+        case GB_SCREEN_EFFECT_GBC_LCD:
+            return "gbc-lcd";
         case GB_SCREEN_EFFECT_OFF:
         default:
             return "off";

@@ -69,6 +69,7 @@ void native_presenter_init(
     presenter->source_node = 0xFFu;
     learned_links_init(&presenter->learned);
     room_actors_reset(&presenter->actors);
+    room_actors_tracker_reset(&presenter->actor_tracker);
 }
 
 bool native_presenter_set_room(NativePresenter* presenter,
@@ -83,6 +84,7 @@ bool native_presenter_set_room(NativePresenter* presenter,
     presenter->rom = rom;
     presenter->rom_size = rom_size;
     presenter->room_bank = switchable_bank;
+    room_actors_tracker_reset(&presenter->actor_tracker);
     return room_compositor_set_room(&presenter->room, rom, rom_size, switchable_bank, area, room);
 }
 
@@ -352,33 +354,16 @@ static uint16_t sample_background(
 
 /* The tone that surrounds the picture when the room does not continue.
  *
- * Derived from the frame rather than chosen per screen, because the two cases
- * that were named disagree on which rule you would pick by hand. Konami is 95%
- * white with a 3% red swoosh, and wants white. The title is 94% black with a
- * 2% red mark, and wants red. A hand-written table has two entries and a
- * third screen nobody remembered. So: take the dominant colour, and when the
- * frame is near black - so that the dominant has nothing to say - take the most
- * saturated one instead.
+ * Derived from the frame's exact five-bit colour histogram: the colour with
+ * the most pixels wins (breaking ties toward black 0u).
  *
- * That gives Konami white because white dominates, the title red because black
- * dominates and red is the colour with life in it, and the Nintendo boot black
- * because it has no saturated colour at all - inverting that logo would be
- * wrong. The Nintendo case is the argument against simply saying "brightest
- * colour wins".
- *
- * The histogram is over the exact five-bit colours, and the winner is the
- * answer.
- *
- * It used to be buckets - four bits per channel - with the winner's mean taken
- * as the colour, and both halves of that returned something the frame does not
- * contain. The Konami logo's bucket holds (31,31,31) 20516 times, (31,31,27)
- * 1669 and (27,27,27) 856, and the mean of those is (30,30,30), a grey that is
- * on screen nowhere. Averaging the whole frame instead is worse and was here
- * once too: the red attract screen is 68% (255,131,131) and its mean is
- * (222,139,139), the red one after it is 67% (255,0,0) and its mean is
- * (197,24,24), and the Konami logo's mean is (238,230,222). "The game's own
- * colour" has to be a colour the game has, so the vote is over the colours
- * themselves and the winner is the colour.
+ * Previously a near-black branch (mean brightness <= 2) fell back to the most
+ * saturated non-black colour on the frame, which flooded mostly-black menus,
+ * splash screens, and intro cutscenes with green (SELECT GAME LEVEL), red
+ * (KCET), or flashing blue/purple/green borders during fades. Returning the
+ * dominant colour directly keeps white logos on white, solid colour fades
+ * smooth, and dark screens (KCET, menus, intro cutscenes) cleanly letterboxed
+ * in black.
  *
  * 32768 counters is 64KB of static array, cleared and refilled per frame, and
  * the two scans over it are 32768 comparisons each. That is the whole cost. */
@@ -388,18 +373,9 @@ static uint16_t derive_backdrop(const GBPresentationHardwareSnapshot* hw) {
     static uint16_t counts[BACKDROP_COLOURS];
     memset(counts, 0, sizeof(counts));
 
-    uint32_t sum_r = 0u;
-    uint32_t sum_g = 0u;
-    uint32_t sum_b = 0u;
     for (uint32_t i = 0; i < (uint32_t)SCREEN_WIDTH * (uint32_t)NATIVE_HEIGHT; ++i) {
-        const uint16_t c = hw->accurate_pixels[i];
-        const uint32_t r = c & 31u;
-        const uint32_t g = (c >> 5) & 31u;
-        const uint32_t b = (c >> 10) & 31u;
-        ++counts[r | (g << 5) | (b << 10)];
-        sum_r += r;
-        sum_g += g;
-        sum_b += b;
+        const uint16_t c = hw->accurate_pixels[i] & 0x7FFFu;
+        ++counts[c];
     }
 
     uint32_t dominant = 0u;
@@ -411,57 +387,7 @@ static uint16_t derive_backdrop(const GBPresentationHardwareSnapshot* hw) {
     if (counts[dominant] == 0u) {
         return 0u;
     }
-
-    /* Two questions, and the mean only answers one of them.
-     *
-     * "Has the frame any light in it" is the mean's question, and the mean is
-     * the right instrument: it is the frame's brightness, and a frame with no
-     * light has no colour to letterbox into. The title answers 2 and the
-     * near-black branch below takes over - that is the branch that keeps its
-     * red. This test is why it must stay on the mean: frame 4000 is 86% black
-     * with white text and answers 3, so it takes the coloured branch and gets
-     * the black it is made of; testing the *dominant* instead sends both to the
-     * saturated branch and paints frame 4000 red over a screen with one red
-     * pixel in it.
-     *
-     * "Which colour is it" is a different question, and there the dominant is
-     * the only instrument. It is a colour the frame is made of, by count, and
-     * every pixel of it is on screen. */
-    const uint32_t pixels = (uint32_t)SCREEN_WIDTH * (uint32_t)NATIVE_HEIGHT;
-    const uint32_t mean_r = sum_r / pixels;
-    const uint32_t mean_g = sum_g / pixels;
-    const uint32_t mean_b = sum_b / pixels;
-    const uint32_t light = mean_r > mean_g ? (mean_r > mean_b ? mean_r : mean_b)
-                                           : (mean_g > mean_b ? mean_g : mean_b);
-    if (light > 2u) {
-        /* The screen has a colour of its own. Use it. */
-        return (uint16_t)dominant;
-    }
-
-    /* Near black: fall back to the most saturated colour, weighted by how much
-     * of it there is, so a small accent cannot flood the screen and a large
-     * flat one always wins. */
-    uint32_t best = 0u;
-    uint32_t best_score = 0u;
-    for (uint32_t i = 0u; i < BACKDROP_COLOURS; ++i) {
-        if (counts[i] == 0u) {
-            continue;
-        }
-        const uint32_t r = i & 31u;
-        const uint32_t g = (i >> 5) & 31u;
-        const uint32_t b = (i >> 10) & 31u;
-        const uint32_t hi = r > g ? (r > b ? r : b) : (g > b ? g : b);
-        const uint32_t lo = r < g ? (r < b ? r : b) : (g < b ? g : b);
-        const uint32_t score = (hi - lo) * counts[i];
-        if (score > best_score) {
-            best_score = score;
-            best = i;
-        }
-    }
-    if (best_score == 0u) {
-        return 0u;
-    }
-    return (uint16_t)best;
+    return (uint16_t)dominant;
 }
 
 
@@ -1525,7 +1451,7 @@ bool native_presenter_render_background(
                 } else if (hud_width != 0u && x >= hud_left && x < hud_left + hud_width) {
                     in_game = hud_source + (x - hud_left);
                 } else {
-                    in_game = (uint32_t)y * SCREEN_WIDTH + x < presenter->width ? x : 0u;
+                    in_game = 0u;
                 }
                 row[x] = hw->accurate_pixels[(size_t)y * SCREEN_WIDTH + in_game];
             }
@@ -1637,27 +1563,31 @@ bool native_presenter_render_background(
                 }
             }
         }
+        const bool row_is_bottom_status =
+            panel && !row_is_scene_map(hw, y, scene_map) &&
+            !row_is_centered_overlay(y, presenter->height, bottom_non_scene_rows);
         uint32_t* row = presenter->pixels + (size_t)y * presenter->stride_pixels;
         for (uint32_t x = 0; x < presenter->width; ++x) {
             uint8_t ci = 0u;
             uint8_t prio = 0u;
-            if (hud_width != 0u && x >= hud_left && x < hud_left + hud_width) {
+            if (row_is_bottom_status) {
+                /* Short bottom status strip (LIFE, boss HP, O2, alert):
+                 * spans the full 160px Game Boy width contiguously at x = 0..159
+                 * so right-side gauges like O2 are never split across the HUD gap. */
+                if (x < (uint32_t)SCREEN_WIDTH) {
+                    row[x] = hw->accurate_pixels[(size_t)y * SCREEN_WIDTH + x];
+                    presenter->guest_pixels++;
+                } else {
+                    row[x] = flat ? backdrop : k_outside_colour;
+                    presenter->outside_pixels++;
+                }
+                ci = 1u;
+                prio = 1u;
+            } else if (hud_width != 0u && x >= hud_left && x < hud_left + hud_width) {
                 row[x] = hw->accurate_pixels[(size_t)y * SCREEN_WIDTH + hud_source + (x - hud_left)];
                 presenter->window_pixels++;
             } else if (panel && !row_is_scene_map(hw, y, scene_map)) {
-                if (!row_is_centered_overlay(y, presenter->height, bottom_non_scene_rows)) {
-                    /* Short bottom status strip (LIFE, boss HP, O2, alert):
-                     * decoupled from sliding game_left and anchored at x = 0. */
-                    if (x < picture_width) {
-                        row[x] = hw->accurate_pixels[(size_t)y * SCREEN_WIDTH + x];
-                        presenter->guest_pixels++;
-                    } else {
-                        row[x] = flat ? backdrop : k_outside_colour;
-                        presenter->outside_pixels++;
-                    }
-                    ci = 1u;
-                    prio = 1u;
-                } else if (x >= overlay_left && x < overlay_left + picture_width) {
+                if (x >= overlay_left && x < overlay_left + picture_width) {
                     /* Centred in-scene dialogue box (e.g. Mei Ling tutorial). */
                     row[x] = hw->accurate_pixels[(size_t)y * SCREEN_WIDTH + (x - overlay_left)];
                     presenter->guest_pixels++;
@@ -1809,12 +1739,14 @@ bool native_presenter_render_background(
             .overlay_left = overlay_left,
             .scene_map = scene_map,
             .bottom_non_scene_rows = bottom_non_scene_rows,
+            .tracker = &presenter->actor_tracker,
         };
         RoomActorRenderStats actor_stats;
         room_actors_render(&presenter->actors, &actor_args, &actor_stats);
         presenter->room_actors_drawn += actor_stats.actors_drawn;
         presenter->room_actor_pixels_drawn += actor_stats.pixels_drawn;
     } else {
+        room_actors_tracker_reset(&presenter->actor_tracker);
         const uint32_t shadow_room_right =
             panel ? (room_right > (uint32_t)SCREEN_WIDTH - picture_width
                          ? room_right - ((uint32_t)SCREEN_WIDTH - picture_width)

@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/31] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/34] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/31] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/34] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/31] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/34] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/31] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/34] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/31] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/34] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/31] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/34] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/31] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/34] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/31] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/34] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/31] platform: confirm host actions with a transient
+Subject: [PATCH 09/34] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/31] platform: name the host after the cartridge and give
+Subject: [PATCH 10/34] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/31] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/34] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/31] platform: centre the footer buttons on the content
+Subject: [PATCH 12/34] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/31] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/34] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/31] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/34] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/31] platform: panel effects for the presented image, one
+Subject: [PATCH 15/34] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/31] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/34] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/31] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/34] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/31] runtime: include math.h for the panel effects
+Subject: [PATCH 18/34] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/31] platform: make the presented surface width a runtime
+Subject: [PATCH 19/34] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/31] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/34] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/31] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/34] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/31] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/34] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/31] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/34] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/31] audio: let the host choose the mastering default
+Subject: [PATCH 24/34] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/31] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/34] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/31] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/34] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/31] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/34] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/31] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/34] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/31] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/34] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/31] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/34] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6378,7 +6378,7 @@ index bbf034d..f8c9f76 100644
 From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 15:56:01 -0300
-Subject: [PATCH 31/31] fix(platform): bound framebuffer copies to active
+Subject: [PATCH 31/34] fix(platform): bound framebuffer copies to active
  present width
 
 ---
@@ -6445,6 +6445,1648 @@ index f8c9f76..b612cf8 100644
                  SDL_GL_MakeCurrent(g_window, NULL);
              }
          }
+-- 
+2.56.0
+
+
+From 355c229f551f0bd44dcb924847e27ae8e3afe6ea Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 22 Nov 2026 16:08:48 -0300
+Subject: [PATCH 32/34] fix(platform): implement cross-platform SDL_Renderer
+ CRT shader pipeline
+
+---
+ runtime/src/platform_sdl.cpp | 618 +++++------------------------------
+ 1 file changed, 76 insertions(+), 542 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index b612cf8..9785595 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -59,148 +59,6 @@ static int g_screen_effect_lattice = 0;
+ static SDL_Texture* g_glow_texture = NULL;
+ static int g_glow_texture_width = 0;
+ 
+-/* ============================================================================
+- * OpenGL Shader State (for GB_SCREEN_EFFECT_SHADER)
+- *
+- * The guest frame is uploaded to an OpenGL texture and drawn through a GLSL
+- * fragment shader (scanlines, chromatic aberration, vignette, phosphor glow).
+- * When the shader effect is active it replaces the SDL_Renderer mask pass.
+- * ============================================================================ */
+-
+-/* OpenGL types (minimal subset, avoids depending on GL headers on every
+- * toolchain). */
+-#ifndef APIENTRY
+-#define APIENTRY
+-#endif
+-typedef unsigned int GLenum;
+-typedef unsigned int GLuint;
+-typedef int GLint;
+-typedef int GLsizei;
+-typedef char GLchar;
+-typedef float GLfloat;
+-typedef unsigned char GLboolean;
+-typedef void GLvoid;
+-typedef unsigned int GLbitfield;
+-#define GL_ARRAY_BUFFER 0x8892
+-#define GL_STATIC_DRAW 0x88E4
+-#define GL_TRIANGLES 0x0004
+-#define GL_TEXTURE_2D 0x0DE1
+-#define GL_RGBA 0x1908
+-#define GL_UNSIGNED_BYTE 0x1401
+-#define GL_NEAREST 0x2600
+-#define GL_LINEAR 0x2601
+-#define GL_CLAMP_TO_EDGE 0x812F
+-#define GL_TEXTURE_MIN_FILTER 0x2801
+-#define GL_TEXTURE_MAG_FILTER 0x2800
+-#define GL_FRAMEBUFFER 0x8D40
+-#define GL_COLOR_BUFFER_BIT 0x00004000
+-#define GL_TEXTURE_WRAP_S 0x2802
+-#define GL_TEXTURE_WRAP_T 0x2803
+-typedef std::ptrdiff_t GLsizeiptr;
+-#define GL_VERTEX_SHADER 0x8B31
+-#define GL_FRAGMENT_SHADER 0x8B30
+-#define GL_COMPILE_STATUS 0x8B81
+-#define GL_LINK_STATUS 0x8B82
+-#define GL_INFO_LOG_LENGTH 0x8B84
+-#define GL_TEXTURE0 0x84C0
+-#define GL_BLEND 0x0BE2
+-#define GL_DEPTH_TEST 0x0B71
+-#define GL_CULL_FACE 0x0B44
+-#define GL_FALSE 0
+-#define GL_TRUE 1
+-#define GL_FLOAT 0x1406
+-
+-static SDL_GLContext g_gl_context = NULL;
+-static GLuint g_shader_program = 0;
+-static GLuint g_shader_vao = 0;
+-static GLuint g_shader_vbo = 0;
+-static GLuint g_shader_texture = 0;
+-static GLint g_shader_loc_texture = -1;
+-static GLint g_shader_loc_intensity = -1;
+-static GLint g_shader_loc_time = -1;
+-static GLint g_shader_loc_resolution = -1;
+-static bool g_gl_initialized = false;
+-static uint32_t g_shader_start_ticks = 0;
+-
+-/* OpenGL function pointers, loaded via SDL_GL_GetProcAddress. */
+-typedef void (APIENTRY *PFNGLGENVERTEXARRAYSPROC)(GLsizei, GLuint*);
+-typedef void (APIENTRY *PFNGLGENBUFFERSPROC)(GLsizei, GLuint*);
+-typedef void (APIENTRY *PFNGLBINDVERTEXARRAYPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLBINDBUFFERPROC)(GLenum, GLuint);
+-typedef void (APIENTRY *PFNGLBUFFERDATAPROC)(GLenum, GLsizeiptr, const GLvoid*, GLenum);
+-typedef void (APIENTRY *PFNGLVERTEXATTRIBPOINTERPROC)(GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid*);
+-typedef void (APIENTRY *PFNGLENABLEVERTEXATTRIBARRAYPROC)(GLuint);
+-typedef GLuint (APIENTRY *PFNGLCREATESHADERPROC)(GLenum);
+-typedef void (APIENTRY *PFNGLSHADERSOURCEPROC)(GLuint, GLsizei, const GLchar* const*, const GLint*);
+-typedef void (APIENTRY *PFNGLCOMPILESHADERPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLGETSHADERIVPROC)(GLuint, GLenum, GLint*);
+-typedef void (APIENTRY *PFNGLGETSHADERINFOLOGPROC)(GLuint, GLsizei, GLsizei*, GLchar*);
+-typedef GLuint (APIENTRY *PFNGLCREATEPROGRAMPROC)(void);
+-typedef void (APIENTRY *PFNGLATTACHSHADERPROC)(GLuint, GLuint);
+-typedef void (APIENTRY *PFNGLLINKPROGRAMPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLGETPROGRAMIVPROC)(GLuint, GLenum, GLint*);
+-typedef void (APIENTRY *PFNGLGETPROGRAMINFOLOGPROC)(GLuint, GLsizei, GLsizei*, GLchar*);
+-typedef void (APIENTRY *PFNGLUSEPROGRAMPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLUNIFORM1FPROC)(GLint, GLfloat);
+-typedef void (APIENTRY *PFNGLUNIFORM2FPROC)(GLint, GLfloat, GLfloat);
+-typedef void (APIENTRY *PFNGLUNIFORM1IPROC)(GLint, GLint);
+-typedef GLint (APIENTRY *PFNGLGETUNIFORMLOCATIONPROC)(GLuint, const GLchar*);
+-typedef void (APIENTRY *PFNGLGENTEXTURESPROC)(GLsizei, GLuint*);
+-typedef void (APIENTRY *PFNGLDELETETEXTURESPROC)(GLsizei, const GLuint*);
+-typedef void (APIENTRY *PFNGLBINDTEXTUREPROC)(GLenum, GLuint);
+-typedef void (APIENTRY *PFNGLTEXIMAGE2DPROC)(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const GLvoid*);
+-typedef void (APIENTRY *PFNGLTEXPARAMETERIPROC)(GLenum, GLenum, GLint);
+-typedef void (APIENTRY *PFNGLDELETEPROGRAMPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLDELETESHADERPROC)(GLuint);
+-typedef void (APIENTRY *PFNGLDELETEVERTEXARRAYSPROC)(GLsizei, const GLuint*);
+-typedef void (APIENTRY *PFNGLDELETEBUFFERSPROC)(GLsizei, const GLuint*);
+-typedef void (APIENTRY *PFNGLACTIVETEXTUREPROC)(GLenum);
+-typedef void (APIENTRY *PFNGLVIEWPORTPROC)(GLint, GLint, GLsizei, GLsizei);
+-typedef void (APIENTRY *PFNGLCLEARPROC)(GLbitfield);
+-typedef void (APIENTRY *PFNGLDRAWARRAYSPROC)(GLenum, GLint, GLsizei);
+-typedef void (APIENTRY *PFNGLREADPIXELSPROC)(GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, GLvoid*);
+-typedef void (APIENTRY *PFNGLDISABLEPROC)(GLenum);
+-typedef void (APIENTRY *PFNGLENABLEPROC)(GLenum);
+-
+-static PFNGLGENVERTEXARRAYSPROC glGenVertexArrays_fn = NULL;
+-static PFNGLGENBUFFERSPROC glGenBuffers_fn = NULL;
+-static PFNGLBINDVERTEXARRAYPROC glBindVertexArray_fn = NULL;
+-static PFNGLBINDBUFFERPROC glBindBuffer_fn = NULL;
+-static PFNGLBUFFERDATAPROC glBufferData_fn = NULL;
+-static PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer_fn = NULL;
+-static PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray_fn = NULL;
+-static PFNGLCREATESHADERPROC glCreateShader_fn = NULL;
+-static PFNGLSHADERSOURCEPROC glShaderSource_fn = NULL;
+-static PFNGLCOMPILESHADERPROC glCompileShader_fn = NULL;
+-static PFNGLGETSHADERIVPROC glGetShaderiv_fn = NULL;
+-static PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog_fn = NULL;
+-static PFNGLCREATEPROGRAMPROC glCreateProgram_fn = NULL;
+-static PFNGLATTACHSHADERPROC glAttachShader_fn = NULL;
+-static PFNGLLINKPROGRAMPROC glLinkProgram_fn = NULL;
+-static PFNGLGETPROGRAMIVPROC glGetProgramiv_fn = NULL;
+-static PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog_fn = NULL;
+-static PFNGLUSEPROGRAMPROC glUseProgram_fn = NULL;
+-static PFNGLUNIFORM1FPROC glUniform1f_fn = NULL;
+-static PFNGLUNIFORM2FPROC glUniform2f_fn = NULL;
+-static PFNGLUNIFORM1IPROC glUniform1i_fn = NULL;
+-static PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation_fn = NULL;
+-static PFNGLGENTEXTURESPROC glGenTextures_fn = NULL;
+-static PFNGLDELETETEXTURESPROC glDeleteTextures_fn = NULL;
+-static PFNGLBINDTEXTUREPROC glBindTexture_fn = NULL;
+-static PFNGLTEXIMAGE2DPROC glTexImage2D_fn = NULL;
+-static PFNGLTEXPARAMETERIPROC glTexParameteri_fn = NULL;
+-static PFNGLDELETEPROGRAMPROC glDeleteProgram_fn = NULL;
+-static PFNGLDELETESHADERPROC glDeleteShader_fn = NULL;
+-static PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays_fn = NULL;
+-static PFNGLDELETEBUFFERSPROC glDeleteBuffers_fn = NULL;
+-static PFNGLACTIVETEXTUREPROC glActiveTexture_fn = NULL;
+-static PFNGLVIEWPORTPROC glViewport_fn = NULL;
+-static PFNGLCLEARPROC glClear_fn = NULL;
+-static PFNGLDRAWARRAYSPROC glDrawArrays_fn = NULL;
+-static PFNGLREADPIXELSPROC glReadPixels_fn = NULL;
+-static PFNGLDISABLEPROC glDisable_fn = NULL;
+-static PFNGLENABLEPROC glEnable_fn = NULL;
+-
+ /* Guest resolution: 160x144 is two 92 KB buffers and lets the upscale do the
+  * spreading, which is the cheapest correct place for a halo. */
+ /* Presentation width.
+@@ -413,7 +271,7 @@ static const char* g_screen_effect_names[] = {
+     "Scanlines",
+     "LCD Grid",
+     "CRT",
+-    "Shader",
++    "CRT Shader",
+ };
+ static const uint32_t g_palettes[][4] = {
+     { 0xFFE0F8D0, 0xFF88C070, 0xFF346856, 0xFF081820 }, // Original
+@@ -2173,360 +2031,6 @@ static int round_to_int(double value) {
+     return (int)(value + 0.5);
+ }
+ 
+-/* ============================================================================
+- * OpenGL shader support (GB_SCREEN_EFFECT_SHADER)
+- *
+- * When the shader effect is active, the guest framebuffer is uploaded to an
+- * OpenGL texture and drawn through a GLSL fragment shader (scanlines,
+- * chromatic aberration, vignette, phosphor glow). The SDL_Renderer mask pass
+- * is skipped entirely. The shader is loaded from embedded source so there are
+- * no external file dependencies.
+- * ============================================================================ */
+-
+-static void* gl_load_proc(const char* name) {
+-    void* proc = SDL_GL_GetProcAddress(name);
+-    if (!proc) {
+-        fprintf(stderr, "[SDL] OpenGL proc not found: %s\n", name);
+-    }
+-    return proc;
+-}
+-
+-static bool opengl_load_procs(void) {
+-    glGenVertexArrays_fn = (PFNGLGENVERTEXARRAYSPROC)gl_load_proc("glGenVertexArrays");
+-    glGenBuffers_fn = (PFNGLGENBUFFERSPROC)gl_load_proc("glGenBuffers");
+-    glBindVertexArray_fn = (PFNGLBINDVERTEXARRAYPROC)gl_load_proc("glBindVertexArray");
+-    glBindBuffer_fn = (PFNGLBINDBUFFERPROC)gl_load_proc("glBindBuffer");
+-    glBufferData_fn = (PFNGLBUFFERDATAPROC)gl_load_proc("glBufferData");
+-    glVertexAttribPointer_fn = (PFNGLVERTEXATTRIBPOINTERPROC)gl_load_proc("glVertexAttribPointer");
+-    glEnableVertexAttribArray_fn = (PFNGLENABLEVERTEXATTRIBARRAYPROC)gl_load_proc("glEnableVertexAttribArray");
+-    glCreateShader_fn = (PFNGLCREATESHADERPROC)gl_load_proc("glCreateShader");
+-    glShaderSource_fn = (PFNGLSHADERSOURCEPROC)gl_load_proc("glShaderSource");
+-    glCompileShader_fn = (PFNGLCOMPILESHADERPROC)gl_load_proc("glCompileShader");
+-    glGetShaderiv_fn = (PFNGLGETSHADERIVPROC)gl_load_proc("glGetShaderiv");
+-    glGetShaderInfoLog_fn = (PFNGLGETSHADERINFOLOGPROC)gl_load_proc("glGetShaderInfoLog");
+-    glCreateProgram_fn = (PFNGLCREATEPROGRAMPROC)gl_load_proc("glCreateProgram");
+-    glAttachShader_fn = (PFNGLATTACHSHADERPROC)gl_load_proc("glAttachShader");
+-    glLinkProgram_fn = (PFNGLLINKPROGRAMPROC)gl_load_proc("glLinkProgram");
+-    glGetProgramiv_fn = (PFNGLGETPROGRAMIVPROC)gl_load_proc("glGetProgramiv");
+-    glGetProgramInfoLog_fn = (PFNGLGETPROGRAMINFOLOGPROC)gl_load_proc("glGetProgramInfoLog");
+-    glUseProgram_fn = (PFNGLUSEPROGRAMPROC)gl_load_proc("glUseProgram");
+-    glUniform1f_fn = (PFNGLUNIFORM1FPROC)gl_load_proc("glUniform1f");
+-    glUniform2f_fn = (PFNGLUNIFORM2FPROC)gl_load_proc("glUniform2f");
+-    glUniform1i_fn = (PFNGLUNIFORM1IPROC)gl_load_proc("glUniform1i");
+-    glGetUniformLocation_fn = (PFNGLGETUNIFORMLOCATIONPROC)gl_load_proc("glGetUniformLocation");
+-    glGenTextures_fn = (PFNGLGENTEXTURESPROC)gl_load_proc("glGenTextures");
+-    glDeleteTextures_fn = (PFNGLDELETETEXTURESPROC)gl_load_proc("glDeleteTextures");
+-    glBindTexture_fn = (PFNGLBINDTEXTUREPROC)gl_load_proc("glBindTexture");
+-    glTexImage2D_fn = (PFNGLTEXIMAGE2DPROC)gl_load_proc("glTexImage2D");
+-    glTexParameteri_fn = (PFNGLTEXPARAMETERIPROC)gl_load_proc("glTexParameteri");
+-    glDeleteProgram_fn = (PFNGLDELETEPROGRAMPROC)gl_load_proc("glDeleteProgram");
+-    glDeleteShader_fn = (PFNGLDELETESHADERPROC)gl_load_proc("glDeleteShader");
+-    glDeleteVertexArrays_fn = (PFNGLDELETEVERTEXARRAYSPROC)gl_load_proc("glDeleteVertexArrays");
+-    glDeleteBuffers_fn = (PFNGLDELETEBUFFERSPROC)gl_load_proc("glDeleteBuffers");
+-    glActiveTexture_fn = (PFNGLACTIVETEXTUREPROC)gl_load_proc("glActiveTexture");
+-    glViewport_fn = (PFNGLVIEWPORTPROC)gl_load_proc("glViewport");
+-    glClear_fn = (PFNGLCLEARPROC)gl_load_proc("glClear");
+-    glDrawArrays_fn = (PFNGLDRAWARRAYSPROC)gl_load_proc("glDrawArrays");
+-    glReadPixels_fn = (PFNGLREADPIXELSPROC)gl_load_proc("glReadPixels");
+-    glDisable_fn = (PFNGLDISABLEPROC)gl_load_proc("glDisable");
+-    glEnable_fn = (PFNGLENABLEPROC)gl_load_proc("glEnable");
+-
+-    return glGenVertexArrays_fn && glGenBuffers_fn && glCreateShader_fn &&
+-           glCreateProgram_fn && glGenTextures_fn && glDeleteTextures_fn &&
+-           glGetUniformLocation_fn && glViewport_fn && glClear_fn &&
+-           glDrawArrays_fn && glReadPixels_fn;
+-}
+-
+-/* Compiles a single shader stage from source. Returns 0 on failure. */
+-static GLuint opengl_compile_shader(GLenum type, const char* source) {
+-    GLuint shader = glCreateShader_fn(type);
+-    if (!shader) {
+-        fprintf(stderr, "[SDL] Failed to create OpenGL shader\n");
+-        return 0;
+-    }
+-    glShaderSource_fn(shader, 1, &source, NULL);
+-    glCompileShader_fn(shader);
+-    GLint ok = 0;
+-    glGetShaderiv_fn(shader, GL_COMPILE_STATUS, &ok);
+-    if (!ok) {
+-        GLint log_len = 0;
+-        glGetShaderiv_fn(shader, GL_INFO_LOG_LENGTH, &log_len);
+-        if (log_len > 1) {
+-            char* log = (char*)SDL_malloc((size_t)log_len);
+-            if (log) {
+-                glGetShaderInfoLog_fn(shader, log_len, NULL, log);
+-                fprintf(stderr, "[SDL] Shader compile error:\n%s\n", log);
+-                SDL_free(log);
+-            }
+-        }
+-        glDeleteShader_fn(shader);
+-        return 0;
+-    }
+-    return shader;
+-}
+-
+-/* Embedded GLSL shader sources (CRT effect). Stored as plain C strings so the
+- * file compiles as both C and C++ (the runtime target mixes C and C++ files). */
+-static const char* g_crt_vertex_shader =
+-    "#version 330 core\n"
+-    "\n"
+-    "layout(location = 0) in vec2 aPos;\n"
+-    "layout(location = 1) in vec2 aTexCoord;\n"
+-    "\n"
+-    "out vec2 TexCoord;\n"
+-    "\n"
+-    "uniform mat4 u_projection;\n"
+-    "\n"
+-    "void main() {\n"
+-    "    gl_Position = u_projection * vec4(aPos, 0.0, 1.0);\n"
+-    "    TexCoord = aTexCoord;\n"
+-    "}\n";
+-
+-static const char* g_crt_fragment_shader =
+-    "#version 330 core\n"
+-    "\n"
+-    "in vec2 TexCoord;\n"
+-    "out vec4 FragColor;\n"
+-    "\n"
+-    "uniform sampler2D u_texture;\n"
+-    "uniform float u_intensity;\n"
+-    "uniform float u_time;\n"
+-    "uniform vec2 u_resolution;\n"
+-    "\n"
+-    "float scanline(float y, float amount, float soft) {\n"
+-    "    float gap = 0.22f;\n"
+-    "    float t = fract(y * 1.0f);\n"
+-    "    float edge = 1.0f - gap;\n"
+-    "    float ramp = smoothstep(edge, edge + soft, t);\n"
+-    "    return amount * ramp;\n"
+-    "}\n"
+-    "\n"
+-    "vec3 chromatic_aberration(sampler2D tex, vec2 uv, float amount, vec2 resolution) {\n"
+-    "    float strength = amount * 0.004f;\n"
+-    "    vec2 offset = (uv - 0.5f) * strength;\n"
+-    "    float r = texture(tex, uv + offset).r;\n"
+-    "    float g = texture(tex, uv).g;\n"
+-    "    float b = texture(tex, uv - offset).b;\n"
+-    "    return vec3(r, g, b);\n"
+-    "}\n"
+-    "\n"
+-    "float vignette(vec2 uv, float amount) {\n"
+-    "    vec2 center = vec2(0.5f);\n"
+-    "    float dist = distance(uv, center);\n"
+-    "    return 1.0f - amount * dist * dist * 0.5f;\n"
+-    "}\n"
+-    "\n"
+-    "vec3 phosphor_glow(vec3 color, float amount) {\n"
+-    "    float luminance = dot(color, vec3(0.299f, 0.587f, 0.114f));\n"
+-    "    float glow = smoothstep(0.75f, 1.0f, luminance);\n"
+-    "    vec3 warm = vec3(1.0f, 0.9f, 0.7f);\n"
+-    "    return color + glow * warm * amount * 0.3f;\n"
+-    "}\n"
+-    "\n"
+-    "void main() {\n"
+-    "    vec2 uv = TexCoord;\n"
+-    "    vec4 tex = texture(u_texture, uv);\n"
+-    "    vec3 color = tex.rgb;\n"
+-    "    float amt = clamp(u_intensity, 0.0f, 1.0f);\n"
+-    "    float line = scanline(uv.y, amt, 0.08f);\n"
+-    "    color *= (1.0f - line);\n"
+-    "    if (amt > 0.1f) {\n"
+-    "        color = chromatic_aberration(u_texture, uv, amt, u_resolution);\n"
+-    "    }\n"
+-    "    color *= vignette(uv, amt * 0.15f);\n"
+-    "    if (amt > 0.2f) {\n"
+-    "        color = phosphor_glow(color, amt);\n"
+-    "    }\n"
+-    "    FragColor = vec4(color, tex.a);\n"
+-    "}\n";
+-
+-static bool opengl_init_shader(void) {
+-    GLuint vert = opengl_compile_shader(GL_VERTEX_SHADER, g_crt_vertex_shader);
+-    GLuint frag = opengl_compile_shader(GL_FRAGMENT_SHADER, g_crt_fragment_shader);
+-    if (!vert || !frag) {
+-        if (vert) glDeleteShader_fn(vert);
+-        if (frag) glDeleteShader_fn(frag);
+-        return false;
+-    }
+-
+-    g_shader_program = glCreateProgram_fn();
+-    glAttachShader_fn(g_shader_program, vert);
+-    glAttachShader_fn(g_shader_program, frag);
+-    glLinkProgram_fn(g_shader_program);
+-
+-    GLint ok = 0;
+-    glGetProgramiv_fn(g_shader_program, GL_LINK_STATUS, &ok);
+-    if (!ok) {
+-        GLint log_len = 0;
+-        glGetProgramiv_fn(g_shader_program, GL_INFO_LOG_LENGTH, &log_len);
+-        if (log_len > 1) {
+-            char* log = (char*)SDL_malloc((size_t)log_len);
+-            if (log) {
+-                glGetProgramInfoLog_fn(g_shader_program, log_len, NULL, log);
+-                fprintf(stderr, "[SDL] Shader link error:\n%s\n", log);
+-                SDL_free(log);
+-            }
+-        }
+-        glDeleteProgram_fn(g_shader_program);
+-        g_shader_program = 0;
+-        glDeleteShader_fn(vert);
+-        glDeleteShader_fn(frag);
+-        return false;
+-    }
+-
+-    glDeleteShader_fn(vert);
+-    glDeleteShader_fn(frag);
+-
+-    g_shader_loc_texture = glGetUniformLocation_fn == NULL ? -1 : -1;
+-    /* Uniform locations are queried after linking; store them lazily on first
+-     * use to avoid calling glGetUniformLocation before the program is bound. */
+-    g_shader_loc_texture = -1;
+-    g_shader_loc_intensity = -1;
+-    g_shader_loc_time = -1;
+-    g_shader_loc_resolution = -1;
+-    return true;
+-}
+-
+-/* Initializes the OpenGL context and shader program. Called once from
+- * gb_platform_init after the SDL window exists. */
+-static bool opengl_init(void) {
+-    if (g_gl_initialized) {
+-        return true;
+-    }
+-
+-    /* Request a core profile OpenGL 3.3 context. */
+-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+-
+-    g_gl_context = SDL_GL_CreateContext(g_window);
+-    if (!g_gl_context) {
+-        fprintf(stderr, "[SDL] Failed to create OpenGL context: %s\n", SDL_GetError());
+-        return false;
+-    }
+-
+-    if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
+-        fprintf(stderr, "[SDL] Failed to make OpenGL context current: %s\n", SDL_GetError());
+-        return false;
+-    }
+-
+-    if (!opengl_load_procs()) {
+-        fprintf(stderr, "[SDL] Failed to load OpenGL functions\n");
+-        return false;
+-    }
+-
+-    if (!opengl_init_shader()) {
+-        fprintf(stderr, "[SDL] Failed to initialize CRT shader\n");
+-        return false;
+-    }
+-
+-    /* Fullscreen quad: position + texcoord per vertex. */
+-    const float quad[] = {
+-        /* x,  y,   u,  v */
+-        -1.0f, -1.0f, 0.0f, 1.0f,
+-         1.0f, -1.0f, 1.0f, 1.0f,
+-        -1.0f,  1.0f, 0.0f, 0.0f,
+-         1.0f,  1.0f, 1.0f, 0.0f,
+-    };
+-
+-    glGenVertexArrays_fn(1, &g_shader_vao);
+-    glGenBuffers_fn(1, &g_shader_vbo);
+-    glBindVertexArray_fn(g_shader_vao);
+-    glBindBuffer_fn(GL_ARRAY_BUFFER, g_shader_vbo);
+-    glBufferData_fn(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
+-    glVertexAttribPointer_fn(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (const GLvoid*)0);
+-    glEnableVertexAttribArray_fn(0);
+-    glVertexAttribPointer_fn(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (const GLvoid*)(2 * sizeof(float)));
+-    glEnableVertexAttribArray_fn(1);
+-    glBindVertexArray_fn(0);
+-
+-    glGenTextures_fn(1, &g_shader_texture);
+-    glBindTexture_fn(GL_TEXTURE_2D, g_shader_texture);
+-    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+-    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+-    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+-    glTexParameteri_fn(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+-    glBindTexture_fn(GL_TEXTURE_2D, 0);
+-
+-    g_shader_start_ticks = SDL_GetTicks();
+-    g_gl_initialized = true;
+-
+-    fprintf(stderr, "[SDL] OpenGL CRT shader initialized\n");
+-    return true;
+-}
+-
+-static void opengl_cleanup(void) {
+-    if (!g_gl_initialized) {
+-        return;
+-    }
+-    if (g_shader_program) {
+-        glDeleteProgram_fn(g_shader_program);
+-        g_shader_program = 0;
+-    }
+-    if (g_shader_vao) {
+-        glDeleteVertexArrays_fn(1, &g_shader_vao);
+-        g_shader_vao = 0;
+-    }
+-    if (g_shader_vbo) {
+-        glDeleteBuffers_fn(1, &g_shader_vbo);
+-        g_shader_vbo = 0;
+-    }
+-    if (g_shader_texture) {
+-        glDeleteTextures_fn(1, &g_shader_texture);
+-        g_shader_texture = 0;
+-    }
+-    if (g_gl_context) {
+-        SDL_GL_MakeCurrent(g_window, NULL);
+-        SDL_GL_DeleteContext(g_gl_context);
+-        g_gl_context = NULL;
+-    }
+-    g_gl_initialized = false;
+-}
+-
+-/* Renders one guest frame through the CRT GLSL shader. The SDL_Renderer is
+- * not used for the guest image when the shader effect is active. */
+-static void opengl_render_frame(const uint32_t* framebuffer, int width, int height,
+-                                float intensity) {
+-    if (!g_gl_initialized || !g_shader_program) {
+-        return;
+-    }
+-
+-    if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
+-        return;
+-    }
+-
+-    glViewport_fn(0, 0, width, height);
+-    glClear_fn(GL_COLOR_BUFFER_BIT);
+-
+-    glUseProgram_fn(g_shader_program);
+-
+-    /* Query uniform locations lazily (only valid after program is bound). */
+-    if (g_shader_loc_texture < 0) {
+-        g_shader_loc_texture = glGetUniformLocation_fn(g_shader_program, "u_texture");
+-        g_shader_loc_intensity = glGetUniformLocation_fn(g_shader_program, "u_intensity");
+-        g_shader_loc_time = glGetUniformLocation_fn(g_shader_program, "u_time");
+-        g_shader_loc_resolution = glGetUniformLocation_fn(g_shader_program, "u_resolution");
+-    }
+-
+-    glActiveTexture_fn(GL_TEXTURE0);
+-    glBindTexture_fn(GL_TEXTURE_2D, g_shader_texture);
+-    glTexImage2D_fn(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+-                    GL_UNSIGNED_BYTE, framebuffer);
+-    glUniform1i_fn(g_shader_loc_texture, 0);
+-    glUniform1f_fn(g_shader_loc_intensity, intensity);
+-    float elapsed = (float)(SDL_GetTicks() - g_shader_start_ticks) / 1000.0f;
+-    glUniform1f_fn(g_shader_loc_time, elapsed);
+-    glUniform2f_fn(g_shader_loc_resolution, (float)width, (float)height);
+-
+-    glBindVertexArray_fn(g_shader_vao);
+-    glDrawArrays_fn(GL_TRIANGLES, 0, 4);
+-    glBindVertexArray_fn(0);
+-    glBindTexture_fn(GL_TEXTURE_2D, 0);
+-    glUseProgram_fn(0);
+-
+-    SDL_GL_SwapWindow(g_window);
+-}
+-
+ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+                                           int effect, int intensity_percent,
+                                           float scale_factor);
+@@ -3109,8 +2613,28 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+ 
+     for (int y = 0; y < dst_h; ++y) {
+         const float fy = fy_lut[y % steps];
++        const float ny =
++            (dst_h > 1) ? (((float)y / (float)(dst_h - 1) - 0.5f) * 2.0f) : 0.0f;
+         uint32_t* row = dst + (size_t)y * (size_t)dst_w;
+         for (int x = 0; x < dst_w; ++x) {
++            if (effect == GB_SCREEN_EFFECT_SHADER) {
++                const float darkness = band_coverage(fy, 1.0f - gap, 1.0f, soft) * strength;
++                const float triad_dim = 1.0f - 0.14f * strength;
++                const int triad = x % 3;
++                const float mask_r = (triad == 0) ? 1.0f : triad_dim;
++                const float mask_g = (triad == 1) ? 1.0f : triad_dim;
++                const float mask_b = (triad == 2) ? 1.0f : triad_dim;
++                const float nx =
++                    (dst_w > 1) ? (((float)x / (float)(dst_w - 1) - 0.5f) * 2.0f) : 0.0f;
++                const float vig = clampf(1.0f - strength * 0.20f * (nx * nx + ny * ny), 0.68f, 1.0f);
++                const float base =
++                    clampf(1.0f - clampf(darkness, 0.0f, 1.0f), 0.0f, 1.0f) * vig;
++                const uint32_t rr = (uint32_t)lrintf(clampf(base * mask_r, 0.0f, 1.0f) * 255.0f);
++                const uint32_t gg = (uint32_t)lrintf(clampf(base * mask_g, 0.0f, 1.0f) * 255.0f);
++                const uint32_t bb = (uint32_t)lrintf(clampf(base * mask_b, 0.0f, 1.0f) * 255.0f);
++                row[x] = 0xFF000000u | (rr << 16) | (gg << 8) | bb;
++                continue;
++            }
+             float darkness = 0.0f;
+             if (effect == GB_SCREEN_EFFECT_SCANLINES || effect == GB_SCREEN_EFFECT_CRT) {
+                 /* Trailing edge only: the classic scanline, not a shaded cell. */
+@@ -3266,6 +2790,40 @@ static void compute_phosphor_glow(const uint32_t* src, int src_pitch_bytes,
+     }
+ }
+ 
++/* Subtle horizontal subpixel chromatic aberration fringe for GB_SCREEN_EFFECT_SHADER.
++ * Shifts red 1 guest pixel right and blue 1 guest pixel left proportional to intensity. */
++static void apply_shader_chromatic_aberration(uint32_t* pixels, int pitch_bytes,
++                                              int width, int height,
++                                              int intensity_percent) {
++    if (!pixels || width <= 0 || width > GB_PRESENT_MAX_WIDTH || height <= 0) {
++        return;
++    }
++    const float fringe = clampf(((float)intensity_percent / 100.0f) * 0.32f, 0.0f, 0.32f);
++    if (fringe < 0.02f) {
++        return;
++    }
++    uint32_t row_copy[GB_PRESENT_MAX_WIDTH];
++    for (int y = 0; y < height; ++y) {
++        uint32_t* row = (uint32_t*)((uint8_t*)pixels + (size_t)y * (size_t)pitch_bytes);
++        memcpy(row_copy, row, (size_t)width * sizeof(uint32_t));
++        for (int x = 0; x < width; ++x) {
++            const uint32_t c_mid = row_copy[x];
++            const uint32_t c_right = row_copy[(x + 1 < width) ? (x + 1) : x];
++            const uint32_t c_left = row_copy[(x > 0) ? (x - 1) : 0];
++            const uint32_t r_mid = (c_mid >> 16) & 0xFFu;
++            const uint32_t r_right = (c_right >> 16) & 0xFFu;
++            const uint32_t g_mid = (c_mid >> 8) & 0xFFu;
++            const uint32_t b_mid = c_mid & 0xFFu;
++            const uint32_t b_left = c_left & 0xFFu;
++            const uint32_t r_out = (uint32_t)lrintf(
++                clampf((float)r_mid + ((float)r_right - (float)r_mid) * fringe, 0.0f, 255.0f));
++            const uint32_t b_out = (uint32_t)lrintf(
++                clampf((float)b_mid + ((float)b_left - (float)b_mid) * fringe, 0.0f, 255.0f));
++            row[x] = 0xFF000000u | (r_out << 16) | (g_mid << 8) | b_out;
++        }
++    }
++}
++
+ /* The glow lives in its own texture because it has to be composited with
+  * SDL_BLENDMODE_ADD, and a texture carries one blend mode. */
+ static bool ensure_glow_texture(void) {
+@@ -3487,10 +3045,15 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             }
+         }
+     }
++    if (g_screen_effect == GB_SCREEN_EFFECT_SHADER) {
++        apply_shader_chromatic_aberration((uint32_t*)pixels, pitch, g_present_width,
++                                          GB_SCREEN_HEIGHT, g_screen_effect_intensity);
++    }
+     /* Phosphor glow, computed from the colour that is actually being shown -
+      * after the panel response, so the halo trails with the image. */
+-    if (g_screen_effect == GB_SCREEN_EFFECT_CRT && ensure_glow_texture() &&
+-        g_glow_buffer_valid) {
++    const bool use_glow =
++        (g_screen_effect == GB_SCREEN_EFFECT_CRT || g_screen_effect == GB_SCREEN_EFFECT_SHADER);
++    if (use_glow && ensure_glow_texture() && g_glow_buffer_valid) {
+         compute_phosphor_glow((const uint32_t*)pixels, pitch, g_glow_buffer,
+                               g_glow_scratch, g_present_width, GB_SCREEN_HEIGHT,
+                               GB_GLOW_THRESHOLD, g_screen_effect_intensity);
+@@ -3503,50 +3066,22 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     /* Clear and render */
+     double compose_start_ms = sdl_now_ms();
+ 
+-    /* When the GLSL shader effect is active, render the guest frame through
+-     * OpenGL + shader, read the result back into the SDL texture, and let the
+-     * normal SDL_Renderer path (ImGui, presentation) continue unchanged. */
+-    if (g_screen_effect == GB_SCREEN_EFFECT_SHADER) {
+-        if (!g_gl_initialized) {
+-            if (!opengl_init()) {
+-                fprintf(stderr, "[SDL] OpenGL init failed, falling back to OFF\n");
+-                g_screen_effect = GB_SCREEN_EFFECT_OFF;
+-            }
++    SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
++    SDL_RenderClear(g_renderer);
++    SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
++    /* Panel effect, drawn over the guest with the same destination rect so the
++     * mask lines up with the guest pixels without any coordinate arithmetic. */
++    if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++        if (g_screen_effect_dirty) {
++            update_screen_effect_texture();
+         }
+-        if (g_gl_initialized) {
+-            if (!SDL_GL_MakeCurrent(g_window, g_gl_context)) {
+-                fprintf(stderr, "[SDL] Failed to make GL current\n");
+-            } else {
+-                opengl_render_frame(framebuffer, g_present_width, GB_SCREEN_HEIGHT,
+-                                    (float)g_screen_effect_intensity / 100.0f);
+-                /* Read the shader output back so the SDL texture holds it for
+-                 * ImGui overlay and presentation. */
+-                static uint32_t shader_readback[GB_SCREEN_HEIGHT * GB_PRESENT_MAX_WIDTH];
+-                glReadPixels_fn(0, 0, g_present_width, GB_SCREEN_HEIGHT,
+-                                GL_RGBA, GL_UNSIGNED_BYTE, shader_readback);
+-                SDL_UpdateTexture(g_texture, NULL, shader_readback,
+-                                  g_present_width * (int)sizeof(uint32_t));
+-                SDL_GL_MakeCurrent(g_window, NULL);
+-            }
++        if (g_screen_effect_texture) {
++            SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
+         }
+-    } else {
+-        SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
+-        SDL_RenderClear(g_renderer);
+-        SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
+-        /* Panel effect, drawn over the guest with the same destination rect so the
+-         * mask lines up with the guest pixels without any coordinate arithmetic. */
+-        if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
+-            if (g_screen_effect_dirty) {
+-                update_screen_effect_texture();
+-            }
+-            if (g_screen_effect_texture) {
+-                SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
+-            }
+-            if (g_screen_effect == GB_SCREEN_EFFECT_CRT && g_glow_texture) {
+-                /* Same destination rect again, so the halo is anchored to the
+-                 * image rather than floating over the letterbox. */
+-                SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
+-            }
++        if (use_glow && g_glow_texture) {
++            /* Same destination rect again, so the halo is anchored to the
++             * image rather than floating over the letterbox. */
++            SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
+         }
+     }
+ 
+@@ -4209,7 +3744,6 @@ void gb_platform_shutdown(void) {
+         SDL_DestroyTexture(g_glow_texture);
+         g_glow_texture = NULL;
+     }
+-    opengl_cleanup();
+     if (g_renderer) {
+         SDL_DestroyRenderer(g_renderer);
+         g_renderer = NULL;
+-- 
+2.56.0
+
+
+From 304eed1da58155f6e74d5e8492be1fb81e1ede00 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 22 Nov 2026 17:16:42 -0300
+Subject: [PATCH 33/34] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
+ LCD shader presets
+
+---
+ runtime/include/platform_sdl.h |   4 +-
+ runtime/src/platform_sdl.cpp   | 671 +++++++++++++++++++++++++++++++--
+ 2 files changed, 650 insertions(+), 25 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 0cd4e5a..9a8e205 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -43,7 +43,9 @@ typedef enum GBScreenEffect {
+     GB_SCREEN_EFFECT_LCD_GRID = 2,
+     GB_SCREEN_EFFECT_CRT = 3,
+     GB_SCREEN_EFFECT_SHADER = 4,
+-    GB_SCREEN_EFFECT_COUNT = 5,
++    GB_SCREEN_EFFECT_CRT_CURVED = 5,
++    GB_SCREEN_EFFECT_GBC_LCD = 6,
++    GB_SCREEN_EFFECT_COUNT = 7,
+ } GBScreenEffect;
+ 
+ enum {
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 9785595..4932232 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -32,6 +32,9 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ #endif
++#if !defined(__ANDROID__)
++#include <SDL_opengl.h>
++#endif
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ #include <thread>
+ #endif
+@@ -271,7 +274,9 @@ static const char* g_screen_effect_names[] = {
+     "Scanlines",
+     "LCD Grid",
+     "CRT",
+-    "CRT Shader",
++    "CRT Trinitron (Flat)",
++    "CRT Arcade (Curved)",
++    "GBC LCD (Shader)",
+ };
+ static const uint32_t g_palettes[][4] = {
+     { 0xFFE0F8D0, 0xFF88C070, 0xFF346856, 0xFF081820 }, // Original
+@@ -2617,7 +2622,7 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+             (dst_h > 1) ? (((float)y / (float)(dst_h - 1) - 0.5f) * 2.0f) : 0.0f;
+         uint32_t* row = dst + (size_t)y * (size_t)dst_w;
+         for (int x = 0; x < dst_w; ++x) {
+-            if (effect == GB_SCREEN_EFFECT_SHADER) {
++            if (effect == GB_SCREEN_EFFECT_SHADER || effect == GB_SCREEN_EFFECT_CRT_CURVED) {
+                 const float darkness = band_coverage(fy, 1.0f - gap, 1.0f, soft) * strength;
+                 const float triad_dim = 1.0f - 0.14f * strength;
+                 const int triad = x % 3;
+@@ -2626,7 +2631,8 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+                 const float mask_b = (triad == 2) ? 1.0f : triad_dim;
+                 const float nx =
+                     (dst_w > 1) ? (((float)x / (float)(dst_w - 1) - 0.5f) * 2.0f) : 0.0f;
+-                const float vig = clampf(1.0f - strength * 0.20f * (nx * nx + ny * ny), 0.68f, 1.0f);
++                const float vig_amt = (effect == GB_SCREEN_EFFECT_CRT_CURVED) ? 0.28f : 0.20f;
++                const float vig = clampf(1.0f - strength * vig_amt * (nx * nx + ny * ny), 0.60f, 1.0f);
+                 const float base =
+                     clampf(1.0f - clampf(darkness, 0.0f, 1.0f), 0.0f, 1.0f) * vig;
+                 const uint32_t rr = (uint32_t)lrintf(clampf(base * mask_r, 0.0f, 1.0f) * 255.0f);
+@@ -2639,7 +2645,8 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+             if (effect == GB_SCREEN_EFFECT_SCANLINES || effect == GB_SCREEN_EFFECT_CRT) {
+                 /* Trailing edge only: the classic scanline, not a shaded cell. */
+                 darkness = band_coverage(fy, 1.0f - gap, 1.0f, soft);
+-            } else if (effect == GB_SCREEN_EFFECT_LCD_GRID) {
++            } else if (effect == GB_SCREEN_EFFECT_LCD_GRID ||
++                       effect == GB_SCREEN_EFFECT_GBC_LCD) {
+                 /* Half a gap on every side, so that two neighbouring borders meet
+                  * to form one gap of the requested width: a lit square framed by
+                  * darkness, which is what an LCD cell looks like. */
+@@ -2824,6 +2831,583 @@ static void apply_shader_chromatic_aberration(uint32_t* pixels, int pitch_bytes,
+     }
+ }
+ 
++static bool is_gl_shader_effect(GBScreenEffect effect) {
++    return effect == GB_SCREEN_EFFECT_SHADER ||
++           effect == GB_SCREEN_EFFECT_CRT_CURVED ||
++           effect == GB_SCREEN_EFFECT_GBC_LCD;
++}
++
++#if !defined(__ANDROID__)
++typedef void (APIENTRY* GBGL_ViewportProc)(GLint x, GLint y, GLsizei width, GLsizei height);
++typedef void (APIENTRY* GBGL_GetIntegervProc)(GLenum pname, GLint* data);
++typedef void (APIENTRY* GBGL_GetTexParameterivProc)(GLenum target, GLenum pname, GLint* params);
++typedef void (APIENTRY* GBGL_DisableProc)(GLenum cap);
++typedef void (APIENTRY* GBGL_BindTextureProc)(GLenum target, GLuint texture);
++typedef void (APIENTRY* GBGL_TexParameteriProc)(GLenum target, GLenum pname, GLint param);
++typedef void (APIENTRY* GBGL_MatrixModeProc)(GLenum mode);
++typedef void (APIENTRY* GBGL_PushMatrixProc)(void);
++typedef void (APIENTRY* GBGL_PopMatrixProc)(void);
++typedef void (APIENTRY* GBGL_LoadIdentityProc)(void);
++typedef void (APIENTRY* GBGL_PushAttribProc)(GLbitfield mask);
++typedef void (APIENTRY* GBGL_PopAttribProc)(void);
++typedef void (APIENTRY* GBGL_BeginProc)(GLenum mode);
++typedef void (APIENTRY* GBGL_EndProc)(void);
++typedef void (APIENTRY* GBGL_TexCoord2fProc)(GLfloat s, GLfloat t);
++typedef void (APIENTRY* GBGL_Vertex2fProc)(GLfloat x, GLfloat y);
++
++struct GBGLShaderPipeline {
++    bool attempted = false;
++    bool ready = false;
++    GLuint program = 0;
++    GLint loc_texture = -1;
++    GLint loc_source_size = -1;
++    GLint loc_output_size = -1;
++    GLint loc_texcoord_scale = -1;
++    GLint loc_strength = -1;
++    GLint loc_mode = -1;
++
++    GBGL_ViewportProc p_glViewport = NULL;
++    GBGL_GetIntegervProc p_glGetIntegerv = NULL;
++    GBGL_GetTexParameterivProc p_glGetTexParameteriv = NULL;
++    GBGL_DisableProc p_glDisable = NULL;
++    GBGL_BindTextureProc p_glBindTexture = NULL;
++    GBGL_TexParameteriProc p_glTexParameteri = NULL;
++    GBGL_MatrixModeProc p_glMatrixMode = NULL;
++    GBGL_PushMatrixProc p_glPushMatrix = NULL;
++    GBGL_PopMatrixProc p_glPopMatrix = NULL;
++    GBGL_LoadIdentityProc p_glLoadIdentity = NULL;
++    GBGL_PushAttribProc p_glPushAttrib = NULL;
++    GBGL_PopAttribProc p_glPopAttrib = NULL;
++    GBGL_BeginProc p_glBegin = NULL;
++    GBGL_EndProc p_glEnd = NULL;
++    GBGL_TexCoord2fProc p_glTexCoord2f = NULL;
++    GBGL_Vertex2fProc p_glVertex2f = NULL;
++
++    PFNGLACTIVETEXTUREPROC p_glActiveTexture = NULL;
++    PFNGLCREATESHADERPROC p_glCreateShader = NULL;
++    PFNGLSHADERSOURCEPROC p_glShaderSource = NULL;
++    PFNGLCOMPILESHADERPROC p_glCompileShader = NULL;
++    PFNGLGETSHADERIVPROC p_glGetShaderiv = NULL;
++    PFNGLGETSHADERINFOLOGPROC p_glGetShaderInfoLog = NULL;
++    PFNGLDELETESHADERPROC p_glDeleteShader = NULL;
++    PFNGLCREATEPROGRAMPROC p_glCreateProgram = NULL;
++    PFNGLATTACHSHADERPROC p_glAttachShader = NULL;
++    PFNGLLINKPROGRAMPROC p_glLinkProgram = NULL;
++    PFNGLGETPROGRAMIVPROC p_glGetProgramiv = NULL;
++    PFNGLGETPROGRAMINFOLOGPROC p_glGetProgramInfoLog = NULL;
++    PFNGLDELETEPROGRAMPROC p_glDeleteProgram = NULL;
++    PFNGLUSEPROGRAMPROC p_glUseProgram = NULL;
++    PFNGLGETUNIFORMLOCATIONPROC p_glGetUniformLocation = NULL;
++    PFNGLUNIFORM1IPROC p_glUniform1i = NULL;
++    PFNGLUNIFORM1FPROC p_glUniform1f = NULL;
++    PFNGLUNIFORM2FPROC p_glUniform2f = NULL;
++};
++
++static GBGLShaderPipeline g_gl_shader = {};
++
++template <typename FnPtr>
++static bool load_gl_proc(const char* name, FnPtr* out_fn) {
++    void* sym = SDL_GL_GetProcAddress(name);
++    if (!sym) {
++        return false;
++    }
++    memcpy(out_fn, &sym, sizeof(FnPtr));
++    return true;
++}
++
++static GLuint compile_gl_shader(GLenum type, const char* source, const char* label) {
++    const GLuint shader = g_gl_shader.p_glCreateShader(type);
++    if (!shader) {
++        return 0;
++    }
++    const GLchar* strings[1] = {source};
++    g_gl_shader.p_glShaderSource(shader, 1, strings, NULL);
++    g_gl_shader.p_glCompileShader(shader);
++    GLint ok = 0;
++    g_gl_shader.p_glGetShaderiv(shader, GL_COMPILE_STATUS, &ok);
++    if (!ok) {
++        char log_buf[1024];
++        GLsizei len = 0;
++        g_gl_shader.p_glGetShaderInfoLog(shader, (GLsizei)sizeof(log_buf) - 1, &len, log_buf);
++        log_buf[(len >= 0 && len < (GLsizei)sizeof(log_buf)) ? len : 0] = '\0';
++        fprintf(stderr, "[SDL] %s shader compile failed: %s\n", label, log_buf);
++        g_gl_shader.p_glDeleteShader(shader);
++        return 0;
++    }
++    return shader;
++}
++
++static void destroy_gl_shader_pipeline(void) {
++    if (g_gl_shader.program && g_gl_shader.p_glDeleteProgram) {
++        g_gl_shader.p_glDeleteProgram(g_gl_shader.program);
++    }
++    g_gl_shader = {};
++}
++
++static void init_gl_shader_pipeline(void) {
++    if (g_gl_shader.attempted) {
++        return;
++    }
++    g_gl_shader.attempted = true;
++    if (!g_renderer) {
++        return;
++    }
++    SDL_RendererInfo info;
++    memset(&info, 0, sizeof(info));
++    if (SDL_GetRendererInfo(g_renderer, &info) != 0 || !info.name ||
++        strcmp(info.name, "opengl") != 0) {
++        fprintf(stderr, "[SDL] Renderer '%s' is not OpenGL; using 2D fallback effects.\n",
++                (info.name ? info.name : "unknown"));
++        return;
++    }
++
++    const bool procs_ok =
++        load_gl_proc("glViewport", &g_gl_shader.p_glViewport) &&
++        load_gl_proc("glGetIntegerv", &g_gl_shader.p_glGetIntegerv) &&
++        load_gl_proc("glGetTexParameteriv", &g_gl_shader.p_glGetTexParameteriv) &&
++        load_gl_proc("glDisable", &g_gl_shader.p_glDisable) &&
++        load_gl_proc("glBindTexture", &g_gl_shader.p_glBindTexture) &&
++        load_gl_proc("glTexParameteri", &g_gl_shader.p_glTexParameteri) &&
++        load_gl_proc("glMatrixMode", &g_gl_shader.p_glMatrixMode) &&
++        load_gl_proc("glPushMatrix", &g_gl_shader.p_glPushMatrix) &&
++        load_gl_proc("glPopMatrix", &g_gl_shader.p_glPopMatrix) &&
++        load_gl_proc("glLoadIdentity", &g_gl_shader.p_glLoadIdentity) &&
++        load_gl_proc("glPushAttrib", &g_gl_shader.p_glPushAttrib) &&
++        load_gl_proc("glPopAttrib", &g_gl_shader.p_glPopAttrib) &&
++        load_gl_proc("glBegin", &g_gl_shader.p_glBegin) &&
++        load_gl_proc("glEnd", &g_gl_shader.p_glEnd) &&
++        load_gl_proc("glTexCoord2f", &g_gl_shader.p_glTexCoord2f) &&
++        load_gl_proc("glVertex2f", &g_gl_shader.p_glVertex2f) &&
++        load_gl_proc("glActiveTexture", &g_gl_shader.p_glActiveTexture) &&
++        load_gl_proc("glCreateShader", &g_gl_shader.p_glCreateShader) &&
++        load_gl_proc("glShaderSource", &g_gl_shader.p_glShaderSource) &&
++        load_gl_proc("glCompileShader", &g_gl_shader.p_glCompileShader) &&
++        load_gl_proc("glGetShaderiv", &g_gl_shader.p_glGetShaderiv) &&
++        load_gl_proc("glGetShaderInfoLog", &g_gl_shader.p_glGetShaderInfoLog) &&
++        load_gl_proc("glDeleteShader", &g_gl_shader.p_glDeleteShader) &&
++        load_gl_proc("glCreateProgram", &g_gl_shader.p_glCreateProgram) &&
++        load_gl_proc("glAttachShader", &g_gl_shader.p_glAttachShader) &&
++        load_gl_proc("glLinkProgram", &g_gl_shader.p_glLinkProgram) &&
++        load_gl_proc("glGetProgramiv", &g_gl_shader.p_glGetProgramiv) &&
++        load_gl_proc("glGetProgramInfoLog", &g_gl_shader.p_glGetProgramInfoLog) &&
++        load_gl_proc("glDeleteProgram", &g_gl_shader.p_glDeleteProgram) &&
++        load_gl_proc("glUseProgram", &g_gl_shader.p_glUseProgram) &&
++        load_gl_proc("glGetUniformLocation", &g_gl_shader.p_glGetUniformLocation) &&
++        load_gl_proc("glUniform1i", &g_gl_shader.p_glUniform1i) &&
++        load_gl_proc("glUniform1f", &g_gl_shader.p_glUniform1f) &&
++        load_gl_proc("glUniform2f", &g_gl_shader.p_glUniform2f);
++    if (!procs_ok) {
++        fprintf(stderr, "[SDL] OpenGL 2.0 shader entry points unavailable; using 2D fallback.\n");
++        destroy_gl_shader_pipeline();
++        return;
++    }
++
++    static const char* k_vertex_shader_src =
++        "#version 120\n"
++        "varying vec2 vTexCoord;\n"
++        "void main() {\n"
++        "    vTexCoord = gl_MultiTexCoord0.xy;\n"
++        "    gl_Position = vec4(gl_Vertex.xy, 0.0, 1.0);\n"
++        "}\n";
++
++    /* Public Domain CRT-Lottes (Timothy Lottes) single-pass CRT shader +
++     * GBC TFT LCD subpixel & color-matrix mode. */
++    static const char* k_fragment_shader_src =
++        "#version 120\n"
++        "uniform sampler2D uTexture;\n"
++        "uniform vec2 uSourceSize;\n"
++        "uniform vec2 uOutputSize;\n"
++        "uniform vec2 uTexCoordScale;\n"
++        "uniform float uStrength;\n"
++        "uniform float uMode;\n"
++        "varying vec2 vTexCoord;\n"
++        "\n"
++        "float ToLinear1(float c) {\n"
++        "    c = clamp(c, 0.0, 1.0);\n"
++        "    return (c <= 0.04045) ? (c / 12.92) : pow((c + 0.055) / 1.055, 2.4);\n"
++        "}\n"
++        "vec3 ToLinear(vec3 c) {\n"
++        "    return vec3(ToLinear1(c.r), ToLinear1(c.g), ToLinear1(c.b));\n"
++        "}\n"
++        "float ToSrgb1(float c) {\n"
++        "    c = clamp(c, 0.0, 1.0);\n"
++        "    return (c <= 0.0031308) ? (c * 12.92) : (1.055 * pow(c, 0.4166667) - 0.055);\n"
++        "}\n"
++        "vec3 ToSrgb(vec3 c) {\n"
++        "    return vec3(ToSrgb1(c.r), ToSrgb1(c.g), ToSrgb1(c.b));\n"
++        "}\n"
++        "\n"
++        "vec3 Fetch(vec2 pos, vec2 off) {\n"
++        "    vec2 texel = floor(pos * uSourceSize + off) + vec2(0.5);\n"
++        "    if (texel.x < 0.0 || texel.x > uSourceSize.x ||\n"
++        "        texel.y < 0.0 || texel.y > uSourceSize.y) {\n"
++        "        return vec3(0.0);\n"
++        "    }\n"
++        "    vec2 uv = (texel / uSourceSize) * uTexCoordScale;\n"
++        "    return ToLinear(texture2D(uTexture, uv).rgb);\n"
++        "}\n"
++        "\n"
++        "vec2 Dist(vec2 pos) {\n"
++        "    vec2 p = pos * uSourceSize;\n"
++        "    return -((p - floor(p)) - vec2(0.5));\n"
++        "}\n"
++        "\n"
++        "float Gaus(float d, float scale) {\n"
++        "    return exp2(scale * d * d);\n"
++        "}\n"
++        "\n"
++        "vec3 Horiz3(vec2 pos, float offY, float hardPix) {\n"
++        "    float dx = Dist(pos).x;\n"
++        "    float wa = Gaus(dx - 1.0, hardPix);\n"
++        "    float wb = Gaus(dx,       hardPix);\n"
++        "    float wc = Gaus(dx + 1.0, hardPix);\n"
++        "    vec3 a = Fetch(pos, vec2(-1.0, offY));\n"
++        "    vec3 b = Fetch(pos, vec2( 0.0, offY));\n"
++        "    vec3 c = Fetch(pos, vec2( 1.0, offY));\n"
++        "    return (a * wa + b * wb + c * wc) / (wa + wb + wc);\n"
++        "}\n"
++        "\n"
++        "vec3 Horiz5(vec2 pos, float offY, float hardPix) {\n"
++        "    float dx = Dist(pos).x;\n"
++        "    float w0 = Gaus(dx - 2.0, hardPix);\n"
++        "    float w1 = Gaus(dx - 1.0, hardPix);\n"
++        "    float w2 = Gaus(dx,       hardPix);\n"
++        "    float w3 = Gaus(dx + 1.0, hardPix);\n"
++        "    float w4 = Gaus(dx + 2.0, hardPix);\n"
++        "    vec3 c = Fetch(pos, vec2(-2.0, offY)) * w0 +\n"
++        "             Fetch(pos, vec2(-1.0, offY)) * w1 +\n"
++        "             Fetch(pos, vec2( 0.0, offY)) * w2 +\n"
++        "             Fetch(pos, vec2( 1.0, offY)) * w3 +\n"
++        "             Fetch(pos, vec2( 2.0, offY)) * w4;\n"
++        "    return c / (w0 + w1 + w2 + w3 + w4);\n"
++        "}\n"
++        "\n"
++        "float ScanWeight(float dy, float offY, float hardScan, vec3 lineColor) {\n"
++        "    float luma = max(lineColor.r, max(lineColor.g, lineColor.b));\n"
++        "    float s = mix(hardScan, hardScan * 0.72, luma);\n"
++        "    return Gaus(dy + offY, s);\n"
++        "}\n"
++        "\n"
++        "vec3 BloomRow(vec2 pos, vec2 dist, float offY, float hardBloomScan, float hardBloomPix) {\n"
++        "    return Horiz5(pos, offY, hardBloomPix) * Gaus(dist.y + offY, hardBloomScan);\n"
++        "}\n"
++        "\n"
++        "vec3 CalcBloom(vec2 pos) {\n"
++        "    vec2 dist = Dist(pos);\n"
++        "    float hbs = -2.0;\n"
++        "    float hbp = -1.6;\n"
++        "    vec3 b = BloomRow(pos, dist, -1.0, hbs, hbp) +\n"
++        "             BloomRow(pos, dist,  0.0, hbs, hbp) +\n"
++        "             BloomRow(pos, dist,  1.0, hbs, hbp);\n"
++        "    return b / 3.0;\n"
++        "}\n"
++        "\n"
++        "vec2 Warp(vec2 uv, vec2 warp) {\n"
++        "    vec2 p = uv * 2.0 - 1.0;\n"
++        "    p *= vec2(1.0 + (p.y * p.y) * warp.x,\n"
++        "              1.0 + (p.x * p.x) * warp.y);\n"
++        "    return p * 0.5 + 0.5;\n"
++        "}\n"
++        "\n"
++        "vec3 ApertureGrilleMask(vec2 frag, float dark, float light) {\n"
++        "    float m = mod(floor(frag.x), 3.0);\n"
++        "    if (m < 0.5) return vec3(light, dark, dark);\n"
++        "    if (m < 1.5) return vec3(dark, light, dark);\n"
++        "    return vec3(dark, dark, light);\n"
++        "}\n"
++        "\n"
++        "vec3 SlotMask(vec2 frag, float dark, float light) {\n"
++        "    float col = floor(frag.x);\n"
++        "    float cellX = floor(col / 3.0);\n"
++        "    float m = col - cellX * 3.0;\n"
++        "    vec3 mask = (m < 0.5) ? vec3(light, dark, dark)\n"
++        "              : ((m < 1.5) ? vec3(dark, light, dark)\n"
++        "                           : vec3(dark, dark, light));\n"
++        "    float rowPhase = mod(floor(frag.y) + mod(cellX, 2.0) * 2.0, 4.0);\n"
++        "    if (rowPhase >= 3.0) {\n"
++        "        mask *= mix(dark, 1.0, 0.35);\n"
++        "    }\n"
++        "    return mask;\n"
++        "}\n"
++        "\n"
++        "vec3 RenderCRT(vec2 uv, bool curved, float strength) {\n"
++        "    vec2 pos = uv;\n"
++        "    float bezel = 1.0;\n"
++        "    if (curved) {\n"
++        "        vec2 warp = vec2(0.018, 0.026) * mix(0.60, 1.0, strength);\n"
++        "        pos = Warp(uv, warp);\n"
++        "        vec2 edge = min(pos, vec2(1.0) - pos);\n"
++        "        vec2 px = edge * uOutputSize;\n"
++        "        float corner = min(px.x, px.y);\n"
++        "        bezel = smoothstep(0.0, 2.5, corner);\n"
++        "        vec2 centered = pos * 2.0 - 1.0;\n"
++        "        float radius = length(max(abs(centered) - vec2(0.96), 0.0));\n"
++        "        bezel *= 1.0 - smoothstep(0.025, 0.045, radius);\n"
++        "        if (pos.x < 0.0 || pos.x > 1.0 || pos.y < 0.0 || pos.y > 1.0) {\n"
++        "            return vec3(0.0);\n"
++        "        }\n"
++        "    }\n"
++        "    float hardPix = mix(-3.6, -2.2, strength);\n"
++        "    float hardScan = mix(-7.0, -12.0, strength);\n"
++        "    vec3 a = Horiz3(pos, -1.0, hardPix);\n"
++        "    vec3 b = Horiz3(pos,  0.0, hardPix);\n"
++        "    vec3 c = Horiz3(pos,  1.0, hardPix);\n"
++        "    if (curved) {\n"
++        "        float conv = 0.14 * strength / uSourceSize.x;\n"
++        "        float ar = Horiz3(pos - vec2(conv, 0.0), -1.0, hardPix).r;\n"
++        "        float br = Horiz3(pos - vec2(conv, 0.0),  0.0, hardPix).r;\n"
++        "        float cr = Horiz3(pos - vec2(conv, 0.0),  1.0, hardPix).r;\n"
++        "        float ab = Horiz3(pos + vec2(conv, 0.0), -1.0, hardPix).b;\n"
++        "        float bb = Horiz3(pos + vec2(conv, 0.0),  0.0, hardPix).b;\n"
++        "        float cb = Horiz3(pos + vec2(conv, 0.0),  1.0, hardPix).b;\n"
++        "        a.r = ar; b.r = br; c.r = cr;\n"
++        "        a.b = ab; b.b = bb; c.b = cb;\n"
++        "    }\n"
++        "    float dy = Dist(pos).y;\n"
++        "    vec3 col = a * ScanWeight(dy, -1.0, hardScan, a) +\n"
++        "               b * ScanWeight(dy,  0.0, hardScan, b) +\n"
++        "               c * ScanWeight(dy,  1.0, hardScan, c);\n"
++        "    float bloomAmt = mix(curved ? 0.06 : 0.04, curved ? 0.16 : 0.12, strength);\n"
++        "    col += CalcBloom(pos) * bloomAmt;\n"
++        "    float maskDark = mix(0.88, 0.58, strength);\n"
++        "    float maskLight = mix(1.06, 1.24, strength);\n"
++        "    vec3 mask = curved ? SlotMask(gl_FragCoord.xy, maskDark, maskLight)\n"
++        "                       : ApertureGrilleMask(gl_FragCoord.xy, maskDark, maskLight);\n"
++        "    col *= mask;\n"
++        "    vec2 vc = pos * 2.0 - 1.0;\n"
++        "    float vig = 1.0 - (curved ? 0.16 : 0.07) * strength * dot(vc, vc);\n"
++        "    col *= clamp(vig, 0.72, 1.0);\n"
++        "    float boost = curved ? mix(1.04, 1.24, strength) : mix(1.03, 1.20, strength);\n"
++        "    col *= boost * bezel;\n"
++        "    return ToSrgb(col);\n"
++        "}\n"
++        "\n"
++        "vec3 RenderGBCLCD(vec2 uv, float strength) {\n"
++        "    vec2 pxPerGuest = uOutputSize / max(uSourceSize, vec2(1.0));\n"
++        "    vec2 texelPos = uv * uSourceSize;\n"
++        "    vec2 centerTexel = (floor(texelPos) + vec2(0.5)) / uSourceSize;\n"
++        "    vec3 rawLin = ToLinear(texture2D(uTexture, clamp(centerTexel, 0.0, 1.0) * uTexCoordScale).rgb);\n"
++        "    vec3 gbcMat = vec3(\n"
++        "        dot(rawLin, vec3(0.80, 0.15, 0.05)),\n"
++        "        dot(rawLin, vec3(0.06, 0.72, 0.22)),\n"
++        "        dot(rawLin, vec3(0.04, 0.14, 0.82))\n"
++        "    );\n"
++        "    vec3 colorLin = mix(rawLin, gbcMat, mix(0.35, 1.0, strength));\n"
++        "    vec2 sub = fract(texelPos);\n"
++        "    vec2 border = clamp(vec2(1.1) / max(pxPerGuest, vec2(1.0)), vec2(0.05), vec2(0.22));\n"
++        "    vec2 aa = clamp(vec2(0.65) / max(pxPerGuest, vec2(1.0)), vec2(0.01), vec2(0.10));\n"
++        "    float gx = smoothstep(0.0, border.x + aa.x, sub.x) *\n"
++        "               (1.0 - smoothstep(1.0 - border.x - aa.x, 1.0, sub.x));\n"
++        "    float gy = smoothstep(0.0, border.y + aa.y, sub.y) *\n"
++        "               (1.0 - smoothstep(1.0 - border.y - aa.y, 1.0, sub.y));\n"
++        "    float cellMask = gx * gy;\n"
++        "    float gridVis = smoothstep(1.6, 3.0, min(pxPerGuest.x, pxPerGuest.y));\n"
++        "    float gridGain = mix(1.0, mix(mix(0.84, 0.66, strength), 1.0, cellMask), gridVis);\n"
++        "    float subVis = smoothstep(2.5, 4.5, pxPerGuest.x);\n"
++        "    float sCol = fract(sub.x * 3.0);\n"
++        "    float gapSub = 1.0 - 0.16 * strength * (1.0 - smoothstep(0.10, 0.25, min(sCol, 1.0 - sCol)));\n"
++        "    float subTint = 1.0 - 0.12 * strength;\n"
++        "    vec3 rgbSub = (sub.x < 0.33333) ? vec3(1.08, subTint, subTint)\n"
++        "                : ((sub.x < 0.66667) ? vec3(subTint, 1.08, subTint)\n"
++        "                                     : vec3(subTint, subTint, 1.08));\n"
++        "    vec3 subMask = mix(vec3(1.0), rgbSub * gapSub, subVis);\n"
++        "    float boost = mix(1.02, 1.18, strength * gridVis);\n"
++        "    vec3 col = colorLin * gridGain * subMask * boost;\n"
++        "    return ToSrgb(col);\n"
++        "}\n"
++        "\n"
++        "void main() {\n"
++        "    vec3 outColor;\n"
++        "    if (uMode < 0.5) {\n"
++        "        outColor = RenderCRT(vTexCoord, false, uStrength);\n"
++        "    } else if (uMode < 1.5) {\n"
++        "        outColor = RenderCRT(vTexCoord, true, uStrength);\n"
++        "    } else {\n"
++        "        outColor = RenderGBCLCD(vTexCoord, uStrength);\n"
++        "    }\n"
++        "    gl_FragColor = vec4(outColor, 1.0);\n"
++        "}\n";
++
++    const GLuint vs = compile_gl_shader(GL_VERTEX_SHADER, k_vertex_shader_src, "vertex");
++    const GLuint fs = compile_gl_shader(GL_FRAGMENT_SHADER, k_fragment_shader_src, "fragment");
++    if (!vs || !fs) {
++        if (vs) g_gl_shader.p_glDeleteShader(vs);
++        if (fs) g_gl_shader.p_glDeleteShader(fs);
++        destroy_gl_shader_pipeline();
++        return;
++    }
++
++    const GLuint prog = g_gl_shader.p_glCreateProgram();
++    if (!prog) {
++        g_gl_shader.p_glDeleteShader(vs);
++        g_gl_shader.p_glDeleteShader(fs);
++        destroy_gl_shader_pipeline();
++        return;
++    }
++    g_gl_shader.p_glAttachShader(prog, vs);
++    g_gl_shader.p_glAttachShader(prog, fs);
++    g_gl_shader.p_glLinkProgram(prog);
++    g_gl_shader.p_glDeleteShader(vs);
++    g_gl_shader.p_glDeleteShader(fs);
++
++    GLint linked = 0;
++    g_gl_shader.p_glGetProgramiv(prog, GL_LINK_STATUS, &linked);
++    if (!linked) {
++        char log_buf[1024];
++        GLsizei len = 0;
++        g_gl_shader.p_glGetProgramInfoLog(prog, (GLsizei)sizeof(log_buf) - 1, &len, log_buf);
++        log_buf[(len >= 0 && len < (GLsizei)sizeof(log_buf)) ? len : 0] = '\0';
++        fprintf(stderr, "[SDL] GLSL shader program link failed: %s\n", log_buf);
++        g_gl_shader.p_glDeleteProgram(prog);
++        destroy_gl_shader_pipeline();
++        return;
++    }
++
++    g_gl_shader.program = prog;
++    g_gl_shader.loc_texture = g_gl_shader.p_glGetUniformLocation(prog, "uTexture");
++    g_gl_shader.loc_source_size = g_gl_shader.p_glGetUniformLocation(prog, "uSourceSize");
++    g_gl_shader.loc_output_size = g_gl_shader.p_glGetUniformLocation(prog, "uOutputSize");
++    g_gl_shader.loc_texcoord_scale = g_gl_shader.p_glGetUniformLocation(prog, "uTexCoordScale");
++    g_gl_shader.loc_strength = g_gl_shader.p_glGetUniformLocation(prog, "uStrength");
++    g_gl_shader.loc_mode = g_gl_shader.p_glGetUniformLocation(prog, "uMode");
++    g_gl_shader.ready = true;
++    fprintf(stderr, "[SDL] GLSL shader pipeline ready (CRT-Lottes + GBC LCD).\n");
++}
++
++static bool render_with_gl_shader(GBScreenEffect effect) {
++    if (!g_gl_shader.ready || !g_renderer || !g_texture ||
++        g_game_viewport.w <= 0 || g_game_viewport.h <= 0) {
++        return false;
++    }
++
++#if SDL_VERSION_ATLEAST(2, 0, 10)
++    SDL_RenderFlush(g_renderer);
++#endif
++
++    int out_w = 0;
++    int out_h = 0;
++    if (SDL_GetRendererOutputSize(g_renderer, &out_w, &out_h) != 0 || out_w <= 0 || out_h <= 0) {
++        return false;
++    }
++
++    GLint prev_viewport[4] = {0, 0, out_w, out_h};
++    GLint prev_program = 0;
++    GLint prev_active_tex = GL_TEXTURE0;
++    GLint prev_tex2d = 0;
++    g_gl_shader.p_glGetIntegerv(GL_VIEWPORT, prev_viewport);
++    g_gl_shader.p_glGetIntegerv(GL_CURRENT_PROGRAM, &prev_program);
++    g_gl_shader.p_glGetIntegerv(GL_ACTIVE_TEXTURE, &prev_active_tex);
++    g_gl_shader.p_glActiveTexture(GL_TEXTURE0);
++    g_gl_shader.p_glGetIntegerv(GL_TEXTURE_BINDING_2D, &prev_tex2d);
++
++    float tex_w = 1.0f;
++    float tex_h = 1.0f;
++    if (SDL_GL_BindTexture(g_texture, &tex_w, &tex_h) != 0) {
++        g_gl_shader.p_glBindTexture(GL_TEXTURE_2D, (GLuint)prev_tex2d);
++        g_gl_shader.p_glActiveTexture((GLenum)prev_active_tex);
++        return false;
++    }
++    if (tex_w > 1.5f || tex_h > 1.5f || tex_w <= 0.0f || tex_h <= 0.0f) {
++        SDL_GL_UnbindTexture(g_texture);
++        g_gl_shader.p_glBindTexture(GL_TEXTURE_2D, (GLuint)prev_tex2d);
++        g_gl_shader.p_glActiveTexture((GLenum)prev_active_tex);
++        return false;
++    }
++
++    GLint prev_min_filter = GL_NEAREST;
++    GLint prev_mag_filter = GL_NEAREST;
++    GLint prev_wrap_s = GL_CLAMP_TO_EDGE;
++    GLint prev_wrap_t = GL_CLAMP_TO_EDGE;
++    g_gl_shader.p_glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, &prev_min_filter);
++    g_gl_shader.p_glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, &prev_mag_filter);
++    g_gl_shader.p_glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, &prev_wrap_s);
++    g_gl_shader.p_glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, &prev_wrap_t);
++
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
++
++    g_gl_shader.p_glPushAttrib(GL_ALL_ATTRIB_BITS);
++    g_gl_shader.p_glDisable(GL_SCISSOR_TEST);
++    g_gl_shader.p_glDisable(GL_BLEND);
++    g_gl_shader.p_glDisable(GL_DEPTH_TEST);
++    g_gl_shader.p_glDisable(GL_CULL_FACE);
++
++    g_gl_shader.p_glMatrixMode(GL_PROJECTION);
++    g_gl_shader.p_glPushMatrix();
++    g_gl_shader.p_glLoadIdentity();
++    g_gl_shader.p_glMatrixMode(GL_MODELVIEW);
++    g_gl_shader.p_glPushMatrix();
++    g_gl_shader.p_glLoadIdentity();
++
++    const GLint gl_y = out_h - (g_game_viewport.y + g_game_viewport.h);
++    g_gl_shader.p_glViewport(g_game_viewport.x, gl_y, g_game_viewport.w, g_game_viewport.h);
++
++    float mode_val = 0.0f;
++    if (effect == GB_SCREEN_EFFECT_CRT_CURVED) {
++        mode_val = 1.0f;
++    } else if (effect == GB_SCREEN_EFFECT_GBC_LCD) {
++        mode_val = 2.0f;
++    }
++    const float strength = clampf((float)g_screen_effect_intensity / 100.0f, 0.0f, 1.0f);
++
++    g_gl_shader.p_glUseProgram(g_gl_shader.program);
++    if (g_gl_shader.loc_texture >= 0) {
++        g_gl_shader.p_glUniform1i(g_gl_shader.loc_texture, 0);
++    }
++    if (g_gl_shader.loc_source_size >= 0) {
++        g_gl_shader.p_glUniform2f(g_gl_shader.loc_source_size,
++                                  (float)g_present_width, (float)GB_SCREEN_HEIGHT);
++    }
++    if (g_gl_shader.loc_output_size >= 0) {
++        g_gl_shader.p_glUniform2f(g_gl_shader.loc_output_size,
++                                  (float)g_game_viewport.w, (float)g_game_viewport.h);
++    }
++    if (g_gl_shader.loc_texcoord_scale >= 0) {
++        g_gl_shader.p_glUniform2f(g_gl_shader.loc_texcoord_scale, tex_w, tex_h);
++    }
++    if (g_gl_shader.loc_strength >= 0) {
++        g_gl_shader.p_glUniform1f(g_gl_shader.loc_strength, strength);
++    }
++    if (g_gl_shader.loc_mode >= 0) {
++        g_gl_shader.p_glUniform1f(g_gl_shader.loc_mode, mode_val);
++    }
++
++    g_gl_shader.p_glBegin(GL_QUADS);
++    g_gl_shader.p_glTexCoord2f(0.0f, 1.0f);
++    g_gl_shader.p_glVertex2f(-1.0f, -1.0f);
++    g_gl_shader.p_glTexCoord2f(1.0f, 1.0f);
++    g_gl_shader.p_glVertex2f(1.0f, -1.0f);
++    g_gl_shader.p_glTexCoord2f(1.0f, 0.0f);
++    g_gl_shader.p_glVertex2f(1.0f, 1.0f);
++    g_gl_shader.p_glTexCoord2f(0.0f, 0.0f);
++    g_gl_shader.p_glVertex2f(-1.0f, 1.0f);
++    g_gl_shader.p_glEnd();
++
++    g_gl_shader.p_glUseProgram((GLuint)prev_program);
++
++    g_gl_shader.p_glMatrixMode(GL_MODELVIEW);
++    g_gl_shader.p_glPopMatrix();
++    g_gl_shader.p_glMatrixMode(GL_PROJECTION);
++    g_gl_shader.p_glPopMatrix();
++
++    g_gl_shader.p_glPopAttrib();
++    g_gl_shader.p_glViewport(prev_viewport[0], prev_viewport[1],
++                             prev_viewport[2], prev_viewport[3]);
++
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, prev_min_filter);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, prev_mag_filter);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, prev_wrap_s);
++    g_gl_shader.p_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, prev_wrap_t);
++
++    SDL_GL_UnbindTexture(g_texture);
++    g_gl_shader.p_glBindTexture(GL_TEXTURE_2D, (GLuint)prev_tex2d);
++    g_gl_shader.p_glActiveTexture((GLenum)prev_active_tex);
++    return true;
++}
++#endif
++
+ /* The glow lives in its own texture because it has to be composited with
+  * SDL_BLENDMODE_ADD, and a texture carries one blend mode. */
+ static bool ensure_glow_texture(void) {
+@@ -3045,14 +3629,24 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             }
+         }
+     }
+-    if (g_screen_effect == GB_SCREEN_EFFECT_SHADER) {
++    const bool want_gl_shader = is_gl_shader_effect(g_screen_effect);
++#if !defined(__ANDROID__)
++    const bool use_gl_shader = want_gl_shader && g_gl_shader.ready;
++#else
++    const bool use_gl_shader = false;
++#endif
++    const bool use_cpu_shader_fallback =
++        !use_gl_shader &&
++        (g_screen_effect == GB_SCREEN_EFFECT_SHADER ||
++         g_screen_effect == GB_SCREEN_EFFECT_CRT_CURVED);
++    if (use_cpu_shader_fallback) {
+         apply_shader_chromatic_aberration((uint32_t*)pixels, pitch, g_present_width,
+                                           GB_SCREEN_HEIGHT, g_screen_effect_intensity);
+     }
+     /* Phosphor glow, computed from the colour that is actually being shown -
+      * after the panel response, so the halo trails with the image. */
+     const bool use_glow =
+-        (g_screen_effect == GB_SCREEN_EFFECT_CRT || g_screen_effect == GB_SCREEN_EFFECT_SHADER);
++        (g_screen_effect == GB_SCREEN_EFFECT_CRT || use_cpu_shader_fallback);
+     if (use_glow && ensure_glow_texture() && g_glow_buffer_valid) {
+         compute_phosphor_glow((const uint32_t*)pixels, pitch, g_glow_buffer,
+                               g_glow_scratch, g_present_width, GB_SCREEN_HEIGHT,
+@@ -3068,20 +3662,30 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+ 
+     SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
+     SDL_RenderClear(g_renderer);
+-    SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
+-    /* Panel effect, drawn over the guest with the same destination rect so the
+-     * mask lines up with the guest pixels without any coordinate arithmetic. */
+-    if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
+-        if (g_screen_effect_dirty) {
+-            update_screen_effect_texture();
+-        }
+-        if (g_screen_effect_texture) {
+-            SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
+-        }
+-        if (use_glow && g_glow_texture) {
+-            /* Same destination rect again, so the halo is anchored to the
+-             * image rather than floating over the letterbox. */
+-            SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
++    bool drew_with_gl = false;
++#if !defined(__ANDROID__)
++    if (use_gl_shader) {
++        drew_with_gl = render_with_gl_shader(g_screen_effect);
++    }
++#else
++    (void)want_gl_shader;
++#endif
++    if (!drew_with_gl) {
++        SDL_RenderCopy(g_renderer, g_texture, NULL, &g_game_viewport);
++        /* Panel effect, drawn over the guest with the same destination rect so the
++         * mask lines up with the guest pixels without any coordinate arithmetic. */
++        if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++            if (g_screen_effect_dirty) {
++                update_screen_effect_texture();
++            }
++            if (g_screen_effect_texture) {
++                SDL_RenderCopy(g_renderer, g_screen_effect_texture, NULL, &g_game_viewport);
++            }
++            if (use_glow && g_glow_texture) {
++                /* Same destination rect again, so the halo is anchored to the
++                 * image rather than floating over the letterbox. */
++                SDL_RenderCopy(g_renderer, g_glow_texture, NULL, &g_game_viewport);
++            }
+         }
+     }
+ 
+@@ -3732,6 +4336,10 @@ void gb_platform_shutdown(void) {
+         ImGui::DestroyContext();
+     }
+ 
++#if !defined(__ANDROID__)
++    destroy_gl_shader_pipeline();
++#endif
++
+     if (g_texture) {
+         SDL_DestroyTexture(g_texture);
+         g_texture = NULL;
+@@ -4493,24 +5101,39 @@ bool gb_platform_init(int scale) {
+     SDL_SetWindowMinimumSize(g_window, g_present_width, GB_SCREEN_HEIGHT);
+     
+     fprintf(stderr, "[SDL] Creating renderer...\n");
+-    /* 
++    /*
+      * NO VSync - we use wall-clock timing to run at exactly 59.7 FPS.
+      * This is essential for non-60Hz monitors (like 100Hz).
+      */
++#if !defined(__ANDROID__)
++    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
++#endif
+     g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
+-        
++
++#if !defined(__ANDROID__)
++    if (!g_renderer) {
++        fprintf(stderr, "[SDL] OpenGL renderer unavailable, retrying default accelerated driver...\n");
++        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
++        g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
++    }
++#endif
++
+     if (!g_renderer) {
+         fprintf(stderr, "[SDL] Hardware renderer failed, trying software fallback...\n");
+         g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_SOFTWARE);
+     }
+-        
++
+     if (!g_renderer) {
+         fprintf(stderr, "[SDL] SDL_CreateRenderer failed: %s\n", SDL_GetError());
+         SDL_DestroyWindow(g_window);
+         SDL_Quit();
+         return false;
+     }
+-    
++
++#if !defined(__ANDROID__)
++    init_gl_shader_pipeline();
++#endif
++
+     update_render_filter();
+ 
+     // Setup Dear ImGui context
+-- 
+2.56.0
+
+
+From 8f3331e1d7fd2d29a4b0a3cbd4bba60b4a951920 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Sun, 22 Nov 2026 17:29:38 -0300
+Subject: [PATCH 34/34] perf(platform): blend LCD response in linear light and
+ tune GBC default to 16ms
+
+---
+ runtime/src/platform_sdl.cpp | 49 +++++++++++++++++++++++++++++++++---
+ tests/test_lcd_response.cpp  | 25 ++++++++++++++----
+ 2 files changed, 66 insertions(+), 8 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 4932232..6337f45 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -214,9 +214,12 @@ static int g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
+ 
+ /* LCD response. Off by default: the trail is authentic and the first time
+  * someone sees it they should have turned it on deliberately, because it does
+- * cost some readability on a map. Persisted, so the choice survives a restart. */
++ * cost some readability on a map. Persisted, so the choice survives a restart.
++ * Tuned to 16 ms by default for CGB active-matrix TFT response (de-flickers
++ * 30 Hz transparencies without smearing fast movement). */
+ static bool g_lcd_response_enabled = false;
+-static int g_lcd_response_ms = 45;
++#define GB_LCD_RESPONSE_MS_DEFAULT 16
++static int g_lcd_response_ms = GB_LCD_RESPONSE_MS_DEFAULT;
+ #define GB_LCD_RESPONSE_MS_MAX 200
+ /* A twisted nematic panel realigns faster under one bias than the other. That
+  * asymmetry is what separates an LCD trail from a generic blur: the smear that
+@@ -2676,22 +2679,62 @@ static void compute_screen_effect_overlay(uint32_t* dst, int dst_w, int dst_h,
+  * feature being off costs nothing because the caller skips the call entirely,
+  * not because of any value of alpha.
+  */
++static const float* lcd_srgb_to_linear_lut(void) {
++    static float lut[256];
++    static bool ready = false;
++    if (!ready) {
++        for (int i = 0; i < 256; ++i) {
++            const float c = (float)i / 255.0f;
++            lut[i] = (c <= 0.04045f) ? (c / 12.92f) : powf((c + 0.055f) / 1.055f, 2.4f);
++        }
++        ready = true;
++    }
++    return lut;
++}
++
++static float lcd_linear_to_srgb_byte(float lin) {
++    const float c = clampf(lin, 0.0f, 1.0f);
++    const float srgb = (c <= 0.0031308f)
++                           ? (c * 12.92f)
++                           : (1.055f * powf(c, 1.0f / 2.4f) - 0.055f);
++    return clampf(srgb, 0.0f, 1.0f) * 255.0f;
++}
++
+ static void apply_lcd_response(const uint32_t* prev, uint32_t* dst, int pitch_bytes,
+                                int width, int height, float dark_alpha,
+                                float light_alpha) {
++    const float* srgb_lut = lcd_srgb_to_linear_lut();
+     for (int y = 0; y < height; ++y) {
+         uint32_t* row = (uint32_t*)((uint8_t*)dst + (size_t)y * (size_t)pitch_bytes);
+         const uint32_t* prev_row = prev + (size_t)y * (size_t)width;
+         for (int x = 0; x < width; ++x) {
+             const uint32_t previous = prev_row[x];
+             const uint32_t target = row[x];
++            if ((previous & 0x00FFFFFFu) == (target & 0x00FFFFFFu)) {
++                continue;
++            }
+             uint32_t out = target & 0xFF000000u;
+             for (int shift = 16; shift >= 0; shift -= 8) {
+                 const uint32_t from = (previous >> shift) & 0xFFu;
+                 const uint32_t to = (target >> shift) & 0xFFu;
++                if (from == to) {
++                    out |= to << shift;
++                    continue;
++                }
+                 /* Falling luminance is the fast direction on the real panel. */
+                 const float alpha = (to < from) ? dark_alpha : light_alpha;
+-                float value = (float)from + ((float)to - (float)from) * alpha;
++                if (alpha <= 0.0f) {
++                    out |= from << shift;
++                    continue;
++                }
++                if (alpha >= 1.0f) {
++                    out |= to << shift;
++                    continue;
++                }
++                const float lin_from = srgb_lut[from];
++                const float lin_to = srgb_lut[to];
++                const float lin_val = lin_from + (lin_to - lin_from) * alpha;
++                float value = lcd_linear_to_srgb_byte(lin_val);
+                 /* Snap once the remainder is under a level. Without this a
+                  * one-level difference never closes - the step is smaller than
+                  * the rounding - and the panel settles a shade below the guest
+diff --git a/tests/test_lcd_response.cpp b/tests/test_lcd_response.cpp
+index 82bb705..fe185e4 100644
+--- a/tests/test_lcd_response.cpp
++++ b/tests/test_lcd_response.cpp
+@@ -14,6 +14,10 @@ static uint32_t argb(uint32_t r, uint32_t g, uint32_t b) {
+     return 0xFF000000u | (r << 16) | (g << 8) | b;
+ }
+ static uint32_t red_of(uint32_t v) { return (v >> 16) & 0xFFu; }
++static double to_linear(uint32_t channel_byte) {
++    const double c = (double)channel_byte / 255.0;
++    return (c <= 0.04045) ? (c / 12.92) : std::pow((c + 0.055) / 1.055, 2.4);
++}
+ 
+ /* The runtime relaxes the locked texture in place, but the guest frame is
+  * rewritten into it before every step, so the target is always fresh. The
+@@ -91,11 +95,10 @@ int main() {
+         const uint32_t falling = step(white, black, dark, light);
+         const uint32_t rising = step(black, white, dark, light);
+ 
+-        /* The two directions live on opposite scales - one falls toward zero,
+-         * the other rises toward 255 - so compare how far each got toward its
+-         * own target rather than comparing the raw levels. */
+-        const double fall_progress = (255.0 - (double)red_of(falling)) / 255.0;
+-        const double rise_progress = (double)red_of(rising) / 255.0;
++        /* The two directions live on opposite linear-light scales - one falls
++         * toward zero, the other rises toward 1.0 - so compare linear progress. */
++        const double fall_progress = 1.0 - to_linear(red_of(falling));
++        const double rise_progress = to_linear(red_of(rising));
+         if (!(fall_progress > rise_progress)) {
+             std::fprintf(stderr, "FAIL: falling %.3f rising %.3f of the way\n",
+                          fall_progress, rise_progress);
+@@ -129,6 +132,18 @@ int main() {
+         }
+     }
+ 
++    /* 6. Linear-light 50/50 blend preserves half physical luminance (~sRGB 186..189)
++     *    instead of darkening to sRGB 128 during 30 Hz flicker transparency. */
++    {
++        const uint32_t mid = step(black, white, 0.5f, 0.5f);
++        const uint32_t r = red_of(mid);
++        if (r < 185u || r > 190u) {
++            std::fprintf(stderr, "FAIL: 50%% linear blend yielded sRGB %u, expected 185..190\n",
++                         r);
++            return 1;
++        }
++    }
++
+     std::printf("lcd response: ok\n");
+     return 0;
+ }
+\ No newline at end of file
 -- 
 2.56.0
 

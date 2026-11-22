@@ -214,8 +214,9 @@ typedef struct NativePresenter {
     uint32_t sprites_over_budget;
     uint32_t sprite_pixels_drawn;
     uint32_t sprite_pixels_hidden_by_bg;
-    /* Persistent room actors captured from WRAM0 ($C700..$CB3F). */
+    /* Persistent room actors captured from WRAM0 ($C700..$CB3F) and props ($CB40..$CBBF). */
     RoomActorSnapshot actors;
+    RoomActorTracker actor_tracker;
     uint32_t room_actors_drawn;
     uint32_t room_actor_pixels_drawn;
     /* Tileset dump for offline colour proof. Set via native_presenter_set_dump_tiles_dir(). */

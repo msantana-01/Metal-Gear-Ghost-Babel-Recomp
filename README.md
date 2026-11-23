@@ -9,10 +9,12 @@ For Ghost Babel, `./build.sh` (or `GhostBabelRecomp.bat` on Windows) builds two
 executables sharing the same core and save files (`build/baserom.sav`):
 
 - **`ghost-babel-remaster`** *(default)* — 256 px widescreen view assembled from
-  the cartridge room layers, margin room/cutscene actors, world props &
-  shadows, sliding 136 px camera framing, centred dialogue/item-pickup overlays,
-  GPU OpenGL GLSL CRT-Lottes & GBC LCD shaders, linear-light LCD response, and
-  audio mastering.
+  the cartridge room layers with a per-room VRAM tileset & palette cache, margin
+  room/cutscene actors, world props & shadows, sliding 136 px camera framing,
+  centred dialogue/item-pickup overlays, GPU OpenGL GLSL CRT-Lottes & GBC LCD
+  shaders, linear-light LCD response, V-Sync + audio Dynamic Rate Control,
+  controller rumble, savestate `.thumb` previews, and cycle-integrated APU audio
+  mastering with headphone crossfeed.
 - **`ghost-babel-authentic`** — original 160×144 hardware frame, unchanged.
 
 ```bash
@@ -24,7 +26,7 @@ cd Metal-Gear-Ghost-Babel-Recomp
 ./run.sh            # Widescreen Remaster (use --authentic for 160px, --gui for window)
 ```
 
-On **Windows**: download `ghost-babel-tools-windows-x86_64-0.6.1.zip` from
+On **Windows**: download `ghost-babel-tools-windows-x86_64-0.6.2.zip` from
 [Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases),
 extract anywhere, and double-click **`GhostBabelRecomp.bat`** (or drag & drop
 your `.gbc` ROM onto **`build.bat`**). No Python, MSYS2, WSL, or administrator
@@ -66,7 +68,7 @@ it. With no window and no pacing at all the same build runs ~2700 fps.
 
 ## Windows (x86-64, Windows 10 / 11)
 
-1. Download **`ghost-babel-tools-windows-x86_64-0.6.1.zip`** from
+1. Download **`ghost-babel-tools-windows-x86_64-0.6.2.zip`** from
    [Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases)
    and extract it to a folder of your choice.
 2. Double-click **`GhostBabelRecomp.bat`** (graphical window) or drag & drop
@@ -224,10 +226,11 @@ intact (`build/baserom.sav`), and `.tools/` refreshes automatically against
 
 ## What's next
 
-As of **v0.6.1**, both **`ghost-babel-remaster`** (256 px widescreen, cartridge
-`RoomMap` margins, room/cutscene actors, world props & shadows, centred
-overlays, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light LCD response, audio
-mastering) and **`ghost-babel-authentic`** (160 px hardware-exact) are part of
+As of **v0.6.2**, both **`ghost-babel-remaster`** (256 px widescreen, cartridge
+`RoomMap` margins with per-room VRAM cache, room/cutscene actors, world props &
+shadows, centred overlays, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light
+LCD response, V-Sync + audio DRC, controller rumble, savestate thumbnails, and
+cycle-integrated APU mastering + crossfeed) and **`ghost-babel-authentic`** (160 px hardware-exact) are part of
 the public Linux and Windows x86-64 releases.
 
 Ongoing work covers margin polish across later areas and future Android build
@@ -243,7 +246,7 @@ The interface is English only. For the commands and package names:
 <summary><b>Português do Brasil</b></summary>
 
 ### Windows
-Baixe `ghost-babel-tools-windows-x86_64-0.6.1.zip` em **Releases**, extraia em
+Baixe `ghost-babel-tools-windows-x86_64-0.6.2.zip` em **Releases**, extraia em
 uma pasta e dê duplo-clique em **`GhostBabelRecomp.bat`** (ou arraste sua ROM
 `.gbc` sobre **`build.bat`**). Não precisa instalar Python, MSYS2 nem WSL: na
 primeira execução o script baixa automaticamente o compilador portátil
@@ -272,7 +275,7 @@ Depois:
 <summary><b>Deutsch</b></summary>
 
 ### Windows
-Lade `ghost-babel-tools-windows-x86_64-0.6.1.zip` von **Releases** herunter,
+Lade `ghost-babel-tools-windows-x86_64-0.6.2.zip` von **Releases** herunter,
 entpacke es und starte **`GhostBabelRecomp.bat`** per Doppelklick (oder ziehe
 deine `.gbc`-ROM auf **`build.bat`**). Es werden weder Python noch MSYS2
 benötigt — der portable Compiler (`w64devkit`) wird beim ersten Start

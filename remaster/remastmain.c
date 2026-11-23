@@ -47,6 +47,7 @@
 #include "room_actors.h"
 #include "room_layers.h"
 #include "room_record.h"
+#include "room_rumble.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -642,7 +643,11 @@ static void perf_report(const PerfCounters* perf, const char* tag) {
     printf("    audio rate          %.0f Hz produced / %u Hz device\n",
            g_audio_stats.sample_rate_actual, g_audio_stats.device_sample_rate);
     printf("    audio mastering     %s\n", gb_platform_get_audio_mastering() ? "on" : "off");
+    printf("    audio crossfeed     %s\n", gb_platform_get_audio_crossfeed() ? "on" : "off");
     printf("    screen effect       %s\n", screen_effect_name(gb_platform_get_screen_effect()));
+    printf("    vsync               %s\n", gb_platform_get_vsync() ? "on" : "off");
+    printf("    rumble              %s (%d%%)\n", gb_platform_get_rumble() ? "on" : "off",
+           gb_platform_get_rumble_strength());
     printf("    audio high water    %u frames\n", g_audio_stats.buffer_high_water_samples);
     if (fps > 59.727 * 1.05) {
         printf("\n  NOTE: the loop is running faster than real time, so the guest\n"
@@ -811,6 +816,22 @@ static void drain_after_frame(GBContext* ctx, uint32_t drain_cycles) {
     ctx->frame_done = 1;
 }
 
+static bool hw_is_flat_screen(const GBPresentationHardwareSnapshot* hw) {
+    if (hw == NULL || (hw->lcdc & 0x80u) == 0u) {
+        return true;
+    }
+    const uint16_t first = hw->accurate_pixels[0];
+    for (uint32_t y = 0u; y < 120u; ++y) {
+        const size_t row_off = (size_t)y * SCREEN_WIDTH;
+        for (uint32_t x = 0u; x < 136u; ++x) {
+            if (hw->accurate_pixels[row_off + x] != first) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 static int run_windowed(GBContext* ctx,
                         GBPresentationSource* source,
                         GBPresentationScene* scene,
@@ -851,7 +872,10 @@ static int run_windowed(GBContext* ctx,
      * artifacts share the bindings and the device, not their identity. */
     gb_platform_set_preference_scope("remaster");
     gb_platform_set_audio_mastering_default(true);
+    gb_platform_set_audio_crossfeed_default(true);
     gb_platform_set_screen_effect_default(GB_SCREEN_EFFECT_SHADER);
+    gb_platform_set_vsync_default(true);
+    gb_platform_set_rumble_default(true);
     if (!gb_platform_init(5)) {
         fprintf(stderr, "remaster: platform init failed\n");
         return 1;
@@ -865,6 +889,8 @@ static int run_windowed(GBContext* ctx,
 
     PresenterRoomSync room_sync;
     memset(&room_sync, 0, sizeof(room_sync));
+    RoomRumbleTracker rumble;
+    room_rumble_reset(&rumble);
     PerfCounters perf;
     perf_init(&perf);
 
@@ -897,6 +923,7 @@ static int run_windowed(GBContext* ctx,
         if (prev_state->valid && prev_state->total_cycles != pre_cycles) {
             prev_state->valid = false;
             room_sync.known = false;
+            room_rumble_reset(&rumble);
             native_presenter_clear_column_cache(presenter);
         }
         gb_reset_frame(ctx);
@@ -965,6 +992,31 @@ static int run_windowed(GBContext* ctx,
             present_pixels[i] = rgb555_to_argb(surface[i]);
         }
         gb_platform_render_frame(present_pixels);
+
+        {
+            const GBPresentationHardwareSnapshot* hw = &render_state->frame.hardware;
+            const bool gameplay_active = ((hw->lcdc & 0x80u) != 0u) &&
+                                         ((hw->lcdc & 0x20u) != 0u) &&
+                                         (hw->wx > 7u) && (hw->wx < 167u);
+            RoomRumbleInput rumble_in;
+            memset(&rumble_in, 0, sizeof(rumble_in));
+            rumble_in.gameplay_active = gameplay_active;
+            rumble_in.flat_screen = hw_is_flat_screen(hw);
+            rumble_in.area = render_state->room_obs.area;
+            rumble_in.room = render_state->room_obs.room;
+            rumble_in.hp = room_rumble_read_hp(ctx->wram, WRAM_TOTAL);
+            rumble_in.alert_state = ctx->wram[ROOM_RUMBLE_ALERT_ADDR];
+            rumble_in.shake_dx = (int8_t)(hw->scx - (uint8_t)render_state->camera_x);
+            rumble_in.shake_dy = (int8_t)(hw->scy - (uint8_t)render_state->camera_y);
+            gb_audio_get_rumble_state(ctx->apu, &rumble_in.audio);
+            RoomRumbleOutput rumble_out;
+            room_rumble_step(&rumble, &rumble_in, &rumble_out);
+            if (rumble_out.trigger) {
+                gb_platform_rumble(rumble_out.low_freq, rumble_out.high_freq,
+                                   rumble_out.duration_ms);
+            }
+        }
+
         gb_platform_vsync(ctx->frame_cycles);
 
         perf_tick(&perf, presenter);

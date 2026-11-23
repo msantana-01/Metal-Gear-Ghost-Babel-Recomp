@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/34] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/36] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/34] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/36] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/34] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/36] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/34] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/36] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/34] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/36] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/34] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/36] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/34] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/36] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/34] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/36] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/34] platform: confirm host actions with a transient
+Subject: [PATCH 09/36] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/34] platform: name the host after the cartridge and give
+Subject: [PATCH 10/36] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/34] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/36] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/34] platform: centre the footer buttons on the content
+Subject: [PATCH 12/36] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/34] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/36] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/34] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/36] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/34] platform: panel effects for the presented image, one
+Subject: [PATCH 15/36] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/34] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/36] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/34] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/36] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/34] runtime: include math.h for the panel effects
+Subject: [PATCH 18/36] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/34] platform: make the presented surface width a runtime
+Subject: [PATCH 19/36] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/34] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/36] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/34] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/36] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/34] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/36] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/34] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/36] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/34] audio: let the host choose the mastering default
+Subject: [PATCH 24/36] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/34] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/36] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/34] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/36] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/34] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/36] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/34] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/36] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/34] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/36] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/34] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/36] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6378,7 +6378,7 @@ index bbf034d..f8c9f76 100644
 From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 15:56:01 -0300
-Subject: [PATCH 31/34] fix(platform): bound framebuffer copies to active
+Subject: [PATCH 31/36] fix(platform): bound framebuffer copies to active
  present width
 
 ---
@@ -6452,7 +6452,7 @@ index f8c9f76..b612cf8 100644
 From 355c229f551f0bd44dcb924847e27ae8e3afe6ea Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 16:08:48 -0300
-Subject: [PATCH 32/34] fix(platform): implement cross-platform SDL_Renderer
+Subject: [PATCH 32/36] fix(platform): implement cross-platform SDL_Renderer
  CRT shader pipeline
 
 ---
@@ -7150,7 +7150,7 @@ index b612cf8..9785595 100644
 From 304eed1da58155f6e74d5e8492be1fb81e1ede00 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:16:42 -0300
-Subject: [PATCH 33/34] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
+Subject: [PATCH 33/36] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
  LCD shader presets
 
 ---
@@ -7945,7 +7945,7 @@ index 9785595..4932232 100644
 From 8f3331e1d7fd2d29a4b0a3cbd4bba60b4a951920 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:29:38 -0300
-Subject: [PATCH 34/34] perf(platform): blend LCD response in linear light and
+Subject: [PATCH 34/36] perf(platform): blend LCD response in linear light and
  tune GBC default to 16ms
 
 ---
@@ -8087,6 +8087,2392 @@ index 82bb705..fe185e4 100644
      return 0;
  }
 \ No newline at end of file
+-- 
+2.56.0
+
+
+From 7e99bdcd929226a8882e34a13d25ebc5d568863d Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Mon, 23 Nov 2026 10:10:20 -0300
+Subject: [PATCH 35/36] feat(audio): cycle-integrated APU anti-aliasing,
+ linear-peak compressor fix, warmth LPF, and headphone crossfeed
+
+---
+ runtime/include/platform_sdl.h      |  10 +
+ runtime/src/audio.c                 | 274 +++++++++++++++++++---------
+ runtime/src/platform_sdl.cpp        | 101 ++++++++--
+ tests/test_audio_chunk_invariance.c |   6 +-
+ tests/test_audio_mastering.cpp      |  27 +++
+ 5 files changed, 316 insertions(+), 102 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 9a8e205..c0dc90b 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -227,6 +227,16 @@ void gb_platform_set_audio_mastering_default(bool enabled);
+  */
+ bool gb_platform_get_audio_mastering(void);
+ 
++/**
++ * @brief Choose the headphone stereo crossfeed default used when preferences are loaded.
++ */
++void gb_platform_set_audio_crossfeed_default(bool enabled);
++
++/**
++ * @brief Current headphone stereo crossfeed state, after preferences and menu toggles.
++ */
++bool gb_platform_get_audio_crossfeed(void);
++
+ /**
+  * @brief Name the artifact's preference scope.
+  *
+diff --git a/runtime/src/audio.c b/runtime/src/audio.c
+index ad78886..f1d8566 100644
+--- a/runtime/src/audio.c
++++ b/runtime/src/audio.c
+@@ -217,9 +217,18 @@ typedef struct GBAudio {
+     /* Last stereo sample produced by the mixer. */
+     int16_t last_output_left;
+     int16_t last_output_right;
+-    
++
+ } GBAudio;
+ 
++/* Extra integration state kept outside GBAudio so sizeof(GBAudio) and
++ * save-state blobs stay binary-compatible. */
++typedef struct GBAudioRuntime {
++    GBAudio state;
++    int64_t mix_acc_l;
++    int64_t mix_acc_r;
++    uint32_t mix_acc_cycles;
++} GBAudioRuntime;
++
+ /* ============================================================================
+  * Internal Helpers
+  * ========================================================================== */
+@@ -346,6 +355,7 @@ static void step_envelope(int* timer, int* volume, uint8_t env_reg) {
+ }
+ 
+ static void audio_reset_timing_state(GBAudio* apu) {
++    GBAudioRuntime* rt = (GBAudioRuntime*)apu;
+     apu->fs_timer = 0;
+     /* Store the previously executed step so the next clock runs step 0. */
+     apu->fs_step = 7;
+@@ -353,6 +363,9 @@ static void audio_reset_timing_state(GBAudio* apu) {
+     apu->sample_phase = 0;
+     apu->last_output_left = 0;
+     apu->last_output_right = 0;
++    rt->mix_acc_l = 0;
++    rt->mix_acc_r = 0;
++    rt->mix_acc_cycles = 0;
+ }
+ 
+ static void audio_clock_frame_sequencer(GBAudio* apu) {
+@@ -426,14 +439,14 @@ static int16_t audio_apply_highpass(int32_t input, int32_t* prev_in, int32_t* pr
+  * ========================================================================== */
+ 
+ void* gb_audio_create(void) {
+-    GBAudio* apu = (GBAudio*)calloc(1, sizeof(GBAudio));
+-    if (!apu) return NULL;
+-    
++    GBAudioRuntime* rt = (GBAudioRuntime*)calloc(1, sizeof(GBAudioRuntime));
++    if (!rt) return NULL;
++
+     /* Approx 70224 cycles per frame / 59.7 fps = ~4.19 MHz */
+     /* 4194304 / 44100 = ~95 cycles per sample */
+-    apu->sample_period = 95;
+-    
+-    return apu;
++    rt->state.sample_period = 95;
++
++    return &rt->state;
+ }
+ 
+ void gb_audio_destroy(void* apu) {
+@@ -525,6 +538,10 @@ bool gb_audio_load_state(void* apu, const void* data, size_t size) {
+     }
+ 
+     memcpy(apu, data, sizeof(GBAudio));
++    GBAudioRuntime* rt = (GBAudioRuntime*)apu;
++    rt->mix_acc_l = 0;
++    rt->mix_acc_r = 0;
++    rt->mix_acc_cycles = 0;
+     return true;
+ }
+ 
+@@ -766,81 +783,15 @@ void gb_audio_write(GBContext* ctx, uint16_t addr, uint8_t value) {
+     }
+ }
+ 
+-static void audio_step_channels(GBAudio* apu, uint32_t cycles) {
+-    if (apu->ch1.enabled) {
+-        uint16_t freq_raw = apu->ch1.nr13 | ((apu->ch1.nr14 & 0x07) << 8);
+-        uint32_t period = (2048 - freq_raw) * 4;
+-        if (period == 0) period = 4;
+-        
+-        apu->ch1.timer += cycles;
+-        while (apu->ch1.timer >= period) {
+-            apu->ch1.timer -= period;
+-            apu->ch1.wave_pos = (apu->ch1.wave_pos + 1) & 7;
+-        }
+-    }
+-    
+-    /* Channel 2 Stepping */
+-    if (apu->ch2.enabled) {
+-        uint16_t freq_raw = apu->ch2.nr23 | ((apu->ch2.nr24 & 0x07) << 8);
+-        uint32_t period = (2048 - freq_raw) * 4;
+-        if (period == 0) period = 4;
+-        
+-        apu->ch2.timer += cycles;
+-        while (apu->ch2.timer >= period) {
+-            apu->ch2.timer -= period;
+-            apu->ch2.wave_pos = (apu->ch2.wave_pos + 1) & 7;
+-        }
+-    }
+-
+-    /* Channel 3 Stepping */
+-    if (apu->ch3.enabled) {
+-        uint16_t freq_raw = apu->ch3.nr33 | ((apu->ch3.nr34 & 0x07) << 8);
+-        uint32_t period = (2048 - freq_raw) * 2;
+-        if (period == 0) period = 2;
+-
+-        apu->ch3.timer += cycles;
+-        while (apu->ch3.timer >= period) {
+-            apu->ch3.timer -= period;
+-            apu->ch3.wave_pos = (apu->ch3.wave_pos + 1) & 31;
+-        }
+-    }
+-
+-    /* Channel 4 Stepping */
+-    if (apu->ch4.enabled) {
+-        /* Polynomial Counter */
+-        uint8_t s = apu->ch4.nr43 >> 4;
+-        uint8_t r = apu->ch4.nr43 & 0x07;
+-        uint32_t period = NOISE_DIVISORS[r & 7] << s;
+-        
+-        /* Minimum period is 8 cycles? */
+-        if (period < 8) period = 8;
+-
+-        apu->ch4.accum += cycles;
+-
+-        uint32_t steps = apu->ch4.accum / period;
+-        apu->ch4.accum %= period;
+-
+-        while (steps-- > 0) {
+-            /* Shift LFSR */
+-            uint16_t lfsr = apu->ch4.lfsr;
+-            bool xor_res = (lfsr & 1) ^ ((lfsr >> 1) & 1);
+-            lfsr >>= 1;
+-            lfsr |= (xor_res << 14);
+-            if (apu->ch4.nr43 & 0x08) { /* 7-bit mode */
+-                lfsr &= ~0x40;
+-                lfsr |= (xor_res << 6);
+-            }
+-            apu->ch4.lfsr = lfsr;
+-        }
+-    }
+-}
+-
+-static void audio_emit_sample(GBContext* ctx, GBAudio* apu) {
+-    audio_stats_sample_generated();
+-    gbrt_note_audio_sample(ctx);
+-
+-    int16_t left = 0;
+-    int16_t right = 0;
++static void audio_sample_current_mix(const GBAudio* apu,
++                                     int* out_l,
++                                     int* out_r,
++                                     int* out_ch1,
++                                     int* out_ch2,
++                                     int* out_ch3,
++                                     int* out_ch4) {
++    int left = 0;
++    int right = 0;
+     int ch1_mix = 0;
+     int ch2_mix = 0;
+     int ch3_mix = 0;
+@@ -883,12 +834,163 @@ static void audio_emit_sample(GBContext* ctx, GBAudio* apu) {
+         if (apu->nr51 & 0x80) left += ch4_mix;
+     }
+ 
++    if (out_l) *out_l = left;
++    if (out_r) *out_r = right;
++    if (out_ch1) *out_ch1 = ch1_mix;
++    if (out_ch2) *out_ch2 = ch2_mix;
++    if (out_ch3) *out_ch3 = ch3_mix;
++    if (out_ch4) *out_ch4 = ch4_mix;
++}
++
++static inline void audio_clock_noise_lfsr(Channel4* ch4) {
++    uint16_t lfsr = ch4->lfsr;
++    bool xor_res = (lfsr & 1) ^ ((lfsr >> 1) & 1);
++    lfsr >>= 1;
++    lfsr |= (xor_res << 14);
++    if (ch4->nr43 & 0x08) { /* 7-bit mode */
++        lfsr &= ~0x40;
++        lfsr |= (xor_res << 6);
++    }
++    ch4->lfsr = lfsr;
++}
++
++static void audio_step_channels(GBAudio* apu, uint32_t cycles) {
++    GBAudioRuntime* rt = (GBAudioRuntime*)apu;
++
++    uint32_t p1 = 0u;
++    uint32_t p2 = 0u;
++    uint32_t p3 = 0u;
++    uint32_t p4 = 0u;
++
++    if (apu->ch1.enabled) {
++        uint16_t freq_raw = apu->ch1.nr13 | ((apu->ch1.nr14 & 0x07) << 8);
++        p1 = (2048u - freq_raw) * 4u;
++        if (p1 == 0u) p1 = 4u;
++    }
++    if (apu->ch2.enabled) {
++        uint16_t freq_raw = apu->ch2.nr23 | ((apu->ch2.nr24 & 0x07) << 8);
++        p2 = (2048u - freq_raw) * 4u;
++        if (p2 == 0u) p2 = 4u;
++    }
++    if (apu->ch3.enabled) {
++        uint16_t freq_raw = apu->ch3.nr33 | ((apu->ch3.nr34 & 0x07) << 8);
++        p3 = (2048u - freq_raw) * 2u;
++        if (p3 == 0u) p3 = 2u;
++    }
++    if (apu->ch4.enabled) {
++        uint8_t s = apu->ch4.nr43 >> 4;
++        uint8_t r = apu->ch4.nr43 & 0x07;
++        p4 = NOISE_DIVISORS[r & 7] << s;
++        if (p4 < 8u) p4 = 8u;
++    }
++
++    while (cycles > 0u) {
++        while (apu->ch1.enabled && apu->ch1.timer >= p1) {
++            apu->ch1.timer -= p1;
++            apu->ch1.wave_pos = (apu->ch1.wave_pos + 1) & 7;
++        }
++        while (apu->ch2.enabled && apu->ch2.timer >= p2) {
++            apu->ch2.timer -= p2;
++            apu->ch2.wave_pos = (apu->ch2.wave_pos + 1) & 7;
++        }
++        while (apu->ch3.enabled && apu->ch3.timer >= p3) {
++            apu->ch3.timer -= p3;
++            apu->ch3.wave_pos = (apu->ch3.wave_pos + 1) & 31;
++        }
++        while (apu->ch4.enabled && apu->ch4.accum >= p4) {
++            apu->ch4.accum -= p4;
++            audio_clock_noise_lfsr(&apu->ch4);
++        }
++
++        uint32_t dt = cycles;
++        if (apu->ch1.enabled) {
++            const uint32_t rem = p1 - apu->ch1.timer;
++            if (rem < dt) dt = rem;
++        }
++        if (apu->ch2.enabled) {
++            const uint32_t rem = p2 - apu->ch2.timer;
++            if (rem < dt) dt = rem;
++        }
++        if (apu->ch3.enabled) {
++            const uint32_t rem = p3 - apu->ch3.timer;
++            if (rem < dt) dt = rem;
++        }
++        if (apu->ch4.enabled) {
++            const uint32_t rem = p4 - apu->ch4.accum;
++            if (rem < dt) dt = rem;
++        }
++
++        int cur_l = 0;
++        int cur_r = 0;
++        audio_sample_current_mix(apu, &cur_l, &cur_r, NULL, NULL, NULL, NULL);
++        rt->mix_acc_l += (int64_t)cur_l * (int64_t)dt;
++        rt->mix_acc_r += (int64_t)cur_r * (int64_t)dt;
++        rt->mix_acc_cycles += dt;
++
++        if (apu->ch1.enabled) {
++            apu->ch1.timer += dt;
++            if (apu->ch1.timer >= p1) {
++                apu->ch1.timer -= p1;
++                apu->ch1.wave_pos = (apu->ch1.wave_pos + 1) & 7;
++            }
++        }
++        if (apu->ch2.enabled) {
++            apu->ch2.timer += dt;
++            if (apu->ch2.timer >= p2) {
++                apu->ch2.timer -= p2;
++                apu->ch2.wave_pos = (apu->ch2.wave_pos + 1) & 7;
++            }
++        }
++        if (apu->ch3.enabled) {
++            apu->ch3.timer += dt;
++            if (apu->ch3.timer >= p3) {
++                apu->ch3.timer -= p3;
++                apu->ch3.wave_pos = (apu->ch3.wave_pos + 1) & 31;
++            }
++        }
++        if (apu->ch4.enabled) {
++            apu->ch4.accum += dt;
++            if (apu->ch4.accum >= p4) {
++                apu->ch4.accum -= p4;
++                audio_clock_noise_lfsr(&apu->ch4);
++            }
++        }
++
++        cycles -= dt;
++    }
++}
++
++static void audio_emit_sample(GBContext* ctx, GBAudio* apu) {
++    GBAudioRuntime* rt = (GBAudioRuntime*)apu;
++    audio_stats_sample_generated();
++    gbrt_note_audio_sample(ctx);
++
++    int cur_l = 0;
++    int cur_r = 0;
++    int ch1_mix = 0;
++    int ch2_mix = 0;
++    int ch3_mix = 0;
++    int ch4_mix = 0;
++    audio_sample_current_mix(apu, &cur_l, &cur_r, &ch1_mix, &ch2_mix, &ch3_mix, &ch4_mix);
++
+     int vol_l = (apu->nr50 >> 4) & 7;
+     int vol_r = apu->nr50 & 7;
+-    int32_t mixed_left = left * (vol_l + 1) * 64;
+-    int32_t mixed_right = right * (vol_r + 1) * 64;
+-    left = audio_apply_highpass(mixed_left, &apu->hp_prev_in_l, &apu->hp_prev_out_l);
+-    right = audio_apply_highpass(mixed_right, &apu->hp_prev_in_r, &apu->hp_prev_out_r);
++    int32_t mixed_left = 0;
++    int32_t mixed_right = 0;
++    if (rt->mix_acc_cycles > 0u) {
++        mixed_left = (int32_t)((rt->mix_acc_l * (int64_t)(vol_l + 1) * 64) /
++                               (int64_t)rt->mix_acc_cycles);
++        mixed_right = (int32_t)((rt->mix_acc_r * (int64_t)(vol_r + 1) * 64) /
++                                (int64_t)rt->mix_acc_cycles);
++        rt->mix_acc_l = 0;
++        rt->mix_acc_r = 0;
++        rt->mix_acc_cycles = 0u;
++    } else {
++        mixed_left = cur_l * (vol_l + 1) * 64;
++        mixed_right = cur_r * (vol_r + 1) * 64;
++    }
++    int16_t left = audio_apply_highpass(mixed_left, &apu->hp_prev_in_l, &apu->hp_prev_out_l);
++    int16_t right = audio_apply_highpass(mixed_right, &apu->hp_prev_in_r, &apu->hp_prev_out_r);
+     apu->last_output_left = left;
+     apu->last_output_right = right;
+ 
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 6337f45..6804222 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -243,6 +243,8 @@ static std::atomic<bool> g_audio_mastering_enabled{false};
+  * gb_platform_init so a fresh profile starts mastered. A saved preference still
+  * wins when runtime_prefs.ini names audio.mastering. */
+ static bool g_audio_mastering_default = false;
++static std::atomic<bool> g_audio_crossfeed_enabled{false};
++static bool g_audio_crossfeed_default = false;
+ /* The artifact's preference scope. Two artifacts share one core, and they must
+  * not share the settings that carry their identity: a player who turns the
+  * mastering off in the remaster keeps the authentic raw, and the other way
+@@ -1046,6 +1048,7 @@ static void set_default_audio_preferences(void) {
+     g_audio_muted.store(false, std::memory_order_relaxed);
+     g_audio_latency_ms = 80;
+     g_audio_mastering_enabled.store(g_audio_mastering_default, std::memory_order_relaxed);
++    g_audio_crossfeed_enabled.store(g_audio_crossfeed_default, std::memory_order_relaxed);
+     g_audio_volume_percent.store(100, std::memory_order_relaxed);
+     g_audio_target_device_name.clear();
+ }
+@@ -1122,6 +1125,7 @@ static std::string runtime_preferences_path(void) {
+  * overwrite each other's opinion of what they are. */
+ static const char* const kIdentityPrefKeys[] = {
+     "audio.mastering",
++    "audio.crossfeed",
+     "screen.effect",
+     "screen.effect_intensity",
+     "screen.lcd_response_enabled",
+@@ -1176,6 +1180,10 @@ static void apply_identity_preference(const char* identity, const char* value) {
+         g_audio_mastering_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
+         return;
+     }
++    if (strcmp(identity, "audio.crossfeed") == 0) {
++        g_audio_crossfeed_enabled.store(strcmp(value, "0") != 0, std::memory_order_relaxed);
++        return;
++    }
+     if (strcmp(identity, "screen.effect") == 0) {
+         long parsed = strtol(value, NULL, 10);
+         if (parsed >= 0 && parsed < GB_SCREEN_EFFECT_COUNT) {
+@@ -1429,6 +1437,8 @@ static void save_runtime_preferences(void) {
+     }
+     fprintf(file, "%s=%d\n", scoped_pref_key("audio.mastering").c_str(),
+             g_audio_mastering_enabled.load(std::memory_order_relaxed) ? 1 : 0);
++    fprintf(file, "%s=%d\n", scoped_pref_key("audio.crossfeed").c_str(),
++            g_audio_crossfeed_enabled.load(std::memory_order_relaxed) ? 1 : 0);
+     fprintf(file, "audio.volume_percent=%u\n",
+             g_audio_volume_percent.load(std::memory_order_relaxed));
+     fprintf(file, "audio.device_name=%s\n", g_audio_target_device_name.c_str());
+@@ -4021,17 +4031,27 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+          * something the runtime applies. Off by default: the 1998 mix is the
+          * mix the game shipped, and someone who came for it should hear it. */
+         bool audio_mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
+-        if (ImGui::Checkbox("Audio Mastering (DC, soft clip, compressor)", &audio_mastering)) {
++        if (ImGui::Checkbox("Audio Mastering (DC, warmth, compressor)", &audio_mastering)) {
+             g_audio_mastering_enabled.store(audio_mastering, std::memory_order_relaxed);
+             audio_master_reset();
+             save_runtime_preferences();
+         }
+         if (ImGui::IsItemHovered()) {
+             ImGui::SetTooltip(
+-                "Removes DC offset, rounds off peaks instead of clipping them, and\n"
+-                "eases down loud passages so quiet ones can be turned up.\n"
++                "Removes DC offset, applies subtle analog low-pass warmth (~12 kHz),\n"
++                "rounds off peaks, and eases down loud passages without moving stereo panning.\n"
+                 "Off gives the original mix unchanged.");
+         }
++        bool audio_crossfeed = g_audio_crossfeed_enabled.load(std::memory_order_relaxed);
++        if (ImGui::Checkbox("Stereo Crossfeed (Headphones)", &audio_crossfeed)) {
++            g_audio_crossfeed_enabled.store(audio_crossfeed, std::memory_order_relaxed);
++            save_runtime_preferences();
++        }
++        if (ImGui::IsItemHovered()) {
++            ImGui::SetTooltip(
++                "Gently blends hard-panned left and right channels (16%%) for natural\n"
++                "headphone listening without collapsing the stereo image.");
++        }
+         if (ImGui::Button("Refresh Devices")) {
+             refresh_audio_output_devices();
+         }
+@@ -4720,6 +4740,7 @@ static void reset_audio_output_buffer(bool preserve_stats) {
+  */
+ 
+ #define AUDIO_MASTER_DC_R 0.9995f
++#define AUDIO_MASTER_WARMTH_HZ 12000.0f
+ #define AUDIO_MASTER_THRESHOLD 0.25f   /* about -12 dBFS, in normalised units */
+ #define AUDIO_MASTER_KNEE 0.70f        /* below this the soft clip is the identity */
+ #define AUDIO_MASTER_CEILING 0.97f      /* about -0.26 dBFS: peaks round off, never pin */
+@@ -4735,11 +4756,13 @@ typedef struct AudioMasterState {
+     float dc_in_right;
+     float dc_out_left;
+     float dc_out_right;
++    float lp_left;
++    float lp_right;
+     float envelope;
+     float gain;
+ } AudioMasterState;
+ 
+-static AudioMasterState g_audio_master = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
++static AudioMasterState g_audio_master = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+ 
+ /* Reset so toggling the chain mid-song cannot click: the DC blocker's history
+  * and the compressor's gain are both states that only make sense for the signal
+@@ -4749,6 +4772,8 @@ static void audio_master_reset(void) {
+     g_audio_master.dc_in_right = 0.0f;
+     g_audio_master.dc_out_left = 0.0f;
+     g_audio_master.dc_out_right = 0.0f;
++    g_audio_master.lp_left = 0.0f;
++    g_audio_master.lp_right = 0.0f;
+     g_audio_master.envelope = 0.0f;
+     g_audio_master.gain = 1.0f;
+ }
+@@ -4803,8 +4828,28 @@ static inline int16_t audio_master_soft_clip(float x) {
+  * Nothing crashed and it was not obviously wrong on a colourful screen - the
+  * same failure this file already documents for RGB555 being fed to an ARGB
+  * buffer. */
++static float compute_warmth_lp_alpha(float sample_rate) {
++    const float alpha =
++        1.0f - expf(-2.0f * 3.14159265f * AUDIO_MASTER_WARMTH_HZ / sample_rate);
++    return clampf(alpha, 0.10f, 1.0f);
++}
++
++static void audio_apply_crossfeed_block(int16_t* out, uint32_t frames) {
++    for (uint32_t i = 0; i < frames; ++i) {
++        const float left = (float)out[i * 2];
++        const float right = (float)out[i * 2 + 1];
++        const float cross_l = left * 0.84f + right * 0.16f;
++        const float cross_r = right * 0.84f + left * 0.16f;
++        const int32_t il = (int32_t)(cross_l + (cross_l >= 0.0f ? 0.5f : -0.5f));
++        const int32_t ir = (int32_t)(cross_r + (cross_r >= 0.0f ? 0.5f : -0.5f));
++        out[i * 2] = (int16_t)(il > 32767 ? 32767 : (il < -32768 ? -32768 : il));
++        out[i * 2 + 1] = (int16_t)(ir > 32767 ? 32767 : (ir < -32768 ? -32768 : ir));
++    }
++}
++
+ static void audio_master_process(int16_t* out, uint32_t frames,
+-                                 float volume_scale, float attack, float release) {
++                                 float volume_scale, float attack, float release,
++                                 float lp_alpha) {
+     const float to_unit = volume_scale / 32768.0f;
+     for (uint32_t i = 0; i < frames; ++i) {
+         float left = (float)out[i * 2] * to_unit;
+@@ -4822,10 +4867,17 @@ static void audio_master_process(int16_t* out, uint32_t frames,
+         left = left_dc;
+         right = right_dc;
+ 
+-        /* 2. Linked compressor: one envelope on the louder channel, one gain
+-         * for both, so the hardware's channel panning survives. */
+-        const float louder = (left > right ? left : right);
+-        const float level = louder < 0.0f ? -louder : louder;
++        /* 2. Gentle ~12 kHz analog low-pass warmth (identical slope per channel). */
++        g_audio_master.lp_left += (left - g_audio_master.lp_left) * lp_alpha;
++        g_audio_master.lp_right += (right - g_audio_master.lp_right) * lp_alpha;
++        left = g_audio_master.lp_left;
++        right = g_audio_master.lp_right;
++
++        /* 3. Linked compressor: envelope tracks max(|left|, |right|) so negative
++         * peaks are compressed identically to positive peaks while preserving panning. */
++        const float abs_l = left < 0.0f ? -left : left;
++        const float abs_r = right < 0.0f ? -right : right;
++        const float level = (abs_l > abs_r) ? abs_l : abs_r;
+         const float smoothing = level > g_audio_master.envelope ? attack : release;
+         g_audio_master.envelope += (level - g_audio_master.envelope) * smoothing;
+         if (g_audio_master.envelope > AUDIO_MASTER_THRESHOLD) {
+@@ -4837,7 +4889,7 @@ static void audio_master_process(int16_t* out, uint32_t frames,
+         left *= g_audio_master.gain;
+         right *= g_audio_master.gain;
+ 
+-        /* 3. Soft clip. */
++        /* 4. Soft clip. */
+         out[i * 2] = audio_master_soft_clip(left);
+         out[i * 2 + 1] = audio_master_soft_clip(right);
+     }
+@@ -4859,6 +4911,7 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     uint32_t copied = 0;
+ 
+     const bool mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
++    const bool crossfeed = g_audio_crossfeed_enabled.load(std::memory_order_relaxed);
+     if (mastering) {
+         /* One reset per callback when the chain was off, so switching it on
+          * starts from a clean state instead of from whatever the filters were
+@@ -4876,6 +4929,7 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+                                                                  : AUDIO_SAMPLE_RATE);
+     const float attack = 1.0f - expf(-1000.0f / (AUDIO_MASTER_ATTACK_MS * sample_rate));
+     const float release = 1.0f - expf(-1000.0f / (AUDIO_MASTER_RELEASE_MS * sample_rate));
++    const float lp_alpha = compute_warmth_lp_alpha(sample_rate);
+     const float volume_scale = (float)volume_percent / 100.0f;
+ 
+     while (copied < samples_to_copy) {
+@@ -4888,7 +4942,7 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+             if (mastering) {
+                 audio_master_reset();
+             }
+-        } else if (!mastering && volume_percent == 100) {
++        } else if (!mastering && !crossfeed && volume_percent == 100) {
+             memcpy(out + copied * 2,
+                    g_audio_ring + read_pos * 2,
+                    (size_t)contiguous * 2u * sizeof(int16_t));
+@@ -4911,7 +4965,11 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+                 }
+             }
+             if (mastering) {
+-                audio_master_process(out + copied * 2, contiguous, volume_scale, attack, release);
++                audio_master_process(out + copied * 2, contiguous, volume_scale,
++                                     attack, release, lp_alpha);
++            }
++            if (crossfeed) {
++                audio_apply_crossfeed_block(out + copied * 2, contiguous);
+             }
+         }
+ 
+@@ -4996,7 +5054,8 @@ void gb_platform_test_audio_master_block(int16_t* frames, uint32_t frame_count,
+                                                                  : AUDIO_SAMPLE_RATE);
+     const float attack = 1.0f - expf(-1000.0f / (AUDIO_MASTER_ATTACK_MS * sample_rate));
+     const float release = 1.0f - expf(-1000.0f / (AUDIO_MASTER_RELEASE_MS * sample_rate));
+-    audio_master_process(frames, frame_count, volume_scale, attack, release);
++    const float lp_alpha = compute_warmth_lp_alpha(sample_rate);
++    audio_master_process(frames, frame_count, volume_scale, attack, release, lp_alpha);
+ }
+ 
+ bool gb_platform_test_audio_concurrency(uint32_t frames,
+@@ -5766,6 +5825,14 @@ bool gb_platform_get_audio_mastering(void) {
+     return g_audio_mastering_enabled.load(std::memory_order_relaxed);
+ }
+ 
++void gb_platform_set_audio_crossfeed_default(bool enabled) {
++    g_audio_crossfeed_default = enabled;
++}
++
++bool gb_platform_get_audio_crossfeed(void) {
++    return g_audio_crossfeed_enabled.load(std::memory_order_relaxed);
++}
++
+ void gb_platform_set_preference_scope(const char* scope) {
+     g_preference_scope = (scope && scope[0]) ? scope : "";
+ }
+@@ -6267,6 +6334,14 @@ void gb_platform_set_title(const char* title) {
+     (void)title;
+ }
+ 
++void gb_platform_set_audio_crossfeed_default(bool enabled) {
++    (void)enabled;
++}
++
++bool gb_platform_get_audio_crossfeed(void) {
++    return false;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+diff --git a/tests/test_audio_chunk_invariance.c b/tests/test_audio_chunk_invariance.c
+index c442f9d..142b29b 100644
+--- a/tests/test_audio_chunk_invariance.c
++++ b/tests/test_audio_chunk_invariance.c
+@@ -10,9 +10,9 @@
+ #define TEST_CYCLES 32768u
+ #define EXPECTED_SAMPLE_COUNT 344u
+ #define EXPECTED_DOUBLE_SPEED_SAMPLE_COUNT 172u
+-#define EXPECTED_DIRECT_PCM_HASH UINT64_C(0x7AC4A860E16D9C99)
+-#define EXPECTED_RUNTIME_PCM_HASH UINT64_C(0xC49D47F4A3C907CD)
+-#define EXPECTED_DOUBLE_SPEED_PCM_HASH UINT64_C(0x3B8DE42C9BFDB4E1)
++#define EXPECTED_DIRECT_PCM_HASH UINT64_C(0xC4031A67F7B31DC9)
++#define EXPECTED_RUNTIME_PCM_HASH UINT64_C(0x7CC69956CBE4BDC1)
++#define EXPECTED_DOUBLE_SPEED_PCM_HASH UINT64_C(0xC7228DB74AAD07F5)
+ 
+ typedef struct AudioCapture {
+     uint64_t hash;
+diff --git a/tests/test_audio_mastering.cpp b/tests/test_audio_mastering.cpp
+index 727d938..6bc0f4d 100644
+--- a/tests/test_audio_mastering.cpp
++++ b/tests/test_audio_mastering.cpp
+@@ -221,6 +221,32 @@ void the_chain_is_deterministic() {
+     check(peak(long_run) <= 32767, "a long constant input does not make the filter diverge");
+ }
+ 
++void negative_peak_on_louder_channel_is_compressed() {
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> neg(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        neg[i * 2] = -28000;
++        neg[i * 2 + 1] = 1000;
++    }
++    gb_platform_test_audio_master_block(neg.data(), kBlock, 1.0f);
++    const int32_t neg_tail = neg[(kBlock - 1) * 2] < 0 ? -(int32_t)neg[(kBlock - 1) * 2]
++                                                        : (int32_t)neg[(kBlock - 1) * 2];
++
++    gb_platform_test_audio_master_reset();
++    std::vector<int16_t> pos(kBlock * 2);
++    for (uint32_t i = 0; i < kBlock; ++i) {
++        pos[i * 2] = 28000;
++        pos[i * 2 + 1] = -1000;
++    }
++    gb_platform_test_audio_master_block(pos.data(), kBlock, 1.0f);
++    const int32_t pos_tail = pos[(kBlock - 1) * 2] < 0 ? -(int32_t)pos[(kBlock - 1) * 2]
++                                                        : (int32_t)pos[(kBlock - 1) * 2];
++
++    check(neg_tail < 20000, "negative peak on louder left channel is compressed");
++    check_near((double)neg_tail, (double)pos_tail, 4.0,
++               "compressor tracks negative and positive peaks symmetrically");
++}
++
+ }  // namespace
+ 
+ int main() {
+@@ -230,6 +256,7 @@ int main() {
+     loud_material_is_eased_down();
+     channel_panning_survives();
+     the_chain_is_deterministic();
++    negative_peak_on_louder_channel_is_compressed();
+ 
+     if (failures == 0) {
+         std::printf("audio mastering: every claim holds\n");
+-- 
+2.56.0
+
+
+From 410f9d80bf11a70f80022555b2979a8f201bef4f Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Mon, 23 Nov 2026 10:58:20 -0300
+Subject: [PATCH 36/36] feat(platform,audio): add savestate thumbnails, V-Sync
+ audio DRC, and controller rumble API
+
+---
+ runtime/include/audio.h        |  16 +
+ runtime/include/platform_sdl.h |  69 +++
+ runtime/src/audio.c            |  23 +
+ runtime/src/platform_sdl.cpp   | 955 ++++++++++++++++++++++++++++-----
+ tests/CMakeLists.txt           |   4 +
+ tests/test_qol_features.cpp    | 219 ++++++++
+ 6 files changed, 1153 insertions(+), 133 deletions(-)
+ create mode 100644 tests/test_qol_features.cpp
+
+diff --git a/runtime/include/audio.h b/runtime/include/audio.h
+index 876221d..6479acc 100644
+--- a/runtime/include/audio.h
++++ b/runtime/include/audio.h
+@@ -117,6 +117,22 @@ bool gb_audio_save_state(const void* apu, void* out_data, size_t size);
+  */
+ bool gb_audio_load_state(void* apu, const void* data, size_t size);
+ 
++/**
++ * @brief Snapshot of APU channel 4 (noise) state used for haptic feedback.
++ */
++typedef struct GBAudioRumbleState {
++    bool ch4_enabled;
++    uint8_t ch4_volume;       /* 0..15 live envelope */
++    uint8_t ch4_clock_shift;  /* NR43 >> 4 (0..15; higher = deeper noise) */
++    bool ch4_width_7bit;      /* (NR43 & 0x08) != 0 */
++    uint32_t ch4_trigger_count;
++} GBAudioRumbleState;
++
++/**
++ * @brief Read current APU noise channel trigger metrics without mutating state.
++ */
++void gb_audio_get_rumble_state(const void* apu, GBAudioRumbleState* out);
++
+ /**
+  * @brief Enable/disable audio debug capture
+  * @param enabled If true, capture audio to debug_audio.raw
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index c0dc90b..e8e80cf 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -7,6 +7,7 @@
+ #define GB_PLATFORM_SDL_H
+ 
+ #include <stdbool.h>
++#include <stddef.h>
+ #include <stdint.h>
+ 
+ #ifdef __cplusplus
+@@ -263,6 +264,36 @@ void gb_platform_set_screen_effect_default(GBScreenEffect effect);
+  */
+ GBScreenEffect gb_platform_get_screen_effect(void);
+ 
++/**
++ * @brief Choose the default V-Sync preference used when preferences are loaded.
++ */
++void gb_platform_set_vsync_default(bool enabled);
++
++/**
++ * @brief Whether V-Sync is currently enabled.
++ */
++bool gb_platform_get_vsync(void);
++
++/**
++ * @brief Choose the default controller rumble state when preferences are loaded.
++ */
++void gb_platform_set_rumble_default(bool enabled);
++
++/**
++ * @brief Whether controller rumble is currently enabled.
++ */
++bool gb_platform_get_rumble(void);
++
++/**
++ * @brief Current controller rumble strength percentage (0..100).
++ */
++int gb_platform_get_rumble_strength(void);
++
++/**
++ * @brief Trigger low/high frequency controller rumble scaled by user strength.
++ */
++void gb_platform_rumble(uint16_t low_freq, uint16_t high_freq, uint32_t duration_ms);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+@@ -307,6 +338,44 @@ void gb_platform_test_audio_master_reset(void);
+  */
+ void gb_platform_test_audio_master_block(int16_t* frames, uint32_t frame_count,
+                                          float volume_scale);
++
++/**
++ * @brief Write an RGB565 savestate thumbnail sidecar (<state_path>.thumb).
++ */
++bool gb_platform_test_write_savestate_thumbnail(const char* state_path,
++                                                const uint32_t* argb,
++                                                int width,
++                                                int height);
++
++/**
++ * @brief Read and validate an RGB565 savestate thumbnail sidecar.
++ */
++bool gb_platform_test_read_savestate_thumbnail(const char* state_path,
++                                               uint16_t* out_rgb565,
++                                               size_t max_pixels,
++                                               int* out_w,
++                                               int* out_h);
++
++/**
++ * @brief Compute DRC audio playback rate skew factor for current ring fill.
++ */
++float gb_platform_test_compute_drc_ratio(uint32_t available,
++                                         uint32_t target_fill,
++                                         float max_skew);
++
++/**
++ * @brief Linearly resample a block of interleaved stereo samples from ring buffer.
++ */
++uint32_t gb_platform_test_resample_stereo_block(const int16_t* ring,
++                                                uint32_t ring_size,
++                                                uint32_t read_pos,
++                                                uint32_t available,
++                                                double ratio,
++                                                double* phase,
++                                                int16_t* out,
++                                                uint32_t out_frames,
++                                                float volume_scale,
++                                                uint32_t* out_consumed);
+ #endif
+ 
+ #ifdef __cplusplus
+diff --git a/runtime/src/audio.c b/runtime/src/audio.c
+index f1d8566..178191e 100644
+--- a/runtime/src/audio.c
++++ b/runtime/src/audio.c
+@@ -227,6 +227,7 @@ typedef struct GBAudioRuntime {
+     int64_t mix_acc_l;
+     int64_t mix_acc_r;
+     uint32_t mix_acc_cycles;
++    uint32_t ch4_trigger_count;
+ } GBAudioRuntime;
+ 
+ /* ============================================================================
+@@ -459,6 +460,7 @@ void gb_audio_reset(void* apu_ptr) {
+     audio_debug_capture_reset();
+     memset(apu, 0, sizeof(GBAudio));
+     audio_reset_timing_state(apu);
++    ((GBAudioRuntime*)apu)->ch4_trigger_count = 0;
+     apu->sample_period = 95;
+     
+     /* Initial Register Values (Standard DMG) */
+@@ -542,9 +544,27 @@ bool gb_audio_load_state(void* apu, const void* data, size_t size) {
+     rt->mix_acc_l = 0;
+     rt->mix_acc_r = 0;
+     rt->mix_acc_cycles = 0;
++    rt->ch4_trigger_count = 0;
+     return true;
+ }
+ 
++void gb_audio_get_rumble_state(const void* apu_ptr, GBAudioRumbleState* out) {
++    if (!out) {
++        return;
++    }
++    memset(out, 0, sizeof(*out));
++    if (!apu_ptr) {
++        return;
++    }
++    const GBAudio* apu = (const GBAudio*)apu_ptr;
++    const GBAudioRuntime* rt = (const GBAudioRuntime*)apu_ptr;
++    out->ch4_enabled = apu->ch4.enabled;
++    out->ch4_volume = (uint8_t)(apu->ch4.volume & 0x0F);
++    out->ch4_clock_shift = (uint8_t)(apu->ch4.nr43 >> 4);
++    out->ch4_width_7bit = (apu->ch4.nr43 & 0x08u) != 0;
++    out->ch4_trigger_count = rt->ch4_trigger_count;
++}
++
+ uint8_t gb_audio_read(GBContext* ctx, uint16_t addr) {
+     GBAudio* apu = (GBAudio*)ctx->apu;
+     if (!apu) return 0xFF;
+@@ -772,6 +792,9 @@ void gb_audio_write(GBContext* ctx, uint16_t addr, uint8_t value) {
+                 
+                 /* LFSR Reload */
+                 apu->ch4.lfsr = 0x7FFF;
++                if (apu->ch4.enabled) {
++                    ((GBAudioRuntime*)apu)->ch4_trigger_count++;
++                }
+                 audio_debug_dump_state(ctx, apu, "trigger-ch4");
+             }
+             break;
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 6804222..dd7dfba 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -22,6 +22,8 @@
+ // reached GCC 11 through the MinGW headers only because this was missing and
+ // GCC 14 happened to pull it in here.
+ #include <math.h>
++#include <chrono>
++#include <ctime>
+ #include <filesystem>
+ #include <map>
+ #include <string>
+@@ -95,7 +97,15 @@ static SDL_Rect g_game_viewport = {0, 0, GB_SCREEN_WIDTH * 5, GB_SCREEN_HEIGHT *
+ static uint32_t g_last_frame_time = 0;
+ static SDL_AudioDeviceID g_audio_device = 0;
+ static SDL_GameController* g_controller = NULL;
+-static bool g_vsync = false;  /* VSync OFF - we pace with wall clock for 59.7 FPS */
++static bool g_vsync = false;
++static bool g_vsync_default = false;
++static int g_display_refresh_hz = 0;
++static bool g_vsync_pacing_fallback = false;
++static uint32_t g_vsync_fast_frame_streak = 0;
++static uint64_t g_vsync_prev_exit_ticks = 0;
++static bool g_vsync_swap_suppressed = false;
++static std::atomic<bool> g_audio_drc_active{false};
++static double g_drc_phase = 0.0;
+ static bool g_audio_started = false;
+ static bool g_audio_first_present_pending = true;
+ static uint32_t g_audio_start_threshold = 0;
+@@ -234,6 +244,9 @@ static uint32_t g_lcd_response_last_ms = 0;
+ static SDL_GameControllerType g_controller_type = SDL_CONTROLLER_TYPE_UNKNOWN;
+ static GBControllerLabelProfile g_controller_label_profile = GB_CONTROLLER_LABEL_GENERIC;
+ static std::string g_controller_name;
++static bool g_rumble_default = false;
++static bool g_rumble_enabled = false;
++static int g_rumble_strength = 100;
+ static bool g_audio_output_enabled = true;
+ static std::atomic<bool> g_audio_muted{false};
+ static uint32_t g_audio_latency_ms = 80;
+@@ -264,6 +277,15 @@ static constexpr int GB_FAST_FORWARD_SPEED_PERCENT = 250;
+ static constexpr int GB_MAX_SHORTCUT_SPEED_PERCENT = 500;
+ static int g_savestate_slot = 0;
+ static std::string g_savestate_status;
++#define GB_SAVESTATE_THUMB_MAGIC 0x48544247u /* "GBTH" */
++#define GB_SAVESTATE_THUMB_FORMAT_RGB565 1u
++static SDL_Texture* g_savestate_thumb_texture = NULL;
++static int g_savestate_thumb_slot = -1;
++static int g_savestate_thumb_w = 0;
++static int g_savestate_thumb_h = 0;
++static bool g_savestate_thumb_has_image = false;
++static bool g_savestate_thumb_dirty = true;
++static std::string g_savestate_thumb_path;
+ static const char* g_render_scaling_mode_names[] = {
+     "Pixel Perfect",
+     "Aspect Fit",
+@@ -376,6 +398,21 @@ static bool delete_savestate_slot(GBContext* ctx, int slot);
+ static bool savestate_slot_exists(const GBContext* ctx, int slot, std::string* out_path);
+ static float settings_ui_scale_for_size(const ImVec2& display_size);
+ static const char* controller_menu_hint_text(void);
++static void stop_controller_rumble(void);
++static void destroy_savestate_thumb_texture(void);
++static void refresh_savestate_thumb_preview(const std::string& state_path, int slot);
++static bool write_savestate_thumbnail(const char* state_path,
++                                      const uint32_t* argb,
++                                      int width,
++                                      int height);
++static bool read_savestate_thumbnail(const char* state_path,
++                                     std::vector<uint16_t>* out_pixels,
++                                     int* out_w,
++                                     int* out_h);
++static bool format_file_timestamp(const char* path, char* out, size_t out_size);
++static void refresh_display_refresh_hz(void);
++static void apply_vsync_mode(bool enabled);
++static void set_menu_open(bool open);
+ static bool input_action_is_runtime(GBInputAction action);
+ static int effective_speed_percent(void);
+ static void update_runtime_action_state(GBContext* ctx);
+@@ -797,6 +834,7 @@ static void commit_binding_capture(const GBInputBinding& binding) {
+ }
+ 
+ static void clear_controller_state(void) {
++    stop_controller_rumble();
+     if (g_controller) {
+         SDL_GameControllerClose(g_controller);
+         g_controller = NULL;
+@@ -1130,6 +1168,7 @@ static const char* const kIdentityPrefKeys[] = {
+     "screen.effect_intensity",
+     "screen.lcd_response_enabled",
+     "screen.lcd_response_ms",
++    "video.vsync",
+ };
+ 
+ /* The identity a key belongs to, or NULL when the key is not an identity key.
+@@ -1210,6 +1249,10 @@ static void apply_identity_preference(const char* identity, const char* value) {
+         }
+         return;
+     }
++    if (strcmp(identity, "video.vsync") == 0) {
++        g_vsync = (strcmp(value, "0") != 0);
++        return;
++    }
+ }
+ 
+ static void load_runtime_preferences(void) {
+@@ -1222,6 +1265,9 @@ static void load_runtime_preferences(void) {
+      * replaces them; a missing one leaves them. */
+     g_screen_effect = g_screen_effect_default;
+     g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
++    g_vsync = g_vsync_default;
++    g_rumble_enabled = g_rumble_default;
++    g_rumble_strength = 100;
+     bool saw_controller_port_ui_binding = false;
+ 
+     const std::string path = runtime_preferences_path();
+@@ -1296,6 +1342,17 @@ static void load_runtime_preferences(void) {
+                     }
+                     continue;
+                 }
++                if (strcmp(key, "controls.rumble") == 0) {
++                    g_rumble_enabled = (strcmp(value, "0") != 0);
++                    continue;
++                }
++                if (strcmp(key, "controls.rumble_strength") == 0) {
++                    long parsed = strtol(value, NULL, 10);
++                    if (parsed < 0) parsed = 0;
++                    if (parsed > 100) parsed = 100;
++                    g_rumble_strength = (int)parsed;
++                    continue;
++                }
+ 
+                 bool is_keyboard = strncmp(key, "keyboard.", 9) == 0;
+                 bool is_controller = strncmp(key, "controller.", 11) == 0;
+@@ -1450,6 +1507,9 @@ static void save_runtime_preferences(void) {
+             g_lcd_response_enabled ? 1 : 0);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_ms").c_str(),
+             g_lcd_response_ms);
++    fprintf(file, "%s=%d\n", scoped_pref_key("video.vsync").c_str(), g_vsync ? 1 : 0);
++    fprintf(file, "controls.rumble=%d\n", g_rumble_enabled ? 1 : 0);
++    fprintf(file, "controls.rumble_strength=%d\n", g_rumble_strength);
+ 
+     for (int action = 0; action < GB_INPUT_ACTION_COUNT; action++) {
+         for (int slot = 0; slot < 2; slot++) {
+@@ -1616,7 +1676,7 @@ static void update_runtime_action_state(GBContext* ctx) {
+                     break;
+ 
+                 case GB_INPUT_ACTION_TOGGLE_MENU:
+-                    g_show_menu = !g_show_menu;
++                    set_menu_open(!g_show_menu);
+                     break;
+ 
+                 case GB_INPUT_ACTION_TOGGLE_PORT_UI:
+@@ -2269,12 +2329,19 @@ static void set_app_suspended(bool suspended) {
+     }
+ 
+     g_app_suspended = suspended;
++    if (suspended) {
++        stop_controller_rumble();
++        destroy_savestate_thumb_texture();
++    }
+     refresh_audio_device_pause_state();
+ 
+     if (!suspended) {
+         g_last_frame_time = SDL_GetTicks();
++        g_vsync_prev_exit_ticks = 0;
++        g_vsync_fast_frame_streak = 0;
+         if (g_window) {
+             update_game_viewport();
++            refresh_display_refresh_hz();
+         }
+         g_renderer_reset_pending = true;
+     }
+@@ -2285,16 +2352,12 @@ static void reset_runtime_display_defaults(void) {
+     g_speed_percent = 100;
+     g_palette_idx = 0;
+     g_smooth_lcd_transitions = true;
+-    g_vsync = false;
+     g_show_overlay = false;
+     g_max_speed_mode = false;
+     g_render_scaling_mode = GB_RENDER_SCALING_PIXEL_PERFECT;
+     g_render_filter_mode = GB_RENDER_FILTER_NEAREST;
+     update_render_filter();
+-
+-    if (g_renderer) {
+-        SDL_RenderSetVSync(g_renderer, 0);
+-    }
++    apply_vsync_mode(g_vsync_default);
+ 
+     const bool want_fullscreen = platform_default_fullscreen();
+     if (g_window) {
+@@ -2322,6 +2385,9 @@ static void reset_runtime_audio_defaults(void) {
+ 
+ static void reset_runtime_control_defaults(void) {
+     set_default_input_bindings();
++    g_rumble_enabled = g_rumble_default;
++    g_rumble_strength = 100;
++    stop_controller_rumble();
+     update_effective_joypad_state();
+     save_runtime_preferences();
+ }
+@@ -3949,8 +4015,25 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         }
+ 
+         menu_section_header("Runtime");
+-        if (ImGui::Checkbox("V-Sync", &g_vsync)) {
+-            SDL_RenderSetVSync(g_renderer, g_vsync ? 1 : 0);
++        if (ImGui::Checkbox("V-Sync (Smooth Scroll)", &g_vsync)) {
++            apply_vsync_mode(g_vsync);
++            show_toast("V-SYNC", g_vsync ? "ON" : "OFF");
++            save_runtime_preferences();
++        }
++        {
++            const char* sync_label = "59.7 Hz Wall-Clock";
++            if (g_vsync && !g_vsync_pacing_fallback) {
++                if (g_display_refresh_hz >= 59 && g_display_refresh_hz <= 60) {
++                    sync_label = "60 Hz V-Sync + Audio DRC";
++                } else if (g_display_refresh_hz >= 119 && g_display_refresh_hz <= 121) {
++                    sync_label = "120 Hz (2-VBlank) + Audio DRC";
++                } else if (g_display_refresh_hz > 0) {
++                    sync_label = "59.7 Hz Wall-Clock (VRR/High-Hz)";
++                }
++            } else if (g_vsync && g_vsync_pacing_fallback) {
++                sync_label = "59.7 Hz Fallback (Driver V-Sync Uncapped)";
++            }
++            ImGui::TextDisabled("Active Sync: %s", sync_label);
+         }
+ 
+         ImGui::Checkbox("Show Overlay", &g_show_overlay);
+@@ -4084,6 +4167,7 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         int savestate_slot = g_savestate_slot + 1;
+         if (ImGui::SliderInt("Active Slot", &savestate_slot, 1, GB_SAVESTATE_SLOT_COUNT)) {
+             g_savestate_slot = savestate_slot - 1;
++            g_savestate_thumb_dirty = true;
+             save_runtime_preferences();
+         }
+         if (ImGui::Button("Save State (F5)")) {
+@@ -4100,8 +4184,34 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         {
+             std::string savestate_path;
+             const bool slot_exists = savestate_slot_exists(g_registered_ctx, g_savestate_slot, &savestate_path);
++            refresh_savestate_thumb_preview(savestate_path, g_savestate_slot);
+             ImGui::Text("Slot File: %s", savestate_path.empty() ? "(unavailable)" : savestate_path.c_str());
+-            ImGui::Text("Slot Status: %s", slot_exists ? "Present" : "Empty");
++            if (slot_exists) {
++                char saved_at[64];
++                if (format_file_timestamp(savestate_path.c_str(), saved_at, sizeof(saved_at))) {
++                    ImGui::Text("Slot Status: Present (%s)", saved_at);
++                } else {
++                    ImGui::Text("Slot Status: Present");
++                }
++                if (g_savestate_thumb_has_image && g_savestate_thumb_texture &&
++                    g_savestate_thumb_w > 0 && g_savestate_thumb_h > 0) {
++                    const float max_preview_w = 256.0f * ui_scale;
++                    const float aspect = (float)g_savestate_thumb_h / (float)g_savestate_thumb_w;
++                    const float draw_w = max_preview_w;
++                    const float draw_h = max_preview_w * aspect;
++                    ImGui::Spacing();
++                    ImGui::Image((ImTextureID)(intptr_t)g_savestate_thumb_texture,
++                                 ImVec2(draw_w, draw_h),
++                                 ImVec2(0.0f, 0.0f),
++                                 ImVec2(1.0f, 1.0f),
++                                 ImVec4(1.0f, 1.0f, 1.0f, 1.0f),
++                                 ImVec4(0.26f, 0.34f, 0.27f, 1.0f));
++                } else {
++                    ImGui::TextDisabled("No thumbnail saved for this slot yet.");
++                }
++            } else {
++                ImGui::Text("Slot Status: Empty");
++            }
+         }
+         if (!g_savestate_status.empty()) {
+             ImGui::TextWrapped("%s", g_savestate_status.c_str());
+@@ -4111,6 +4221,30 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         if (!g_controller_name.empty()) {
+             ImGui::Text("Detected Controller: %s", g_controller_name.c_str());
+             ImGui::TextDisabled("Profile: %s", controller_type_name(g_controller_type));
++            if (ImGui::Checkbox("Controller Rumble", &g_rumble_enabled)) {
++                if (!g_rumble_enabled) {
++                    stop_controller_rumble();
++                }
++                save_runtime_preferences();
++            }
++            if (g_rumble_enabled) {
++                if (ImGui::SliderInt("Rumble Strength (%)", &g_rumble_strength, 0, 100)) {
++                }
++                if (ImGui::IsItemDeactivatedAfterEdit()) {
++                    save_runtime_preferences();
++                }
++                ImGui::SameLine();
++                if (ImGui::Button("Test Rumble")) {
++#if SDL_VERSION_ATLEAST(2, 0, 9)
++                    if (g_controller && g_rumble_strength > 0) {
++                        const uint32_t scale = (uint32_t)g_rumble_strength;
++                        const uint16_t low_s = (uint16_t)((0xB000u * scale) / 100u);
++                        const uint16_t high_s = (uint16_t)((0xD000u * scale) / 100u);
++                        SDL_GameControllerRumble(g_controller, low_s, high_s, 180u);
++                    }
++#endif
++                }
++            }
+         } else {
+ #if defined(__ANDROID__)
+             ImGui::TextDisabled("No controller detected. Controller mappings will apply when one is connected.");
+@@ -4222,7 +4356,7 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+ 
+         ImGui::SameLine();
+         if (ImGui::Button("Resume", ImVec2(footer_button_width, 0.0f))) {
+-            g_show_menu = false;
++            set_menu_open(false);
+         }
+ 
+         if (g_launcher_return_enabled) {
+@@ -4390,6 +4524,7 @@ void gb_platform_shutdown(void) {
+     g_port_frame_valid = false;
+ 
+     clear_controller_state();
++    destroy_savestate_thumb_texture();
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
+     
+@@ -4655,6 +4790,7 @@ static void clear_audio_ring_buffer_locked(void) {
+     g_audio_read_pos.store(0, std::memory_order_relaxed);
+     g_audio_producer_write_pos = 0;
+     g_audio_pending_write_frames = 0;
++    g_drc_phase = 0.0;
+     memset(g_audio_ring, 0, sizeof(g_audio_ring));
+     g_audio_started = false;
+     update_audio_stats_from_ring();
+@@ -4895,6 +5031,79 @@ static void audio_master_process(int16_t* out, uint32_t frames,
+     }
+ }
+ 
++/* Dynamic Rate Control helpers for lock-step V-Sync without audio drift. */
++static float compute_drc_ratio(uint32_t available, uint32_t target_fill, float max_skew) {
++    if (target_fill == 0 || max_skew <= 0.0f) {
++        return 1.0f;
++    }
++    const float error = ((float)available - (float)target_fill) / (float)target_fill;
++    float skew = error * max_skew;
++    if (skew > max_skew) skew = max_skew;
++    if (skew < -max_skew) skew = -max_skew;
++    return 1.0f + skew;
++}
++
++static uint32_t resample_stereo_block(const int16_t* ring,
++                                      uint32_t ring_size,
++                                      uint32_t read_pos,
++                                      uint32_t available,
++                                      double ratio,
++                                      double* phase,
++                                      int16_t* out,
++                                      uint32_t out_frames,
++                                      float volume_scale,
++                                      uint32_t* out_consumed) {
++    if (out_consumed) {
++        *out_consumed = 0;
++    }
++    if (!ring || ring_size == 0 || available == 0 || !phase || !out || out_frames == 0 ||
++        ratio <= 0.0) {
++        return 0;
++    }
++    double pos = *phase;
++    if (pos < 0.0) {
++        pos = 0.0;
++    }
++    uint32_t produced = 0;
++    while (produced < out_frames) {
++        const uint32_t idx0 = (uint32_t)pos;
++        if (idx0 >= available) {
++            break;
++        }
++        const uint32_t idx1 = (idx0 + 1u < available) ? (idx0 + 1u) : idx0;
++        const float frac = (float)(pos - (double)idx0);
++        const uint32_t r0 = (read_pos + idx0) % ring_size;
++        const uint32_t r1 = (read_pos + idx1) % ring_size;
++        const float l0 = (float)ring[r0 * 2u];
++        const float r_0 = (float)ring[r0 * 2u + 1u];
++        const float l1 = (float)ring[r1 * 2u];
++        const float r_1 = (float)ring[r1 * 2u + 1u];
++        const float l_interp = (l0 + (l1 - l0) * frac) * volume_scale;
++        const float r_interp = (r_0 + (r_1 - r_0) * frac) * volume_scale;
++        long li = lrintf(l_interp);
++        long ri = lrintf(r_interp);
++        if (li < -32768) li = -32768;
++        if (li > 32767) li = 32767;
++        if (ri < -32768) ri = -32768;
++        if (ri > 32767) ri = 32767;
++        out[produced * 2u] = (int16_t)li;
++        out[produced * 2u + 1u] = (int16_t)ri;
++        produced++;
++        pos += ratio;
++    }
++    uint32_t consumed = (uint32_t)pos;
++    if (consumed >= available) {
++        consumed = available;
++        *phase = 0.0;
++    } else {
++        *phase = pos - (double)consumed;
++    }
++    if (out_consumed) {
++        *out_consumed = consumed;
++    }
++    return produced;
++}
++
+ /* SDL callback - pulls samples from ring buffer */
+ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     (void)userdata;
+@@ -4932,49 +5141,101 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     const float lp_alpha = compute_warmth_lp_alpha(sample_rate);
+     const float volume_scale = (float)volume_percent / 100.0f;
+ 
+-    while (copied < samples_to_copy) {
+-        uint32_t contiguous = AUDIO_RING_SIZE - read_pos;
+-        const uint32_t remaining = samples_to_copy - copied;
+-        if (contiguous > remaining) contiguous = remaining;
+-
++    const bool drc = g_audio_drc_active.load(std::memory_order_relaxed);
++    if (drc && available >= 2u && samples_needed > 0u) {
++        const uint32_t dev_floor =
++            (g_audio_device_buffer_samples > 0u) ? (g_audio_device_buffer_samples * 2u) : 1024u;
++        uint32_t target_fill = g_audio_low_watermark * 2u;
++        if (target_fill < dev_floor) {
++            target_fill = dev_floor;
++        }
++        if (target_fill > AUDIO_RING_SIZE / 2u) {
++            target_fill = AUDIO_RING_SIZE / 2u;
++        }
++        const float ratio = compute_drc_ratio(available, target_fill, 0.015f);
+         if (muted || volume_percent == 0) {
+-            memset(out + copied * 2, 0, (size_t)contiguous * 2u * sizeof(int16_t));
++            const double pos = g_drc_phase + (double)samples_needed * (double)ratio;
++            uint32_t consumed = (uint32_t)pos;
++            if (consumed >= available) {
++                consumed = available;
++                g_drc_phase = 0.0;
++            } else {
++                g_drc_phase = pos - (double)consumed;
++            }
++            memset(out, 0, (size_t)samples_needed * 2u * sizeof(int16_t));
+             if (mastering) {
+                 audio_master_reset();
+             }
+-        } else if (!mastering && !crossfeed && volume_percent == 100) {
+-            memcpy(out + copied * 2,
+-                   g_audio_ring + read_pos * 2,
+-                   (size_t)contiguous * 2u * sizeof(int16_t));
++            read_pos = (read_pos + consumed) % AUDIO_RING_SIZE;
++            copied = samples_needed;
+         } else {
+-            for (uint32_t i = 0; i < contiguous; ++i) {
+-                int32_t left = g_audio_ring[(read_pos + i) * 2];
+-                int32_t right = g_audio_ring[(read_pos + i) * 2 + 1];
+-                if (!mastering) {
+-                    left = (left * (int32_t)volume_percent) / 100;
+-                    right = (right * (int32_t)volume_percent) / 100;
+-                    if (left < -32768) left = -32768;
+-                    if (left > 32767) left = 32767;
+-                    if (right < -32768) right = -32768;
+-                    if (right > 32767) right = 32767;
+-                    out[(copied + i) * 2] = (int16_t)left;
+-                    out[(copied + i) * 2 + 1] = (int16_t)right;
+-                } else {
+-                    out[(copied + i) * 2] = (int16_t)left;
+-                    out[(copied + i) * 2 + 1] = (int16_t)right;
++            uint32_t consumed = 0u;
++            const float pre_scale = mastering ? 1.0f : volume_scale;
++            copied = resample_stereo_block(g_audio_ring,
++                                           AUDIO_RING_SIZE,
++                                           read_pos,
++                                           available,
++                                           (double)ratio,
++                                           &g_drc_phase,
++                                           out,
++                                           samples_needed,
++                                           pre_scale,
++                                           &consumed);
++            if (copied > 0u) {
++                if (mastering) {
++                    audio_master_process(out, copied, volume_scale, attack, release, lp_alpha);
++                }
++                if (crossfeed) {
++                    audio_apply_crossfeed_block(out, copied);
+                 }
+             }
+-            if (mastering) {
+-                audio_master_process(out + copied * 2, contiguous, volume_scale,
+-                                     attack, release, lp_alpha);
+-            }
+-            if (crossfeed) {
+-                audio_apply_crossfeed_block(out + copied * 2, contiguous);
+-            }
++            read_pos = (read_pos + consumed) % AUDIO_RING_SIZE;
+         }
++    } else {
++        while (copied < samples_to_copy) {
++            uint32_t contiguous = AUDIO_RING_SIZE - read_pos;
++            const uint32_t remaining = samples_to_copy - copied;
++            if (contiguous > remaining) contiguous = remaining;
+ 
+-        copied += contiguous;
+-        read_pos = (read_pos + contiguous) % AUDIO_RING_SIZE;
++            if (muted || volume_percent == 0) {
++                memset(out + copied * 2, 0, (size_t)contiguous * 2u * sizeof(int16_t));
++                if (mastering) {
++                    audio_master_reset();
++                }
++            } else if (!mastering && !crossfeed && volume_percent == 100) {
++                memcpy(out + copied * 2,
++                       g_audio_ring + read_pos * 2,
++                       (size_t)contiguous * 2u * sizeof(int16_t));
++            } else {
++                for (uint32_t i = 0; i < contiguous; ++i) {
++                    int32_t left = g_audio_ring[(read_pos + i) * 2];
++                    int32_t right = g_audio_ring[(read_pos + i) * 2 + 1];
++                    if (!mastering) {
++                        left = (left * (int32_t)volume_percent) / 100;
++                        right = (right * (int32_t)volume_percent) / 100;
++                        if (left < -32768) left = -32768;
++                        if (left > 32767) left = 32767;
++                        if (right < -32768) right = -32768;
++                        if (right > 32767) right = 32767;
++                        out[(copied + i) * 2] = (int16_t)left;
++                        out[(copied + i) * 2 + 1] = (int16_t)right;
++                    } else {
++                        out[(copied + i) * 2] = (int16_t)left;
++                        out[(copied + i) * 2 + 1] = (int16_t)right;
++                    }
++                }
++                if (mastering) {
++                    audio_master_process(out + copied * 2, contiguous, volume_scale,
++                                         attack, release, lp_alpha);
++                }
++                if (crossfeed) {
++                    audio_apply_crossfeed_block(out + copied * 2, contiguous);
++                }
++            }
++
++            copied += contiguous;
++            read_pos = (read_pos + contiguous) % AUDIO_RING_SIZE;
++        }
+     }
+ 
+     const uint32_t underruns = samples_needed - copied;
+@@ -5058,6 +5319,56 @@ void gb_platform_test_audio_master_block(int16_t* frames, uint32_t frame_count,
+     audio_master_process(frames, frame_count, volume_scale, attack, release, lp_alpha);
+ }
+ 
++bool gb_platform_test_write_savestate_thumbnail(const char* state_path,
++                                                const uint32_t* argb,
++                                                int width,
++                                                int height) {
++    return write_savestate_thumbnail(state_path, argb, width, height);
++}
++
++bool gb_platform_test_read_savestate_thumbnail(const char* state_path,
++                                               uint16_t* out_rgb565,
++                                               size_t max_pixels,
++                                               int* out_w,
++                                               int* out_h) {
++    if (!out_rgb565 || !out_w || !out_h) {
++        return false;
++    }
++    std::vector<uint16_t> pixels;
++    int w = 0;
++    int h = 0;
++    if (!read_savestate_thumbnail(state_path, &pixels, &w, &h)) {
++        return false;
++    }
++    if (pixels.size() > max_pixels) {
++        return false;
++    }
++    memcpy(out_rgb565, pixels.data(), pixels.size() * sizeof(uint16_t));
++    *out_w = w;
++    *out_h = h;
++    return true;
++}
++
++float gb_platform_test_compute_drc_ratio(uint32_t available,
++                                         uint32_t target_fill,
++                                         float max_skew) {
++    return compute_drc_ratio(available, target_fill, max_skew);
++}
++
++uint32_t gb_platform_test_resample_stereo_block(const int16_t* ring,
++                                                uint32_t ring_size,
++                                                uint32_t read_pos,
++                                                uint32_t available,
++                                                double ratio,
++                                                double* phase,
++                                                int16_t* out,
++                                                uint32_t out_frames,
++                                                float volume_scale,
++                                                uint32_t* out_consumed) {
++    return resample_stereo_block(ring, ring_size, read_pos, available, ratio,
++                                 phase, out, out_frames, volume_scale, out_consumed);
++}
++
+ bool gb_platform_test_audio_concurrency(uint32_t frames,
+                                         GBAudioStressResult* out_result) {
+     if (!out_result || frames < AUDIO_WRITE_BATCH_FRAMES * 4u) return false;
+@@ -5259,7 +5570,17 @@ bool gb_platform_init(int scale) {
+         return false;
+     }
+     update_game_viewport();
+-    
++
++    g_savestate_thumb_dirty = true;
++    g_vsync_pacing_fallback = false;
++    g_vsync_fast_frame_streak = 0;
++    g_vsync_prev_exit_ticks = 0;
++    g_vsync_swap_suppressed = false;
++    g_audio_drc_active.store(false, std::memory_order_relaxed);
++    g_drc_phase = 0.0;
++    refresh_display_refresh_hz();
++    apply_vsync_mode(g_vsync);
++
+     g_last_frame_time = SDL_GetTicks();
+     
+     return true;
+@@ -5416,7 +5737,7 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+ 
+             if (event->cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
+                 if (pressed) {
+-                    g_show_menu = !g_show_menu;
++                    set_menu_open(!g_show_menu);
+                 }
+                 return true;
+             }
+@@ -5472,7 +5793,7 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                 case SDL_SCANCODE_ESCAPE:
+                 case SDL_SCANCODE_AC_BACK:
+                     if (pressed && event->key.repeat == 0) {
+-                        g_show_menu = !g_show_menu;
++                        set_menu_open(!g_show_menu);
+                     }
+                     return true;
+ 
+@@ -5514,6 +5835,15 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                     g_windowed_height = event->window.data2;
+                 }
+                 update_game_viewport();
++            } else if (event->window.event == SDL_WINDOWEVENT_MOVED
++#if SDL_VERSION_ATLEAST(2, 0, 18)
++                       || event->window.event == SDL_WINDOWEVENT_DISPLAY_CHANGED
++#endif
++            ) {
++                refresh_display_refresh_hz();
++                g_vsync_pacing_fallback = false;
++                g_vsync_fast_frame_streak = 0;
++                g_vsync_prev_exit_ticks = 0;
+             }
+             break;
+ 
+@@ -5685,115 +6015,137 @@ uint8_t gb_platform_get_joypad(void) {
+ 
+ void gb_platform_vsync(uint32_t frame_cycles) {
+     if (g_benchmark_mode || g_app_suspended) {
++        g_audio_drc_active.store(false, std::memory_order_relaxed);
+         g_last_timing.pacing_cycles = (frame_cycles > 0) ? frame_cycles : 70224u;
+         g_last_timing.pacing_ms = 0.0;
+         return;
+     }
+-    /* 
+-     * Frame pacing: Run at the DMG frame cadence derived from 70224 cycles
+-     * at 4194304 Hz, and ease off sleeping when audio fill is too low.
+-     *
+-     * Each call accounts for the frame that just completed. Keep an
+-     * accumulated wall-clock target and advance it before waiting so the
+-     * current frame's cycle count is what determines the current sleep.
++    /*
++     * Frame pacing:
++     *  - With V-Sync on a 60 Hz or 120 Hz monitor (at 100% speed), lock frame
++     *    presentation to VBlank / 2-VBlank boundaries and enable Audio DRC
++     *    so the 59.727 Hz -> 60.000 Hz (~+0.46%) mismatch produces zero judder
++     *    and zero audio underruns/overflows.
++     *  - Otherwise (V-Sync off, VRR/other refresh rates, fast-forward, or if a
++     *    driver fails to block on VBlank), fall back to precise wall-clock pacing.
+      */
+     static uint64_t next_frame_time = 0;
+     static uint64_t frame_remainder = 0;
+     const uint64_t gb_frame_cycles = (frame_cycles > 0) ? (uint64_t)frame_cycles : 70224ull;
+-    const uint64_t gb_cpu_hz = 4194304;
++    const uint64_t gb_cpu_hz = 4194304ull;
+     uint64_t freq = SDL_GetPerformanceFrequency();
+     uint64_t now = SDL_GetPerformanceCounter();
+     uint32_t speed_percent = (uint32_t)effective_speed_percent();
+-    uint64_t frame_ticks_num = (freq * gb_frame_cycles * 100ull) + frame_remainder;
+-    uint64_t frame_ticks_den = gb_cpu_hz * (uint64_t)speed_percent;
+-    uint64_t frame_ticks = frame_ticks_num / frame_ticks_den;
+     double pacing_start_ms = sdl_now_ms();
+ 
+-    if (frame_ticks == 0) {
+-        frame_ticks = 1;
++    /* Suspend V-Sync blocking during fast-forward (>100%) so shortcuts aren't
++     * capped at monitor refresh rate, and re-arm swap interval on return. */
++    if (g_renderer) {
++        const bool want_suppressed = g_vsync && speed_percent > 100u;
++        if (want_suppressed != g_vsync_swap_suppressed) {
++            g_vsync_swap_suppressed = want_suppressed;
++            SDL_RenderSetVSync(g_renderer, (g_vsync && !want_suppressed) ? 1 : 0);
++            g_vsync_prev_exit_ticks = 0;
++            g_vsync_fast_frame_streak = 0;
++        }
+     }
+ 
+-    if (next_frame_time == 0) {
+-        next_frame_time = now;
+-    }
++    const bool refresh_is_60 = (g_display_refresh_hz >= 59 && g_display_refresh_hz <= 60);
++    const bool refresh_is_120 = (g_display_refresh_hz >= 119 && g_display_refresh_hz <= 121);
++    const bool can_vsync_lock =
++        g_vsync && !g_vsync_swap_suppressed && speed_percent == 100u &&
++        !g_vsync_pacing_fallback && (refresh_is_60 || refresh_is_120);
+ 
+-    frame_remainder = frame_ticks_num % frame_ticks_den;
+-
+-    uint32_t audio_fill = audio_ring_fill_samples();
+-    bool audio_starved = audio_output_should_run() && g_audio_started &&
+-                         g_audio_low_watermark > 0u && audio_fill < g_audio_low_watermark;
+-
+-    /*
+-     * Ring-short case: shorten this frame's wait instead of dropping it.
+-     *
+-     * The old rule was "ring below the low watermark, do not sleep at all". It
+-     * is a bang-bang controller around a threshold, and it costs more cadence
+-     * than it buys audio: the free-running frame fills the ring, the next frame
+-     * sleeps the banked wait, the ring drains, and the cycle repeats. Measured
+-     * on a 7000-frame windowed run: the cadence climbed 0.870x to 0.986x while
+-     * the per-frame wait alternated between 0.001 ms and 32.3 ms and the ring
+-     * swung between 6.5 ms and 82 ms.
+-     *
+-     * The wait is instead scaled by how full the ring is relative to the
+-     * watermark. An empty ring means run free - the guest has produced and the
+-     * device has taken everything - and a ring at the watermark means a full
+-     * frame, which is the 60 fps the APU's rate is matched to. The equilibrium
+-     * becomes the watermark itself rather than the ring's ceiling.
+-     *
+-     * The schedule advances by the wait the frame actually served, so the
+-     * skipped portion is not banked. Banking is what turned the old valve into
+-     * the second half of the cycle: frames that served nothing left the target
+-     * ten milliseconds further ahead each frame, and the ring's recovery was
+-     * paid out as one 32 ms stall.
+-     *
+-     * The schedule is still never pulled forward, so a frame that overslept
+-     * keeps its debt and later frames repay it by serving a shorter wait. That
+-     * repayment is why the cadence reaches 1.0x at all.
+-     */
+-    uint64_t frame_wait_ticks = frame_ticks;
+-    if (audio_starved) {
+-        frame_wait_ticks = (frame_ticks * (uint64_t)audio_fill) / (uint64_t)g_audio_low_watermark;
+-    }
+-
+-    next_frame_time += frame_wait_ticks;
+-    uint64_t target_frame_time = next_frame_time;
+-
+-    if (now < target_frame_time) {
+-        for (;;) {
+-            uint64_t wait_ticks = target_frame_time - now;
+-            uint32_t wait_us = (uint32_t)((wait_ticks * 1000000) / freq);
+-
+-            /*
+-             * SDL_Delay() can oversleep by several milliseconds on desktop OSes.
+-             * Sleep in small chunks, then busy-wait the tail for stable pacing.
+-             */
+-            if (wait_us > 4000) {
+-                SDL_Delay((wait_us / 1000) - 2);
+-            } else if (wait_us > 1500) {
+-                SDL_Delay(1);
++    bool vsync_60_direct = false;
++    if (can_vsync_lock && refresh_is_60) {
++        if (g_vsync_prev_exit_ticks != 0) {
++            const double loop_ms =
++                ((double)(now - g_vsync_prev_exit_ticks) * 1000.0) / (double)freq;
++            if (loop_ms < 8.0) {
++                if (++g_vsync_fast_frame_streak >= 4u) {
++                    g_vsync_pacing_fallback = true;
++                }
+             } else {
+-                break;
+-            }
+-
+-            now = SDL_GetPerformanceCounter();
+-            if (now >= target_frame_time) {
+-                break;
++                g_vsync_fast_frame_streak = 0;
+             }
+         }
+-
+-        while (SDL_GetPerformanceCounter() < target_frame_time) {
+-            /* spin */
+-        }
+-        now = SDL_GetPerformanceCounter();
++        vsync_60_direct = !g_vsync_pacing_fallback;
+     }
+ 
+-    /* If we fell behind by more than 3 frames, reset (don't try to catch up) */
+-    uint64_t max_frame_lag = frame_ticks * 3;
+-    if (now > target_frame_time + max_frame_lag) {
++    if (vsync_60_direct) {
++        g_audio_drc_active.store(audio_output_should_run() && g_audio_started,
++                                 std::memory_order_relaxed);
+         next_frame_time = now;
+         frame_remainder = 0;
++    } else {
++        const bool lock_120_half = (can_vsync_lock && refresh_is_120);
++        g_audio_drc_active.store(lock_120_half && audio_output_should_run() && g_audio_started,
++                                 std::memory_order_relaxed);
++        uint64_t frame_ticks_num;
++        uint64_t frame_ticks_den;
++        if (lock_120_half) {
++            const uint64_t half_hz = (uint64_t)(g_display_refresh_hz / 2);
++            frame_ticks_num = (freq * gb_frame_cycles) + frame_remainder;
++            frame_ticks_den = 70224ull * half_hz;
++        } else {
++            frame_ticks_num = (freq * gb_frame_cycles * 100ull) + frame_remainder;
++            frame_ticks_den = gb_cpu_hz * (uint64_t)speed_percent;
++        }
++        uint64_t frame_ticks = frame_ticks_num / frame_ticks_den;
++        if (frame_ticks == 0) {
++            frame_ticks = 1;
++        }
++        if (next_frame_time == 0) {
++            next_frame_time = now;
++        }
++        frame_remainder = frame_ticks_num % frame_ticks_den;
++
++        uint32_t audio_fill = audio_ring_fill_samples();
++        bool audio_starved = !lock_120_half && audio_output_should_run() && g_audio_started &&
++                             g_audio_low_watermark > 0u && audio_fill < g_audio_low_watermark;
++
++        uint64_t frame_wait_ticks = frame_ticks;
++        if (audio_starved) {
++            frame_wait_ticks =
++                (frame_ticks * (uint64_t)audio_fill) / (uint64_t)g_audio_low_watermark;
++        }
++
++        next_frame_time += frame_wait_ticks;
++        uint64_t target_frame_time = next_frame_time;
++
++        if (now < target_frame_time) {
++            for (;;) {
++                uint64_t wait_ticks = target_frame_time - now;
++                uint32_t wait_us = (uint32_t)((wait_ticks * 1000000) / freq);
++
++                if (wait_us > 4000) {
++                    SDL_Delay((wait_us / 1000) - 2);
++                } else if (wait_us > 1500) {
++                    SDL_Delay(1);
++                } else {
++                    break;
++                }
++
++                now = SDL_GetPerformanceCounter();
++                if (now >= target_frame_time) {
++                    break;
++                }
++            }
++
++            while (SDL_GetPerformanceCounter() < target_frame_time) {
++                /* spin */
++            }
++            now = SDL_GetPerformanceCounter();
++        }
++
++        uint64_t max_frame_lag = frame_ticks * 3;
++        if (now > target_frame_time + max_frame_lag) {
++            next_frame_time = now;
++            frame_remainder = 0;
++        }
+     }
+-    
++
++    g_vsync_prev_exit_ticks = now;
+     update_audio_stats_from_ring();
+     audio_stats_tick(SDL_GetTicks64());
+     g_last_timing.pacing_cycles = (uint32_t)gb_frame_cycles;
+@@ -5845,6 +6197,96 @@ GBScreenEffect gb_platform_get_screen_effect(void) {
+     return g_screen_effect;
+ }
+ 
++static void refresh_display_refresh_hz(void) {
++    g_display_refresh_hz = 0;
++    if (!g_window || g_benchmark_mode) {
++        return;
++    }
++    const int display_idx = SDL_GetWindowDisplayIndex(g_window);
++    if (display_idx < 0) {
++        return;
++    }
++    SDL_DisplayMode mode;
++    if (SDL_GetCurrentDisplayMode(display_idx, &mode) == 0 && mode.refresh_rate > 0) {
++        g_display_refresh_hz = mode.refresh_rate;
++    }
++}
++
++static void apply_vsync_mode(bool enabled) {
++    g_vsync = enabled;
++    g_vsync_pacing_fallback = false;
++    g_vsync_fast_frame_streak = 0;
++    g_vsync_prev_exit_ticks = 0;
++    g_vsync_swap_suppressed = false;
++    if (g_renderer) {
++        const int interval = (g_vsync && effective_speed_percent() == 100) ? 1 : 0;
++        if (SDL_RenderSetVSync(g_renderer, interval) != 0) {
++            fprintf(stderr, "[SDL] SDL_RenderSetVSync(%d) failed: %s\n", interval, SDL_GetError());
++        }
++    }
++}
++
++static void stop_controller_rumble(void) {
++#if SDL_VERSION_ATLEAST(2, 0, 9)
++    if (g_controller && !g_benchmark_mode) {
++        SDL_GameControllerRumble(g_controller, 0, 0, 0);
++    }
++#endif
++}
++
++static void set_menu_open(bool open) {
++    if (g_show_menu == open) {
++        return;
++    }
++    g_show_menu = open;
++    g_vsync_prev_exit_ticks = 0;
++    if (open) {
++        stop_controller_rumble();
++        g_savestate_thumb_dirty = true;
++    }
++}
++
++void gb_platform_set_vsync_default(bool enabled) {
++    g_vsync_default = enabled;
++}
++
++bool gb_platform_get_vsync(void) {
++    return g_vsync;
++}
++
++void gb_platform_set_rumble_default(bool enabled) {
++    g_rumble_default = enabled;
++}
++
++bool gb_platform_get_rumble(void) {
++    return g_rumble_enabled;
++}
++
++int gb_platform_get_rumble_strength(void) {
++    return g_rumble_strength;
++}
++
++void gb_platform_rumble(uint16_t low_freq, uint16_t high_freq, uint32_t duration_ms) {
++    if (!g_rumble_enabled || g_rumble_strength <= 0 || !g_controller ||
++        g_benchmark_mode || g_app_suspended || g_show_menu) {
++        return;
++    }
++#if SDL_VERSION_ATLEAST(2, 0, 9)
++    if (duration_ms == 0 || (low_freq == 0 && high_freq == 0)) {
++        SDL_GameControllerRumble(g_controller, 0, 0, 0);
++        return;
++    }
++    const uint32_t scale = (uint32_t)g_rumble_strength;
++    const uint16_t low_scaled = (uint16_t)(((uint32_t)low_freq * scale) / 100u);
++    const uint16_t high_scaled = (uint16_t)(((uint32_t)high_freq * scale) / 100u);
++    SDL_GameControllerRumble(g_controller, low_scaled, high_scaled, duration_ms);
++#else
++    (void)low_freq;
++    (void)high_freq;
++    (void)duration_ms;
++#endif
++}
++
+ /* ============================================================================
+  * Save Data
+  * ========================================================================== */
+@@ -5952,6 +6394,210 @@ static bool savestate_slot_exists(const GBContext* ctx, int slot, std::string* o
+     return fs::exists(fs::path(filename), ec) && !ec;
+ }
+ 
++static void destroy_savestate_thumb_texture(void) {
++    if (g_savestate_thumb_texture) {
++        SDL_DestroyTexture(g_savestate_thumb_texture);
++        g_savestate_thumb_texture = NULL;
++    }
++    g_savestate_thumb_slot = -1;
++    g_savestate_thumb_w = 0;
++    g_savestate_thumb_h = 0;
++    g_savestate_thumb_has_image = false;
++    g_savestate_thumb_dirty = true;
++    g_savestate_thumb_path.clear();
++}
++
++static bool write_savestate_thumbnail(const char* state_path,
++                                      const uint32_t* argb,
++                                      int width,
++                                      int height) {
++    if (!state_path || !state_path[0] || !argb ||
++        width < 1 || width > GB_PRESENT_MAX_WIDTH ||
++        height < 1 || height > GB_SCREEN_HEIGHT) {
++        return false;
++    }
++    const std::string thumb_path = std::string(state_path) + ".thumb";
++    const std::string tmp_path = thumb_path + ".tmp";
++    const size_t pixel_count = (size_t)width * (size_t)height;
++    std::vector<uint8_t> buf(12u + pixel_count * 2u);
++    buf[0] = (uint8_t)(GB_SAVESTATE_THUMB_MAGIC & 0xFFu);
++    buf[1] = (uint8_t)((GB_SAVESTATE_THUMB_MAGIC >> 8) & 0xFFu);
++    buf[2] = (uint8_t)((GB_SAVESTATE_THUMB_MAGIC >> 16) & 0xFFu);
++    buf[3] = (uint8_t)((GB_SAVESTATE_THUMB_MAGIC >> 24) & 0xFFu);
++    buf[4] = (uint8_t)(width & 0xFF);
++    buf[5] = (uint8_t)((width >> 8) & 0xFF);
++    buf[6] = (uint8_t)(height & 0xFF);
++    buf[7] = (uint8_t)((height >> 8) & 0xFF);
++    buf[8] = (uint8_t)(GB_SAVESTATE_THUMB_FORMAT_RGB565 & 0xFFu);
++    buf[9] = 0u;
++    buf[10] = 0u;
++    buf[11] = 0u;
++    for (size_t i = 0; i < pixel_count; ++i) {
++        const uint32_t px = argb[i];
++        const uint16_t r = (uint16_t)((px >> 16) & 0xFFu);
++        const uint16_t g = (uint16_t)((px >> 8) & 0xFFu);
++        const uint16_t b = (uint16_t)(px & 0xFFu);
++        const uint16_t rgb565 = (uint16_t)(((r & 0xF8u) << 8) | ((g & 0xFCu) << 3) | (b >> 3));
++        buf[12u + i * 2u] = (uint8_t)(rgb565 & 0xFFu);
++        buf[12u + i * 2u + 1u] = (uint8_t)((rgb565 >> 8) & 0xFFu);
++    }
++    FILE* file = fopen(tmp_path.c_str(), "wb");
++    if (!file) {
++        return false;
++    }
++    const size_t written = fwrite(buf.data(), 1u, buf.size(), file);
++    if (fclose(file) != 0 || written != buf.size()) {
++        std::error_code rm_ec;
++        fs::remove(fs::path(tmp_path), rm_ec);
++        return false;
++    }
++    std::error_code ec;
++    fs::rename(fs::path(tmp_path), fs::path(thumb_path), ec);
++    if (ec) {
++        fs::remove(fs::path(thumb_path), ec);
++        ec.clear();
++        fs::rename(fs::path(tmp_path), fs::path(thumb_path), ec);
++        if (ec) {
++            std::error_code rm_ec;
++            fs::remove(fs::path(tmp_path), rm_ec);
++            return false;
++        }
++    }
++    return true;
++}
++
++static bool read_savestate_thumbnail(const char* state_path,
++                                     std::vector<uint16_t>* out_pixels,
++                                     int* out_w,
++                                     int* out_h) {
++    if (!state_path || !state_path[0] || !out_pixels || !out_w || !out_h) {
++        return false;
++    }
++    out_pixels->clear();
++    *out_w = 0;
++    *out_h = 0;
++    const std::string thumb_path = std::string(state_path) + ".thumb";
++    FILE* file = fopen(thumb_path.c_str(), "rb");
++    if (!file) {
++        return false;
++    }
++    if (fseek(file, 0L, SEEK_END) != 0) {
++        fclose(file);
++        return false;
++    }
++    const long size = ftell(file);
++    if (size < 12L || fseek(file, 0L, SEEK_SET) != 0) {
++        fclose(file);
++        return false;
++    }
++    std::vector<uint8_t> raw((size_t)size);
++    if (fread(raw.data(), 1u, raw.size(), file) != raw.size()) {
++        fclose(file);
++        return false;
++    }
++    fclose(file);
++
++    const uint32_t magic = (uint32_t)raw[0] | ((uint32_t)raw[1] << 8) |
++                           ((uint32_t)raw[2] << 16) | ((uint32_t)raw[3] << 24);
++    const int width = (int)((uint16_t)raw[4] | ((uint16_t)raw[5] << 8));
++    const int height = (int)((uint16_t)raw[6] | ((uint16_t)raw[7] << 8));
++    const uint16_t format = (uint16_t)(raw[8] | ((uint16_t)raw[9] << 8));
++    const uint16_t reserved = (uint16_t)(raw[10] | ((uint16_t)raw[11] << 8));
++    if (magic != GB_SAVESTATE_THUMB_MAGIC ||
++        format != GB_SAVESTATE_THUMB_FORMAT_RGB565 ||
++        reserved != 0u ||
++        width < 1 || width > GB_PRESENT_MAX_WIDTH ||
++        height < 1 || height > GB_SCREEN_HEIGHT) {
++        return false;
++    }
++    const size_t pixel_count = (size_t)width * (size_t)height;
++    if (raw.size() != 12u + pixel_count * 2u) {
++        return false;
++    }
++    out_pixels->resize(pixel_count);
++    for (size_t i = 0; i < pixel_count; ++i) {
++        (*out_pixels)[i] =
++            (uint16_t)(raw[12u + i * 2u] | ((uint16_t)raw[12u + i * 2u + 1u] << 8));
++    }
++    *out_w = width;
++    *out_h = height;
++    return true;
++}
++
++static bool format_file_timestamp(const char* path, char* out, size_t out_size) {
++    if (!path || !path[0] || !out || out_size == 0) {
++        return false;
++    }
++    out[0] = '\0';
++    std::error_code ec;
++    const auto ftime = fs::last_write_time(fs::path(path), ec);
++    if (ec) {
++        return false;
++    }
++    const auto now_file = fs::file_time_type::clock::now();
++    const auto now_sys = std::chrono::system_clock::now();
++    const auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
++        ftime - now_file + now_sys);
++    const std::time_t tt = std::chrono::system_clock::to_time_t(sctp);
++    std::tm tm_local = {};
++#if defined(_WIN32)
++    if (localtime_s(&tm_local, &tt) != 0) {
++        return false;
++    }
++#else
++    if (!localtime_r(&tt, &tm_local)) {
++        return false;
++    }
++#endif
++    return std::strftime(out, out_size, "%Y-%m-%d %H:%M:%S", &tm_local) > 0;
++}
++
++static void refresh_savestate_thumb_preview(const std::string& state_path, int slot) {
++    if (!g_savestate_thumb_dirty &&
++        g_savestate_thumb_slot == slot &&
++        g_savestate_thumb_path == state_path) {
++        return;
++    }
++    g_savestate_thumb_dirty = false;
++    g_savestate_thumb_slot = slot;
++    g_savestate_thumb_path = state_path;
++    g_savestate_thumb_has_image = false;
++
++    if (!g_renderer || state_path.empty()) {
++        return;
++    }
++    std::vector<uint16_t> pixels;
++    int w = 0;
++    int h = 0;
++    if (!read_savestate_thumbnail(state_path.c_str(), &pixels, &w, &h)) {
++        return;
++    }
++    if (!g_savestate_thumb_texture ||
++        g_savestate_thumb_w != w ||
++        g_savestate_thumb_h != h) {
++        if (g_savestate_thumb_texture) {
++            SDL_DestroyTexture(g_savestate_thumb_texture);
++            g_savestate_thumb_texture = NULL;
++        }
++        g_savestate_thumb_texture = SDL_CreateTexture(
++            g_renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, w, h);
++        if (!g_savestate_thumb_texture) {
++            return;
++        }
++#if SDL_VERSION_ATLEAST(2, 0, 12)
++        SDL_SetTextureScaleMode(g_savestate_thumb_texture, SDL_ScaleModeLinear);
++#endif
++        g_savestate_thumb_w = w;
++        g_savestate_thumb_h = h;
++    }
++    if (SDL_UpdateTexture(g_savestate_thumb_texture,
++                          NULL,
++                          pixels.data(),
++                          w * (int)sizeof(uint16_t)) == 0) {
++        g_savestate_thumb_has_image = true;
++    }
++}
++
+ static bool save_savestate_slot(GBContext* ctx, int slot) {
+     if (!ctx) {
+         set_savestate_status("Save", slot, false, "No active game context");
+@@ -5961,6 +6607,18 @@ static bool save_savestate_slot(GBContext* ctx, int slot) {
+     char filename[512];
+     sdl_get_savestate_path(filename, sizeof(filename), ctx, slot);
+     const bool success = gb_context_save_state_file(ctx, filename);
++    if (success) {
++        if (g_last_guest_framebuffer_valid) {
++            std::vector<uint32_t> argb_tmp((size_t)g_present_width * (size_t)GB_SCREEN_HEIGHT);
++            copy_display_frame(argb_tmp.data(),
++                               g_present_width * (int)sizeof(uint32_t),
++                               g_last_guest_framebuffer,
++                               g_palette_idx,
++                               ctx);
++            write_savestate_thumbnail(filename, argb_tmp.data(), g_present_width, GB_SCREEN_HEIGHT);
++        }
++        g_savestate_thumb_dirty = true;
++    }
+     set_savestate_status("Save", slot, success, filename);
+     return success;
+ }
+@@ -5975,12 +6633,14 @@ static bool load_savestate_slot(GBContext* ctx, int slot) {
+     sdl_get_savestate_path(filename, sizeof(filename), ctx, slot);
+     const bool success = gb_context_load_state_file(ctx, filename);
+     if (success) {
++        stop_controller_rumble();
+         reset_audio_output_buffer(true);
+         g_last_guest_framebuffer_valid = false;
+         /* The trail belongs to the state that produced it: carrying it across a
+          * load would smear one scene's motion into another. */
+         g_lcd_response_valid = false;
+         g_lcd_response_last_ms = 0;
++        g_vsync_prev_exit_ticks = 0;
+         g_present_count = ctx->completed_frames;
+         g_last_frame_time = SDL_GetTicks();
+     }
+@@ -5998,6 +6658,9 @@ static bool delete_savestate_slot(GBContext* ctx, int slot) {
+     sdl_get_savestate_path(filename, sizeof(filename), ctx, slot);
+     std::error_code ec;
+     const bool removed = fs::remove(fs::path(filename), ec);
++    std::error_code thumb_ec;
++    fs::remove(fs::path(std::string(filename) + ".thumb"), thumb_ec);
++    g_savestate_thumb_dirty = true;
+     if (!removed && !ec) {
+         set_savestate_status("Delete", slot, false, "Slot file does not exist");
+         return false;
+@@ -6342,6 +7005,32 @@ bool gb_platform_get_audio_crossfeed(void) {
+     return false;
+ }
+ 
++void gb_platform_set_vsync_default(bool enabled) {
++    (void)enabled;
++}
++
++bool gb_platform_get_vsync(void) {
++    return false;
++}
++
++void gb_platform_set_rumble_default(bool enabled) {
++    (void)enabled;
++}
++
++bool gb_platform_get_rumble(void) {
++    return false;
++}
++
++int gb_platform_get_rumble_strength(void) {
++    return 0;
++}
++
++void gb_platform_rumble(uint16_t low_freq, uint16_t high_freq, uint32_t duration_ms) {
++    (void)low_freq;
++    (void)high_freq;
++    (void)duration_ms;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 64bae97..c8bbf40 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -431,6 +431,10 @@ if(TARGET gbrt)
+         target_link_libraries(test_audio_mastering PRIVATE gbrt)
+         add_test(NAME audio_mastering_measures_its_own_claims COMMAND test_audio_mastering)
+ 
++        add_executable(test_qol_features test_qol_features.cpp)
++        target_link_libraries(test_qol_features PRIVATE gbrt)
++        add_test(NAME qol_features_thumbnails_drc_and_rumble COMMAND test_qol_features)
++
+         add_executable(test_input_script test_input_script.cpp)
+         target_link_libraries(test_input_script PRIVATE gbrt)
+         add_test(NAME input_script_rejects_malformed_tokens COMMAND test_input_script)
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+new file mode 100644
+index 0000000..b99038d
+--- /dev/null
++++ b/tests/test_qol_features.cpp
+@@ -0,0 +1,219 @@
++/* Unit tests for QOL runtime helpers:
++ *  - RGB565 savestate sidecar thumbnails (GBTH) write/read & corrupt rejection
++ *  - Audio Dynamic Rate Control ratio clamping and wrap-around resampling
++ *  - APU CH4 rumble trigger snapshot & savestate size invariance
++ */
++
++#include "audio.h"
++#include "platform_sdl.h"
++
++#include <cmath>
++#include <cstdint>
++#include <cstdio>
++#include <cstring>
++#include <filesystem>
++#include <string>
++#include <vector>
++
++namespace fs = std::filesystem;
++
++namespace {
++
++int g_failures = 0;
++
++void check(bool condition, const char* what) {
++    if (!condition) {
++        std::printf("FAIL %s\n", what);
++        g_failures++;
++    }
++}
++
++void test_savestate_thumbnails() {
++    const fs::path base =
++        fs::temp_directory_path() / "gb_recomp_test_qol_slot.state1";
++    const fs::path thumb = fs::path(base.string() + ".thumb");
++    std::error_code ec;
++    fs::remove(base, ec);
++    fs::remove(thumb, ec);
++
++    constexpr int W = 256;
++    constexpr int H = 144;
++    std::vector<uint32_t> argb((size_t)W * (size_t)H, 0xFF000000u);
++    for (int y = 0; y < H; ++y) {
++        for (int x = 0; x < W; ++x) {
++            const uint8_t r = (uint8_t)((x * 255) / (W - 1));
++            const uint8_t g = (uint8_t)((y * 255) / (H - 1));
++            const uint8_t b = (uint8_t)(((x ^ y) * 3) & 0xFF);
++            argb[(size_t)y * W + (size_t)x] =
++                0xFF000000u | ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
++        }
++    }
++
++    check(gb_platform_test_write_savestate_thumbnail(base.string().c_str(), argb.data(), W, H),
++          "thumbnail sidecar writes cleanly");
++    check(fs::exists(thumb, ec), "thumbnail sidecar exists at .thumb");
++    check(fs::file_size(thumb, ec) == 12u + (size_t)W * (size_t)H * 2u,
++          "thumbnail sidecar has exact expected size");
++
++    std::vector<uint16_t> loaded((size_t)W * (size_t)H, 0);
++    int out_w = 0;
++    int out_h = 0;
++    check(gb_platform_test_read_savestate_thumbnail(
++              base.string().c_str(), loaded.data(), loaded.size(), &out_w, &out_h),
++          "thumbnail sidecar reads back validly");
++    check(out_w == W && out_h == H, "thumbnail preserves exact 256x144 geometry");
++
++    bool rgb565_exact = true;
++    for (size_t i = 0; i < loaded.size(); ++i) {
++        const uint32_t px = argb[i];
++        const uint16_t r = (uint16_t)((px >> 16) & 0xFFu);
++        const uint16_t g = (uint16_t)((px >> 8) & 0xFFu);
++        const uint16_t b = (uint16_t)(px & 0xFFu);
++        const uint16_t want =
++            (uint16_t)(((r & 0xF8u) << 8) | ((g & 0xFCu) << 3) | (b >> 3));
++        if (loaded[i] != want) {
++            rgb565_exact = false;
++            break;
++        }
++    }
++    check(rgb565_exact, "thumbnail roundtrip matches RGB565 conversion bit-for-bit");
++
++    /* Reject bad magic */
++    {
++        FILE* f = std::fopen(thumb.string().c_str(), "r+b");
++        check(f != nullptr, "open thumb for magic corruption");
++        if (f) {
++            const uint8_t bad[4] = {'X', 'Y', 'Z', '!'};
++            std::fwrite(bad, 1, 4, f);
++            std::fclose(f);
++        }
++        check(!gb_platform_test_read_savestate_thumbnail(
++                  base.string().c_str(), loaded.data(), loaded.size(), &out_w, &out_h),
++              "corrupt magic thumbnail is rejected");
++    }
++
++    /* Reject oversized dimensions or truncated payload */
++    {
++        FILE* f = std::fopen(thumb.string().c_str(), "wb");
++        if (f) {
++            const uint8_t bad_hdr[12] = {'G', 'B', 'T', 'H', 0x00, 0x10, 0x90, 0x00, 1, 0, 0, 0};
++            std::fwrite(bad_hdr, 1, sizeof(bad_hdr), f);
++            std::fclose(f);
++        }
++        check(!gb_platform_test_read_savestate_thumbnail(
++                  base.string().c_str(), loaded.data(), loaded.size(), &out_w, &out_h),
++              "oversized/truncated thumbnail is rejected");
++    }
++
++    /* Reject out-of-range write request */
++    check(!gb_platform_test_write_savestate_thumbnail(base.string().c_str(), argb.data(), 512, 144),
++          "out-of-bounds thumbnail write width is refused");
++
++    fs::remove(base, ec);
++    fs::remove(thumb, ec);
++}
++
++void test_drc_rate_and_resampler() {
++    const float eq = gb_platform_test_compute_drc_ratio(2048u, 2048u, 0.015f);
++    check(std::fabs(eq - 1.0f) < 1e-6f, "DRC ratio is exactly 1.0 at target fill");
++
++    const float high = gb_platform_test_compute_drc_ratio(16000u, 2048u, 0.015f);
++    check(std::fabs(high - 1.015f) < 1e-6f, "DRC ratio clamps upper skew to +max_skew");
++
++    const float low = gb_platform_test_compute_drc_ratio(0u, 2048u, 0.015f);
++    check(std::fabs(low - 0.985f) < 1e-6f, "DRC ratio clamps lower skew to -max_skew");
++
++    /* Ring wrap-around interpolation over monotonic ramp */
++    constexpr uint32_t kRingSize = 16;
++    int16_t ring[kRingSize * 2] = {};
++    const uint32_t read_pos = 12;
++    const uint32_t available = 10;
++    for (uint32_t i = 0; i < available; ++i) {
++        const uint32_t idx = (read_pos + i) % kRingSize;
++        ring[idx * 2] = (int16_t)(i * 1000);
++        ring[idx * 2 + 1] = (int16_t)(-(int32_t)i * 500);
++    }
++
++    double phase = 0.0;
++    int16_t out[16] = {};
++    uint32_t consumed = 0;
++    const uint32_t produced = gb_platform_test_resample_stereo_block(
++        ring, kRingSize, read_pos, available, 1.005, &phase, out, 8u, 1.0f, &consumed);
++    check(produced == 8u, "resampler produces requested frames when ring has enough data");
++    check(consumed == 8u, "resampler reports integer ring consumption");
++    check(phase >= 0.0 && phase < 1.0, "resampler preserves fractional phase in [0, 1)");
++
++    bool monotonic = true;
++    for (uint32_t i = 1; i < produced; ++i) {
++        if (out[i * 2] <= out[(i - 1) * 2] || out[i * 2 + 1] >= out[(i - 1) * 2 + 1]) {
++            monotonic = false;
++            break;
++        }
++    }
++    check(monotonic, "wrapped stereo ramp stays strictly monotonic through linear interpolation");
++
++    /* Exhaustion safety: never read past available */
++    double phase2 = 0.25;
++    int16_t short_out[16] = {};
++    uint32_t consumed2 = 0;
++    const uint32_t produced2 = gb_platform_test_resample_stereo_block(
++        ring, kRingSize, read_pos, 3u, 1.005, &phase2, short_out, 8u, 1.0f, &consumed2);
++    check(produced2 <= 3u, "resampler stops cleanly at available boundary");
++    check(consumed2 == 3u && phase2 == 0.0, "resampler clears phase on exhaustion");
++}
++
++void test_audio_rumble_metrics() {
++    GBContext ctx = {};
++    ctx.apu = gb_audio_create();
++    check(ctx.apu != nullptr, "APU created");
++    if (!ctx.apu) {
++        return;
++    }
++
++    const size_t blob_size = gb_audio_state_size();
++    std::vector<uint8_t> saved(blob_size, 0);
++
++    /* Power on APU */
++    gb_audio_write(&ctx, 0xFF26, 0x80);
++    gb_audio_write(&ctx, 0xFF21, 0xF2); /* NR42: vol=15, DAC on */
++    gb_audio_write(&ctx, 0xFF22, 0x64); /* NR43: shift=6, 15-bit LFSR */
++    gb_audio_write(&ctx, 0xFF23, 0x80); /* Trigger CH4 */
++
++    GBAudioRumbleState st = {};
++    gb_audio_get_rumble_state(ctx.apu, &st);
++    check(st.ch4_enabled, "CH4 enabled after trigger");
++    check(st.ch4_volume == 15, "CH4 volume matches NR42 top nibble");
++    check(st.ch4_clock_shift == 6, "CH4 clock shift matches NR43 >> 4");
++    check(!st.ch4_width_7bit, "CH4 width bit reflects 15-bit noise");
++    check(st.ch4_trigger_count == 1u, "CH4 trigger counter increments on trigger");
++
++    /* Second trigger with 7-bit metallic width and shift 3 */
++    gb_audio_write(&ctx, 0xFF22, 0x38);
++    gb_audio_write(&ctx, 0xFF23, 0x80);
++    gb_audio_get_rumble_state(ctx.apu, &st);
++    check(st.ch4_trigger_count == 2u, "second CH4 trigger increments counter");
++    check(st.ch4_clock_shift == 3, "CH4 clock shift updated");
++    check(st.ch4_width_7bit, "CH4 7-bit width flag set");
++
++    /* Savestate roundtrip must still serialize GBAudio cleanly and clear runtime counter */
++    check(gb_audio_save_state(ctx.apu, saved.data(), saved.size()), "audio save state succeeds");
++    check(gb_audio_load_state(ctx.apu, saved.data(), saved.size()), "audio load state succeeds");
++    gb_audio_get_rumble_state(ctx.apu, &st);
++    check(st.ch4_trigger_count == 0u, "audio load state zeroes runtime trigger counter");
++
++    gb_audio_destroy(ctx.apu);
++}
++
++}  // namespace
++
++int main() {
++    test_savestate_thumbnails();
++    test_drc_rate_and_resampler();
++    test_audio_rumble_metrics();
++    if (g_failures > 0) {
++        std::printf("qol_features: %d failure(s)\n", g_failures);
++        return 1;
++    }
++    std::printf("qol_features: all checks passed\n");
++    return 0;
++}
 -- 
 2.56.0
 

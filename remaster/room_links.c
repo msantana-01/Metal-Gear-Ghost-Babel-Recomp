@@ -297,7 +297,7 @@ bool room_link_place_edge(const RoomLinkGeometry* current,
         out->origin_x = current->origin_x + current->cols * 16 - neighbour->start_x;
     } else {
         out->origin_x =
-            current->origin_x - neighbour->start_x - ROOM_LINK_SCREEN_WIDTH;
+            current->origin_x - neighbour->start_x - ROOM_LINK_PLAYFIELD_WIDTH;
     }
     /* The guest does not scroll from one room into the next: when the player
      * crosses the limit it cuts to the destination room's own header camera

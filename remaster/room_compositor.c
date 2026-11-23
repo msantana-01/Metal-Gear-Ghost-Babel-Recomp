@@ -56,6 +56,14 @@ static bool place_decoded_neighbour(RoomCompositor* compositor,
                                     RoomLinkEdge edge,
                                     int32_t margin_left,
                                     int32_t margin_right) {
+    /* Rooms built from different metatile atlases require different VRAM
+     * tilesets and palettes (e.g. indoor truck room 2:10 vs outdoor 2:5),
+     * so placing a cross-atlas neighbour into the active frame's VRAM
+     * produces garbled tiles in the off-grid margin. */
+    if (compositor->neighbour.atlas_bank != compositor->map.atlas_bank ||
+        compositor->neighbour.atlas_ptr != compositor->map.atlas_ptr) {
+        return false;
+    }
     const RoomLinkGeometry current = geometry_from_map(&compositor->map);
     const RoomLinkGeometry neighbour = geometry_from_map(&compositor->neighbour);
     RoomLinkPlacement placement;

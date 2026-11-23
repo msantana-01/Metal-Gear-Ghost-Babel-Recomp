@@ -17,5 +17,5 @@
     "Playtesting Linux and Windows widescreen builds"
   ],
   "tags": ["widescreen", "gbc", "recomp"],
-  "notes": "Public builds for Linux x86_64 and Windows x86_64 (v0.6.1+), toolchain only: you supply your own copy of the game and no game data is distributed. Frame-exact against a cycle-accurate reference; 75 of 75 Blargg and Mooneye tests pass. Ships both the 256px widescreen remaster (cartridge RoomMap margins, margin room/cutscene actors, world props and shadows, centred overlays, mastered audio, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light LCD response) and the authentic 160px build. Android is planned."
+  "notes": "Public builds for Linux x86_64 and Windows x86_64 (v0.6.2+), toolchain only: you supply your own copy of the game and no game data is distributed. Frame-exact against a cycle-accurate reference; 75 of 75 Blargg and Mooneye tests pass. Ships both the 256px widescreen remaster (cartridge RoomMap margins with per-room VRAM cache, margin room/cutscene actors, world props and shadows, centred overlays, cycle-integrated APU audio mastering & crossfeed, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light LCD response, V-Sync + audio DRC, savestate thumbnails, semantic controller rumble) and the authentic 160px build. Android is planned."
 }

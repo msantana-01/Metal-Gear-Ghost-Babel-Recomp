@@ -47,6 +47,74 @@
  * we only reach it when the PPU reports a non-CGB mode. */
 static const uint16_t k_dmg_palette[4] = {0x7FFF, 0x5294, 0x294A, 0x0000};
 
+/* Per-room snapshot of VRAM tile patterns and BG palettes for neighbour margin
+ * rendering. Ghost Babel streams room-specific tile graphics into VRAM bank 1
+ * ($9000..$97FF) even between adjacent rooms sharing the same metatile atlas,
+ * so drawing a neighbour's metatile IDs with the active room's VRAM corrupts
+ * tiles in the widescreen margin. Module-scoped to keep stack-allocated
+ * NativePresenter small. */
+#define ROOM_VRAM_CACHE_SLOTS 32u
+
+typedef struct RoomVramEntry {
+    bool valid;
+    uint8_t area;
+    uint8_t room;
+    uint8_t lcdc;
+    uint32_t last_used;
+    uint8_t tile_data[2][TILE_AREA];
+    uint8_t background_palettes[0x40];
+} RoomVramEntry;
+
+static RoomVramEntry g_room_vram_cache[ROOM_VRAM_CACHE_SLOTS];
+static uint32_t g_room_vram_cache_tick = 0u;
+
+static void room_vram_cache_clear(void) {
+    memset(g_room_vram_cache, 0, sizeof(g_room_vram_cache));
+    g_room_vram_cache_tick = 0u;
+}
+
+static const RoomVramEntry* room_vram_cache_find(uint8_t area, uint8_t room) {
+    for (uint32_t i = 0u; i < ROOM_VRAM_CACHE_SLOTS; ++i) {
+        if (g_room_vram_cache[i].valid && g_room_vram_cache[i].area == area &&
+            g_room_vram_cache[i].room == room) {
+            g_room_vram_cache[i].last_used = ++g_room_vram_cache_tick;
+            return &g_room_vram_cache[i];
+        }
+    }
+    return NULL;
+}
+
+static void room_vram_cache_store(
+    uint8_t area, uint8_t room, const GBPresentationHardwareSnapshot* hw) {
+    RoomVramEntry* target = NULL;
+    for (uint32_t i = 0u; i < ROOM_VRAM_CACHE_SLOTS; ++i) {
+        if (g_room_vram_cache[i].valid && g_room_vram_cache[i].area == area &&
+            g_room_vram_cache[i].room == room) {
+            target = &g_room_vram_cache[i];
+            break;
+        }
+        if (!g_room_vram_cache[i].valid && target == NULL) {
+            target = &g_room_vram_cache[i];
+        }
+    }
+    if (target == NULL) {
+        target = &g_room_vram_cache[0];
+        for (uint32_t i = 1u; i < ROOM_VRAM_CACHE_SLOTS; ++i) {
+            if (g_room_vram_cache[i].last_used < target->last_used) {
+                target = &g_room_vram_cache[i];
+            }
+        }
+    }
+    target->valid = true;
+    target->area = area;
+    target->room = room;
+    target->lcdc = hw->lcdc;
+    target->last_used = ++g_room_vram_cache_tick;
+    memcpy(target->tile_data, hw->tile_data, sizeof(target->tile_data));
+    memcpy(target->background_palettes, hw->background_palettes,
+           sizeof(target->background_palettes));
+}
+
 void native_presenter_init(
     NativePresenter* presenter,
     uint32_t width,
@@ -70,6 +138,7 @@ void native_presenter_init(
     learned_links_init(&presenter->learned);
     room_actors_reset(&presenter->actors);
     room_actors_tracker_reset(&presenter->actor_tracker);
+    room_vram_cache_clear();
 }
 
 bool native_presenter_set_room(NativePresenter* presenter,
@@ -290,8 +359,10 @@ static bool row_is_scene_map(const GBPresentationHardwareSnapshot *hw, uint32_t 
  * The pixel position is in *world* space: the flips mirror the tile, so which
  * bit of the pattern a pixel reads depends on where the tile sits in the room,
  * not on where it sits on the surface. */
-static uint16_t sample_pattern(
-    const GBPresentationHardwareSnapshot* hw,
+static uint16_t sample_pattern_raw(
+    uint8_t lcdc,
+    const uint8_t tile_data[2][TILE_AREA],
+    const uint8_t background_palettes[0x40],
     uint8_t tile_id,
     uint8_t attribute,
     uint32_t world_x,
@@ -309,11 +380,11 @@ static uint16_t sample_pattern(
     }
 
     const uint32_t bank = (cgb && (attribute & ATTR_VRAM_BANK) != 0u) ? 1u : 0u;
-    const uint32_t pattern_offset = tile_pattern_offset(hw->lcdc, tile_id);
+    const uint32_t pattern_offset = tile_pattern_offset(lcdc, tile_id);
     if (pattern_offset + TILE_BYTES > TILE_AREA) {
         return 0x7FFFu; /* unreachable for a valid tile ID; fail loud in colour */
     }
-    const uint8_t* pattern = &hw->tile_data[bank][pattern_offset];
+    const uint8_t* pattern = &tile_data[bank][pattern_offset];
     const uint8_t color_index = pattern_color_index(pattern, px, py);
 
     *out_color_index = color_index;
@@ -321,7 +392,21 @@ static uint16_t sample_pattern(
     if (!cgb) {
         return k_dmg_palette[color_index];
     }
-    return read_palette(hw->background_palettes, (uint8_t)(attribute & ATTR_PALETTE), color_index);
+    return read_palette(background_palettes, (uint8_t)(attribute & ATTR_PALETTE), color_index);
+}
+
+static uint16_t sample_pattern(
+    const GBPresentationHardwareSnapshot* hw,
+    uint8_t tile_id,
+    uint8_t attribute,
+    uint32_t world_x,
+    uint32_t world_y,
+    bool cgb,
+    uint8_t* out_color_index,
+    uint8_t* out_attr_priority) {
+    return sample_pattern_raw(hw->lcdc, hw->tile_data, hw->background_palettes, tile_id,
+                              attribute, world_x, world_y, cgb, out_color_index,
+                              out_attr_priority);
 }
 
 static uint16_t sample_background(
@@ -1393,6 +1478,8 @@ bool native_presenter_render_background(
      * edge the guest never had. */
     uint32_t room_left = panel ? (margin_left < band_left ? margin_left : band_left) : 0u;
     uint32_t room_right = panel ? (margin_right < band_right ? margin_right : band_right) : 0u;
+    const uint32_t own_room_left = room_left;
+    const uint32_t own_room_right = room_right;
     /* How much of the band the room itself occupies is the guest's own answer,
      * handed in as margin_left and margin_right; this file does not have to
      * guess. The band can still be wider than the room: at the camera's limit
@@ -1471,11 +1558,16 @@ bool native_presenter_render_background(
      * that, the search over the scroll registers runs instead. Either way the
      * placed camera is checked against the guest's own map, because a room whose
      * data disagrees with the guest is a defect that should be counted. */
+    const RoomVramEntry* nbr_vram = NULL;
     if (presenter->room_map_enabled && presenter->room.has_room) {
         if (presenter->room.camera_from_guest) {
             (void)room_compositor_verify(&presenter->room, hw);
         } else {
             (void)room_compositor_align(&presenter->room, hw);
+        }
+        if (presenter->room.camera_valid && presenter->room.map.valid && panel && !flat &&
+            (hw->lcdc & LCDC_LCD_ENABLE) != 0u) {
+            room_vram_cache_store(presenter->room.map.area, presenter->room.map.room, hw);
         }
         /* A margin that leaves the room's own grid asks the transition table
          * for the room behind the door on that edge. The question is the
@@ -1512,21 +1604,27 @@ bool native_presenter_render_background(
             }
         }
         if (presenter->room.neighbour_ready) {
-            presenter->neighbour_placements++;
-            /* The neighbour is an annexe of this room, so the scene extends to
-             * the surface band on the edge it was placed against. Without this
-             * the margin branch below never sees those columns: `room_left` is
-             * zero at the camera's limit and the whole band is painted as
-             * "past the room" before the compositor can answer. */
-            if (panel && presenter->room.neighbour_place.edge == ROOM_LINK_EDGE_LEFT) {
-                room_left = band_left;
-            } else if (panel && presenter->room.neighbour_place.edge == ROOM_LINK_EDGE_RIGHT) {
-                room_right = band_right;
+            nbr_vram = room_vram_cache_find(presenter->room.neighbour.area,
+                                            presenter->room.neighbour.room);
+            if (nbr_vram != NULL) {
+                presenter->neighbour_placements++;
+                /* The neighbour is an annexe of this room, so the scene extends to
+                 * the surface band on the edge it was placed against. Without this
+                 * the margin branch below never sees those columns: `room_left` is
+                 * zero at the camera's limit and the whole band is painted as
+                 * "past the room" before the compositor can answer. */
+                if (panel && presenter->room.neighbour_place.edge == ROOM_LINK_EDGE_LEFT) {
+                    room_left = band_left;
+                } else if (panel && presenter->room.neighbour_place.edge == ROOM_LINK_EDGE_RIGHT) {
+                    room_right = band_right;
+                }
             }
         }
     }
     const uint32_t scene_left = game_left - room_left;
     const uint32_t scene_right = game_left + picture_width + room_right;
+    const uint32_t own_scene_left = game_left - own_room_left;
+    const uint32_t own_scene_right = game_left + picture_width + own_room_right;
     uint32_t bottom_non_scene_rows = 0u;
     if (panel) {
         for (uint32_t y = presenter->height / 2u; y < presenter->height; ++y) {
@@ -1603,15 +1701,19 @@ bool native_presenter_render_background(
                     const RoomTileSource source = room_compositor_tile_from(
                         &presenter->room, core_x, (int32_t)y, &room_id, &room_attr);
                     if (source == ROOM_TILE_SOURCE_ROOM ||
-                        source == ROOM_TILE_SOURCE_NEIGHBOUR) {
+                        (source == ROOM_TILE_SOURCE_NEIGHBOUR && nbr_vram != NULL)) {
                         const uint32_t world_x = (uint32_t)(presenter->room.camera_x + core_x);
                         const uint32_t world_y =
                             (uint32_t)(presenter->room.camera_y + (int32_t)y);
-                        row[x] = sample_pattern(hw, room_id, room_attr, world_x, world_y, cgb,
-                                                &ci, &prio);
                         if (source == ROOM_TILE_SOURCE_NEIGHBOUR) {
+                            row[x] = sample_pattern_raw(
+                                nbr_vram->lcdc, nbr_vram->tile_data,
+                                nbr_vram->background_palettes, room_id, room_attr, world_x,
+                                world_y, cgb, &ci, &prio);
                             presenter->margin_from_neighbour++;
                         } else {
+                            row[x] = sample_pattern(hw, room_id, room_attr, world_x, world_y, cgb,
+                                                    &ci, &prio);
                             presenter->margin_from_room++;
                         }
                         g_margin_from_map++;
@@ -1672,15 +1774,25 @@ bool native_presenter_render_background(
                             prio = 1u;
                             g_margin_letterbox++;
                             presenter->outside_pixels++;
+                        } else if (source == ROOM_TILE_SOURCE_NEIGHBOUR && nbr_vram == NULL) {
+                            row[x] = backdrop;
+                            ci = 1u;
+                            prio = 1u;
+                            g_margin_letterbox++;
+                            presenter->outside_pixels++;
                         } else {
                             const uint32_t world_x = (uint32_t)(presenter->room.camera_x + core_x);
                             const uint32_t world_y =
                                 (uint32_t)(presenter->room.camera_y + (int32_t)y);
-                            row[x] = sample_pattern(hw, room_id, room_attr, world_x, world_y, cgb,
-                                                    &ci, &prio);
                             if (source == ROOM_TILE_SOURCE_NEIGHBOUR) {
+                                row[x] = sample_pattern_raw(
+                                    nbr_vram->lcdc, nbr_vram->tile_data,
+                                    nbr_vram->background_palettes, room_id, room_attr, world_x,
+                                    world_y, cgb, &ci, &prio);
                                 presenter->margin_from_neighbour++;
                             } else {
+                                row[x] = sample_pattern(hw, room_id, room_attr, world_x, world_y,
+                                                        cgb, &ci, &prio);
                                 presenter->margin_from_room++;
                             }
                             g_margin_from_map++;
@@ -1688,9 +1800,20 @@ bool native_presenter_render_background(
                         }
                     } else {
                         presenter->margin_room_miss++;
-                        resolve_margin_from_guest(presenter, hw, x, y, camera_x, game_left,
-                                                  picture_width, backdrop, cgb, scene_map, row,
-                                                  &ci, &prio);
+                        if (x < own_scene_left || x >= own_scene_right) {
+                            /* Outside the room's own travel, a missing neighbour
+                             * cell must letterbox rather than sample the active
+                             * room's wrapped PPU tilemap. */
+                            row[x] = backdrop;
+                            ci = 1u;
+                            prio = 1u;
+                            g_margin_letterbox++;
+                            presenter->outside_pixels++;
+                        } else {
+                            resolve_margin_from_guest(presenter, hw, x, y, camera_x, game_left,
+                                                      picture_width, backdrop, cgb, scene_map, row,
+                                                      &ci, &prio);
+                        }
                     }
                 } else {
                     resolve_margin_from_guest(presenter, hw, x, y, camera_x, game_left,

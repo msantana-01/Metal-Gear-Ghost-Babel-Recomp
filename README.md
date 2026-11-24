@@ -11,7 +11,10 @@ executables sharing the same core and save files (`build/baserom.sav`):
 - **`ghost-babel-remaster`** *(default)* — 256 px widescreen view assembled from
   the cartridge room layers with a per-room VRAM tileset & palette cache, margin
   room/cutscene actors, world props & shadows, sliding 136 px camera framing,
-  centred dialogue/item-pickup overlays, GPU OpenGL GLSL CRT-Lottes & GBC LCD
+  centred dialogue/item-pickup overlays, **Modern Stealth** gamepad controls
+  (`B` crouch, `Start` Codec, `RB`/`LT`/`LB` quick weapon & item swap), a
+  gamepad-navigable **Codec tactical pause menu** with embedded pixel font and
+  true pause, `F12` debug snapshots, GPU OpenGL GLSL CRT-Lottes & GBC LCD
   shaders, linear-light LCD response, V-Sync + audio Dynamic Rate Control,
   controller rumble, savestate `.thumb` previews, and cycle-integrated APU audio
   mastering with headphone crossfeed.
@@ -26,7 +29,7 @@ cd Metal-Gear-Ghost-Babel-Recomp
 ./run.sh            # Widescreen Remaster (use --authentic for 160px, --gui for window)
 ```
 
-On **Windows**: download `ghost-babel-tools-windows-x86_64-0.6.2.zip` from
+On **Windows**: download `ghost-babel-tools-windows-x86_64-0.7.0.zip` from
 [Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases),
 extract anywhere, and double-click **`GhostBabelRecomp.bat`** (or drag & drop
 your `.gbc` ROM onto **`build.bat`**). No Python, MSYS2, WSL, or administrator
@@ -68,7 +71,7 @@ it. With no window and no pacing at all the same build runs ~2700 fps.
 
 ## Windows (x86-64, Windows 10 / 11)
 
-1. Download **`ghost-babel-tools-windows-x86_64-0.6.2.zip`** from
+1. Download **`ghost-babel-tools-windows-x86_64-0.7.0.zip`** from
    [Releases](https://github.com/msantana-01/Metal-Gear-Ghost-Babel-Recomp/releases)
    and extract it to a folder of your choice.
 2. Double-click **`GhostBabelRecomp.bat`** (graphical window) or drag & drop
@@ -153,8 +156,28 @@ The keyboard is the controller. A gamepad works too.
 | `F5` / `F8` | save / load state |
 | `F9` | next screen effect (Off, Scanlines, LCD Grid, CRT, CRT Trinitron (Flat), CRT Arcade (Curved), GBC LCD (Shader)) |
 | `F4` | toggle LCD response (linear-light panel decay) |
+| `F12` | save isolated debug snapshot bundle (`debug/snap_...`) |
 | `M` | mute |
-| `Esc` | configuration menu |
+| `Esc` | Codec tactical pause menu |
+
+### Modern Stealth Gamepad Controls (`ghost-babel-remaster` default)
+
+`ghost-babel-remaster` defaults to **Modern Stealth** (switchable to **Classic GBC** in `Esc` / `L3` → **Controls**; `ghost-babel-authentic` keeps **Classic GBC**):
+
+| Xbox / PS button | action |
+|---|---|
+| D-Pad / Left Stick | movement, aiming, and menu navigation |
+| `A` / Cross | punch / interact / confirm |
+| `B` / Circle | crouch / prone (`GB Start`) |
+| `X` / Square or `RT` / R2 | fire / use weapon (`GB B`) |
+| `Y` / Triangle or `Back` / Share | open equipment menu (`GB Select`) |
+| `Start` / Options | open **Codec** in gameplay (works as normal Start on title screen) |
+| `RB` / R1 | quick next weapon macro |
+| `LT` / L2 | quick previous weapon macro |
+| `LB` / L1 | quick next item macro |
+| `L3` / `R3` | Codec tactical pause menu (`L3`) / native panel (`R3`) |
+
+Inside the **Codec Tactical Pause Menu** (`Esc` or `L3`), emulation and audio pause cleanly while you navigate with **D-Pad / Stick** (`A` select, `B` back/resume, `LB`/`RB` switch tabs across `MISSION`, `DISPLAY`, `AUDIO`, `CONTROLS`, `SYSTEM`).
 
 ### Screen effects & remaster features
 
@@ -226,12 +249,7 @@ intact (`build/baserom.sav`), and `.tools/` refreshes automatically against
 
 ## What's next
 
-As of **v0.6.2**, both **`ghost-babel-remaster`** (256 px widescreen, cartridge
-`RoomMap` margins with per-room VRAM cache, room/cutscene actors, world props &
-shadows, centred overlays, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light
-LCD response, V-Sync + audio DRC, controller rumble, savestate thumbnails, and
-cycle-integrated APU mastering + crossfeed) and **`ghost-babel-authentic`** (160 px hardware-exact) are part of
-the public Linux and Windows x86-64 releases.
+As of **v0.7.0**, both **`ghost-babel-remaster`** (256 px widescreen, **Modern Stealth** gamepad controls with `Start → Codec` and quick weapon/item swap, gamepad-navigable **Codec tactical pause menu** with embedded pixel font and true pause, `F12` debug snapshots, cartridge `RoomMap` margins with per-room VRAM cache, room/cutscene actors, world props & shadows, centred overlays, GPU GLSL CRT-Lottes & GBC LCD shaders, linear-light LCD response, V-Sync + audio DRC, controller rumble, savestate thumbnails, and cycle-integrated APU mastering + crossfeed) and **`ghost-babel-authentic`** (160 px hardware-exact) are part of the public Linux and Windows x86-64 releases.
 
 Ongoing work covers margin polish across later areas and future Android build
 support.
@@ -246,7 +264,7 @@ The interface is English only. For the commands and package names:
 <summary><b>Português do Brasil</b></summary>
 
 ### Windows
-Baixe `ghost-babel-tools-windows-x86_64-0.6.2.zip` em **Releases**, extraia em
+Baixe `ghost-babel-tools-windows-x86_64-0.7.0.zip` em **Releases**, extraia em
 uma pasta e dê duplo-clique em **`GhostBabelRecomp.bat`** (ou arraste sua ROM
 `.gbc` sobre **`build.bat`**). Não precisa instalar Python, MSYS2 nem WSL: na
 primeira execução o script baixa automaticamente o compilador portátil
@@ -275,7 +293,7 @@ Depois:
 <summary><b>Deutsch</b></summary>
 
 ### Windows
-Lade `ghost-babel-tools-windows-x86_64-0.6.2.zip` von **Releases** herunter,
+Lade `ghost-babel-tools-windows-x86_64-0.7.0.zip` von **Releases** herunter,
 entpacke es und starte **`GhostBabelRecomp.bat`** per Doppelklick (oder ziehe
 deine `.gbc`-ROM auf **`build.bat`**). Es werden weder Python noch MSYS2
 benötigt — der portable Compiler (`w64devkit`) wird beim ersten Start

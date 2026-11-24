@@ -689,27 +689,8 @@ static void notice_exiting_sprites(NativePresenter *presenter,
  *    the side. It is a property of the side.
  *  - "backdrop" is what is left: a flat picture (the game's own fade), or a
  *    margin the room rectangle says is not the room. */
-static uint32_t g_margin_replayed;
-static uint32_t g_margin_from_map;
-static uint32_t g_margin_backdrop;
-/* Columns the picture letterboxes into because the guest is not playing a room
- * at all: no panel and no room, or no panel and a room it is only presenting.
- * Counted apart from the other two because it is the only margin that is not a
- * statement about the room - see the backdrop choice. */
-static uint32_t g_margin_letterbox;
-
-/* Of the margin pixels that came from the map, how many came from a tilemap byte
- * the guest has actually written since it streamed this piece of the room, how
- * many came from a byte nothing has written yet, and how many were refused
- * because the byte the guest did write describes a different piece. The last
- * number is the one that decides whether the map may be read at all outside the
- * camera's own columns; see map_column_usable and map_column_untouched. */
-static uint32_t g_margin_map_fresh;
-static uint32_t g_margin_map_untouched;
-static uint32_t g_margin_map_stale;
-static uint32_t g_margin_map_fresh_left;
-static uint32_t g_margin_map_untouched_left;
-static uint32_t g_margin_map_stale_left;
+/* Margin counters now live on each NativePresenter instance (presenter->margin_*),
+ * so multiple instances or resets never leak stale totals through file globals. */
 
 /* The camera's absolute position, in pixels, accumulated from the SCX/SCY
  * deltas the snapshot hands us.
@@ -1119,6 +1100,16 @@ void native_presenter_enable_column_cache(NativePresenter *presenter, bool enabl
         presenter->column_cache = calloc(256u * 256u, sizeof(uint16_t));
         presenter->column_seen = calloc(256u * 256u, sizeof(uint8_t));
         presenter->column_page = calloc(256u * 256u, sizeof(uint16_t));
+        if (presenter->column_cache == NULL || presenter->column_seen == NULL ||
+            presenter->column_page == NULL) {
+            free(presenter->column_cache);
+            free(presenter->column_seen);
+            free(presenter->column_page);
+            presenter->column_cache = NULL;
+            presenter->column_seen = NULL;
+            presenter->column_page = NULL;
+            presenter->column_cache_enabled = false;
+        }
     }
 }
 
@@ -1221,16 +1212,16 @@ static void resolve_margin_from_guest(NativePresenter* presenter,
         if (row_is_scene_map(hw, y, scene_map) &&
             column_replay(presenter, hw, x, y, camera_x, ci, prio, &replayed)) {
             row[x] = replayed;
-            g_margin_replayed++;
+            presenter->margin_replayed++;
             presenter->bg_pixels++;
         } else if (row_is_scene_map(hw, y, scene_map) &&
                    (map_column_usable(presenter, hw, x, y, camera_x) ||
                     margin_is_leading(presenter, x, game_left, picture_width))) {
             row[x] = sample_background(hw, x, y, camera_x, cgb, ci, prio);
-            g_margin_from_map++;
-            g_margin_map_fresh++;
+            presenter->margin_from_map++;
+            presenter->margin_map_fresh++;
             if (x < game_left) {
-                g_margin_map_fresh_left++;
+                presenter->margin_map_fresh_left++;
             }
             presenter->bg_pixels++;
         } else if (row_is_scene_map(hw, y, scene_map) &&
@@ -1246,10 +1237,10 @@ static void resolve_margin_from_guest(NativePresenter* presenter,
              * those columns 36 pixels of travel later, and refusing
              * it is a black column. */
             row[x] = sample_background(hw, x, y, camera_x, cgb, ci, prio);
-            g_margin_from_map++;
-            g_margin_map_untouched++;
+            presenter->margin_from_map++;
+            presenter->margin_map_untouched++;
             if (x < game_left) {
-                g_margin_map_untouched_left++;
+                presenter->margin_map_untouched_left++;
             }
             presenter->bg_pixels++;
         } else {
@@ -1262,11 +1253,11 @@ static void resolve_margin_from_guest(NativePresenter* presenter,
             /* Opaque: the bar is not something to stand on. */
             *ci = 1u;
             *prio = 1u;
-            g_margin_map_stale++;
+            presenter->margin_map_stale++;
             if (x < game_left) {
-                g_margin_map_stale_left++;
+                presenter->margin_map_stale_left++;
             }
-            g_margin_backdrop++;
+            presenter->margin_backdrop++;
             presenter->outside_pixels++;
         }
     } else {
@@ -1276,9 +1267,9 @@ static void resolve_margin_from_guest(NativePresenter* presenter,
          * each other. */
         row[x] = column_sample(presenter, hw, x, y, camera_x, cgb, scene_map, ci, prio);
         if (map_column_usable(presenter, hw, x, y, camera_x)) {
-            g_margin_map_fresh++;
+            presenter->margin_map_fresh++;
         } else {
-            g_margin_map_stale++;
+            presenter->margin_map_stale++;
         }
         presenter->bg_pixels++;
         }
@@ -1716,7 +1707,7 @@ bool native_presenter_render_background(
                                                     &ci, &prio);
                             presenter->margin_from_room++;
                         }
-                        g_margin_from_map++;
+                        presenter->margin_from_map++;
                         presenter->bg_pixels++;
                     } else {
                         row[x] = backdrop;
@@ -1745,7 +1736,7 @@ bool native_presenter_render_background(
                     row[x] = backdrop;
                     ci = 1u;
                     prio = 1u;
-                    g_margin_backdrop++;
+                    presenter->margin_backdrop++;
                     presenter->outside_pixels++;
                 } else if (presenter->room_map_enabled && presenter->room.camera_valid) {
                     uint8_t room_id = 0u;
@@ -1765,20 +1756,20 @@ bool native_presenter_render_background(
                         if (have_replay) {
                             row[x] = replayed;
                             presenter->margin_from_room++;
-                            g_margin_replayed++;
+                            presenter->margin_replayed++;
                             presenter->bg_pixels++;
                         } else if (source == ROOM_TILE_SOURCE_BLANK) {
                             presenter->margin_room_miss++;
                             row[x] = backdrop;
                             ci = 1u;
                             prio = 1u;
-                            g_margin_letterbox++;
+                            presenter->margin_letterbox++;
                             presenter->outside_pixels++;
                         } else if (source == ROOM_TILE_SOURCE_NEIGHBOUR && nbr_vram == NULL) {
                             row[x] = backdrop;
                             ci = 1u;
                             prio = 1u;
-                            g_margin_letterbox++;
+                            presenter->margin_letterbox++;
                             presenter->outside_pixels++;
                         } else {
                             const uint32_t world_x = (uint32_t)(presenter->room.camera_x + core_x);
@@ -1795,7 +1786,7 @@ bool native_presenter_render_background(
                                                         cgb, &ci, &prio);
                                 presenter->margin_from_room++;
                             }
-                            g_margin_from_map++;
+                            presenter->margin_from_map++;
                             presenter->bg_pixels++;
                         }
                     } else {
@@ -1807,7 +1798,7 @@ bool native_presenter_render_background(
                             row[x] = backdrop;
                             ci = 1u;
                             prio = 1u;
-                            g_margin_letterbox++;
+                            presenter->margin_letterbox++;
                             presenter->outside_pixels++;
                         } else {
                             resolve_margin_from_guest(presenter, hw, x, y, camera_x, game_left,
@@ -1825,7 +1816,7 @@ bool native_presenter_render_background(
                 ci = 1u;
                 prio = 1u;
                 if (!panel) {
-                    g_margin_letterbox++;
+                    presenter->margin_letterbox++;
                 }
                 presenter->outside_pixels++;
             }
@@ -1915,16 +1906,6 @@ bool native_presenter_render_background(
         render_margin_sprites(presenter, hw, cgb, game_left, picture_width, hud_left, scene_map);
     }
 
-    presenter->margin_replayed = g_margin_replayed;
-    presenter->margin_from_map = g_margin_from_map;
-    presenter->margin_backdrop = g_margin_backdrop;
-    presenter->margin_letterbox = g_margin_letterbox;
-    presenter->margin_map_fresh = g_margin_map_fresh;
-    presenter->margin_map_untouched = g_margin_map_untouched;
-    presenter->margin_map_stale = g_margin_map_stale;
-    presenter->margin_map_fresh_left = g_margin_map_fresh_left;
-    presenter->margin_map_untouched_left = g_margin_map_untouched_left;
-    presenter->margin_map_stale_left = g_margin_map_stale_left;
     presenter->lines_rendered += presenter->height;
     remember_frame_sprites(presenter, hw);
     return true;

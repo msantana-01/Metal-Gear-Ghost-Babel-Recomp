@@ -34,17 +34,21 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+#include <direct.h>
 #include <windows.h>
 #else
 #include <sys/resource.h>
-#include <time.h>
+#include <sys/stat.h>
 #endif
+#include <errno.h>
+#include <time.h>
 
 #include "audio_stats.h"
 #include "camera_extent.h"
 #include "native_presenter.h"
 #include "platform_sdl.h"
 #include "room_actors.h"
+#include "room_controls.h"
 #include "room_layers.h"
 #include "room_record.h"
 #include "room_rumble.h"
@@ -731,8 +735,11 @@ static bool write_ppm(const char* path, const uint32_t* pixels, uint32_t width) 
             fwrite(rgb, 1, 3, out);
         }
     }
-    fclose(out);
-    return true;
+    const bool ok = !ferror(out);
+    if (fclose(out) != 0) {
+        return false;
+    }
+    return ok;
 }
 
 /* The accurate pixels on their own, unpainted. */
@@ -753,8 +760,11 @@ static bool write_reference_ppm(const GBPresentationFrame* frame, const char* pa
             fwrite(rgb, 1, 3, out);
         }
     }
-    fclose(out);
-    return true;
+    const bool ok = !ferror(out);
+    if (fclose(out) != 0) {
+        return false;
+    }
+    return ok;
 }
 
 /* The playable host.
@@ -785,6 +795,202 @@ static uint32_t rgb555_to_argb(uint32_t color) {
     const uint32_t g = ((color >> 5) & 0x1Fu) * 255u / 31u;
     const uint32_t b = ((color >> 10) & 0x1Fu) * 255u / 31u;
     return 0xFF000000u | (r << 16) | (g << 8) | b;
+}
+
+static bool mkdir_one(const char* path) {
+#ifdef _WIN32
+    return _mkdir(path) == 0;
+#else
+    return mkdir(path, 0755) == 0;
+#endif
+}
+
+static bool ensure_dir_exists(const char* path) {
+    if (path == NULL || path[0] == '\0') {
+        return false;
+    }
+    return mkdir_one(path) || errno == EEXIST;
+}
+
+static bool write_bmp_rgb24_pixels(
+    const char* path, const uint32_t* argb_or_null, const uint16_t* rgb555_or_null, uint32_t width, uint32_t height) {
+    if (path == NULL || width == 0u || height == 0u ||
+        (argb_or_null == NULL && rgb555_or_null == NULL)) {
+        return false;
+    }
+    const uint32_t row_raw = width * 3u;
+    const uint32_t row_stride = (row_raw + 3u) & ~3u;
+    uint8_t* row = calloc(1u, row_stride);
+    if (row == NULL) {
+        return false;
+    }
+    FILE* out = fopen(path, "wb");
+    if (out == NULL) {
+        free(row);
+        return false;
+    }
+    const uint32_t img_size = row_stride * height;
+    const uint32_t file_size = 54u + img_size;
+    uint8_t hdr[54];
+    memset(hdr, 0, sizeof(hdr));
+    hdr[0] = 'B';
+    hdr[1] = 'M';
+    hdr[2] = (uint8_t)(file_size & 0xFFu);
+    hdr[3] = (uint8_t)((file_size >> 8) & 0xFFu);
+    hdr[4] = (uint8_t)((file_size >> 16) & 0xFFu);
+    hdr[5] = (uint8_t)((file_size >> 24) & 0xFFu);
+    hdr[10] = 54u;
+    hdr[14] = 40u;
+    hdr[18] = (uint8_t)(width & 0xFFu);
+    hdr[19] = (uint8_t)((width >> 8) & 0xFFu);
+    hdr[20] = (uint8_t)((width >> 16) & 0xFFu);
+    hdr[21] = (uint8_t)((width >> 24) & 0xFFu);
+    hdr[22] = (uint8_t)(height & 0xFFu);
+    hdr[23] = (uint8_t)((height >> 8) & 0xFFu);
+    hdr[24] = (uint8_t)((height >> 16) & 0xFFu);
+    hdr[25] = (uint8_t)((height >> 24) & 0xFFu);
+    hdr[26] = 1u;
+    hdr[28] = 24u;
+    hdr[34] = (uint8_t)(img_size & 0xFFu);
+    hdr[35] = (uint8_t)((img_size >> 8) & 0xFFu);
+    hdr[36] = (uint8_t)((img_size >> 16) & 0xFFu);
+    hdr[37] = (uint8_t)((img_size >> 24) & 0xFFu);
+
+    bool ok = (fwrite(hdr, 1u, sizeof(hdr), out) == sizeof(hdr));
+    for (int32_t y = (int32_t)height - 1; ok && y >= 0; --y) {
+        const size_t row_off = (size_t)y * (size_t)width;
+        for (uint32_t x = 0u; x < width; ++x) {
+            const uint32_t argb =
+                argb_or_null != NULL ? argb_or_null[row_off + x] : rgb555_to_argb(rgb555_or_null[row_off + x]);
+            row[(size_t)x * 3u + 0u] = (uint8_t)(argb & 0xFFu);
+            row[(size_t)x * 3u + 1u] = (uint8_t)((argb >> 8) & 0xFFu);
+            row[(size_t)x * 3u + 2u] = (uint8_t)((argb >> 16) & 0xFFu);
+        }
+        ok = (fwrite(row, 1u, row_stride, out) == row_stride);
+    }
+    ok = ok && !ferror(out);
+    if (fclose(out) != 0) {
+        ok = false;
+    }
+    free(row);
+    return ok;
+}
+
+static bool write_bmp_argb(const char* path, const uint32_t* argb, uint32_t width, uint32_t height) {
+    return write_bmp_rgb24_pixels(path, argb, NULL, width, height);
+}
+
+static bool write_bmp_rgb555(const char* path, const uint16_t* rgb555, uint32_t width, uint32_t height) {
+    return write_bmp_rgb24_pixels(path, NULL, rgb555, width, height);
+}
+
+static void save_remaster_debug_snapshot(GBContext* ctx,
+                                         const NativePresenter* presenter,
+                                         const SyncedGuestState* guest,
+                                         const uint32_t* present_pixels,
+                                         const uint16_t* accurate_pixels,
+                                         uint32_t view_width,
+                                         bool widescreen,
+                                         CameraMargin margin,
+                                         uint32_t host_frame) {
+    if (ctx == NULL || guest == NULL || !ensure_dir_exists("debug")) {
+        gb_platform_show_toast("DEBUG SNAPSHOT", "FAILED");
+        return;
+    }
+
+    const time_t now = time(NULL);
+    const struct tm* tm_now = localtime(&now);
+    char stamp[32];
+    if (tm_now == NULL || strftime(stamp, sizeof(stamp), "%Y%m%d_%H%M%S", tm_now) == 0u) {
+        snprintf(stamp, sizeof(stamp), "00000000_000000");
+    }
+
+    const unsigned area = (unsigned)guest->room_obs.area;
+    const unsigned room = (unsigned)guest->room_obs.room;
+    const unsigned long long frame_num = (unsigned long long)ctx->completed_frames;
+    char folder[128];
+    char dir[256];
+    bool created = false;
+    for (int suffix = 0; suffix < 1000; ++suffix) {
+        if (suffix == 0) {
+            snprintf(folder, sizeof(folder), "snap_%s_a%02u_r%02u_f%llu", stamp, area, room,
+                     frame_num);
+        } else {
+            snprintf(folder, sizeof(folder), "snap_%s_a%02u_r%02u_f%llu_%d", stamp, area, room,
+                     frame_num, suffix);
+        }
+        snprintf(dir, sizeof(dir), "debug/%s", folder);
+        if (mkdir_one(dir)) {
+            created = true;
+            break;
+        }
+        if (errno != EEXIST) {
+            break;
+        }
+    }
+    if (!created) {
+        gb_platform_show_toast("DEBUG SNAPSHOT", "FAILED");
+        return;
+    }
+
+    char path[320];
+    snprintf(path, sizeof(path), "%s/screen.bmp", dir);
+    const bool screen_ok = write_bmp_argb(path, present_pixels, view_width, SCREEN_HEIGHT);
+
+    snprintf(path, sizeof(path), "%s/accurate.bmp", dir);
+    const bool accurate_ok =
+        accurate_pixels != NULL && write_bmp_rgb555(path, accurate_pixels, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    snprintf(path, sizeof(path), "%s/state.bin", dir);
+    const bool state_ok = gb_context_save_state_file(ctx, path);
+
+    snprintf(path, sizeof(path), "%s/info.txt", dir);
+    FILE* info = fopen(path, "w");
+    if (info != NULL) {
+        const GBPresentationHardwareSnapshot* hw = &guest->frame.hardware;
+        fprintf(info, "timestamp=%s\n", stamp);
+        fprintf(info, "mode=%s\n", widescreen ? "remaster-widescreen" : "remaster-classic");
+        fprintf(info, "view_width=%u\n", view_width);
+        fprintf(info, "view_height=%u\n", (unsigned)SCREEN_HEIGHT);
+        fprintf(info, "host_frame=%u\n", host_frame);
+        fprintf(info, "completed_frames=%llu\n", frame_num);
+        fprintf(info, "total_cycles=%llu\n", (unsigned long long)ctx->total_cycles);
+        fprintf(info, "area=%u\n", area);
+        fprintf(info, "room=%u\n", room);
+        fprintf(info, "camera_x=%u\n", (unsigned)guest->camera_x);
+        fprintf(info, "camera_y=%u\n", (unsigned)guest->camera_y);
+        fprintf(info, "bounds_min_x=%u\n", (unsigned)guest->bounds.min_x);
+        fprintf(info, "bounds_max_x=%u\n", (unsigned)guest->bounds.max_x);
+        fprintf(info, "margin_left=%u\n", margin.left);
+        fprintf(info, "margin_right=%u\n", margin.right);
+        fprintf(info, "source_node=%u\n", (unsigned)guest->source_node);
+        fprintf(info, "live_atlas=%u:0x%04X\n", (unsigned)guest->live_atlas_bank,
+                (unsigned)guest->live_atlas_ptr);
+        fprintf(info, "lcdc=0x%02X scx=%u scy=%u wx=%u wy=%u\n", (unsigned)hw->lcdc,
+                (unsigned)hw->scx, (unsigned)hw->scy, (unsigned)hw->wx, (unsigned)hw->wy);
+        if (presenter != NULL) {
+            fprintf(info, "presenter_camera_valid=%d presenter_cam=%d,%d\n",
+                    presenter->room.camera_valid ? 1 : 0, (int)presenter->room.camera_x,
+                    (int)presenter->room.camera_y);
+            fprintf(info, "neighbour_ready=%d neighbour_area=%u neighbour_room=%u edge=%d origin=%d,%d\n",
+                    presenter->room.neighbour_ready ? 1 : 0, (unsigned)presenter->room.neighbour.area,
+                    (unsigned)presenter->room.neighbour.room,
+                    (int)presenter->room.neighbour_place.edge,
+                    (int)presenter->room.neighbour_place.origin_x,
+                    (int)presenter->room.neighbour_place.origin_y);
+        }
+        fprintf(info, "screen_bmp=%s\n", screen_ok ? "screen.bmp" : "error");
+        fprintf(info, "accurate_bmp=%s\n", accurate_ok ? "accurate.bmp" : "error");
+        fprintf(info, "state_bin=%s\n", state_ok ? "state.bin" : "error");
+        fprintf(info,
+                "replay_cmd=./output/ghost-babel/build/ghost-babel-remaster --headless --widescreen --load-state-file %s/state.bin --limit-frames 5 --dump-dir /tmp/snap_repro --dump-frames 4\n",
+                dir);
+        fclose(info);
+    }
+
+    printf("[DEBUG] Snapshot saved to %s (area=%u room=%u cam=%u,%u frame=%llu)\n", dir, area,
+           room, (unsigned)guest->camera_x, (unsigned)guest->camera_y, frame_num);
+    gb_platform_show_toast("DEBUG SNAPSHOT", (screen_ok && state_ok) ? folder : "PARTIAL");
 }
 
 static void drain_after_frame(GBContext* ctx, uint32_t drain_cycles) {
@@ -876,6 +1082,7 @@ static int run_windowed(GBContext* ctx,
     gb_platform_set_screen_effect_default(GB_SCREEN_EFFECT_SHADER);
     gb_platform_set_vsync_default(true);
     gb_platform_set_rumble_default(true);
+    gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
     if (!gb_platform_init(5)) {
         fprintf(stderr, "remaster: platform init failed\n");
         return 1;
@@ -891,6 +1098,8 @@ static int run_windowed(GBContext* ctx,
     memset(&room_sync, 0, sizeof(room_sync));
     RoomRumbleTracker rumble;
     room_rumble_reset(&rumble);
+    RoomControls controls;
+    room_controls_reset(&controls);
     PerfCounters perf;
     perf_init(&perf);
 
@@ -907,7 +1116,7 @@ static int run_windowed(GBContext* ctx,
     }
 
     int status = 0;
-    for (uint32_t frame = 0; frame < frame_limit; ++frame) {
+    for (uint32_t frame = 0; frame < frame_limit;) {
         /* Input is pumped at the frame boundary, before the reset, which is
          * where the harness pumps it too. Polling after the frame instead put
          * the activation window 4560 cycles - a whole VBlank - later, and since
@@ -919,11 +1128,20 @@ static int run_windowed(GBContext* ctx,
             status = 0;
             goto shutdown;
         }
+        if (gb_platform_is_menu_open()) {
+            room_controls_reset(&controls);
+            gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
+            gb_platform_present_framebuffer(present_pixels);
+            gb_platform_vsync(70224u);
+            continue;
+        }
         const uint64_t pre_cycles = ctx->total_cycles;
         if (prev_state->valid && prev_state->total_cycles != pre_cycles) {
             prev_state->valid = false;
             room_sync.known = false;
             room_rumble_reset(&rumble);
+            room_controls_reset(&controls);
+            gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
             native_presenter_clear_column_cache(presenter);
         }
         gb_reset_frame(ctx);
@@ -991,6 +1209,11 @@ static int run_windowed(GBContext* ctx,
         for (size_t i = 0; i < (size_t)view_width * SCREEN_HEIGHT; ++i) {
             present_pixels[i] = rgb555_to_argb(surface[i]);
         }
+        if (gb_platform_consume_debug_snapshot_request()) {
+            save_remaster_debug_snapshot(ctx, presenter, render_state, present_pixels,
+                                         render_state->frame.hardware.accurate_pixels, view_width,
+                                         view_width > SCREEN_WIDTH, margin, frame);
+        }
         gb_platform_render_frame(present_pixels);
 
         {
@@ -998,10 +1221,11 @@ static int run_windowed(GBContext* ctx,
             const bool gameplay_active = ((hw->lcdc & 0x80u) != 0u) &&
                                          ((hw->lcdc & 0x20u) != 0u) &&
                                          (hw->wx > 7u) && (hw->wx < 167u);
+            const bool flat_screen = hw_is_flat_screen(hw);
             RoomRumbleInput rumble_in;
             memset(&rumble_in, 0, sizeof(rumble_in));
             rumble_in.gameplay_active = gameplay_active;
-            rumble_in.flat_screen = hw_is_flat_screen(hw);
+            rumble_in.flat_screen = flat_screen;
             rumble_in.area = render_state->room_obs.area;
             rumble_in.room = render_state->room_obs.room;
             rumble_in.hp = room_rumble_read_hp(ctx->wram, WRAM_TOTAL);
@@ -1015,14 +1239,35 @@ static int run_windowed(GBContext* ctx,
                 gb_platform_rumble(rumble_out.low_freq, rumble_out.high_freq,
                                    rumble_out.duration_ms);
             }
+
+            uint32_t top_overlay_rows = 0u;
+            uint32_t bottom_status_rows = 0u;
+            count_overlay_rows(hw, &top_overlay_rows, &bottom_status_rows);
+            RoomControlsInput ctrl_in;
+            memset(&ctrl_in, 0, sizeof(ctrl_in));
+            ctrl_in.gameplay_active = gameplay_active;
+            ctrl_in.flat_screen = flat_screen;
+            ctrl_in.menu_open = (bottom_status_rows > 8u || top_overlay_rows > 0u);
+            ctrl_in.button_edges = gb_platform_consume_remaster_button_edges();
+            RoomControlsOutput ctrl_out;
+            room_controls_step(&controls, &ctrl_in, &ctrl_out);
+            gb_platform_set_macro_joypad_override(ctrl_out.override_active,
+                                                  ctrl_out.dpad_mask,
+                                                  ctrl_out.buttons_mask);
+            if (ctrl_out.toast_label != NULL) {
+                gb_platform_show_toast("QUICK", ctrl_out.toast_label);
+            }
         }
 
         gb_platform_vsync(ctx->frame_cycles);
 
         perf_tick(&perf, presenter);
+        ++frame;
     }
 
 shutdown:
+    gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
+    native_presenter_enable_column_cache(presenter, false);
     free(prev_state);
     free(post_state);
     free(render_state);
@@ -1083,23 +1328,24 @@ static bool sweep_capture_points(
     GBContext* ctx, GBPresentationSource* source, GBPresentationScene* scene, GBPortFrame* ui,
     NativePresenter* presenter, uint32_t* surface, uint32_t frame_limit, const uint32_t* drains,
     size_t drain_count) {
+    bool ok = false;
     size_t* wins = calloc(drain_count, sizeof(size_t));
     double* best = calloc(frame_limit != 0 ? frame_limit : 1u, sizeof(double));
     if (wins == NULL || best == NULL) {
-        return false;
+        goto cleanup;
     }
     for (uint32_t index = 0; index < frame_limit; ++index) {
         if (!run_one_frame(ctx)) {
-            return false;
+            goto cleanup;
         }
         if (!gb_context_save_state_file(ctx, SWEEP_STATE_PATH)) {
-            return false;
+            goto cleanup;
         }
         double frame_best = -1.0;
         size_t frame_best_index = 0;
         for (size_t d = 0; d < drain_count; ++d) {
             if (!gb_context_load_state_file(ctx, SWEEP_STATE_PATH)) {
-                return false;
+                goto cleanup;
             }
             drain_after_frame(ctx, drains[d]);
             GBPresentationFrame probe;
@@ -1120,7 +1366,7 @@ static bool sweep_capture_points(
             best[index] = frame_best;
         }
         if (!gb_context_load_state_file(ctx, SWEEP_STATE_PATH)) {
-            return false;
+            goto cleanup;
         }
     }
     printf("\ncapture-point sweep: %u frames x %zu drains (UNVERIFIED, see logs)\n", frame_limit,
@@ -1128,9 +1374,12 @@ static bool sweep_capture_points(
     for (size_t d = 0; d < drain_count; ++d) {
         printf("    drain %-8u won %zu frames\n", drains[d], wins[d]);
     }
+    ok = true;
+
+cleanup:
     free(wins);
     free(best);
-    return true;
+    return ok;
 }
 
 static void usage(void) {
@@ -1169,6 +1418,7 @@ static void usage(void) {
         "                        a room, not a camera window\n"
         "  --sweep-drains A,B   per-frame capture-point sweep (UNVERIFIED)\n"
         "  --sweep-frames N     frames for the sweep\n"
+        "  --debug-snapshot-at N  save an isolated F12-style debug bundle on frame N\n"
         "  --hw-trace P,S,N     write N PPU snapshots (patterns, maps, attributes,\n"
         "                        palettes, reference pixels) from frame S to P\n");
 }
@@ -1258,6 +1508,8 @@ int main(int argc, char** argv) {
     uint8_t previous_oam[OAM_BYTES];
     int search_oam_shadow = 0;
     uint32_t search_frame = 0;
+    int debug_snapshot_active = 0;
+    uint32_t debug_snapshot_frame = 0;
     uint32_t view_width = SCREEN_WIDTH;
 
     for (int i = 1; i < argc; ++i) {
@@ -1386,8 +1638,6 @@ int main(int argc, char** argv) {
             if (view_width < SCREEN_WIDTH) {
                 view_width = SCREEN_WIDTH;
             }
-        } else if (strcmp(argv[i], "--camera-x") == 0 && i + 1 < argc) {
-            (void)strtoul(argv[++i], NULL, 10);
         } else if (strcmp(argv[i], "--dump-stride") == 0 && i + 1 < argc) {
             dump_stride = (uint32_t)strtoul(argv[++i], NULL, 10);
         } else if (strcmp(argv[i], "--dump-dir") == 0 && i + 1 < argc) {
@@ -1402,6 +1652,9 @@ int main(int argc, char** argv) {
             sweep_drains = argv[++i];
         } else if (strcmp(argv[i], "--sweep-frames") == 0 && i + 1 < argc) {
             sweep_frames = (uint32_t)strtoul(argv[++i], NULL, 10);
+        } else if (strcmp(argv[i], "--debug-snapshot-at") == 0 && i + 1 < argc) {
+            debug_snapshot_frame = (uint32_t)strtoul(argv[++i], NULL, 10);
+            debug_snapshot_active = 1;
         } else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
             usage();
             return 0;
@@ -1475,6 +1728,7 @@ int main(int argc, char** argv) {
         gbrt_presentation_source_init(&source, ctx, &presentation_config);
     if (init_status != GB_PRESENTATION_OK) {
         fprintf(stderr, "remaster: source init failed: %s\n", status_name(init_status));
+        gb_context_destroy(ctx);
         return 1;
     }
 
@@ -1488,21 +1742,30 @@ int main(int argc, char** argv) {
     ui.canvas_width = SCREEN_WIDTH;
     ui.canvas_height = SCREEN_HEIGHT;
 
+    int exit_code = 1;
+    FILE* meta = NULL;
+    FILE* room_out = NULL;
+    FILE* room_map_out = NULL;
+    FILE* trace_file = NULL;
+    FILE* hw_file = NULL;
+    SyncedGuestState* prev_state = NULL;
+    SyncedGuestState* post_state = NULL;
+    SyncedGuestState* render_state = NULL;
+    NativePresenter presenter;
+    memset(&presenter, 0, sizeof(presenter));
+
     /* The colour index and attribute-priority buffers are indexed by the same
      * surface column the background pass writes, margin included: the object
      * pass needs the margin's own priority, not just the picture's. */
     const size_t view_pixels = (size_t)view_width * SCREEN_HEIGHT;
     uint32_t* surface = calloc(view_pixels, sizeof(uint32_t));
-    uint32_t* previous_render = calloc(view_pixels, sizeof(uint32_t));
     uint8_t* bg_color_index = calloc(view_pixels, sizeof(uint8_t));
     uint8_t* bg_attr_priority = calloc(view_pixels, sizeof(uint8_t));
-    if (surface == NULL || previous_render == NULL || bg_color_index == NULL ||
-        bg_attr_priority == NULL) {
+    if (surface == NULL || bg_color_index == NULL || bg_attr_priority == NULL) {
         fprintf(stderr, "remaster: out of memory\n");
-        return 1;
+        goto cleanup;
     }
 
-    NativePresenter presenter;
     native_presenter_init(&presenter, view_width, SCREEN_HEIGHT, surface, view_width,
                           bg_color_index, bg_attr_priority);
     if (dump_tiles_dir) {
@@ -1519,7 +1782,7 @@ int main(int argc, char** argv) {
     if (load_state_file != NULL) {
         if (!gb_context_load_state_file(ctx, load_state_file)) {
             fprintf(stderr, "remaster: cannot load state file %s\n", load_state_file);
-            return 1;
+            goto cleanup;
         }
         /* Input scripts are anchored to absolute cycle counts. After a state
          * load the clock is already deep into the run, so a script written
@@ -1537,21 +1800,16 @@ int main(int argc, char** argv) {
         uint32_t* present_pixels = calloc(view_pixels, sizeof(uint32_t));
         if (present_pixels == NULL) {
             fprintf(stderr, "remaster: out of memory\n");
-            return 1;
+            goto cleanup;
         }
-        const int rc = run_windowed(ctx, &source, &scene, &ui, &presenter, surface, present_pixels,
-                                    view_width,
-                                    cgb_mode, limit_explicit ? limit_frames : UINT32_MAX,
-                                    margin, &extent, margin_left_cap, column_cache, room_map,
-                                    screenshot_prefix, screenshot_frames, drain_cycles,
-                                    perf_report_flag);
-        free(surface);
+        exit_code = run_windowed(ctx, &source, &scene, &ui, &presenter, surface, present_pixels,
+                                 view_width,
+                                 cgb_mode, limit_explicit ? limit_frames : UINT32_MAX,
+                                 margin, &extent, margin_left_cap, column_cache, room_map,
+                                 screenshot_prefix, screenshot_frames, drain_cycles,
+                                 perf_report_flag);
         free(present_pixels);
-        free(previous_render);
-        free(bg_color_index);
-        free(bg_attr_priority);
-        gb_context_destroy(ctx);
-        return rc;
+        goto cleanup;
     }
 
     if (sweep_drains != NULL) {
@@ -1566,10 +1824,10 @@ int main(int argc, char** argv) {
         }
         const bool ok = sweep_capture_points(ctx, &source, &scene, &ui, &presenter, surface,
                                              sweep_frames, drains, drain_count);
-        return ok ? 0 : 1;
+        exit_code = ok ? 0 : 1;
+        goto cleanup;
     }
 
-    FILE* meta = NULL;
     native_presenter_enable_column_cache(&presenter, column_cache);
     native_presenter_enable_room_map(&presenter, room_map);
 
@@ -1577,29 +1835,29 @@ int main(int argc, char** argv) {
         char path[512];
         snprintf(path, sizeof(path), "%s/meta.csv", dump_dir);
         meta = fopen(path, "w");
-        if (meta != NULL) {
-            fputs(META_HEADER, meta);
+        if (meta == NULL) {
+            fprintf(stderr, "remaster: cannot write meta to %s\n", path);
+            goto cleanup;
         }
+        fputs(META_HEADER, meta);
     }
 
     /* Room identity, one row per change. See room_record_row. */
-    FILE* room_out = NULL;
     if (room_record_path != NULL) {
         room_out = fopen(room_record_path, "w");
         if (room_out == NULL) {
             fprintf(stderr, "remaster: cannot write room record to %s\n", room_record_path);
-            return 1;
+            goto cleanup;
         }
         fputs(ROOM_HEADER, room_out);
     }
 
     /* Whether the room's index table stands still. See room_map_row. */
-    FILE* room_map_out = NULL;
     if (room_map_path != NULL) {
         room_map_out = fopen(room_map_path, "w");
         if (room_map_out == NULL) {
             fprintf(stderr, "remaster: cannot write room map to %s\n", room_map_path);
-            return 1;
+            goto cleanup;
         }
         fputs("frame,area,room,cam_x,cam_y,table_hash,table_nonzero,atlas\n", room_map_out);
     }
@@ -1634,26 +1892,23 @@ int main(int argc, char** argv) {
      * a hundred frames of moving sprites. The host only writes bytes; all
      * interpretation happens in tools/, keeping one place where the analysis
      * lives and one place where a bug can hide. */
-    FILE* trace_file = NULL;
     if (trace_path != NULL) {
         trace_file = fopen(trace_path, "wb");
         if (trace_file == NULL) {
             fprintf(stderr, "remaster: cannot write trace to %s\n", trace_path);
-            return 1;
+            goto cleanup;
         }
     }
-    FILE* hw_file = NULL;
     if (hw_trace_path != NULL) {
         hw_file = fopen(hw_trace_path, "wb");
         if (hw_file == NULL) {
             fprintf(stderr, "remaster: cannot write hardware trace to %s\n", hw_trace_path);
-            return 1;
+            goto cleanup;
         }
         const uint32_t header[2] = {HW_TRACE_MAGIC, (uint32_t)1u};
         if (fwrite(header, 1u, sizeof(header), hw_file) != sizeof(header)) {
             fprintf(stderr, "remaster: hardware trace write failed\n");
-            fclose(hw_file);
-            return 1;
+            goto cleanup;
         }
     }
 
@@ -1661,15 +1916,12 @@ int main(int argc, char** argv) {
     uint32_t block_oam_changes = 0;
     uint32_t block_frame = 0;
 
-    SyncedGuestState* prev_state = calloc(1u, sizeof(*prev_state));
-    SyncedGuestState* post_state = calloc(1u, sizeof(*post_state));
-    SyncedGuestState* render_state = calloc(1u, sizeof(*render_state));
+    prev_state = calloc(1u, sizeof(*prev_state));
+    post_state = calloc(1u, sizeof(*post_state));
+    render_state = calloc(1u, sizeof(*render_state));
     if (prev_state == NULL || post_state == NULL || render_state == NULL) {
         fprintf(stderr, "remaster: out of memory\n");
-        free(prev_state);
-        free(post_state);
-        free(render_state);
-        return 1;
+        goto cleanup;
     }
 
     for (uint32_t index = 0; index < limit_frames; ++index) {
@@ -1681,10 +1933,7 @@ int main(int argc, char** argv) {
         }
         if (!run_one_frame(ctx)) {
             fprintf(stderr, "remaster: frame %u did not complete\n", index);
-            free(prev_state);
-            free(post_state);
-            free(render_state);
-            return 1;
+            goto cleanup;
         }
         drain_after_frame(ctx, drain_cycles);
 
@@ -1762,11 +2011,7 @@ int main(int argc, char** argv) {
             if (fwrite(ctx->wram, 1u, WRAM_TOTAL, trace_file) != WRAM_TOTAL ||
                 fwrite(ctx->oam, 1u, OAM_BYTES, trace_file) != OAM_BYTES) {
                 fprintf(stderr, "remaster: trace write failed\n");
-                fclose(trace_file);
-                free(prev_state);
-                free(post_state);
-                free(render_state);
-                return 1;
+                goto cleanup;
             }
             stats.frames_traced++;
         }
@@ -1775,11 +2020,7 @@ int main(int argc, char** argv) {
             index < hw_trace_start + hw_trace_count) {
             if (!write_hw_record(hw_file, hw)) {
                 fprintf(stderr, "remaster: hardware trace write failed\n");
-                fclose(hw_file);
-                free(prev_state);
-                free(post_state);
-                free(render_state);
-                return 1;
+                goto cleanup;
             }
             stats.frames_traced++;
         }
@@ -1867,12 +2108,21 @@ int main(int argc, char** argv) {
         if (!native_presenter_render_background(&presenter, &render_state->frame, margin.left,
                                                 margin.right, cgb_mode)) {
             fprintf(stderr, "remaster: render failed at %u\n", index);
-            free(prev_state);
-            free(post_state);
-            free(render_state);
-            return 1;
+            goto cleanup;
         }
-        memcpy(previous_render, surface, view_pixels * sizeof(uint32_t));
+
+        if (debug_snapshot_active && index == debug_snapshot_frame) {
+            uint32_t* snap_argb = malloc(view_pixels * sizeof(uint32_t));
+            if (snap_argb != NULL) {
+                for (size_t k = 0; k < view_pixels; ++k) {
+                    snap_argb[k] = rgb555_to_argb(surface[k]);
+                }
+                save_remaster_debug_snapshot(ctx, &presenter, render_state, snap_argb,
+                                             hw->accurate_pixels, view_width, widescreen != 0,
+                                             margin, index);
+                free(snap_argb);
+            }
+        }
 
         if (should_dump) {
             char ref_path[512];
@@ -2070,22 +2320,6 @@ int main(int argc, char** argv) {
 
     }
 
-    if (meta != NULL) {
-        fclose(meta);
-    }
-    if (room_out != NULL) {
-        fclose(room_out);
-    }
-    if (room_map_out != NULL) {
-        fclose(room_map_out);
-    }
-    if (trace_file != NULL) {
-        fclose(trace_file);
-    }
-    if (hw_file != NULL) {
-        fclose(hw_file);
-    }
-
     stats.sprite_pixels_drawn = presenter.sprite_pixels_drawn;
     stats.sprite_pixels_hidden_by_bg = presenter.sprite_pixels_hidden_by_bg;
     stats.sprites_over_budget = presenter.sprites_over_budget;
@@ -2187,13 +2421,31 @@ int main(int argc, char** argv) {
     if (last_status != GB_PRESENTATION_OK) {
         printf("  last capture status        %s\n", status_name(last_status));
     }
+    exit_code = 0;
 
+cleanup:
+    if (meta != NULL) {
+        fclose(meta);
+    }
+    if (room_out != NULL) {
+        fclose(room_out);
+    }
+    if (room_map_out != NULL) {
+        fclose(room_map_out);
+    }
+    if (trace_file != NULL) {
+        fclose(trace_file);
+    }
+    if (hw_file != NULL) {
+        fclose(hw_file);
+    }
     free(prev_state);
     free(post_state);
     free(render_state);
+    native_presenter_enable_column_cache(&presenter, false);
     free(surface);
-    free(previous_render);
     free(bg_color_index);
     free(bg_attr_priority);
-    return 0;
+    gb_context_destroy(ctx);
+    return exit_code;
 }

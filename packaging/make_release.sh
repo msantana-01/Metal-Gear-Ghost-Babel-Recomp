@@ -50,6 +50,8 @@ FILES=(
   remaster/learned_links.h
   remaster/room_actors.c
   remaster/room_actors.h
+  remaster/room_controls.c
+  remaster/room_controls.h
   remaster/room_rumble.c
   remaster/room_rumble.h
   remaster/sprite_shadow.c

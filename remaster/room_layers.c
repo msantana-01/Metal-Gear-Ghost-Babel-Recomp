@@ -77,6 +77,8 @@ RoomDecompressStatus room_layer_decompress(const uint8_t* rom,
     if (length == 0u || length > out_capacity || length > ROOM_LAYER_MAX_BYTES) {
         return ROOM_DECOMPRESS_IMPLAUSIBLE;
     }
+    /* Clear target window so a malformed ROM forward-reference cannot read stack garbage. */
+    memset(out, 0, length);
 
     const uint16_t end = (uint16_t)((uint32_t)start + length);
     size_t written = 0u;

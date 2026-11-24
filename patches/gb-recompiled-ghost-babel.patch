@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/36] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/41] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/36] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/41] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/36] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/41] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/36] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/41] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/36] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/41] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/36] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/41] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/36] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/41] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/36] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/41] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/36] platform: confirm host actions with a transient
+Subject: [PATCH 09/41] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/36] platform: name the host after the cartridge and give
+Subject: [PATCH 10/41] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/36] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/41] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/36] platform: centre the footer buttons on the content
+Subject: [PATCH 12/41] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/36] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/41] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/36] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/41] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/36] platform: panel effects for the presented image, one
+Subject: [PATCH 15/41] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/36] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/41] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/36] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/41] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/36] runtime: include math.h for the panel effects
+Subject: [PATCH 18/41] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/36] platform: make the presented surface width a runtime
+Subject: [PATCH 19/41] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/36] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/41] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/36] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/41] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/36] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/41] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/36] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/41] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/36] audio: let the host choose the mastering default
+Subject: [PATCH 24/41] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/36] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/41] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/36] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/41] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/36] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/41] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/36] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/41] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/36] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/41] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/36] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/41] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6378,7 +6378,7 @@ index bbf034d..f8c9f76 100644
 From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 15:56:01 -0300
-Subject: [PATCH 31/36] fix(platform): bound framebuffer copies to active
+Subject: [PATCH 31/41] fix(platform): bound framebuffer copies to active
  present width
 
 ---
@@ -6452,7 +6452,7 @@ index f8c9f76..b612cf8 100644
 From 355c229f551f0bd44dcb924847e27ae8e3afe6ea Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 16:08:48 -0300
-Subject: [PATCH 32/36] fix(platform): implement cross-platform SDL_Renderer
+Subject: [PATCH 32/41] fix(platform): implement cross-platform SDL_Renderer
  CRT shader pipeline
 
 ---
@@ -7150,7 +7150,7 @@ index b612cf8..9785595 100644
 From 304eed1da58155f6e74d5e8492be1fb81e1ede00 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:16:42 -0300
-Subject: [PATCH 33/36] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
+Subject: [PATCH 33/41] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
  LCD shader presets
 
 ---
@@ -7945,7 +7945,7 @@ index 9785595..4932232 100644
 From 8f3331e1d7fd2d29a4b0a3cbd4bba60b4a951920 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:29:38 -0300
-Subject: [PATCH 34/36] perf(platform): blend LCD response in linear light and
+Subject: [PATCH 34/41] perf(platform): blend LCD response in linear light and
  tune GBC default to 16ms
 
 ---
@@ -8094,7 +8094,7 @@ index 82bb705..fe185e4 100644
 From 7e99bdcd929226a8882e34a13d25ebc5d568863d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:10:20 -0300
-Subject: [PATCH 35/36] feat(audio): cycle-integrated APU anti-aliasing,
+Subject: [PATCH 35/41] feat(audio): cycle-integrated APU anti-aliasing,
  linear-peak compressor fix, warmth LPF, and headphone crossfeed
 
 ---
@@ -8779,7 +8779,7 @@ index 727d938..6bc0f4d 100644
 From 410f9d80bf11a70f80022555b2979a8f201bef4f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:58:20 -0300
-Subject: [PATCH 36/36] feat(platform,audio): add savestate thumbnails, V-Sync
+Subject: [PATCH 36/41] feat(platform,audio): add savestate thumbnails, V-Sync
  audio DRC, and controller rumble API
 
 ---
@@ -10473,6 +10473,2401 @@ index 0000000..b99038d
 +    std::printf("qol_features: all checks passed\n");
 +    return 0;
 +}
+-- 
+2.56.0
+
+
+From 355ebc4869b8b504a4cd4d8e58edfde34110b270 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 24 Nov 2026 08:31:59 -0300
+Subject: [PATCH 37/41] feat(platform): add F12 debug snapshot trigger, BMP
+ fallback writer, and public toast API
+
+---
+ runtime/include/platform_sdl.h |  10 +++
+ runtime/src/platform_sdl.cpp   | 151 +++++++++++++++++++++++++++++++++
+ 2 files changed, 161 insertions(+)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index e8e80cf..4ad9224 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -294,6 +294,16 @@ int gb_platform_get_rumble_strength(void);
+  */
+ void gb_platform_rumble(uint16_t low_freq, uint16_t high_freq, uint32_t duration_ms);
+ 
++/**
++ * @brief Consume any pending F12 debug snapshot request triggered by user input.
++ */
++bool gb_platform_consume_debug_snapshot_request(void);
++
++/**
++ * @brief Display a brief on-screen toast message in the overlay.
++ */
++void gb_platform_show_toast(const char* label, const char* value);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index dd7dfba..2584eb9 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -331,6 +331,7 @@ static GBInputAction g_binding_capture_action = GB_INPUT_ACTION_RIGHT;
+ static int g_binding_capture_slot = 0;
+ static bool g_fast_forward_active = false;
+ static bool g_max_speed_mode = false;
++static bool g_debug_snapshot_requested = false;
+ 
+ /* Transient confirmation for host actions, drawn over the game in the
+  * bottom-right corner. Label and value are stored apart because they are drawn
+@@ -4527,6 +4528,7 @@ void gb_platform_shutdown(void) {
+     destroy_savestate_thumb_texture();
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
++    g_debug_snapshot_requested = false;
+     
+     if (ImGui::GetCurrentContext() != NULL) {
+         ImGui_ImplSDLRenderer2_Shutdown();
+@@ -5447,6 +5449,7 @@ bool gb_platform_init(int scale) {
+     g_max_speed_mode = false;
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
++    g_debug_snapshot_requested = false;
+     update_effective_joypad_state();
+     g_last_guest_framebuffer_valid = false;
+     g_present_count = 0;
+@@ -5790,6 +5793,12 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                     }
+                     return true;
+ 
++                case SDL_SCANCODE_F12:
++                    if (pressed && event->key.repeat == 0) {
++                        g_debug_snapshot_requested = true;
++                    }
++                    return true;
++
+                 case SDL_SCANCODE_ESCAPE:
+                 case SDL_SCANCODE_AC_BACK:
+                     if (pressed && event->key.repeat == 0) {
+@@ -5939,7 +5948,140 @@ void gb_platform_submit_port_frame(void* user, const GBPortFrame* frame) {
+ 
+ 
+ 
++static bool write_bmp_argb(const char* path, const uint32_t* argb, int width, int height) {
++    if (!path || !argb || width <= 0 || height <= 0) {
++        return false;
++    }
++    FILE* f = fopen(path, "wb");
++    if (!f) {
++        return false;
++    }
++    const uint32_t row_raw = (uint32_t)width * 3u;
++    const uint32_t row_stride = (row_raw + 3u) & ~3u;
++    const uint32_t img_size = row_stride * (uint32_t)height;
++    const uint32_t file_size = 54u + img_size;
++    uint8_t hdr[54] = {};
++    hdr[0] = 'B';
++    hdr[1] = 'M';
++    hdr[2] = (uint8_t)(file_size & 0xFFu);
++    hdr[3] = (uint8_t)((file_size >> 8) & 0xFFu);
++    hdr[4] = (uint8_t)((file_size >> 16) & 0xFFu);
++    hdr[5] = (uint8_t)((file_size >> 24) & 0xFFu);
++    hdr[10] = 54u;
++    hdr[14] = 40u;
++    hdr[18] = (uint8_t)((uint32_t)width & 0xFFu);
++    hdr[19] = (uint8_t)(((uint32_t)width >> 8) & 0xFFu);
++    hdr[20] = (uint8_t)(((uint32_t)width >> 16) & 0xFFu);
++    hdr[21] = (uint8_t)(((uint32_t)width >> 24) & 0xFFu);
++    hdr[22] = (uint8_t)((uint32_t)height & 0xFFu);
++    hdr[23] = (uint8_t)(((uint32_t)height >> 8) & 0xFFu);
++    hdr[24] = (uint8_t)(((uint32_t)height >> 16) & 0xFFu);
++    hdr[25] = (uint8_t)(((uint32_t)height >> 24) & 0xFFu);
++    hdr[26] = 1u;
++    hdr[28] = 24u;
++    hdr[34] = (uint8_t)(img_size & 0xFFu);
++    hdr[35] = (uint8_t)((img_size >> 8) & 0xFFu);
++    hdr[36] = (uint8_t)((img_size >> 16) & 0xFFu);
++    hdr[37] = (uint8_t)((img_size >> 24) & 0xFFu);
++
++    bool ok = (fwrite(hdr, 1, sizeof(hdr), f) == sizeof(hdr));
++    std::vector<uint8_t> row(row_stride, 0u);
++    for (int y = height - 1; ok && y >= 0; --y) {
++        const uint32_t* src = argb + (size_t)y * (size_t)width;
++        for (int x = 0; x < width; ++x) {
++            const uint32_t c = src[x];
++            row[(size_t)x * 3u + 0u] = (uint8_t)(c & 0xFFu);
++            row[(size_t)x * 3u + 1u] = (uint8_t)((c >> 8) & 0xFFu);
++            row[(size_t)x * 3u + 2u] = (uint8_t)((c >> 16) & 0xFFu);
++        }
++        ok = (fwrite(row.data(), 1, row_stride, f) == row_stride);
++    }
++    fclose(f);
++    return ok;
++}
++
++static void save_platform_debug_snapshot(const uint32_t* framebuffer) {
++    if (!framebuffer) {
++        return;
++    }
++    std::time_t now = std::time(NULL);
++    std::tm tm_now = {};
++#if defined(_WIN32)
++    localtime_s(&tm_now, &now);
++#else
++    localtime_r(&now, &tm_now);
++#endif
++    char stamp[32];
++    if (std::strftime(stamp, sizeof(stamp), "%Y%m%d_%H%M%S", &tm_now) == 0) {
++        snprintf(stamp, sizeof(stamp), "00000000_000000");
++    }
++
++    const uint64_t frame_num =
++        g_registered_ctx ? g_registered_ctx->completed_frames : (uint64_t)g_frame_count;
++    const uint64_t total_cycles =
++        g_registered_ctx ? g_registered_ctx->total_cycles : 0ull;
++
++    std::error_code ec;
++    fs::path debug_root("debug");
++    fs::create_directories(debug_root, ec);
++
++    char base_name[96];
++    snprintf(base_name, sizeof(base_name), "snap_%s_f%llu", stamp,
++             (unsigned long long)frame_num);
++    fs::path dir = debug_root / base_name;
++    for (int suffix = 1; fs::exists(dir, ec) && suffix < 1000; ++suffix) {
++        char alt[112];
++        snprintf(alt, sizeof(alt), "%s_%d", base_name, suffix);
++        dir = debug_root / alt;
++    }
++    if (!fs::create_directories(dir, ec) && !fs::exists(dir, ec)) {
++        show_toast("DEBUG SNAPSHOT", "FAILED");
++        return;
++    }
++
++    std::vector<uint32_t> argb_tmp((size_t)g_present_width * (size_t)GB_SCREEN_HEIGHT);
++    copy_display_frame(argb_tmp.data(), g_present_width * (int)sizeof(uint32_t), framebuffer,
++                       g_palette_idx, g_registered_ctx);
++    const bool bmp_ok =
++        write_bmp_argb((dir / "screen.bmp").string().c_str(), argb_tmp.data(),
++                       g_present_width, GB_SCREEN_HEIGHT);
++    const bool state_ok =
++        g_registered_ctx &&
++        gb_context_save_state_file(g_registered_ctx, (dir / "state.bin").string().c_str());
++
++    if (FILE* info = fopen((dir / "info.txt").string().c_str(), "w")) {
++        fprintf(info, "timestamp=%s\n", stamp);
++        fprintf(info, "mode=authentic\n");
++        fprintf(info, "frame=%llu\n", (unsigned long long)frame_num);
++        fprintf(info, "total_cycles=%llu\n", (unsigned long long)total_cycles);
++        fprintf(info, "screen_width=%d\n", g_present_width);
++        fprintf(info, "screen_height=%d\n", GB_SCREEN_HEIGHT);
++        fprintf(info, "screen_bmp=%s\n", bmp_ok ? "screen.bmp" : "error");
++        fprintf(info, "state_bin=%s\n", state_ok ? "state.bin" : "error");
++        fclose(info);
++    }
++
++    const std::string folder = dir.filename().string();
++    printf("[DEBUG] Snapshot saved to %s (frame=%llu cycles=%llu)\n",
++           dir.string().c_str(), (unsigned long long)frame_num,
++           (unsigned long long)total_cycles);
++    show_toast("DEBUG SNAPSHOT", (bmp_ok && state_ok) ? folder.c_str() : "PARTIAL");
++}
++
++bool gb_platform_consume_debug_snapshot_request(void) {
++    const bool requested = g_debug_snapshot_requested;
++    g_debug_snapshot_requested = false;
++    return requested;
++}
++
++void gb_platform_show_toast(const char* label, const char* value) {
++    show_toast(label, value);
++}
++
+ void gb_platform_render_frame(const uint32_t* framebuffer) {
++    if (framebuffer != NULL && gb_platform_consume_debug_snapshot_request()) {
++        save_platform_debug_snapshot(framebuffer);
++    }
+     render_frame_internal(framebuffer, true);
+ }
+ 
+@@ -7031,6 +7173,15 @@ void gb_platform_rumble(uint16_t low_freq, uint16_t high_freq, uint32_t duration
+     (void)duration_ms;
+ }
+ 
++bool gb_platform_consume_debug_snapshot_request(void) {
++    return false;
++}
++
++void gb_platform_show_toast(const char* label, const char* value) {
++    (void)label;
++    (void)value;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+-- 
+2.56.0
+
+
+From 611ca16b5f483b077ec9d4ffe37448bb795ec199 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 24 Nov 2026 09:38:36 -0300
+Subject: [PATCH 38/41] feat: add Modern Stealth control preset and macro
+ joypad override API
+
+---
+ runtime/include/platform_sdl.h |  33 +++++
+ runtime/src/platform_sdl.cpp   | 241 ++++++++++++++++++++++++++++-----
+ 2 files changed, 243 insertions(+), 31 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 4ad9224..f668300 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -49,6 +49,19 @@ typedef enum GBScreenEffect {
+     GB_SCREEN_EFFECT_COUNT = 7,
+ } GBScreenEffect;
+ 
++typedef enum GBControlPreset {
++    GB_CONTROL_PRESET_CLASSIC = 0,
++    GB_CONTROL_PRESET_MODERN = 1,
++    GB_CONTROL_PRESET_COUNT = 2,
++} GBControlPreset;
++
++enum {
++    GB_REMASTER_BTN_LB = 1u << 0,
++    GB_REMASTER_BTN_RB = 1u << 1,
++    GB_REMASTER_BTN_LT = 1u << 2,
++    GB_REMASTER_BTN_RT = 1u << 3,
++};
++
+ enum {
+     GB_PLATFORM_RETURN_TO_LAUNCHER_EXIT_CODE = 64,
+ };
+@@ -304,6 +317,26 @@ bool gb_platform_consume_debug_snapshot_request(void);
+  */
+ void gb_platform_show_toast(const char* label, const char* value);
+ 
++/**
++ * @brief Choose the default controller preset used when preferences are loaded.
++ */
++void gb_platform_set_control_preset_default(GBControlPreset preset);
++
++/**
++ * @brief Current controller preset, after preferences and menu selection.
++ */
++GBControlPreset gb_platform_get_control_preset(void);
++
++/**
++ * @brief Override manual joypad state during an input-only remaster macro.
++ */
++void gb_platform_set_macro_joypad_override(bool active, uint8_t dpad_mask, uint8_t buttons_mask);
++
++/**
++ * @brief Consume rising-edge physical shoulder/trigger bits (GB_REMASTER_BTN_*).
++ */
++uint32_t gb_platform_consume_remaster_button_edges(void);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 2584eb9..a4f40d8 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -247,6 +247,17 @@ static std::string g_controller_name;
+ static bool g_rumble_default = false;
+ static bool g_rumble_enabled = false;
+ static int g_rumble_strength = 100;
++static GBControlPreset g_control_preset_default = GB_CONTROL_PRESET_CLASSIC;
++static GBControlPreset g_control_preset = GB_CONTROL_PRESET_CLASSIC;
++static const char* g_control_preset_names[GB_CONTROL_PRESET_COUNT] = {
++    "Classic GBC",
++    "Modern Stealth",
++};
++static bool g_macro_override_active = false;
++static uint8_t g_macro_joypad_dpad = 0xFF;
++static uint8_t g_macro_joypad_buttons = 0xFF;
++static uint32_t g_remaster_btn_held_mask = 0;
++static uint32_t g_remaster_btn_edge_mask = 0;
+ static bool g_audio_output_enabled = true;
+ static std::atomic<bool> g_audio_muted{false};
+ static uint32_t g_audio_latency_ms = 80;
+@@ -843,6 +854,8 @@ static void clear_controller_state(void) {
+     memset(g_controller_button_binding_pressed, 0, sizeof(g_controller_button_binding_pressed));
+     memset(g_controller_axis_binding_pressed, 0, sizeof(g_controller_axis_binding_pressed));
+     memset(g_controller_axis_values, 0, sizeof(g_controller_axis_values));
++    g_remaster_btn_held_mask = 0;
++    g_remaster_btn_edge_mask = 0;
+     g_controller_type = SDL_CONTROLLER_TYPE_UNKNOWN;
+     g_controller_label_profile = detect_controller_label_profile(NULL);
+     g_controller_name.clear();
+@@ -1092,9 +1105,46 @@ static void set_default_audio_preferences(void) {
+     g_audio_target_device_name.clear();
+ }
+ 
++static void set_default_controller_bindings_for_preset(GBControlPreset preset) {
++    memset(g_controller_bindings, 0, sizeof(g_controller_bindings));
++
++    g_controller_bindings[GB_INPUT_ACTION_UP][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP);
++    g_controller_bindings[GB_INPUT_ACTION_UP][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_NEGATIVE, SDL_CONTROLLER_AXIS_LEFTY);
++    g_controller_bindings[GB_INPUT_ACTION_DOWN][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
++    g_controller_bindings[GB_INPUT_ACTION_DOWN][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_LEFTY);
++    g_controller_bindings[GB_INPUT_ACTION_LEFT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
++    g_controller_bindings[GB_INPUT_ACTION_LEFT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_NEGATIVE, SDL_CONTROLLER_AXIS_LEFTX);
++    g_controller_bindings[GB_INPUT_ACTION_RIGHT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
++    g_controller_bindings[GB_INPUT_ACTION_RIGHT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_LEFTX);
++    g_controller_bindings[GB_INPUT_ACTION_TOGGLE_MENU][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_LEFTSTICK);
++    g_controller_bindings[GB_INPUT_ACTION_TOGGLE_PORT_UI][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
++
++    if (preset == GB_CONTROL_PRESET_MODERN) {
++        g_controller_bindings[GB_INPUT_ACTION_A][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_A);
++        g_controller_bindings[GB_INPUT_ACTION_B][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_X);
++        g_controller_bindings[GB_INPUT_ACTION_B][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
++        g_controller_bindings[GB_INPUT_ACTION_START][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_B);
++        g_controller_bindings[GB_INPUT_ACTION_START][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_START);
++        g_controller_bindings[GB_INPUT_ACTION_SELECT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_Y);
++        g_controller_bindings[GB_INPUT_ACTION_SELECT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_BACK);
++    } else {
++        g_controller_bindings[GB_INPUT_ACTION_A][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_B);
++        g_controller_bindings[GB_INPUT_ACTION_A][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
++        g_controller_bindings[GB_INPUT_ACTION_B][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_A);
++        g_controller_bindings[GB_INPUT_ACTION_B][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
++        g_controller_bindings[GB_INPUT_ACTION_SELECT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_BACK);
++        g_controller_bindings[GB_INPUT_ACTION_START][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_START);
++        g_controller_bindings[GB_INPUT_ACTION_FAST_FORWARD][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
++        g_controller_bindings[GB_INPUT_ACTION_TOGGLE_MAX_SPEED][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
++        g_controller_bindings[GB_INPUT_ACTION_SAVE_STATE][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_X);
++        g_controller_bindings[GB_INPUT_ACTION_LOAD_STATE][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_Y);
++    }
++
++    clear_all_binding_pressed_state();
++}
++
+ static void set_default_input_bindings(void) {
+     memset(g_keyboard_bindings, 0, sizeof(g_keyboard_bindings));
+-    memset(g_controller_bindings, 0, sizeof(g_controller_bindings));
+ 
+     g_keyboard_bindings[GB_INPUT_ACTION_UP][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_UP);
+     g_keyboard_bindings[GB_INPUT_ACTION_UP][1] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_W);
+@@ -1125,28 +1175,7 @@ static void set_default_input_bindings(void) {
+     g_keyboard_bindings[GB_INPUT_ACTION_NEXT_SCREEN_EFFECT][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F9);
+     g_keyboard_bindings[GB_INPUT_ACTION_TOGGLE_LCD_RESPONSE][0] = make_binding(GB_INPUT_BINDING_KEY, SDL_SCANCODE_F4);
+ 
+-    g_controller_bindings[GB_INPUT_ACTION_UP][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP);
+-    g_controller_bindings[GB_INPUT_ACTION_UP][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_NEGATIVE, SDL_CONTROLLER_AXIS_LEFTY);
+-    g_controller_bindings[GB_INPUT_ACTION_DOWN][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+-    g_controller_bindings[GB_INPUT_ACTION_DOWN][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_LEFTY);
+-    g_controller_bindings[GB_INPUT_ACTION_LEFT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+-    g_controller_bindings[GB_INPUT_ACTION_LEFT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_NEGATIVE, SDL_CONTROLLER_AXIS_LEFTX);
+-    g_controller_bindings[GB_INPUT_ACTION_RIGHT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+-    g_controller_bindings[GB_INPUT_ACTION_RIGHT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_LEFTX);
+-    g_controller_bindings[GB_INPUT_ACTION_A][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_B);
+-    g_controller_bindings[GB_INPUT_ACTION_A][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+-    g_controller_bindings[GB_INPUT_ACTION_B][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_A);
+-    g_controller_bindings[GB_INPUT_ACTION_B][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+-    g_controller_bindings[GB_INPUT_ACTION_SELECT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_BACK);
+-    g_controller_bindings[GB_INPUT_ACTION_START][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_START);
+-    g_controller_bindings[GB_INPUT_ACTION_FAST_FORWARD][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+-    g_controller_bindings[GB_INPUT_ACTION_TOGGLE_MAX_SPEED][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+-    g_controller_bindings[GB_INPUT_ACTION_SAVE_STATE][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_X);
+-    g_controller_bindings[GB_INPUT_ACTION_LOAD_STATE][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_Y);
+-    g_controller_bindings[GB_INPUT_ACTION_TOGGLE_MENU][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+-    g_controller_bindings[GB_INPUT_ACTION_TOGGLE_PORT_UI][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+-
+-    clear_all_binding_pressed_state();
++    set_default_controller_bindings_for_preset(g_control_preset);
+ }
+ 
+ static std::string runtime_preferences_path(void) {
+@@ -1170,6 +1199,7 @@ static const char* const kIdentityPrefKeys[] = {
+     "screen.lcd_response_enabled",
+     "screen.lcd_response_ms",
+     "video.vsync",
++    "control.preset",
+ };
+ 
+ /* The identity a key belongs to, or NULL when the key is not an identity key.
+@@ -1254,10 +1284,18 @@ static void apply_identity_preference(const char* identity, const char* value) {
+         g_vsync = (strcmp(value, "0") != 0);
+         return;
+     }
++    if (strcmp(identity, "control.preset") == 0) {
++        long parsed = strtol(value, NULL, 10);
++        if (parsed >= 0 && parsed < GB_CONTROL_PRESET_COUNT) {
++            g_control_preset = (GBControlPreset)parsed;
++        }
++        return;
++    }
+ }
+ 
+ static void load_runtime_preferences(void) {
+     set_default_audio_preferences();
++    g_control_preset = g_control_preset_default;
+     set_default_input_bindings();
+     g_savestate_slot = 0;
+     g_savestate_status.clear();
+@@ -1270,6 +1308,8 @@ static void load_runtime_preferences(void) {
+     g_rumble_enabled = g_rumble_default;
+     g_rumble_strength = 100;
+     bool saw_controller_port_ui_binding = false;
++    GBInputBinding parsed_controller_bindings[GB_INPUT_ACTION_COUNT][2] = {};
++    bool parsed_controller_has_binding[GB_INPUT_ACTION_COUNT][2] = {};
+ 
+     const std::string path = runtime_preferences_path();
+     if (!path.empty()) {
+@@ -1361,7 +1401,21 @@ static void load_runtime_preferences(void) {
+                     continue;
+                 }
+ 
+-                char* section = key + (is_keyboard ? 9 : 11);
++                const std::string raw_key(key);
++                char* section = NULL;
++                if (is_keyboard) {
++                    section = key + 9;
++                } else if (!g_preference_scope.empty()) {
++                    const std::string expected_prefix = "controller." + g_preference_scope + ".";
++                    if (strncmp(raw_key.c_str(), expected_prefix.c_str(), expected_prefix.size()) != 0) {
++                        g_foreign_identity_values[raw_key] = value;
++                        continue;
++                    }
++                    section = key + expected_prefix.size();
++                } else {
++                    section = key + 11;
++                }
++
+                 char* dot = strrchr(section, '.');
+                 if (!dot) {
+                     continue;
+@@ -1375,6 +1429,9 @@ static void load_runtime_preferences(void) {
+ 
+                 GBInputAction action = GB_INPUT_ACTION_RIGHT;
+                 if (!parse_input_action_name(section, &action)) {
++                    if (is_controller && g_preference_scope.empty() && strchr(section, '.') != NULL) {
++                        g_foreign_identity_values[raw_key] = value;
++                    }
+                     continue;
+                 }
+ 
+@@ -1416,16 +1473,26 @@ static void load_runtime_preferences(void) {
+                 if (is_keyboard) {
+                     g_keyboard_bindings[action][slot] = binding;
+                 } else {
+-                    g_controller_bindings[action][slot] = binding;
+-                    if (action == GB_INPUT_ACTION_TOGGLE_PORT_UI) {
+-                        saw_controller_port_ui_binding = true;
+-                    }
++                    parsed_controller_bindings[action][slot] = binding;
++                    parsed_controller_has_binding[action][slot] = true;
+                 }
+             }
+             fclose(file);
+         }
+     }
+ 
++    set_default_controller_bindings_for_preset(g_control_preset);
++    for (int action = 0; action < GB_INPUT_ACTION_COUNT; action++) {
++        for (int slot = 0; slot < 2; slot++) {
++            if (parsed_controller_has_binding[action][slot]) {
++                g_controller_bindings[action][slot] = parsed_controller_bindings[action][slot];
++                if (action == GB_INPUT_ACTION_TOGGLE_PORT_UI) {
++                    saw_controller_port_ui_binding = true;
++                }
++            }
++        }
++    }
++
+     /*
+      * Runtime preferences written before the game-panel action existed stored
+      * the old default R3 binding as Toggle Menu slot 1. Preserve every custom
+@@ -1509,6 +1576,7 @@ static void save_runtime_preferences(void) {
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_ms").c_str(),
+             g_lcd_response_ms);
+     fprintf(file, "%s=%d\n", scoped_pref_key("video.vsync").c_str(), g_vsync ? 1 : 0);
++    fprintf(file, "%s=%d\n", scoped_pref_key("control.preset").c_str(), (int)g_control_preset);
+     fprintf(file, "controls.rumble=%d\n", g_rumble_enabled ? 1 : 0);
+     fprintf(file, "controls.rumble_strength=%d\n", g_rumble_strength);
+ 
+@@ -1520,11 +1588,14 @@ static void save_runtime_preferences(void) {
+         }
+     }
+ 
++    const std::string ctrl_prefix =
++        g_preference_scope.empty() ? "controller." : ("controller." + g_preference_scope + ".");
+     for (int action = 0; action < GB_INPUT_ACTION_COUNT; action++) {
+         for (int slot = 0; slot < 2; slot++) {
+             char value[64];
+             binding_to_config_value(g_controller_bindings[action][slot], value, sizeof(value));
+-            fprintf(file, "controller.%s.%d=%s\n", input_action_config_name((GBInputAction)action), slot, value);
++            fprintf(file, "%s%s.%d=%s\n", ctrl_prefix.c_str(),
++                    input_action_config_name((GBInputAction)action), slot, value);
+         }
+     }
+ 
+@@ -1736,10 +1807,25 @@ static void rebuild_manual_joypad_state_from_bindings(void) {
+     if (input_action_is_pressed(GB_INPUT_ACTION_START)) g_manual_joypad_buttons &= (uint8_t)~0x08;
+ }
+ 
++static void set_remaster_button_held(uint32_t bit, bool pressed) {
++    const bool was_held = (g_remaster_btn_held_mask & bit) != 0;
++    if (pressed) {
++        g_remaster_btn_held_mask |= bit;
++        if (!was_held && !g_show_menu && !g_binding_capture_active &&
++            g_control_preset == GB_CONTROL_PRESET_MODERN) {
++            g_remaster_btn_edge_mask |= bit;
++        }
++    } else {
++        g_remaster_btn_held_mask &= ~bit;
++    }
++}
++
+ static void update_effective_joypad_state(void) {
+     rebuild_manual_joypad_state_from_bindings();
+-    g_joypad_dpad = g_manual_joypad_dpad & g_script_joypad_dpad;
+-    g_joypad_buttons = g_manual_joypad_buttons & g_script_joypad_buttons;
++    const uint8_t base_dpad = g_macro_override_active ? g_macro_joypad_dpad : g_manual_joypad_dpad;
++    const uint8_t base_buttons = g_macro_override_active ? g_macro_joypad_buttons : g_manual_joypad_buttons;
++    g_joypad_dpad = base_dpad & g_script_joypad_dpad;
++    g_joypad_buttons = base_buttons & g_script_joypad_buttons;
+ }
+ 
+ static void request_joypad_interrupt(GBContext* ctx) {
+@@ -2385,6 +2471,8 @@ static void reset_runtime_audio_defaults(void) {
+ }
+ 
+ static void reset_runtime_control_defaults(void) {
++    g_control_preset = g_control_preset_default;
++    g_remaster_btn_edge_mask = 0;
+     set_default_input_bindings();
+     g_rumble_enabled = g_rumble_default;
+     g_rumble_strength = 100;
+@@ -4219,6 +4307,28 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+         }
+ 
+         menu_section_header("Controls");
++        {
++            int preset_idx = (int)g_control_preset;
++            if (ImGui::Combo("Control Preset", &preset_idx, g_control_preset_names,
++                             GB_CONTROL_PRESET_COUNT)) {
++                if (preset_idx >= 0 && preset_idx < GB_CONTROL_PRESET_COUNT) {
++                    g_control_preset = (GBControlPreset)preset_idx;
++                    set_default_controller_bindings_for_preset(g_control_preset);
++                    g_remaster_btn_edge_mask = 0;
++                    update_effective_joypad_state();
++                    save_runtime_preferences();
++                    show_toast("CONTROLS",
++                               g_control_preset == GB_CONTROL_PRESET_MODERN
++                                   ? "MODERN STEALTH"
++                                   : "CLASSIC GBC");
++                }
++            }
++            if (g_control_preset == GB_CONTROL_PRESET_MODERN) {
++                ImGui::TextDisabled(
++                    "Modern Stealth: A=Action, B=Crouch, X/RT=Fire, Y/Back=Menu, "
++                    "RB=Next Weapon, LT=Prev Weapon, LB=Next Item");
++            }
++        }
+         if (!g_controller_name.empty()) {
+             ImGui::Text("Detected Controller: %s", g_controller_name.c_str());
+             ImGui::TextDisabled("Profile: %s", controller_type_name(g_controller_type));
+@@ -4529,6 +4639,11 @@ void gb_platform_shutdown(void) {
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
+     g_debug_snapshot_requested = false;
++    g_macro_override_active = false;
++    g_macro_joypad_dpad = 0xFF;
++    g_macro_joypad_buttons = 0xFF;
++    g_remaster_btn_held_mask = 0;
++    g_remaster_btn_edge_mask = 0;
+     
+     if (ImGui::GetCurrentContext() != NULL) {
+         ImGui_ImplSDLRenderer2_Shutdown();
+@@ -5450,6 +5565,11 @@ bool gb_platform_init(int scale) {
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
+     g_debug_snapshot_requested = false;
++    g_macro_override_active = false;
++    g_macro_joypad_dpad = 0xFF;
++    g_macro_joypad_buttons = 0xFF;
++    g_remaster_btn_held_mask = 0;
++    g_remaster_btn_edge_mask = 0;
+     update_effective_joypad_state();
+     g_last_guest_framebuffer_valid = false;
+     g_present_count = 0;
+@@ -5715,6 +5835,17 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+             if (event->caxis.axis >= 0 && event->caxis.axis < SDL_CONTROLLER_AXIS_MAX) {
+                 g_controller_axis_values[event->caxis.axis] = event->caxis.value;
+             }
++            if (event->caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
++                const bool was_held = (g_remaster_btn_held_mask & GB_REMASTER_BTN_LT) != 0;
++                const bool now_held = was_held ? (event->caxis.value >= 10000)
++                                               : (event->caxis.value >= 16384);
++                set_remaster_button_held(GB_REMASTER_BTN_LT, now_held);
++            } else if (event->caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
++                const bool was_held = (g_remaster_btn_held_mask & GB_REMASTER_BTN_RT) != 0;
++                const bool now_held = was_held ? (event->caxis.value >= 10000)
++                                               : (event->caxis.value >= 16384);
++                set_remaster_button_held(GB_REMASTER_BTN_RT, now_held);
++            }
+             update_controller_axis_binding_state();
+             update_effective_joypad_state();
+             update_runtime_action_state(ctx);
+@@ -5738,6 +5869,12 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+             uint8_t previous_dpad = g_joypad_dpad;
+             uint8_t previous_buttons = g_joypad_buttons;
+ 
++            if (event->cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
++                set_remaster_button_held(GB_REMASTER_BTN_LB, pressed);
++            } else if (event->cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
++                set_remaster_button_held(GB_REMASTER_BTN_RB, pressed);
++            }
++
+             if (event->cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
+                 if (pressed) {
+                     set_menu_open(!g_show_menu);
+@@ -6383,6 +6520,7 @@ static void set_menu_open(bool open) {
+     g_show_menu = open;
+     g_vsync_prev_exit_ticks = 0;
+     if (open) {
++        g_remaster_btn_edge_mask = 0;
+         stop_controller_rumble();
+         g_savestate_thumb_dirty = true;
+     }
+@@ -6400,6 +6538,29 @@ void gb_platform_set_rumble_default(bool enabled) {
+     g_rumble_default = enabled;
+ }
+ 
++void gb_platform_set_control_preset_default(GBControlPreset preset) {
++    if ((int)preset >= 0 && (int)preset < GB_CONTROL_PRESET_COUNT) {
++        g_control_preset_default = preset;
++    }
++}
++
++GBControlPreset gb_platform_get_control_preset(void) {
++    return g_control_preset;
++}
++
++void gb_platform_set_macro_joypad_override(bool active, uint8_t dpad_mask, uint8_t buttons_mask) {
++    g_macro_override_active = active;
++    g_macro_joypad_dpad = active ? dpad_mask : 0xFF;
++    g_macro_joypad_buttons = active ? buttons_mask : 0xFF;
++    update_effective_joypad_state();
++}
++
++uint32_t gb_platform_consume_remaster_button_edges(void) {
++    const uint32_t edges = g_remaster_btn_edge_mask;
++    g_remaster_btn_edge_mask = 0;
++    return edges;
++}
++
+ bool gb_platform_get_rumble(void) {
+     return g_rumble_enabled;
+ }
+@@ -7182,6 +7343,24 @@ void gb_platform_show_toast(const char* label, const char* value) {
+     (void)value;
+ }
+ 
++void gb_platform_set_control_preset_default(GBControlPreset preset) {
++    (void)preset;
++}
++
++GBControlPreset gb_platform_get_control_preset(void) {
++    return GB_CONTROL_PRESET_CLASSIC;
++}
++
++void gb_platform_set_macro_joypad_override(bool active, uint8_t dpad_mask, uint8_t buttons_mask) {
++    (void)active;
++    (void)dpad_mask;
++    (void)buttons_mask;
++}
++
++uint32_t gb_platform_consume_remaster_button_edges(void) {
++    return 0;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+-- 
+2.56.0
+
+
+From 4bd69cf7831f0810d0bf8cd2b55565bcc9e18b1a Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 24 Nov 2026 10:12:58 -0300
+Subject: [PATCH 39/41] test: isolate runtime_prefs preset tests and trim
+ unused macro bit
+
+---
+ runtime/include/platform_sdl.h |  9 ++++-
+ runtime/src/platform_sdl.cpp   | 32 ++++++++++++++---
+ tests/test_qol_features.cpp    | 66 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 6 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index f668300..518aec3 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -59,7 +59,6 @@ enum {
+     GB_REMASTER_BTN_LB = 1u << 0,
+     GB_REMASTER_BTN_RB = 1u << 1,
+     GB_REMASTER_BTN_LT = 1u << 2,
+-    GB_REMASTER_BTN_RT = 1u << 3,
+ };
+ 
+ enum {
+@@ -419,6 +418,14 @@ uint32_t gb_platform_test_resample_stereo_block(const int16_t* ring,
+                                                 uint32_t out_frames,
+                                                 float volume_scale,
+                                                 uint32_t* out_consumed);
++
++/**
++ * @brief Override runtime_prefs.ini path for isolated unit tests.
++ */
++void gb_platform_test_set_runtime_prefs_path(const char* path);
++void gb_platform_test_load_runtime_prefs(void);
++void gb_platform_test_save_runtime_prefs(void);
++int gb_platform_test_get_controller_action_binding_code(int action, int slot);
+ #endif
+ 
+ #ifdef __cplusplus
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index a4f40d8..d444b13 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -1178,7 +1178,14 @@ static void set_default_input_bindings(void) {
+     set_default_controller_bindings_for_preset(g_control_preset);
+ }
+ 
++static std::string g_test_runtime_prefs_path;
++
+ static std::string runtime_preferences_path(void) {
++    if (!g_test_runtime_prefs_path.empty()) {
++        fs::path resolved(g_test_runtime_prefs_path);
++        ensure_parent_directory(resolved);
++        return resolved.lexically_normal().string();
++    }
+     const std::string pref_dir = make_pref_storage_dir("runtime");
+     if (!pref_dir.empty()) {
+         fs::path resolved = fs::path(pref_dir) / "runtime_prefs.ini";
+@@ -1295,6 +1302,7 @@ static void apply_identity_preference(const char* identity, const char* value) {
+ 
+ static void load_runtime_preferences(void) {
+     set_default_audio_preferences();
++    g_foreign_identity_values.clear();
+     g_control_preset = g_control_preset_default;
+     set_default_input_bindings();
+     g_savestate_slot = 0;
+@@ -5541,6 +5549,25 @@ bool gb_platform_test_audio_concurrency(uint32_t frames,
+            g_audio_stats.total_samples_queued == frames_enqueued &&
+            g_audio_stats.total_buffer_underruns == out_result->underruns;
+ }
++
++void gb_platform_test_set_runtime_prefs_path(const char* path) {
++    g_test_runtime_prefs_path = (path && path[0]) ? path : "";
++}
++
++void gb_platform_test_load_runtime_prefs(void) {
++    load_runtime_preferences();
++}
++
++void gb_platform_test_save_runtime_prefs(void) {
++    save_runtime_preferences();
++}
++
++int gb_platform_test_get_controller_action_binding_code(int action, int slot) {
++    if (action < 0 || action >= GB_INPUT_ACTION_COUNT || slot < 0 || slot >= 2) {
++        return -1;
++    }
++    return (int)g_controller_bindings[action][slot].code;
++}
+ #endif
+ 
+ bool gb_platform_init(int scale) {
+@@ -5840,11 +5867,6 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                 const bool now_held = was_held ? (event->caxis.value >= 10000)
+                                                : (event->caxis.value >= 16384);
+                 set_remaster_button_held(GB_REMASTER_BTN_LT, now_held);
+-            } else if (event->caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+-                const bool was_held = (g_remaster_btn_held_mask & GB_REMASTER_BTN_RT) != 0;
+-                const bool now_held = was_held ? (event->caxis.value >= 10000)
+-                                               : (event->caxis.value >= 16384);
+-                set_remaster_button_held(GB_REMASTER_BTN_RT, now_held);
+             }
+             update_controller_axis_binding_state();
+             update_effective_joypad_state();
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+index b99038d..d237998 100644
+--- a/tests/test_qol_features.cpp
++++ b/tests/test_qol_features.cpp
+@@ -12,6 +12,7 @@
+ #include <cstdio>
+ #include <cstring>
+ #include <filesystem>
++#include <fstream>
+ #include <string>
+ #include <vector>
+ 
+@@ -204,12 +205,77 @@ void test_audio_rumble_metrics() {
+     gb_audio_destroy(ctx.apu);
+ }
+ 
++void test_control_presets_and_macro_override() {
++    const fs::path prefs_path =
++        fs::temp_directory_path() / "gb_recomp_test_qol_prefs.ini";
++    std::error_code ec;
++    fs::remove(prefs_path, ec);
++
++    gb_platform_test_set_runtime_prefs_path(prefs_path.string().c_str());
++
++    /* 1. Macro joypad override takes precedence over manual joypad and restores cleanly. */
++    g_joypad_dpad = 0xFF;
++    g_joypad_buttons = 0xFF;
++    gb_platform_set_macro_joypad_override(true, 0xFEu, 0xFBu);
++    check(g_joypad_dpad == 0xFEu && g_joypad_buttons == 0xFBu,
++          "macro joypad override applies active-low dpad and button masks");
++    gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
++    check(g_joypad_dpad == 0xFFu && g_joypad_buttons == 0xFFu,
++          "clearing macro joypad override restores idle joypad state");
++
++    /* 2. Authentic (unscoped) saves Classic GBC bindings. */
++    gb_platform_set_preference_scope("");
++    gb_platform_set_control_preset_default(GB_CONTROL_PRESET_CLASSIC);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_control_preset() == GB_CONTROL_PRESET_CLASSIC,
++          "unscoped host defaults to Classic GBC preset");
++    const int classic_a_code = gb_platform_test_get_controller_action_binding_code(4, 0);
++    check(classic_a_code == 1, "Classic GBC maps GB A to controller East/B button (code 1)");
++    gb_platform_test_save_runtime_prefs();
++
++    /* 3. Remaster scope opens with Modern Stealth without being overwritten by authentic's
++     * controller.a.0, and saving remaster preserves authentic's controller.a.0 verbatim. */
++    gb_platform_set_preference_scope("remaster");
++    gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_control_preset() == GB_CONTROL_PRESET_MODERN,
++          "remaster scope defaults to Modern Stealth even with legacy authentic prefs");
++    const int modern_a_code = gb_platform_test_get_controller_action_binding_code(4, 0);
++    check(modern_a_code == 0, "Modern Stealth maps GB A to controller South/A button (code 0)");
++    gb_platform_test_save_runtime_prefs();
++
++    /* 4. Saving authentic again preserves remaster's scoped preset and bindings. */
++    gb_platform_set_preference_scope("");
++    gb_platform_set_control_preset_default(GB_CONTROL_PRESET_CLASSIC);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_control_preset() == GB_CONTROL_PRESET_CLASSIC &&
++              gb_platform_test_get_controller_action_binding_code(4, 0) == 1,
++          "unscoped load restores Classic GBC after remaster save");
++    gb_platform_test_save_runtime_prefs();
++
++    std::ifstream ifs(prefs_path);
++    std::string contents((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
++    check(contents.find("control.preset=0") != std::string::npos,
++          "runtime_prefs keeps authentic control.preset=0");
++    check(contents.find("control.preset.remaster=1") != std::string::npos,
++          "runtime_prefs preserves foreign control.preset.remaster=1");
++    check(contents.find("controller.a.0=button:1") != std::string::npos,
++          "runtime_prefs keeps authentic controller.a.0");
++    check(contents.find("controller.remaster.a.0=button:0") != std::string::npos,
++          "runtime_prefs preserves foreign controller.remaster.a.0");
++
++    gb_platform_set_preference_scope("");
++    gb_platform_test_set_runtime_prefs_path(nullptr);
++    fs::remove(prefs_path, ec);
++}
++
+ }  // namespace
+ 
+ int main() {
+     test_savestate_thumbnails();
+     test_drc_rate_and_resampler();
+     test_audio_rumble_metrics();
++    test_control_presets_and_macro_override();
+     if (g_failures > 0) {
+         std::printf("qol_features: %d failure(s)\n", g_failures);
+         return 1;
+-- 
+2.56.0
+
+
+From 2246ce3d2896bf242eff71b770af89dd6a8bbeec Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 24 Nov 2026 10:46:12 -0300
+Subject: [PATCH 40/41] feat: add Codec tactical pause menu with pixel font and
+ gamepad nav
+
+---
+ runtime/include/platform_sdl.h |    6 +
+ runtime/src/pixel_font_8x8.h   |  161 +++++
+ runtime/src/platform_sdl.cpp   | 1014 ++++++++++++++++----------------
+ tests/test_qol_features.cpp    |    6 +-
+ 4 files changed, 672 insertions(+), 515 deletions(-)
+ create mode 100644 runtime/src/pixel_font_8x8.h
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 518aec3..94a14ef 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -59,6 +59,7 @@ enum {
+     GB_REMASTER_BTN_LB = 1u << 0,
+     GB_REMASTER_BTN_RB = 1u << 1,
+     GB_REMASTER_BTN_LT = 1u << 2,
++    GB_REMASTER_BTN_START = 1u << 3,
+ };
+ 
+ enum {
+@@ -336,6 +337,11 @@ void gb_platform_set_macro_joypad_override(bool active, uint8_t dpad_mask, uint8
+  */
+ uint32_t gb_platform_consume_remaster_button_edges(void);
+ 
++/**
++ * @brief Whether the host settings/pause menu overlay is currently open.
++ */
++bool gb_platform_is_menu_open(void);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/pixel_font_8x8.h b/runtime/src/pixel_font_8x8.h
+new file mode 100644
+index 0000000..b197c4d
+--- /dev/null
++++ b/runtime/src/pixel_font_8x8.h
+@@ -0,0 +1,161 @@
++#ifndef GB_PIXEL_FONT_8X8_H
++#define GB_PIXEL_FONT_8X8_H
++
++#include "imgui.h"
++#include <stdint.h>
++
++/* Compact 6x8 tactical bitmap font (ASCII 0x20..0x7E, MSB = leftmost pixel).
++ * Each glyph uses columns bit7..bit2 (5px glyph + 1px gap), rendered at 2x
++ * integer scale (12x16 px) for razor-sharp Game Boy Color Codec aesthetics. */
++static const uint8_t kPixelFont6x8[95][8] = {
++    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, /* 0x20 ' ' */
++    {0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x20, 0x00}, /* 0x21 '!' */
++    {0x50, 0x50, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00}, /* 0x22 '"' */
++    {0x50, 0x50, 0xF8, 0x50, 0xF8, 0x50, 0x50, 0x00}, /* 0x23 '#' */
++    {0x20, 0x78, 0xA0, 0x70, 0x28, 0xF0, 0x20, 0x00}, /* 0x24 '$' */
++    {0xC8, 0xC8, 0x10, 0x20, 0x40, 0x98, 0x98, 0x00}, /* 0x25 '%' */
++    {0x40, 0xA0, 0xA0, 0x40, 0xA8, 0x90, 0x68, 0x00}, /* 0x26 '&' */
++    {0x20, 0x20, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00}, /* 0x27 ''' */
++    {0x10, 0x20, 0x40, 0x40, 0x40, 0x20, 0x10, 0x00}, /* 0x28 '(' */
++    {0x40, 0x20, 0x10, 0x10, 0x10, 0x20, 0x40, 0x00}, /* 0x29 ')' */
++    {0x00, 0x20, 0xA8, 0x70, 0xA8, 0x20, 0x00, 0x00}, /* 0x2A '*' */
++    {0x00, 0x20, 0x20, 0xF8, 0x20, 0x20, 0x00, 0x00}, /* 0x2B '+' */
++    {0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x40}, /* 0x2C ',' */
++    {0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00}, /* 0x2D '-' */
++    {0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x60, 0x00}, /* 0x2E '.' */
++    {0x08, 0x08, 0x10, 0x20, 0x40, 0x80, 0x80, 0x00}, /* 0x2F '/' */
++    {0x70, 0x88, 0x98, 0xA8, 0xC8, 0x88, 0x70, 0x00}, /* 0x30 '0' */
++    {0x20, 0x60, 0x20, 0x20, 0x20, 0x20, 0x70, 0x00}, /* 0x31 '1' */
++    {0x70, 0x88, 0x08, 0x30, 0x40, 0x80, 0xF8, 0x00}, /* 0x32 '2' */
++    {0x70, 0x88, 0x08, 0x30, 0x08, 0x88, 0x70, 0x00}, /* 0x33 '3' */
++    {0x10, 0x30, 0x50, 0x90, 0xF8, 0x10, 0x10, 0x00}, /* 0x34 '4' */
++    {0xF8, 0x80, 0xF0, 0x08, 0x08, 0x88, 0x70, 0x00}, /* 0x35 '5' */
++    {0x30, 0x40, 0x80, 0xF0, 0x88, 0x88, 0x70, 0x00}, /* 0x36 '6' */
++    {0xF8, 0x08, 0x10, 0x20, 0x20, 0x20, 0x20, 0x00}, /* 0x37 '7' */
++    {0x70, 0x88, 0x88, 0x70, 0x88, 0x88, 0x70, 0x00}, /* 0x38 '8' */
++    {0x70, 0x88, 0x88, 0x78, 0x08, 0x10, 0x60, 0x00}, /* 0x39 '9' */
++    {0x00, 0x60, 0x60, 0x00, 0x60, 0x60, 0x00, 0x00}, /* 0x3A ':' */
++    {0x00, 0x60, 0x60, 0x00, 0x60, 0x20, 0x40, 0x00}, /* 0x3B ';' */
++    {0x10, 0x20, 0x40, 0x80, 0x40, 0x20, 0x10, 0x00}, /* 0x3C '<' */
++    {0x00, 0x00, 0xF8, 0x00, 0xF8, 0x00, 0x00, 0x00}, /* 0x3D '=' */
++    {0x40, 0x20, 0x10, 0x08, 0x10, 0x20, 0x40, 0x00}, /* 0x3E '>' */
++    {0x70, 0x88, 0x08, 0x10, 0x20, 0x00, 0x20, 0x00}, /* 0x3F '?' */
++    {0x70, 0x88, 0xA8, 0xB8, 0xB0, 0x80, 0x70, 0x00}, /* 0x40 '@' */
++    {0x70, 0x88, 0x88, 0xF8, 0x88, 0x88, 0x88, 0x00}, /* 0x41 'A' */
++    {0xF0, 0x88, 0x88, 0xF0, 0x88, 0x88, 0xF0, 0x00}, /* 0x42 'B' */
++    {0x70, 0x88, 0x80, 0x80, 0x80, 0x88, 0x70, 0x00}, /* 0x43 'C' */
++    {0xE0, 0x90, 0x88, 0x88, 0x88, 0x90, 0xE0, 0x00}, /* 0x44 'D' */
++    {0xF8, 0x80, 0x80, 0xF0, 0x80, 0x80, 0xF8, 0x00}, /* 0x45 'E' */
++    {0xF8, 0x80, 0x80, 0xF0, 0x80, 0x80, 0x80, 0x00}, /* 0x46 'F' */
++    {0x70, 0x88, 0x80, 0x98, 0x88, 0x88, 0x70, 0x00}, /* 0x47 'G' */
++    {0x88, 0x88, 0x88, 0xF8, 0x88, 0x88, 0x88, 0x00}, /* 0x48 'H' */
++    {0x70, 0x20, 0x20, 0x20, 0x20, 0x20, 0x70, 0x00}, /* 0x49 'I' */
++    {0x38, 0x10, 0x10, 0x10, 0x90, 0x90, 0x60, 0x00}, /* 0x4A 'J' */
++    {0x88, 0x90, 0xA0, 0xC0, 0xA0, 0x90, 0x88, 0x00}, /* 0x4B 'K' */
++    {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0xF8, 0x00}, /* 0x4C 'L' */
++    {0x88, 0xD8, 0xA8, 0xA8, 0x88, 0x88, 0x88, 0x00}, /* 0x4D 'M' */
++    {0x88, 0xC8, 0xA8, 0x98, 0x88, 0x88, 0x88, 0x00}, /* 0x4E 'N' */
++    {0x70, 0x88, 0x88, 0x88, 0x88, 0x88, 0x70, 0x00}, /* 0x4F 'O' */
++    {0xF0, 0x88, 0x88, 0xF0, 0x80, 0x80, 0x80, 0x00}, /* 0x50 'P' */
++    {0x70, 0x88, 0x88, 0x88, 0xA8, 0x90, 0x68, 0x00}, /* 0x51 'Q' */
++    {0xF0, 0x88, 0x88, 0xF0, 0xA0, 0x90, 0x88, 0x00}, /* 0x52 'R' */
++    {0x70, 0x88, 0x80, 0x70, 0x08, 0x88, 0x70, 0x00}, /* 0x53 'S' */
++    {0xF8, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00}, /* 0x54 'T' */
++    {0x88, 0x88, 0x88, 0x88, 0x88, 0x88, 0x70, 0x00}, /* 0x55 'U' */
++    {0x88, 0x88, 0x88, 0x88, 0x88, 0x50, 0x20, 0x00}, /* 0x56 'V' */
++    {0x88, 0x88, 0x88, 0xA8, 0xA8, 0xD8, 0x88, 0x00}, /* 0x57 'W' */
++    {0x88, 0x88, 0x50, 0x20, 0x50, 0x88, 0x88, 0x00}, /* 0x58 'X' */
++    {0x88, 0x88, 0x50, 0x20, 0x20, 0x20, 0x20, 0x00}, /* 0x59 'Y' */
++    {0xF8, 0x08, 0x10, 0x20, 0x40, 0x80, 0xF8, 0x00}, /* 0x5A 'Z' */
++    {0x70, 0x40, 0x40, 0x40, 0x40, 0x40, 0x70, 0x00}, /* 0x5B '[' */
++    {0x80, 0x80, 0x40, 0x20, 0x10, 0x08, 0x08, 0x00}, /* 0x5C '\' */
++    {0x70, 0x10, 0x10, 0x10, 0x10, 0x10, 0x70, 0x00}, /* 0x5D ']' */
++    {0x20, 0x50, 0x88, 0x00, 0x00, 0x00, 0x00, 0x00}, /* 0x5E '^' */
++    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00}, /* 0x5F '_' */
++    {0x40, 0x20, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00}, /* 0x60 '`' */
++    {0x00, 0x00, 0x70, 0x08, 0x78, 0x88, 0x78, 0x00}, /* 0x61 'a' */
++    {0x80, 0x80, 0xF0, 0x88, 0x88, 0x88, 0xF0, 0x00}, /* 0x62 'b' */
++    {0x00, 0x00, 0x70, 0x88, 0x80, 0x88, 0x70, 0x00}, /* 0x63 'c' */
++    {0x08, 0x08, 0x78, 0x88, 0x88, 0x88, 0x78, 0x00}, /* 0x64 'd' */
++    {0x00, 0x00, 0x70, 0x88, 0xF8, 0x80, 0x70, 0x00}, /* 0x65 'e' */
++    {0x30, 0x48, 0x40, 0xE0, 0x40, 0x40, 0x40, 0x00}, /* 0x66 'f' */
++    {0x00, 0x00, 0x78, 0x88, 0x78, 0x08, 0x70, 0x00}, /* 0x67 'g' */
++    {0x80, 0x80, 0xF0, 0x88, 0x88, 0x88, 0x88, 0x00}, /* 0x68 'h' */
++    {0x20, 0x00, 0x60, 0x20, 0x20, 0x20, 0x70, 0x00}, /* 0x69 'i' */
++    {0x10, 0x00, 0x30, 0x10, 0x10, 0x90, 0x60, 0x00}, /* 0x6A 'j' */
++    {0x80, 0x80, 0x90, 0xA0, 0xC0, 0xA0, 0x90, 0x00}, /* 0x6B 'k' */
++    {0x60, 0x20, 0x20, 0x20, 0x20, 0x20, 0x70, 0x00}, /* 0x6C 'l' */
++    {0x00, 0x00, 0xD0, 0xA8, 0xA8, 0xA8, 0x88, 0x00}, /* 0x6D 'm' */
++    {0x00, 0x00, 0xF0, 0x88, 0x88, 0x88, 0x88, 0x00}, /* 0x6E 'n' */
++    {0x00, 0x00, 0x70, 0x88, 0x88, 0x88, 0x70, 0x00}, /* 0x6F 'o' */
++    {0x00, 0x00, 0xF0, 0x88, 0xF0, 0x80, 0x80, 0x00}, /* 0x70 'p' */
++    {0x00, 0x00, 0x78, 0x88, 0x78, 0x08, 0x08, 0x00}, /* 0x71 'q' */
++    {0x00, 0x00, 0xB0, 0xC8, 0x80, 0x80, 0x80, 0x00}, /* 0x72 'r' */
++    {0x00, 0x00, 0x78, 0x80, 0x70, 0x08, 0xF0, 0x00}, /* 0x73 's' */
++    {0x40, 0x40, 0xE0, 0x40, 0x40, 0x48, 0x30, 0x00}, /* 0x74 't' */
++    {0x00, 0x00, 0x88, 0x88, 0x88, 0x98, 0x68, 0x00}, /* 0x75 'u' */
++    {0x00, 0x00, 0x88, 0x88, 0x88, 0x50, 0x20, 0x00}, /* 0x76 'v' */
++    {0x00, 0x00, 0x88, 0xA8, 0xA8, 0xD8, 0x88, 0x00}, /* 0x77 'w' */
++    {0x00, 0x00, 0x88, 0x50, 0x20, 0x50, 0x88, 0x00}, /* 0x78 'x' */
++    {0x00, 0x00, 0x88, 0x88, 0x78, 0x08, 0x70, 0x00}, /* 0x79 'y' */
++    {0x00, 0x00, 0xF8, 0x10, 0x20, 0x40, 0xF8, 0x00}, /* 0x7A 'z' */
++    {0x18, 0x20, 0x20, 0xC0, 0x20, 0x20, 0x18, 0x00}, /* 0x7B '{' */
++    {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00}, /* 0x7C '|' */
++    {0xC0, 0x20, 0x20, 0x18, 0x20, 0x20, 0xC0, 0x00}, /* 0x7D '}' */
++    {0x00, 0x40, 0xA8, 0x10, 0x00, 0x00, 0x00, 0x00}, /* 0x7E '~' */
++};
++
++static ImFont* build_tactical_pixel_font(ImGuiIO& io) {
++    static const ImWchar fallback_range[] = {0x00A0, 0x00FF, 0};
++    ImFontConfig cfg;
++    cfg.SizePixels = 16.0f;
++    cfg.GlyphRanges = fallback_range;
++    cfg.OversampleH = 1;
++    cfg.OversampleV = 1;
++    cfg.PixelSnapH = true;
++
++    ImFont* font = io.Fonts->AddFontDefault(&cfg);
++    if (!font) {
++        return NULL;
++    }
++
++    int rect_ids[95];
++    for (int i = 0; i < 95; ++i) {
++        const ImWchar ch = (ImWchar)(0x20 + i);
++        rect_ids[i] = io.Fonts->AddCustomRectFontGlyph(
++            font, ch, 12, 16, 12.0f, ImVec2(0.0f, 0.0f));
++    }
++
++    unsigned char* alpha_pixels = NULL;
++    int tex_w = 0;
++    int tex_h = 0;
++    io.Fonts->GetTexDataAsAlpha8(&alpha_pixels, &tex_w, &tex_h);
++    if (!alpha_pixels || tex_w <= 0 || tex_h <= 0) {
++        return font;
++    }
++
++    for (int i = 0; i < 95; ++i) {
++        if (rect_ids[i] < 0) {
++            continue;
++        }
++        const ImFontAtlasCustomRect* rect = io.Fonts->GetCustomRectByIndex(rect_ids[i]);
++        if (!rect || !rect->IsPacked()) {
++            continue;
++        }
++        for (int row = 0; row < 8; ++row) {
++            const uint8_t bits = kPixelFont6x8[i][row];
++            for (int col = 0; col < 6; ++col) {
++                const uint8_t on = (bits & (0x80u >> col)) ? 0xFFu : 0x00u;
++                const int px = (int)rect->X + col * 2;
++                const int py = (int)rect->Y + row * 2;
++                alpha_pixels[py * tex_w + px] = on;
++                alpha_pixels[py * tex_w + px + 1] = on;
++                alpha_pixels[(py + 1) * tex_w + px] = on;
++                alpha_pixels[(py + 1) * tex_w + px + 1] = on;
++            }
++        }
++    }
++    return font;
++}
++
++#endif /* GB_PIXEL_FONT_8X8_H */
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index d444b13..112e289 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -44,6 +44,7 @@
+ #include "imgui.h"
+ #include "backends/imgui_impl_sdl2.h"
+ #include "backends/imgui_impl_sdlrenderer2.h"
++#include "pixel_font_8x8.h"
+ 
+ namespace fs = std::filesystem;
+ 
+@@ -118,6 +119,8 @@ static GBPlatformTimingInfo g_last_timing = {};
+ 
+ /* Menu State */
+ static bool g_show_menu = false;
++static bool g_menu_just_opened = false;
++static int g_menu_active_tab = 0;
+ static bool g_show_overlay = false;
+ static int g_speed_percent = 100;
+ static int g_palette_idx = 0;
+@@ -845,12 +848,22 @@ static void commit_binding_capture(const GBInputBinding& binding) {
+     cancel_binding_capture();
+ }
+ 
++static void sync_imgui_gamepad_mode(void) {
++    if (ImGui::GetCurrentContext() != NULL) {
++        ImGui_ImplSDL2_SetGamepadMode(
++            ImGui_ImplSDL2_GamepadMode_Manual,
++            g_controller ? &g_controller : NULL,
++            g_controller ? 1 : 0);
++    }
++}
++
+ static void clear_controller_state(void) {
+     stop_controller_rumble();
+     if (g_controller) {
+         SDL_GameControllerClose(g_controller);
+         g_controller = NULL;
+     }
++    sync_imgui_gamepad_mode();
+     memset(g_controller_button_binding_pressed, 0, sizeof(g_controller_button_binding_pressed));
+     memset(g_controller_axis_binding_pressed, 0, sizeof(g_controller_axis_binding_pressed));
+     memset(g_controller_axis_values, 0, sizeof(g_controller_axis_values));
+@@ -898,6 +911,7 @@ static bool open_controller_index(int joystick_index) {
+     clear_controller_state();
+     g_controller = controller;
+     refresh_controller_profile();
++    sync_imgui_gamepad_mode();
+     return true;
+ }
+ 
+@@ -1124,7 +1138,6 @@ static void set_default_controller_bindings_for_preset(GBControlPreset preset) {
+         g_controller_bindings[GB_INPUT_ACTION_B][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_X);
+         g_controller_bindings[GB_INPUT_ACTION_B][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+         g_controller_bindings[GB_INPUT_ACTION_START][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_B);
+-        g_controller_bindings[GB_INPUT_ACTION_START][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_START);
+         g_controller_bindings[GB_INPUT_ACTION_SELECT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_Y);
+         g_controller_bindings[GB_INPUT_ACTION_SELECT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_BACK);
+     } else {
+@@ -1830,6 +1843,11 @@ static void set_remaster_button_held(uint32_t bit, bool pressed) {
+ 
+ static void update_effective_joypad_state(void) {
+     rebuild_manual_joypad_state_from_bindings();
++    if (g_show_menu) {
++        g_joypad_dpad = 0xFF;
++        g_joypad_buttons = 0xFF;
++        return;
++    }
+     const uint8_t base_dpad = g_macro_override_active ? g_macro_joypad_dpad : g_manual_joypad_dpad;
+     const uint8_t base_buttons = g_macro_override_active ? g_macro_joypad_buttons : g_manual_joypad_buttons;
+     g_joypad_dpad = base_dpad & g_script_joypad_dpad;
+@@ -3913,409 +3931,340 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+ 
+     if (g_show_menu) {
+         const float ui_scale = imgui_io.FontGlobalScale;
+-        const float footer_height = ImGui::GetFrameHeightWithSpacing() *
+-                                    (g_launcher_return_enabled ? 3.8f : 3.0f);
++        static const char* const kMenuTabNames[] = {
++            "MISSION", "DISPLAY", "AUDIO", "CONTROLS", "SYSTEM",
++        };
++        constexpr int kMenuTabCount = IM_ARRAYSIZE(kMenuTabNames);
+ 
+-        /* Constrain the content and centre it.
+-         *
+-         * Without this the controls span the whole window - a 1900 px wide
+-         * "Speed %" slider on a 4K display, with its label stranded against
+-         * the far edge. Most widgets here carry their label as their last
+-         * argument, so bounding the row is what pulls the label back next to
+-         * the control it describes. */
+-        const float page_margin = 28.0f * ui_scale;
+-        const float content_w =
+-            (imgui_io.DisplaySize.x - page_margin * 2.0f) < 900.0f * ui_scale
+-                ? (imgui_io.DisplaySize.x - page_margin * 2.0f)
+-                : 1200.0f * ui_scale;
++        if (g_menu_just_opened) {
++            g_menu_active_tab = 0;
++            ImGui::SetNextWindowFocus();
++            g_menu_just_opened = false;
++        }
++
++        if (!g_binding_capture_active &&
++            !ImGui::IsPopupOpen((const char*)NULL, ImGuiPopupFlags_AnyPopupId)) {
++            if (ImGui::IsKeyPressed(ImGuiKey_GamepadL1, false)) {
++                g_menu_active_tab = (g_menu_active_tab + kMenuTabCount - 1) % kMenuTabCount;
++            } else if (ImGui::IsKeyPressed(ImGuiKey_GamepadR1, false)) {
++                g_menu_active_tab = (g_menu_active_tab + 1) % kMenuTabCount;
++            } else if (!ImGui::IsAnyItemActive() &&
++                       ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false)) {
++                set_menu_open(false);
++            }
++        }
++
++        ImGui::GetBackgroundDrawList()->AddRectFilled(
++            ImVec2(0.0f, 0.0f), imgui_io.DisplaySize, IM_COL32(2, 10, 8, 188));
++
++        const float max_w = 940.0f * ui_scale;
++        const float max_h = 620.0f * ui_scale;
++        const float modal_w = (imgui_io.DisplaySize.x * 0.90f < max_w)
++                                  ? (imgui_io.DisplaySize.x * 0.90f)
++                                  : max_w;
++        const float modal_h = (imgui_io.DisplaySize.y * 0.88f < max_h)
++                                  ? (imgui_io.DisplaySize.y * 0.88f)
++                                  : max_h;
++        ImGui::SetNextWindowPos(
++            ImVec2((imgui_io.DisplaySize.x - modal_w) * 0.5f,
++                   (imgui_io.DisplaySize.y - modal_h) * 0.5f),
++            ImGuiCond_Always);
++        ImGui::SetNextWindowSize(ImVec2(modal_w, modal_h), ImGuiCond_Always);
+ 
+-        ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+-        ImGui::SetNextWindowSize(imgui_io.DisplaySize, ImGuiCond_Always);
+-        ImGui::SetNextWindowBgAlpha(0.96f);
+         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(18.0f * ui_scale, 16.0f * ui_scale));
+-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(14.0f * ui_scale, 10.0f * ui_scale));
+-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(10.0f * ui_scale, 10.0f * ui_scale));
+-        ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarSize, 18.0f * ui_scale);
+-        /* Palette. Dear ImGui's default is a saturated blue that reads as an
+-         * unfinished demo, and this is a Game Boy tool. These are the four
+-         * greens of a DMG palette plus a near-black, so the widgets sit in
+-         * the same visual family as the hardware and as the toast. */
+-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.055f, 0.075f, 0.060f, 0.96f));
+-        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.070f, 0.095f, 0.075f, 0.60f));
+-        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.100f, 0.140f, 0.105f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.150f, 0.210f, 0.155f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.190f, 0.270f, 0.195f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.260f, 0.340f, 0.270f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.880f, 0.920f, 0.880f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImVec4(0.480f, 0.540f, 0.490f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.130f, 0.200f, 0.140f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.200f, 0.310f, 0.215f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.250f, 0.390f, 0.265f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.200f, 0.320f, 0.220f, 0.70f));
+-        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.260f, 0.400f, 0.280f, 0.80f));
+-        ImGui::PushStyleColor(ImGuiCol_CheckMark, ImVec4(0.450f, 0.820f, 0.400f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.350f, 0.700f, 0.330f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.520f, 0.880f, 0.480f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.230f, 0.310f, 0.240f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(0.420f, 0.620f, 0.430f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, ImVec4(0.060f, 0.085f, 0.065f, 1.00f));
+-        ImGui::PushStyleColor(ImGuiCol_ScrollbarGrab, ImVec4(0.220f, 0.330f, 0.230f, 1.00f));
+-        ImGui::Begin("GameBoy Recompiled",
++        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 2.0f);
++        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(18.0f * ui_scale, 14.0f * ui_scale));
++        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(12.0f * ui_scale, 8.0f * ui_scale));
++        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(10.0f * ui_scale, 8.0f * ui_scale));
++        ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarSize, 14.0f * ui_scale);
++
++        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.039f, 0.075f, 0.063f, 0.98f));
++        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.055f, 0.098f, 0.082f, 0.72f));
++        ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.043f, 0.082f, 0.067f, 0.98f));
++        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.082f, 0.149f, 0.118f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.125f, 0.235f, 0.180f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.165f, 0.310f, 0.235f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.180f, 0.910f, 0.541f, 0.85f));
++        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.860f, 0.980f, 0.900f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImVec4(0.440f, 0.630f, 0.520f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.095f, 0.185f, 0.140f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.155f, 0.315f, 0.225f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.210f, 0.440f, 0.300f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.145f, 0.320f, 0.220f, 0.85f));
++        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.200f, 0.430f, 0.295f, 0.90f));
++        ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.240f, 0.520f, 0.350f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_CheckMark, ImVec4(0.270f, 1.000f, 0.600f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.210f, 0.820f, 0.490f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.340f, 1.000f, 0.650f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.140f, 0.420f, 0.280f, 0.90f));
++        ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, ImVec4(0.045f, 0.085f, 0.068f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_ScrollbarGrab, ImVec4(0.160f, 0.450f, 0.300f, 1.00f));
++        ImGui::PushStyleColor(ImGuiCol_NavHighlight, ImVec4(0.270f, 1.000f, 0.600f, 1.00f));
++
++        ImGui::Begin("TacticalCodecMenu",
+                      &g_show_menu,
+                      ImGuiWindowFlags_NoDecoration |
+                          ImGuiWindowFlags_NoMove |
+                          ImGuiWindowFlags_NoResize |
+                          ImGuiWindowFlags_NoSavedSettings |
+                          ImGuiWindowFlags_NoCollapse);
+-        /* Name the menu after the cartridge rather than after the toolchain.
+- *
+- * The host used to open with "GameBoy Recompiled", which is the upstream
+- * engine's product and wrong for every ROM that is not its own demo - and
+- * this executable takes whatever ROM the user supplies. Reading the header
+- * means a build started from any game labels itself with that game. */
+-char rom_title[17];
+-gbrt_get_rom_title(g_registered_ctx, rom_title);
+ 
+-/* ImGui resets the cursor back to the start of the line after every item, so
+- * SetCursorPosX only holds for the item that follows it. On a narrow window
+- * content_x lands on the left padding anyway and the whole header looked
+- * correct by accident; on 4K it does not, and the subtitle slid out to the
+- * far left while the title stayed centred. Every line sets its own X.
+- *
+- * The padding is inside the offset because SetCursorPosX is measured from the
+- * window's outer corner, not from its inner content area. Without it, a zero
+- * offset clipped the leading glyph of every line - visible only at window
+- * sizes where the content is not clamped. */
+-const float menu_padding_x = 18.0f * ui_scale;
+-const float content_x =
+-    menu_padding_x +
+-    (imgui_io.DisplaySize.x - 2.0f * menu_padding_x - content_w) * 0.5f;
+-
+-ImGui::SetCursorPosX(content_x);
+-ImGui::TextColored(ImVec4(0.62f, 0.85f, 0.52f, 1.0f), "%s", rom_title);
+-ImGui::SetCursorPosX(content_x);
+-ImGui::TextDisabled("SETTINGS");
+-ImGui::SetCursorPosX(content_x);
+-ImGui::Separator();
+-ImGui::SetCursorPosX(content_x);
+-ImGui::TextWrapped("Toggle menu: %s", controller_menu_hint_text());
+-#if defined(__ANDROID__)
+-ImGui::SetCursorPosX(content_x);
+-ImGui::TextWrapped("Android Back / Escape also opens or closes the menu.");
+-#else
+-ImGui::SetCursorPosX(content_x);
+-ImGui::TextWrapped("Escape also opens or closes the menu.");
+-#endif
+-ImGui::SetCursorPosX(content_x);
+-ImGui::Separator();
+-ImGui::SetCursorPosX(content_x);
+-ImGui::BeginChild("SettingsScroll", ImVec2(content_w, -footer_height), false);
+-ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+-        ImGui::Text("Performance: %.1f FPS", ImGui::GetIO().Framerate);
+-
+-        int window_w = 0;
+-        int window_h = 0;
+-        SDL_GetWindowSize(g_window, &window_w, &window_h);
+-
+-        menu_section_header("Graphics");
+-        ImGui::Text("Window: %d x %d", window_w, window_h);
+-        ImGui::Text("Viewport: %d x %d (%.2fx)",
+-                    g_game_viewport.w,
+-                    g_game_viewport.h,
+-                    (double)g_game_viewport.w / (double)g_present_width);
+-
+-        bool fullscreen = g_fullscreen;
+-        if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
+-            set_fullscreen_enabled(fullscreen);
+-        }
+-
+-        int scaling_mode = (int)g_render_scaling_mode;
+-        if (ImGui::Combo("Scaling Mode",
+-                         &scaling_mode,
+-                         g_render_scaling_mode_names,
+-                         IM_ARRAYSIZE(g_render_scaling_mode_names))) {
+-            g_render_scaling_mode = (GBRenderScalingMode)scaling_mode;
+-            update_game_viewport();
+-        }
+-
+-        int filter_mode = (int)g_render_filter_mode;
+-        if (ImGui::Combo("Scale Filter",
+-                         &filter_mode,
+-                         g_render_filter_names,
+-                         IM_ARRAYSIZE(g_render_filter_names))) {
+-            g_render_filter_mode = (GBRenderFilterMode)filter_mode;
+-            update_render_filter();
+-        }
+-
+-        int screen_effect = (int)g_screen_effect;
+-        bool lcd_response = g_lcd_response_enabled;
+-        if (ImGui::Checkbox("LCD Response", &lcd_response)) {
+-            g_lcd_response_enabled = lcd_response;
+-            /* Reseed either way: turning it on must not flash, and turning it
+-             * off must not leave a stale trail to resume from. */
+-            g_lcd_response_valid = false;
+-            g_lcd_response_last_ms = 0;
+-            show_toast("LCD RESPONSE", lcd_response ? "ON" : "OFF");
+-            save_runtime_preferences();
+-        }
+-        if (ImGui::Combo("Screen Effect",
+-                         &screen_effect,
+-                         g_screen_effect_names,
+-                         IM_ARRAYSIZE(g_screen_effect_names))) {
+-            g_screen_effect = (GBScreenEffect)screen_effect;
+-            g_screen_effect_dirty = true;
+-            show_toast("SCREEN EFFECT", g_screen_effect_names[screen_effect]);
+-            save_runtime_preferences();
+-        }
+-
+-        if (g_lcd_response_enabled) {
+-            if (ImGui::SliderInt("Response ms",
+-                                 &g_lcd_response_ms,
+-                                 1,
+-                                 GB_LCD_RESPONSE_MS_MAX)) {
+-                /* The history holds colours, not times: a different response
+-                 * time only changes the coefficients, so it needs no reseed. */
+-            }
+-            if (ImGui::IsItemDeactivatedAfterEdit()) {
+-                save_runtime_preferences();
+-            }
+-        }
+-
+-        if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
+-            if (ImGui::SliderInt("Effect Strength %",
+-                                 &g_screen_effect_intensity,
+-                                 GB_SCREEN_EFFECT_INTENSITY_MIN,
+-                                 GB_SCREEN_EFFECT_INTENSITY_MAX)) {
+-                g_screen_effect_dirty = true;
+-            }
+-            /* Saving from inside the drag would rewrite the prefs file sixty
+-             * times a second. Persist on release instead: the value is already
+-             * live in memory, and the file only matters across a restart. */
+-            if (ImGui::IsItemDeactivatedAfterEdit()) {
+-                save_runtime_preferences();
+-            }
+-        }
+-
+-        if (!g_fullscreen) {
+-            int scale_idx = g_scale - 1;
+-            if (ImGui::Combo("Window Size",
+-                             &scale_idx,
+-                             g_scale_names,
+-                             IM_ARRAYSIZE(g_scale_names))) {
+-                g_scale = scale_idx + 1;
+-                apply_window_scale_preset();
+-            }
+-        } else {
+-            ImGui::TextDisabled("Window Size is disabled while fullscreen is active.");
+-        }
+-
+-        menu_section_header("Runtime");
+-        if (ImGui::Checkbox("V-Sync (Smooth Scroll)", &g_vsync)) {
+-            apply_vsync_mode(g_vsync);
+-            show_toast("V-SYNC", g_vsync ? "ON" : "OFF");
+-            save_runtime_preferences();
+-        }
++        /* Draw outer tactical Codec corner brackets. */
+         {
+-            const char* sync_label = "59.7 Hz Wall-Clock";
+-            if (g_vsync && !g_vsync_pacing_fallback) {
+-                if (g_display_refresh_hz >= 59 && g_display_refresh_hz <= 60) {
+-                    sync_label = "60 Hz V-Sync + Audio DRC";
+-                } else if (g_display_refresh_hz >= 119 && g_display_refresh_hz <= 121) {
+-                    sync_label = "120 Hz (2-VBlank) + Audio DRC";
+-                } else if (g_display_refresh_hz > 0) {
+-                    sync_label = "59.7 Hz Wall-Clock (VRR/High-Hz)";
+-                }
+-            } else if (g_vsync && g_vsync_pacing_fallback) {
+-                sync_label = "59.7 Hz Fallback (Driver V-Sync Uncapped)";
++            ImDrawList* wd = ImGui::GetWindowDrawList();
++            const ImVec2 p0 = ImGui::GetWindowPos();
++            const ImVec2 sz = ImGui::GetWindowSize();
++            const ImVec2 p1(p0.x + sz.x, p0.y + sz.y);
++            const ImU32 col = IM_COL32(68, 255, 153, 220);
++            const float arm = 14.0f * ui_scale;
++            const float ins = 5.0f * ui_scale;
++            wd->AddLine(ImVec2(p0.x + ins, p0.y + ins), ImVec2(p0.x + ins + arm, p0.y + ins), col, 2.0f);
++            wd->AddLine(ImVec2(p0.x + ins, p0.y + ins), ImVec2(p0.x + ins, p0.y + ins + arm), col, 2.0f);
++            wd->AddLine(ImVec2(p1.x - ins, p0.y + ins), ImVec2(p1.x - ins - arm, p0.y + ins), col, 2.0f);
++            wd->AddLine(ImVec2(p1.x - ins, p0.y + ins), ImVec2(p1.x - ins, p0.y + ins + arm), col, 2.0f);
++            wd->AddLine(ImVec2(p0.x + ins, p1.y - ins), ImVec2(p0.x + ins + arm, p1.y - ins), col, 2.0f);
++            wd->AddLine(ImVec2(p0.x + ins, p1.y - ins), ImVec2(p0.x + ins, p1.y - ins - arm), col, 2.0f);
++            wd->AddLine(ImVec2(p1.x - ins, p1.y - ins), ImVec2(p1.x - ins - arm, p1.y - ins), col, 2.0f);
++            wd->AddLine(ImVec2(p1.x - ins, p1.y - ins), ImVec2(p1.x - ins, p1.y - ins - arm), col, 2.0f);
++        }
++
++        char rom_title[17];
++        gbrt_get_rom_title(g_registered_ctx, rom_title);
++        ImGui::TextColored(ImVec4(0.27f, 1.00f, 0.60f, 1.0f), "%s // CODEC", rom_title);
++        const char* preset_badge =
++            (g_control_preset == GB_CONTROL_PRESET_MODERN) ? "MODERN STEALTH" : "CLASSIC GBC";
++        char status_rhs[64];
++        snprintf(status_rhs, sizeof(status_rhs), "[%s]  %4.0f FPS",
++                 preset_badge, ImGui::GetIO().Framerate);
++        const float rhs_w = ImGui::CalcTextSize(status_rhs).x;
++        ImGui::SameLine(ImGui::GetWindowContentRegionMax().x - rhs_w);
++        ImGui::TextColored(ImVec4(0.58f, 0.88f, 0.70f, 1.0f), "%s", status_rhs);
++        ImGui::Separator();
++
++        /* 5 tactical tabs (selectable via mouse or LB/RB). */
++        const float avail_w = ImGui::GetContentRegionAvail().x;
++        const float tab_spacing = ImGui::GetStyle().ItemSpacing.x;
++        const float tab_w = (avail_w - tab_spacing * (float)(kMenuTabCount - 1)) / (float)kMenuTabCount;
++        for (int t = 0; t < kMenuTabCount; ++t) {
++            if (t > 0) {
++                ImGui::SameLine();
++            }
++            const bool active = (g_menu_active_tab == t);
++            if (active) {
++                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.145f, 0.420f, 0.285f, 1.0f));
++                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.92f, 1.00f, 0.95f, 1.0f));
++            }
++            if (ImGui::Button(kMenuTabNames[t], ImVec2(tab_w, 0.0f))) {
++                g_menu_active_tab = t;
++            }
++            if (active) {
++                ImGui::PopStyleColor(2);
+             }
+-            ImGui::TextDisabled("Active Sync: %s", sync_label);
+         }
++        ImGui::Separator();
+ 
+-        ImGui::Checkbox("Show Overlay", &g_show_overlay);
+-        ImGui::Checkbox("Smooth Slow Frames", &g_smooth_lcd_transitions);
+-        if (ImGui::SliderInt("Speed %", &g_speed_percent, 10, 500)) {
+-            reset_audio_output_buffer(true);
+-        }
+-        if (ImGui::Button("Reset Speed")) {
+-            g_speed_percent = 100;
+-            g_max_speed_mode = false;
+-            reset_audio_output_buffer(true);
+-        }
+-        ImGui::Text("Effective Speed: %d%%", effective_speed_percent());
+-        if (g_fast_forward_active) {
+-            ImGui::TextDisabled("Fast forward shortcut is active.");
+-        } else if (g_max_speed_mode) {
+-            ImGui::TextDisabled("Max speed shortcut is active.");
+-        }
+-        const bool cgb_colors = g_registered_ctx &&
+-            g_registered_ctx->config.model == GB_MODEL_CGB;
+-        ImGui::BeginDisabled(cgb_colors);
+-        ImGui::Combo("Palette", &g_palette_idx, g_palette_names, IM_ARRAYSIZE(g_palette_names));
+-        ImGui::EndDisabled();
+-        if (cgb_colors) {
+-            ImGui::TextDisabled("Game Boy Color uses the game's color palettes.");
+-        }
++        const float footer_h = ImGui::GetFrameHeightWithSpacing() * 1.65f;
++        ImGui::BeginChild("CodecTabBody", ImVec2(0.0f, -footer_h), false, ImGuiWindowFlags_NavFlattened);
++        ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.52f);
+ 
+-        menu_section_header("Audio");
+-        if (ImGui::Checkbox("Enable Audio Output", &g_audio_output_enabled)) {
+-            reset_audio_output_buffer(true);
+-            save_runtime_preferences();
+-        }
+-        bool audio_muted = g_audio_muted.load(std::memory_order_relaxed);
+-        if (ImGui::Checkbox("Mute", &audio_muted)) {
+-            g_audio_muted.store(audio_muted, std::memory_order_relaxed);
+-            save_runtime_preferences();
+-        }
+-        int audio_volume_percent =
+-            (int)g_audio_volume_percent.load(std::memory_order_relaxed);
+-        if (ImGui::SliderInt("Master Volume (%)", &audio_volume_percent, 0, 200)) {
+-            g_audio_volume_percent.store((uint32_t)audio_volume_percent,
+-                                         std::memory_order_relaxed);
+-            save_runtime_preferences();
+-        }
+-        if (ImGui::BeginCombo("Output Device", current_audio_output_device_label())) {
+-            bool selected_default = g_audio_target_device_name.empty();
+-            if (ImGui::Selectable("System Default", selected_default)) {
+-                g_audio_target_device_name.clear();
++        if (g_menu_active_tab == 0) {
++            /* MISSION TAB */
++            const float body_w = ImGui::GetContentRegionAvail().x;
++            const float sp = ImGui::GetStyle().ItemSpacing.x;
++            const float btn3_w = (body_w - sp * 2.0f) / 3.0f;
++            if (ImGui::Button("Resume Mission", ImVec2(btn3_w, 0.0f))) {
++                set_menu_open(false);
++            }
++            ImGui::SameLine();
++            if (ImGui::Button("Save State (F5)", ImVec2(btn3_w, 0.0f))) {
++                save_savestate_slot(g_registered_ctx, g_savestate_slot);
++            }
++            ImGui::SameLine();
++            if (ImGui::Button("Load State (F8)", ImVec2(btn3_w, 0.0f))) {
++                load_savestate_slot(g_registered_ctx, g_savestate_slot);
++            }
++
++            menu_section_header("Mission State Slot");
++            int savestate_slot = g_savestate_slot + 1;
++            if (ImGui::SliderInt("Active Slot", &savestate_slot, 1, GB_SAVESTATE_SLOT_COUNT)) {
++                g_savestate_slot = savestate_slot - 1;
++                g_savestate_thumb_dirty = true;
+                 save_runtime_preferences();
+-                reopen_audio_output_device(true);
+             }
+-            if (selected_default) {
+-                ImGui::SetItemDefaultFocus();
++            ImGui::SameLine();
++            if (ImGui::Button("Delete Slot")) {
++                delete_savestate_slot(g_registered_ctx, g_savestate_slot);
+             }
+ 
+-            for (size_t i = 0; i < g_audio_output_devices.size(); i++) {
+-                const bool selected = g_audio_output_devices[i] == g_audio_target_device_name;
+-                if (ImGui::Selectable(g_audio_output_devices[i].c_str(), selected)) {
+-                    g_audio_target_device_name = g_audio_output_devices[i];
+-                    save_runtime_preferences();
+-                    reopen_audio_output_device(true);
+-                }
+-                if (selected) {
+-                    ImGui::SetItemDefaultFocus();
+-                }
+-            }
+-            ImGui::EndCombo();
+-        }
+-        int audio_latency_ms = (int)g_audio_latency_ms;
+-        if (ImGui::SliderInt("Target Audio Latency (ms)", &audio_latency_ms, 20, 250)) {
+-            g_audio_latency_ms = (uint32_t)audio_latency_ms;
+-            recompute_audio_targets();
+-            reset_audio_output_buffer(true);
+-            save_runtime_preferences();
+-        }
+-        /* Mastering is the remaster's opinion about how this should sound, not
+-         * a fix for a defect, so it is a toggle the player chooses rather than
+-         * something the runtime applies. Off by default: the 1998 mix is the
+-         * mix the game shipped, and someone who came for it should hear it. */
+-        bool audio_mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
+-        if (ImGui::Checkbox("Audio Mastering (DC, warmth, compressor)", &audio_mastering)) {
+-            g_audio_mastering_enabled.store(audio_mastering, std::memory_order_relaxed);
+-            audio_master_reset();
+-            save_runtime_preferences();
+-        }
+-        if (ImGui::IsItemHovered()) {
+-            ImGui::SetTooltip(
+-                "Removes DC offset, applies subtle analog low-pass warmth (~12 kHz),\n"
+-                "rounds off peaks, and eases down loud passages without moving stereo panning.\n"
+-                "Off gives the original mix unchanged.");
+-        }
+-        bool audio_crossfeed = g_audio_crossfeed_enabled.load(std::memory_order_relaxed);
+-        if (ImGui::Checkbox("Stereo Crossfeed (Headphones)", &audio_crossfeed)) {
+-            g_audio_crossfeed_enabled.store(audio_crossfeed, std::memory_order_relaxed);
+-            save_runtime_preferences();
+-        }
+-        if (ImGui::IsItemHovered()) {
+-            ImGui::SetTooltip(
+-                "Gently blends hard-panned left and right channels (16%%) for natural\n"
+-                "headphone listening without collapsing the stereo image.");
+-        }
+-        if (ImGui::Button("Refresh Devices")) {
+-            refresh_audio_output_devices();
+-        }
+-        ImGui::SameLine();
+-        if (ImGui::Button("Reconnect Audio")) {
+-            reopen_audio_output_device(true);
+-        }
+-        ImGui::SameLine();
+-        if (ImGui::Button("Clear Audio Buffer")) {
+-            reset_audio_output_buffer(true);
+-        }
+-        /* Which device we are on is configuration and belongs here. The ring
+-         * buffer occupancy and the device's own buffer geometry are not: they
+-         * were dumped raw into the settings flow as if they were options to
+-         * change, and they change on their own. They moved to the debug
+-         * overlay (F1), which already reports ring fill and underruns. */
+-        ImGui::Text("Requested Output: %s", current_audio_output_device_label());
+-        ImGui::Text("Active Output: %s", g_audio_active_device_name.empty() ? "Unavailable" : g_audio_active_device_name.c_str());
+-        if (!current_audio_output_device_available()) {
+-            ImGui::TextDisabled("Requested device is unavailable. Using the default output when possible.");
+-        }
+-        if (effective_speed_percent() != 100) {
+-            ImGui::TextDisabled("Audio output pauses while Speed %% is not 100.");
+-        }
+-        if (ImGui::Button("Reset Audio")) {
+-            reset_runtime_audio_defaults();
+-        }
+-
+-        menu_section_header("Savestates");
+-        int savestate_slot = g_savestate_slot + 1;
+-        if (ImGui::SliderInt("Active Slot", &savestate_slot, 1, GB_SAVESTATE_SLOT_COUNT)) {
+-            g_savestate_slot = savestate_slot - 1;
+-            g_savestate_thumb_dirty = true;
+-            save_runtime_preferences();
+-        }
+-        if (ImGui::Button("Save State (F5)")) {
+-            save_savestate_slot(g_registered_ctx, g_savestate_slot);
+-        }
+-        ImGui::SameLine();
+-        if (ImGui::Button("Load State (F8)")) {
+-            load_savestate_slot(g_registered_ctx, g_savestate_slot);
+-        }
+-        ImGui::SameLine();
+-        if (ImGui::Button("Delete Slot")) {
+-            delete_savestate_slot(g_registered_ctx, g_savestate_slot);
+-        }
+-        {
+             std::string savestate_path;
+             const bool slot_exists = savestate_slot_exists(g_registered_ctx, g_savestate_slot, &savestate_path);
+             refresh_savestate_thumb_preview(savestate_path, g_savestate_slot);
+-            ImGui::Text("Slot File: %s", savestate_path.empty() ? "(unavailable)" : savestate_path.c_str());
+             if (slot_exists) {
+                 char saved_at[64];
+                 if (format_file_timestamp(savestate_path.c_str(), saved_at, sizeof(saved_at))) {
+-                    ImGui::Text("Slot Status: Present (%s)", saved_at);
++                    ImGui::Text("Slot %d: Ready (%s)", g_savestate_slot + 1, saved_at);
+                 } else {
+-                    ImGui::Text("Slot Status: Present");
++                    ImGui::Text("Slot %d: Ready", g_savestate_slot + 1);
+                 }
+                 if (g_savestate_thumb_has_image && g_savestate_thumb_texture &&
+                     g_savestate_thumb_w > 0 && g_savestate_thumb_h > 0) {
+-                    const float max_preview_w = 256.0f * ui_scale;
+-                    const float aspect = (float)g_savestate_thumb_h / (float)g_savestate_thumb_w;
+-                    const float draw_w = max_preview_w;
+-                    const float draw_h = max_preview_w * aspect;
+-                    ImGui::Spacing();
++                    const float preview_w = 240.0f * ui_scale;
++                    const float preview_h = preview_w * ((float)g_savestate_thumb_h / (float)g_savestate_thumb_w);
+                     ImGui::Image((ImTextureID)(intptr_t)g_savestate_thumb_texture,
+-                                 ImVec2(draw_w, draw_h),
++                                 ImVec2(preview_w, preview_h),
+                                  ImVec2(0.0f, 0.0f),
+                                  ImVec2(1.0f, 1.0f),
+                                  ImVec4(1.0f, 1.0f, 1.0f, 1.0f),
+-                                 ImVec4(0.26f, 0.34f, 0.27f, 1.0f));
++                                 ImVec4(0.18f, 0.91f, 0.54f, 0.85f));
+                 } else {
+                     ImGui::TextDisabled("No thumbnail saved for this slot yet.");
+                 }
+             } else {
+-                ImGui::Text("Slot Status: Empty");
++                ImGui::TextDisabled("Slot %d: Empty", g_savestate_slot + 1);
++            }
++            if (!g_savestate_status.empty()) {
++                ImGui::TextWrapped("%s", g_savestate_status.c_str());
+             }
+-        }
+-        if (!g_savestate_status.empty()) {
+-            ImGui::TextWrapped("%s", g_savestate_status.c_str());
+-        }
+ 
+-        menu_section_header("Controls");
+-        {
++            menu_section_header("Session");
++            if (g_launcher_return_enabled) {
++                if (ImGui::Button("Return to Launcher")) {
++                    g_exit_action = GB_PLATFORM_EXIT_RETURN_TO_LAUNCHER;
++                    SDL_Event quit_event;
++                    quit_event.type = SDL_QUIT;
++                    SDL_PushEvent(&quit_event);
++                }
++                ImGui::SameLine();
++            }
++            if (ImGui::Button("Quit Game")) {
++                g_exit_action = GB_PLATFORM_EXIT_QUIT;
++                SDL_Event quit_event;
++                quit_event.type = SDL_QUIT;
++                SDL_PushEvent(&quit_event);
++            }
++        } else if (g_menu_active_tab == 1) {
++            /* DISPLAY TAB */
++            int screen_effect = (int)g_screen_effect;
++            if (ImGui::Combo("Screen Effect",
++                             &screen_effect,
++                             g_screen_effect_names,
++                             IM_ARRAYSIZE(g_screen_effect_names))) {
++                g_screen_effect = (GBScreenEffect)screen_effect;
++                g_screen_effect_dirty = true;
++                show_toast("SCREEN EFFECT", g_screen_effect_names[screen_effect]);
++                save_runtime_preferences();
++            }
++            if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
++                if (ImGui::SliderInt("Effect Strength %",
++                                     &g_screen_effect_intensity,
++                                     GB_SCREEN_EFFECT_INTENSITY_MIN,
++                                     GB_SCREEN_EFFECT_INTENSITY_MAX)) {
++                    g_screen_effect_dirty = true;
++                }
++                if (ImGui::IsItemDeactivatedAfterEdit()) {
++                    save_runtime_preferences();
++                }
++            }
++
++            bool lcd_response = g_lcd_response_enabled;
++            if (ImGui::Checkbox("LCD Response", &lcd_response)) {
++                g_lcd_response_enabled = lcd_response;
++                g_lcd_response_valid = false;
++                g_lcd_response_last_ms = 0;
++                show_toast("LCD RESPONSE", lcd_response ? "ON" : "OFF");
++                save_runtime_preferences();
++            }
++            if (g_lcd_response_enabled) {
++                ImGui::SliderInt("Response ms", &g_lcd_response_ms, 1, GB_LCD_RESPONSE_MS_MAX);
++                if (ImGui::IsItemDeactivatedAfterEdit()) {
++                    save_runtime_preferences();
++                }
++            }
++
++            menu_section_header("Window & Sync");
++            bool fullscreen = g_fullscreen;
++            if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
++                set_fullscreen_enabled(fullscreen);
++            }
++            int scaling_mode = (int)g_render_scaling_mode;
++            if (ImGui::Combo("Scaling Mode",
++                             &scaling_mode,
++                             g_render_scaling_mode_names,
++                             IM_ARRAYSIZE(g_render_scaling_mode_names))) {
++                g_render_scaling_mode = (GBRenderScalingMode)scaling_mode;
++                update_game_viewport();
++            }
++            int filter_mode = (int)g_render_filter_mode;
++            if (ImGui::Combo("Scale Filter",
++                             &filter_mode,
++                             g_render_filter_names,
++                             IM_ARRAYSIZE(g_render_filter_names))) {
++                g_render_filter_mode = (GBRenderFilterMode)filter_mode;
++                update_render_filter();
++            }
++            if (!g_fullscreen) {
++                int scale_idx = g_scale - 1;
++                if (ImGui::Combo("Window Size",
++                                 &scale_idx,
++                                 g_scale_names,
++                                 IM_ARRAYSIZE(g_scale_names))) {
++                    g_scale = scale_idx + 1;
++                    apply_window_scale_preset();
++                }
++            }
++            if (ImGui::Checkbox("V-Sync (Smooth Scroll)", &g_vsync)) {
++                apply_vsync_mode(g_vsync);
++                show_toast("V-SYNC", g_vsync ? "ON" : "OFF");
++                save_runtime_preferences();
++            }
++            {
++                const char* sync_label = "59.7 Hz Wall-Clock";
++                if (g_vsync && !g_vsync_pacing_fallback) {
++                    if (g_display_refresh_hz >= 59 && g_display_refresh_hz <= 60) {
++                        sync_label = "60 Hz V-Sync + Audio DRC";
++                    } else if (g_display_refresh_hz >= 119 && g_display_refresh_hz <= 121) {
++                        sync_label = "120 Hz (2-VBlank) + Audio DRC";
++                    } else if (g_display_refresh_hz > 0) {
++                        sync_label = "59.7 Hz Wall-Clock (VRR/High-Hz)";
++                    }
++                } else if (g_vsync && g_vsync_pacing_fallback) {
++                    sync_label = "59.7 Hz Fallback (Driver V-Sync Uncapped)";
++                }
++                ImGui::TextDisabled("Active Sync: %s", sync_label);
++            }
++        } else if (g_menu_active_tab == 2) {
++            /* AUDIO TAB */
++            int audio_volume_percent = (int)g_audio_volume_percent.load(std::memory_order_relaxed);
++            if (ImGui::SliderInt("Master Volume (%)", &audio_volume_percent, 0, 200)) {
++                g_audio_volume_percent.store((uint32_t)audio_volume_percent,
++                                             std::memory_order_relaxed);
++                save_runtime_preferences();
++            }
++            bool audio_muted = g_audio_muted.load(std::memory_order_relaxed);
++            if (ImGui::Checkbox("Mute", &audio_muted)) {
++                g_audio_muted.store(audio_muted, std::memory_order_relaxed);
++                save_runtime_preferences();
++            }
++            bool audio_mastering = g_audio_mastering_enabled.load(std::memory_order_relaxed);
++            if (ImGui::Checkbox("Audio Mastering (DC, warmth, compressor)", &audio_mastering)) {
++                g_audio_mastering_enabled.store(audio_mastering, std::memory_order_relaxed);
++                audio_master_reset();
++                save_runtime_preferences();
++            }
++            bool audio_crossfeed = g_audio_crossfeed_enabled.load(std::memory_order_relaxed);
++            if (ImGui::Checkbox("Stereo Crossfeed (Headphones)", &audio_crossfeed)) {
++                g_audio_crossfeed_enabled.store(audio_crossfeed, std::memory_order_relaxed);
++                save_runtime_preferences();
++            }
++            if (ImGui::Checkbox("Enable Audio Output", &g_audio_output_enabled)) {
++                reset_audio_output_buffer(true);
++                save_runtime_preferences();
++            }
++            ImGui::TextDisabled("Output: %s",
++                                g_audio_active_device_name.empty() ? current_audio_output_device_label()
++                                                                   : g_audio_active_device_name.c_str());
++        } else if (g_menu_active_tab == 3) {
++            /* CONTROLS TAB */
+             int preset_idx = (int)g_control_preset;
+             if (ImGui::Combo("Control Preset", &preset_idx, g_control_preset_names,
+                              GB_CONTROL_PRESET_COUNT)) {
+@@ -4332,171 +4281,183 @@ ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.55f);
+                 }
+             }
+             if (g_control_preset == GB_CONTROL_PRESET_MODERN) {
+-                ImGui::TextDisabled(
+-                    "Modern Stealth: A=Action, B=Crouch, X/RT=Fire, Y/Back=Menu, "
+-                    "RB=Next Weapon, LT=Prev Weapon, LB=Next Item");
++                ImGui::BulletText("A: Action / Punch      B: Crouch / Prone");
++                ImGui::BulletText("X / RT: Fire Weapon    Y / Back: Equip Menu");
++                ImGui::BulletText("Start: Codec           RB / LT: Next / Prev Weapon");
++                ImGui::BulletText("LB: Next Item          L3: Pause Menu");
++            } else {
++                ImGui::BulletText("B / RB: Action (GB A)  A / LB: Weapon (GB B)");
++                ImGui::BulletText("Back: Equip Menu       Start: Crouch / Codec");
++                ImGui::BulletText("X / Y: Save / Load     RT / LT: Fast / Max Speed");
+             }
+-        }
+-        if (!g_controller_name.empty()) {
+-            ImGui::Text("Detected Controller: %s", g_controller_name.c_str());
+-            ImGui::TextDisabled("Profile: %s", controller_type_name(g_controller_type));
+-            if (ImGui::Checkbox("Controller Rumble", &g_rumble_enabled)) {
+-                if (!g_rumble_enabled) {
+-                    stop_controller_rumble();
+-                }
+-                save_runtime_preferences();
+-            }
+-            if (g_rumble_enabled) {
+-                if (ImGui::SliderInt("Rumble Strength (%)", &g_rumble_strength, 0, 100)) {
+-                }
+-                if (ImGui::IsItemDeactivatedAfterEdit()) {
++
++            menu_section_header("Gamepad & Rumble");
++            if (!g_controller_name.empty()) {
++                ImGui::Text("Controller: %s (%s)",
++                            g_controller_name.c_str(),
++                            controller_type_name(g_controller_type));
++                if (ImGui::Checkbox("Controller Rumble", &g_rumble_enabled)) {
++                    if (!g_rumble_enabled) {
++                        stop_controller_rumble();
++                    }
+                     save_runtime_preferences();
+                 }
+-                ImGui::SameLine();
+-                if (ImGui::Button("Test Rumble")) {
+-#if SDL_VERSION_ATLEAST(2, 0, 9)
+-                    if (g_controller && g_rumble_strength > 0) {
+-                        const uint32_t scale = (uint32_t)g_rumble_strength;
+-                        const uint16_t low_s = (uint16_t)((0xB000u * scale) / 100u);
+-                        const uint16_t high_s = (uint16_t)((0xD000u * scale) / 100u);
+-                        SDL_GameControllerRumble(g_controller, low_s, high_s, 180u);
++                if (g_rumble_enabled) {
++                    ImGui::SliderInt("Rumble Strength (%)", &g_rumble_strength, 0, 100);
++                    if (ImGui::IsItemDeactivatedAfterEdit()) {
++                        save_runtime_preferences();
+                     }
++                    ImGui::SameLine();
++                    if (ImGui::Button("Test Rumble")) {
++#if SDL_VERSION_ATLEAST(2, 0, 9)
++                        if (g_controller && g_rumble_strength > 0) {
++                            const uint32_t scale = (uint32_t)g_rumble_strength;
++                            const uint16_t low_s = (uint16_t)((0xB000u * scale) / 100u);
++                            const uint16_t high_s = (uint16_t)((0xD000u * scale) / 100u);
++                            SDL_GameControllerRumble(g_controller, low_s, high_s, 180u);
++                        }
+ #endif
++                    }
++                }
++            } else {
++                ImGui::TextDisabled("No controller detected.");
++            }
++
++            if (ImGui::CollapsingHeader("Custom Bindings")) {
++                render_binding_editor("Keyboard Gameplay",
++                                      GB_CAPTURE_DEVICE_KEYBOARD,
++                                      g_keyboard_bindings,
++                                      GB_INPUT_ACTION_RIGHT,
++                                      GB_INPUT_ACTION_FAST_FORWARD);
++                ImGui::Spacing();
++                render_binding_editor("Controller Gameplay",
++                                      GB_CAPTURE_DEVICE_CONTROLLER,
++                                      g_controller_bindings,
++                                      GB_INPUT_ACTION_RIGHT,
++                                      GB_INPUT_ACTION_FAST_FORWARD);
++                ImGui::Spacing();
++                render_binding_editor("Keyboard Shortcuts",
++                                      GB_CAPTURE_DEVICE_KEYBOARD,
++                                      g_keyboard_bindings,
++                                      GB_INPUT_ACTION_FAST_FORWARD,
++                                      GB_INPUT_ACTION_COUNT);
++                ImGui::Spacing();
++                render_binding_editor("Controller Shortcuts",
++                                      GB_CAPTURE_DEVICE_CONTROLLER,
++                                      g_controller_bindings,
++                                      GB_INPUT_ACTION_FAST_FORWARD,
++                                      GB_INPUT_ACTION_COUNT);
++                if (g_binding_capture_active) {
++                    ImGui::Separator();
++                    ImGui::TextDisabled("Waiting for %s input for %s slot %d",
++                                        g_binding_capture_device == GB_CAPTURE_DEVICE_KEYBOARD
++                                            ? "keyboard"
++                                            : "controller",
++                                        g_input_action_names[g_binding_capture_action],
++                                        g_binding_capture_slot + 1);
++                    if (ImGui::Button("Cancel Capture")) {
++                        cancel_binding_capture();
++                    }
++                }
++                if (ImGui::Button("Reset Controls")) {
++                    reset_runtime_control_defaults();
+                 }
+             }
+         } else {
+-#if defined(__ANDROID__)
+-            ImGui::TextDisabled("No controller detected. Controller mappings will apply when one is connected.");
+-#else
+-            ImGui::TextDisabled("No controller detected.");
+-#endif
+-        }
+-        render_binding_editor("Keyboard Gameplay",
+-                              GB_CAPTURE_DEVICE_KEYBOARD,
+-                              g_keyboard_bindings,
+-                              GB_INPUT_ACTION_RIGHT,
+-                              GB_INPUT_ACTION_FAST_FORWARD);
+-        ImGui::Spacing();
+-        render_binding_editor("Controller Gameplay",
+-                              GB_CAPTURE_DEVICE_CONTROLLER,
+-                              g_controller_bindings,
+-                              GB_INPUT_ACTION_RIGHT,
+-                              GB_INPUT_ACTION_FAST_FORWARD);
+-        ImGui::Spacing();
+-        render_binding_editor("Keyboard Shortcuts",
+-                              GB_CAPTURE_DEVICE_KEYBOARD,
+-                              g_keyboard_bindings,
+-                              GB_INPUT_ACTION_FAST_FORWARD,
+-                              GB_INPUT_ACTION_COUNT);
+-        ImGui::Spacing();
+-        render_binding_editor("Controller Shortcuts",
+-                              GB_CAPTURE_DEVICE_CONTROLLER,
+-                              g_controller_bindings,
+-                              GB_INPUT_ACTION_FAST_FORWARD,
+-                              GB_INPUT_ACTION_COUNT);
+-        if (g_binding_capture_active) {
+-            ImGui::Separator();
+-            ImGui::TextDisabled("Waiting for %s input for %s slot %d",
+-                                g_binding_capture_device == GB_CAPTURE_DEVICE_KEYBOARD ? "keyboard" : "controller",
+-                                g_input_action_names[g_binding_capture_action],
+-                                g_binding_capture_slot + 1);
+-            if (ImGui::Button("Cancel Capture")) {
+-                cancel_binding_capture();
+-            }
+-        }
+-        if (ImGui::Button("Reset Controls")) {
+-            reset_runtime_control_defaults();
+-        }
+-        ImGui::TextDisabled("Shortcut bindings can also control fast forward, max speed, savestates, overlay, mute, and the menu.");
+-        ImGui::BulletText("%s", controller_menu_hint_text());
+-#if defined(__ANDROID__)
+-        ImGui::BulletText("Android Back / Escape: Settings Menu");
+-#else
+-        ImGui::BulletText("Escape: Settings Menu");
+-#endif
++            /* SYSTEM TAB */
++            int window_w = 0;
++            int window_h = 0;
++            SDL_GetWindowSize(g_window, &window_w, &window_h);
++            ImGui::Text("Window: %d x %d  |  Viewport: %d x %d (%.2fx)",
++                        window_w, window_h,
++                        g_game_viewport.w, g_game_viewport.h,
++                        (double)g_game_viewport.w / (double)g_present_width);
+ 
+-        if (has_interpreter_activity(g_registered_ctx)) {
+-            const GBInterpreterHotspot* hotspot = &g_registered_ctx->interpreter_hotspots[0];
+-            ImGui::Separator();
+-            ImGui::TextDisabled("Interpreter Fallback");
+-            ImGui::Text("Frame Fallbacks: %u", g_registered_ctx->frame_dispatch_fallbacks);
+-            ImGui::Text("Interp Entries: %llu",
+-                        (unsigned long long)g_registered_ctx->total_interpreter_entries);
+-            ImGui::Text("Total Fallbacks: %llu",
+-                        (unsigned long long)g_registered_ctx->total_dispatch_fallbacks);
+-            ImGui::Text("Interp Instr: frame %llu total %llu",
+-                        (unsigned long long)g_registered_ctx->frame_interpreter_instructions,
+-                        (unsigned long long)g_registered_ctx->total_interpreter_instructions);
+-            ImGui::Text("Interp Cycles: frame %llu total %llu",
+-                        (unsigned long long)g_registered_ctx->frame_interpreter_cycles,
+-                        (unsigned long long)g_registered_ctx->total_interpreter_cycles);
+-            if (hotspot->valid && hotspot->entries > 0) {
+-                ImGui::Text("Top Hotspot: %03X:%04X", hotspot->bank, hotspot->addr);
+-                ImGui::Text("Hits %llu Instr %llu Cycles %llu",
+-                            (unsigned long long)hotspot->entries,
+-                            (unsigned long long)hotspot->instructions,
+-                            (unsigned long long)hotspot->cycles);
++            ImGui::Checkbox("Show Debug Overlay (F1)", &g_show_overlay);
++            ImGui::Checkbox("Smooth Slow Frames", &g_smooth_lcd_transitions);
++            if (ImGui::SliderInt("Speed %", &g_speed_percent, 10, 500)) {
++                reset_audio_output_buffer(true);
+             }
+-            if (g_registered_ctx->has_unimplemented_interpreter_opcode) {
+-                ImGui::Text("Coverage Gap: %02X at %03X:%04X",
+-                            g_registered_ctx->last_unimplemented_opcode,
+-                            g_registered_ctx->last_unimplemented_bank,
+-                            g_registered_ctx->last_unimplemented_addr);
++            ImGui::SameLine();
++            if (ImGui::Button("Reset Speed")) {
++                g_speed_percent = 100;
++                g_max_speed_mode = false;
++                reset_audio_output_buffer(true);
++            }
++            const bool cgb_colors =
++                g_registered_ctx && g_registered_ctx->config.model == GB_MODEL_CGB;
++            ImGui::BeginDisabled(cgb_colors);
++            ImGui::Combo("Palette", &g_palette_idx, g_palette_names, IM_ARRAYSIZE(g_palette_names));
++            ImGui::EndDisabled();
++
++            menu_section_header("Audio Device");
++            if (ImGui::BeginCombo("Output Device", current_audio_output_device_label())) {
++                bool selected_default = g_audio_target_device_name.empty();
++                if (ImGui::Selectable("System Default", selected_default)) {
++                    g_audio_target_device_name.clear();
++                    save_runtime_preferences();
++                    reopen_audio_output_device(true);
++                }
++                if (selected_default) {
++                    ImGui::SetItemDefaultFocus();
++                }
++                for (size_t i = 0; i < g_audio_output_devices.size(); i++) {
++                    const bool selected = g_audio_output_devices[i] == g_audio_target_device_name;
++                    if (ImGui::Selectable(g_audio_output_devices[i].c_str(), selected)) {
++                        g_audio_target_device_name = g_audio_output_devices[i];
++                        save_runtime_preferences();
++                        reopen_audio_output_device(true);
++                    }
++                    if (selected) {
++                        ImGui::SetItemDefaultFocus();
++                    }
++                }
++                ImGui::EndCombo();
++            }
++            int audio_latency_ms = (int)g_audio_latency_ms;
++            if (ImGui::SliderInt("Target Audio Latency (ms)", &audio_latency_ms, 20, 250)) {
++                g_audio_latency_ms = (uint32_t)audio_latency_ms;
++                recompute_audio_targets();
++                reset_audio_output_buffer(true);
++                save_runtime_preferences();
++            }
++            if (ImGui::Button("Refresh Devices")) {
++                refresh_audio_output_devices();
++            }
++            ImGui::SameLine();
++            if (ImGui::Button("Reconnect Audio")) {
++                reopen_audio_output_device(true);
++            }
++            ImGui::SameLine();
++            if (ImGui::Button("Reset Display")) {
++                reset_runtime_display_defaults();
++            }
++            ImGui::SameLine();
++            if (ImGui::Button("Reset Audio")) {
++                reset_runtime_audio_defaults();
++            }
++
++            if (has_interpreter_activity(g_registered_ctx)) {
++                const GBInterpreterHotspot* hotspot = &g_registered_ctx->interpreter_hotspots[0];
++                menu_section_header("Interpreter Diagnostics");
++                ImGui::Text("Fallbacks: frame %u  total %llu",
++                            g_registered_ctx->frame_dispatch_fallbacks,
++                            (unsigned long long)g_registered_ctx->total_dispatch_fallbacks);
++                if (hotspot->valid && hotspot->entries > 0) {
++                    ImGui::Text("Top Hotspot: %03X:%04X (hits %llu)",
++                                hotspot->bank, hotspot->addr,
++                                (unsigned long long)hotspot->entries);
++                }
+             }
+         }
++
+         ImGui::PopItemWidth();
+         ImGui::EndChild();
+-        ImGui::SetCursorPosX(content_x);
+         ImGui::Separator();
+-
+-        /* Footer actions.
+-         *
+-         * "Resume" used to sit in the header, positioned with a SameLine()
+-         * offset from the start of the line. That only lined up on narrow
+-         * windows: ImGui resets the cursor X to the line start after every
+-         * item, so on a 4K screen the button drifted away from the content
+-         * block. The footer is already the action row, and equal-width buttons
+-         * there need no position arithmetic at all. */
+-        const int footer_button_count = g_launcher_return_enabled ? 4 : 3;
+-        /* Same column as the content above it. The footer used to measure the
+-         * full window width, which put Reset Display against the far left and
+-         * Quit against the far right while everything between them sat in a
+-         * centred 900 px block. */
+-        const float footer_button_width =
+-            (content_w - ImGui::GetStyle().ItemSpacing.x * (footer_button_count - 1)) /
+-            (float)footer_button_count;
+-        /* Immediately before the button, not before the Separator above it:
+-         * SetCursorPosX only holds for the next item, so positioning the rule
+-         * and then submitting it put the first button back at the line start. */
+-        ImGui::SetCursorPosX(content_x);
+-        if (ImGui::Button("Reset Display", ImVec2(footer_button_width, 0.0f))) {
+-            reset_runtime_display_defaults();
+-        }
+-
+-        ImGui::SameLine();
+-        if (ImGui::Button("Resume", ImVec2(footer_button_width, 0.0f))) {
+-            set_menu_open(false);
+-        }
+-
+-        if (g_launcher_return_enabled) {
+-            ImGui::SameLine();
+-            if (ImGui::Button("Return to Launcher", ImVec2(footer_button_width, 0.0f))) {
+-                g_exit_action = GB_PLATFORM_EXIT_RETURN_TO_LAUNCHER;
+-                SDL_Event quit_event;
+-                quit_event.type = SDL_QUIT;
+-                SDL_PushEvent(&quit_event);
+-            }
+-        }
+-
+-        ImGui::SameLine();
+-        if (ImGui::Button("Quit", ImVec2(footer_button_width, 0.0f))) {
+-            g_exit_action = GB_PLATFORM_EXIT_QUIT;
+-            SDL_Event quit_event;
+-            quit_event.type = SDL_QUIT;
+-            SDL_PushEvent(&quit_event);
+-        }
++        ImGui::TextColored(ImVec4(0.50f, 0.80f, 0.62f, 1.0f),
++                           "[D-PAD] Navigate   [A] Select   [B / ESC / L3] Resume   [LB/RB] Switch Tab");
+         ImGui::End();
+-        ImGui::PopStyleColor(20);
++        ImGui::PopStyleColor(22);
+         ImGui::PopStyleVar(6);
+     } else if (g_show_overlay) {
+         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+@@ -4861,6 +4822,7 @@ static bool audio_output_should_run(void) {
+            g_audio_output_enabled &&
+            !g_benchmark_mode &&
+            !g_app_suspended &&
++           !g_show_menu &&
+            effective_speed_percent() == 100;
+ }
+ 
+@@ -5708,10 +5670,21 @@ bool gb_platform_init(int scale) {
+ 
+     // Setup Dear ImGui style
+     ImGui::StyleColorsDark();
++    ImGui::GetStyle().AntiAliasedLinesUseTex = false;
++
++    io.Fonts->Flags |= ImFontAtlasFlags_NoBakedLines;
++    ImFont* pixel_font = build_tactical_pixel_font(io);
++    if (pixel_font != NULL) {
++        io.FontDefault = pixel_font;
++    }
+ 
+     // Setup Platform/Renderer backends
+     ImGui_ImplSDL2_InitForSDLRenderer(g_window, g_renderer);
+     ImGui_ImplSDLRenderer2_Init(g_renderer);
++    sync_imgui_gamepad_mode();
++    if (ImGui_ImplSDLRenderer2_CreateFontsTexture() && io.Fonts->TexID) {
++        SDL_SetTextureScaleMode((SDL_Texture*)(intptr_t)io.Fonts->TexID, SDL_ScaleModeNearest);
++    }
+ 
+     if (!recreate_streaming_texture()) {
+         SDL_DestroyRenderer(g_renderer);
+@@ -5895,6 +5868,8 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                 set_remaster_button_held(GB_REMASTER_BTN_LB, pressed);
+             } else if (event->cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+                 set_remaster_button_held(GB_REMASTER_BTN_RB, pressed);
++            } else if (event->cbutton.button == SDL_CONTROLLER_BUTTON_START) {
++                set_remaster_button_held(GB_REMASTER_BTN_START, pressed);
+             }
+ 
+             if (event->cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
+@@ -6542,10 +6517,13 @@ static void set_menu_open(bool open) {
+     g_show_menu = open;
+     g_vsync_prev_exit_ticks = 0;
+     if (open) {
++        g_menu_just_opened = true;
+         g_remaster_btn_edge_mask = 0;
+         stop_controller_rumble();
+         g_savestate_thumb_dirty = true;
+     }
++    update_effective_joypad_state();
++    refresh_audio_device_pause_state();
+ }
+ 
+ void gb_platform_set_vsync_default(bool enabled) {
+@@ -6583,6 +6561,10 @@ uint32_t gb_platform_consume_remaster_button_edges(void) {
+     return edges;
+ }
+ 
++bool gb_platform_is_menu_open(void) {
++    return g_show_menu;
++}
++
+ bool gb_platform_get_rumble(void) {
+     return g_rumble_enabled;
+ }
+@@ -7383,6 +7365,10 @@ uint32_t gb_platform_consume_remaster_button_edges(void) {
+     return 0;
+ }
+ 
++bool gb_platform_is_menu_open(void) {
++    return false;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+index d237998..3494ed3 100644
+--- a/tests/test_qol_features.cpp
++++ b/tests/test_qol_features.cpp
+@@ -213,7 +213,8 @@ void test_control_presets_and_macro_override() {
+ 
+     gb_platform_test_set_runtime_prefs_path(prefs_path.string().c_str());
+ 
+-    /* 1. Macro joypad override takes precedence over manual joypad and restores cleanly. */
++    /* 1. Initial menu state & macro joypad override. */
++    check(!gb_platform_is_menu_open(), "pause menu starts closed");
+     g_joypad_dpad = 0xFF;
+     g_joypad_buttons = 0xFF;
+     gb_platform_set_macro_joypad_override(true, 0xFEu, 0xFBu);
+@@ -242,6 +243,9 @@ void test_control_presets_and_macro_override() {
+           "remaster scope defaults to Modern Stealth even with legacy authentic prefs");
+     const int modern_a_code = gb_platform_test_get_controller_action_binding_code(4, 0);
+     check(modern_a_code == 0, "Modern Stealth maps GB A to controller South/A button (code 0)");
++    check(gb_platform_test_get_controller_action_binding_code(7, 0) == 1 &&
++              gb_platform_test_get_controller_action_binding_code(7, 1) == 0,
++          "Modern Stealth reserves physical Start for Codec (GB Start mapped only to B)");
+     gb_platform_test_save_runtime_prefs();
+ 
+     /* 4. Saving authentic again preserves remaster's scoped preset and bindings. */
+-- 
+2.56.0
+
+
+From fa04d9e4f0e71c4904312996c5a141e566366e6d Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Tue, 24 Nov 2026 10:58:09 -0300
+Subject: [PATCH 41/41] fix: migrate legacy Modern Stealth controller.start.1
+ binding off Start
+
+---
+ runtime/src/platform_sdl.cpp | 10 ++++++++++
+ tests/test_qol_features.cpp  | 15 +++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 112e289..b630bb6 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -1514,6 +1514,16 @@ static void load_runtime_preferences(void) {
+         }
+     }
+ 
++    if (g_control_preset == GB_CONTROL_PRESET_MODERN) {
++        const GBInputBinding& legacy_modern_start =
++            g_controller_bindings[GB_INPUT_ACTION_START][1];
++        if (legacy_modern_start.kind == GB_INPUT_BINDING_CONTROLLER_BUTTON &&
++            legacy_modern_start.code == SDL_CONTROLLER_BUTTON_START) {
++            g_controller_bindings[GB_INPUT_ACTION_START][1] =
++                make_binding(GB_INPUT_BINDING_NONE, 0);
++        }
++    }
++
+     /*
+      * Runtime preferences written before the game-panel action existed stored
+      * the old default R3 binding as Toggle Menu slot 1. Preserve every custom
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+index 3494ed3..2a74aa9 100644
+--- a/tests/test_qol_features.cpp
++++ b/tests/test_qol_features.cpp
+@@ -268,6 +268,21 @@ void test_control_presets_and_macro_override() {
+     check(contents.find("controller.remaster.a.0=button:0") != std::string::npos,
+           "runtime_prefs preserves foreign controller.remaster.a.0");
+ 
++    /* 5. Legacy Modern Stealth runtime_prefs.ini with controller.remaster.start.1=button:6
++     * migrates cleanly so physical Start triggers Codec instead of crouching. */
++    {
++        std::ofstream ofs(prefs_path);
++        ofs << "control.preset.remaster=1\n"
++            << "controller.remaster.start.0=button:1\n"
++            << "controller.remaster.start.1=button:6\n";
++    }
++    gb_platform_set_preference_scope("remaster");
++    gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_test_get_controller_action_binding_code(7, 0) == 1 &&
++              gb_platform_test_get_controller_action_binding_code(7, 1) == 0,
++          "migrates legacy Modern Stealth controller.remaster.start.1=button:6 to none");
++
+     gb_platform_set_preference_scope("");
+     gb_platform_test_set_runtime_prefs_path(nullptr);
+     fs::remove(prefs_path, ec);
 -- 
 2.56.0
 

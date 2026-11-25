@@ -1077,9 +1077,12 @@ static int run_windowed(GBContext* ctx,
      * scope keeps that choice out of the authentic artifact's file: the two
      * artifacts share the bindings and the device, not their identity. */
     gb_platform_set_preference_scope("remaster");
+    gb_platform_set_menu_title("METAL GEAR GHOST BABEL // SETTINGS");
     gb_platform_set_audio_mastering_default(true);
     gb_platform_set_audio_crossfeed_default(true);
     gb_platform_set_screen_effect_default(GB_SCREEN_EFFECT_SHADER);
+    gb_platform_set_color_profile_default(GB_COLOR_PROFILE_MODERN);
+    gb_platform_set_tactical_fx_default(true);
     gb_platform_set_vsync_default(true);
     gb_platform_set_rumble_default(true);
     gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
@@ -1100,6 +1103,8 @@ static int run_windowed(GBContext* ctx,
     room_rumble_reset(&rumble);
     RoomControls controls;
     room_controls_reset(&controls);
+    float tactical_alert = 0.0f;
+    float tactical_danger = 0.0f;
     PerfCounters perf;
     perf_init(&perf);
 
@@ -1141,6 +1146,9 @@ static int run_windowed(GBContext* ctx,
             room_sync.known = false;
             room_rumble_reset(&rumble);
             room_controls_reset(&controls);
+            tactical_alert = 0.0f;
+            tactical_danger = 0.0f;
+            gb_platform_set_tactical_fx_state(0.0f, 0.0f);
             gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
             native_presenter_clear_column_cache(presenter);
         }
@@ -1239,6 +1247,25 @@ static int run_windowed(GBContext* ctx,
                 gb_platform_rumble(rumble_out.low_freq, rumble_out.high_freq,
                                    rumble_out.duration_ms);
             }
+            {
+                const float alert_target =
+                    (gameplay_active && !flat_screen && (rumble_in.alert_state & 0x80u) != 0u)
+                        ? 1.0f
+                        : 0.0f;
+                const float danger_target =
+                    (gameplay_active && !flat_screen && rumble_in.hp > 0u && rumble_in.hp <= 6u)
+                        ? ((7.0f - (float)rumble_in.hp) / 6.0f)
+                        : 0.0f;
+                tactical_alert += (alert_target - tactical_alert) * 0.25f;
+                tactical_danger += (danger_target - tactical_danger) * 0.20f;
+                if (alert_target <= 0.0f && tactical_alert < 0.005f) {
+                    tactical_alert = 0.0f;
+                }
+                if (danger_target <= 0.0f && tactical_danger < 0.005f) {
+                    tactical_danger = 0.0f;
+                }
+                gb_platform_set_tactical_fx_state(tactical_alert, tactical_danger);
+            }
 
             uint32_t top_overlay_rows = 0u;
             uint32_t bottom_status_rows = 0u;
@@ -1266,6 +1293,7 @@ static int run_windowed(GBContext* ctx,
     }
 
 shutdown:
+    gb_platform_set_tactical_fx_state(0.0f, 0.0f);
     gb_platform_set_macro_joypad_override(false, 0xFFu, 0xFFu);
     native_presenter_enable_column_cache(presenter, false);
     free(prev_state);

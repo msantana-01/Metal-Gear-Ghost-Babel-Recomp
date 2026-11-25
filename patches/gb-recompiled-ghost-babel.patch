@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/41] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/44] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/41] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/44] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/41] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/44] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/41] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/44] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/41] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/44] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/41] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/44] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/41] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/44] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/41] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/44] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/41] platform: confirm host actions with a transient
+Subject: [PATCH 09/44] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/41] platform: name the host after the cartridge and give
+Subject: [PATCH 10/44] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/41] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/44] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/41] platform: centre the footer buttons on the content
+Subject: [PATCH 12/44] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/41] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/44] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/41] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/44] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/41] platform: panel effects for the presented image, one
+Subject: [PATCH 15/44] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/41] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/44] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/41] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/44] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/41] runtime: include math.h for the panel effects
+Subject: [PATCH 18/44] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/41] platform: make the presented surface width a runtime
+Subject: [PATCH 19/44] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/41] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/44] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/41] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/44] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/41] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/44] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/41] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/44] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/41] audio: let the host choose the mastering default
+Subject: [PATCH 24/44] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/41] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/44] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/41] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/44] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/41] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/44] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/41] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/44] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/41] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/44] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/41] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/44] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6378,7 +6378,7 @@ index bbf034d..f8c9f76 100644
 From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 15:56:01 -0300
-Subject: [PATCH 31/41] fix(platform): bound framebuffer copies to active
+Subject: [PATCH 31/44] fix(platform): bound framebuffer copies to active
  present width
 
 ---
@@ -6452,7 +6452,7 @@ index f8c9f76..b612cf8 100644
 From 355c229f551f0bd44dcb924847e27ae8e3afe6ea Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 16:08:48 -0300
-Subject: [PATCH 32/41] fix(platform): implement cross-platform SDL_Renderer
+Subject: [PATCH 32/44] fix(platform): implement cross-platform SDL_Renderer
  CRT shader pipeline
 
 ---
@@ -7150,7 +7150,7 @@ index b612cf8..9785595 100644
 From 304eed1da58155f6e74d5e8492be1fb81e1ede00 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:16:42 -0300
-Subject: [PATCH 33/41] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
+Subject: [PATCH 33/44] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
  LCD shader presets
 
 ---
@@ -7945,7 +7945,7 @@ index 9785595..4932232 100644
 From 8f3331e1d7fd2d29a4b0a3cbd4bba60b4a951920 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:29:38 -0300
-Subject: [PATCH 34/41] perf(platform): blend LCD response in linear light and
+Subject: [PATCH 34/44] perf(platform): blend LCD response in linear light and
  tune GBC default to 16ms
 
 ---
@@ -8094,7 +8094,7 @@ index 82bb705..fe185e4 100644
 From 7e99bdcd929226a8882e34a13d25ebc5d568863d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:10:20 -0300
-Subject: [PATCH 35/41] feat(audio): cycle-integrated APU anti-aliasing,
+Subject: [PATCH 35/44] feat(audio): cycle-integrated APU anti-aliasing,
  linear-peak compressor fix, warmth LPF, and headphone crossfeed
 
 ---
@@ -8779,7 +8779,7 @@ index 727d938..6bc0f4d 100644
 From 410f9d80bf11a70f80022555b2979a8f201bef4f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:58:20 -0300
-Subject: [PATCH 36/41] feat(platform,audio): add savestate thumbnails, V-Sync
+Subject: [PATCH 36/44] feat(platform,audio): add savestate thumbnails, V-Sync
  audio DRC, and controller rumble API
 
 ---
@@ -10480,7 +10480,7 @@ index 0000000..b99038d
 From 355ebc4869b8b504a4cd4d8e58edfde34110b270 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 08:31:59 -0300
-Subject: [PATCH 37/41] feat(platform): add F12 debug snapshot trigger, BMP
+Subject: [PATCH 37/44] feat(platform): add F12 debug snapshot trigger, BMP
  fallback writer, and public toast API
 
 ---
@@ -10714,7 +10714,7 @@ index dd7dfba..2584eb9 100644
 From 611ca16b5f483b077ec9d4ffe37448bb795ec199 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 09:38:36 -0300
-Subject: [PATCH 38/41] feat: add Modern Stealth control preset and macro
+Subject: [PATCH 38/44] feat: add Modern Stealth control preset and macro
  joypad override API
 
 ---
@@ -11197,7 +11197,7 @@ index 2584eb9..a4f40d8 100644
 From 4bd69cf7831f0810d0bf8cd2b55565bcc9e18b1a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:12:58 -0300
-Subject: [PATCH 39/41] test: isolate runtime_prefs preset tests and trim
+Subject: [PATCH 39/44] test: isolate runtime_prefs preset tests and trim
  unused macro bit
 
 ---
@@ -11395,7 +11395,7 @@ index b99038d..d237998 100644
 From 2246ce3d2896bf242eff71b770af89dd6a8bbeec Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:46:12 -0300
-Subject: [PATCH 40/41] feat: add Codec tactical pause menu with pixel font and
+Subject: [PATCH 40/44] feat: add Codec tactical pause menu with pixel font and
  gamepad nav
 
 ---
@@ -12813,7 +12813,7 @@ index d237998..3494ed3 100644
 From fa04d9e4f0e71c4904312996c5a141e566366e6d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:58:09 -0300
-Subject: [PATCH 41/41] fix: migrate legacy Modern Stealth controller.start.1
+Subject: [PATCH 41/44] fix: migrate legacy Modern Stealth controller.start.1
  binding off Start
 
 ---
@@ -12868,6 +12868,1627 @@ index 3494ed3..2a74aa9 100644
      gb_platform_set_preference_scope("");
      gb_platform_test_set_runtime_prefs_path(nullptr);
      fs::remove(prefs_path, ec);
+-- 
+2.56.0
+
+
+From ee659d41d11f91f8a4788815f26792f963986440 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Wed, 25 Nov 2026 08:30:20 -0300
+Subject: [PATCH 42/44] feat(platform): add color profiles, tactical FX, UI
+ SFX, save gallery, dynamic prompts, and ImGui gamepad assert fix
+
+---
+ runtime/include/platform_sdl.h |  33 ++
+ runtime/src/platform_sdl.cpp   | 853 ++++++++++++++++++++++++++++-----
+ tests/test_qol_features.cpp    |  66 +++
+ 3 files changed, 834 insertions(+), 118 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 94a14ef..61806bb 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -55,6 +55,13 @@ typedef enum GBControlPreset {
+     GB_CONTROL_PRESET_COUNT = 2,
+ } GBControlPreset;
+ 
++typedef enum GBColorProfile {
++    GB_COLOR_PROFILE_RAW = 0,
++    GB_COLOR_PROFILE_MODERN = 1,
++    GB_COLOR_PROFILE_GBC_AUTHENTIC = 2,
++    GB_COLOR_PROFILE_COUNT = 3,
++} GBColorProfile;
++
+ enum {
+     GB_REMASTER_BTN_LB = 1u << 0,
+     GB_REMASTER_BTN_RB = 1u << 1,
+@@ -342,6 +349,31 @@ uint32_t gb_platform_consume_remaster_button_edges(void);
+  */
+ bool gb_platform_is_menu_open(void);
+ 
++/**
++ * @brief Choose the default color profile used when preferences are loaded.
++ */
++void gb_platform_set_color_profile_default(GBColorProfile profile);
++
++/**
++ * @brief Current active color profile.
++ */
++GBColorProfile gb_platform_get_color_profile(void);
++
++/**
++ * @brief Choose whether tactical screen edge vignette FX are enabled by default.
++ */
++void gb_platform_set_tactical_fx_default(bool enabled);
++
++/**
++ * @brief Whether tactical screen edge vignette FX are currently enabled.
++ */
++bool gb_platform_get_tactical_fx(void);
++
++/**
++ * @brief Feed read-only alert/low-HP edge vignette intensity (0.0 .. 1.0).
++ */
++void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_intensity);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+@@ -432,6 +464,7 @@ void gb_platform_test_set_runtime_prefs_path(const char* path);
+ void gb_platform_test_load_runtime_prefs(void);
+ void gb_platform_test_save_runtime_prefs(void);
+ int gb_platform_test_get_controller_action_binding_code(int action, int slot);
++uint32_t gb_platform_test_apply_color_profile(uint32_t argb, int profile);
+ #endif
+ 
+ #ifdef __cplusplus
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index b630bb6..f678534 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -224,6 +224,17 @@ static GBScreenEffect g_screen_effect = GB_SCREEN_EFFECT_OFF;
+  * artifact opens with, and a saved preference still wins. */
+ static GBScreenEffect g_screen_effect_default = GB_SCREEN_EFFECT_OFF;
+ static int g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
++static GBColorProfile g_color_profile_default = GB_COLOR_PROFILE_RAW;
++static GBColorProfile g_color_profile = GB_COLOR_PROFILE_RAW;
++static const char* g_color_profile_names[GB_COLOR_PROFILE_COUNT] = {
++    "Raw (Original)",
++    "Modern Balanced",
++    "GBC Authentic",
++};
++static bool g_tactical_fx_default = false;
++static bool g_tactical_fx_enabled = false;
++static float g_tactical_alert_level = 0.0f;
++static float g_tactical_danger_level = 0.0f;
+ 
+ /* LCD response. Off by default: the trail is authentic and the first time
+  * someone sees it they should have turned it on deliberately, because it does
+@@ -293,13 +304,26 @@ static int g_savestate_slot = 0;
+ static std::string g_savestate_status;
+ #define GB_SAVESTATE_THUMB_MAGIC 0x48544247u /* "GBTH" */
+ #define GB_SAVESTATE_THUMB_FORMAT_RGB565 1u
+-static SDL_Texture* g_savestate_thumb_texture = NULL;
+-static int g_savestate_thumb_slot = -1;
+-static int g_savestate_thumb_w = 0;
+-static int g_savestate_thumb_h = 0;
+-static bool g_savestate_thumb_has_image = false;
+-static bool g_savestate_thumb_dirty = true;
+-static std::string g_savestate_thumb_path;
++typedef struct GBSavestateThumbEntry {
++    SDL_Texture* texture;
++    int w;
++    int h;
++    bool has_image;
++    bool dirty;
++    bool exists;
++    std::string path;
++    std::string timestamp;
++} GBSavestateThumbEntry;
++static GBSavestateThumbEntry g_savestate_thumbs[GB_SAVESTATE_SLOT_COUNT];
++typedef enum GBUiSfxKind {
++    GB_UI_SFX_NONE = 0,
++    GB_UI_SFX_MOVE = 1,
++    GB_UI_SFX_CONFIRM = 2,
++    GB_UI_SFX_OPEN = 3,
++    GB_UI_SFX_CLOSE = 4,
++} GBUiSfxKind;
++static std::atomic<bool> g_audio_menu_paused{false};
++static std::atomic<uint32_t> g_ui_sfx_pending{GB_UI_SFX_NONE};
+ static const char* g_render_scaling_mode_names[] = {
+     "Pixel Perfect",
+     "Aspect Fit",
+@@ -413,9 +437,23 @@ static bool delete_savestate_slot(GBContext* ctx, int slot);
+ static bool savestate_slot_exists(const GBContext* ctx, int slot, std::string* out_path);
+ static float settings_ui_scale_for_size(const ImVec2& display_size);
+ static const char* controller_menu_hint_text(void);
++static const char* menu_footer_hint_text(void);
++static const char* controller_short_confirm_label(void);
++static const char* controller_short_cancel_label(void);
++static const char* controller_short_west_label(void);
++static const char* controller_short_north_label(void);
++static const char* controller_short_lb_label(void);
++static const char* controller_short_rb_label(void);
++static const char* controller_short_lt_label(void);
++static const char* controller_short_rt_label(void);
++static const char* controller_short_start_label(void);
++static const char* controller_short_back_label(void);
+ static void stop_controller_rumble(void);
+-static void destroy_savestate_thumb_texture(void);
+-static void refresh_savestate_thumb_preview(const std::string& state_path, int slot);
++static void mark_all_savestate_thumbs_dirty(void);
++static void destroy_savestate_thumb_textures(void);
++static void refresh_savestate_thumb_preview(const GBContext* ctx, int slot);
++static void play_ui_sfx(GBUiSfxKind kind);
++static uint32_t apply_color_profile_argb(uint32_t px, GBColorProfile profile);
+ static bool write_savestate_thumbnail(const char* state_path,
+                                       const uint32_t* argb,
+                                       int width,
+@@ -746,6 +784,128 @@ static const char* controller_guide_label(void) {
+     }
+ }
+ 
++static const char* controller_short_confirm_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_XBOX: return "A";
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Cross";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "B";
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "A";
++    }
++}
++
++static const char* controller_short_cancel_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_XBOX: return "B";
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Circle";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "A";
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "B";
++    }
++}
++
++static const char* controller_short_west_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_XBOX: return "X";
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Square";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "Y";
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "X";
++    }
++}
++
++static const char* controller_short_north_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_XBOX: return "Y";
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Triangle";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "X";
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "Y";
++    }
++}
++
++static const char* controller_short_lb_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "L1";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "L";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "LB";
++    }
++}
++
++static const char* controller_short_rb_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "R1";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "R";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "RB";
++    }
++}
++
++static const char* controller_short_lt_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "L2";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "ZL";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "LT";
++    }
++}
++
++static const char* controller_short_rt_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "R2";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "ZR";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "RT";
++    }
++}
++
++static const char* controller_short_start_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Options";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "+";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "Start";
++    }
++}
++
++static const char* controller_short_back_label(void) {
++    switch (g_controller_label_profile) {
++        case GB_CONTROLLER_LABEL_PLAYSTATION: return "Create";
++        case GB_CONTROLLER_LABEL_NINTENDO: return "-";
++        case GB_CONTROLLER_LABEL_XBOX:
++        case GB_CONTROLLER_LABEL_GENERIC:
++        default:
++            return "Back";
++    }
++}
++
++static const char* menu_footer_hint_text(void) {
++    static char buf[128];
++    snprintf(buf,
++             sizeof(buf),
++             "[D-PAD] Navigate   [%s] Select   [%s / ESC / L3] Resume   [%s/%s] Switch Tab",
++             controller_short_confirm_label(),
++             controller_short_cancel_label(),
++             controller_short_lb_label(),
++             controller_short_rb_label());
++    return buf;
++}
++
+ static const char* controller_button_label(SDL_GameControllerButton button) {
+     switch (button) {
+         case SDL_CONTROLLER_BUTTON_A: return controller_face_south_label();
+@@ -850,10 +1010,19 @@ static void commit_binding_capture(const GBInputBinding& binding) {
+ 
+ static void sync_imgui_gamepad_mode(void) {
+     if (ImGui::GetCurrentContext() != NULL) {
+-        ImGui_ImplSDL2_SetGamepadMode(
+-            ImGui_ImplSDL2_GamepadMode_Manual,
+-            g_controller ? &g_controller : NULL,
+-            g_controller ? 1 : 0);
++        if (g_controller != NULL) {
++            ImGui_ImplSDL2_SetGamepadMode(
++                ImGui_ImplSDL2_GamepadMode_Manual,
++                &g_controller,
++                1);
++        } else {
++            /* Passing Manual with (NULL, 0) trips IM_ASSERT in
++             * ImGui_ImplSDL2_SetGamepadMode on shutdown or when unplugged. */
++            ImGui_ImplSDL2_SetGamepadMode(
++                ImGui_ImplSDL2_GamepadMode_AutoFirst,
++                NULL,
++                0);
++        }
+     }
+ }
+ 
+@@ -1216,6 +1385,8 @@ static const char* const kIdentityPrefKeys[] = {
+     "audio.crossfeed",
+     "screen.effect",
+     "screen.effect_intensity",
++    "screen.color_profile",
++    "screen.tactical_fx",
+     "screen.lcd_response_enabled",
+     "screen.lcd_response_ms",
+     "video.vsync",
+@@ -1289,6 +1460,17 @@ static void apply_identity_preference(const char* identity, const char* value) {
+         }
+         return;
+     }
++    if (strcmp(identity, "screen.color_profile") == 0) {
++        long parsed = strtol(value, NULL, 10);
++        if (parsed >= 0 && parsed < GB_COLOR_PROFILE_COUNT) {
++            g_color_profile = (GBColorProfile)parsed;
++        }
++        return;
++    }
++    if (strcmp(identity, "screen.tactical_fx") == 0) {
++        g_tactical_fx_enabled = (strcmp(value, "0") != 0);
++        return;
++    }
+     if (strcmp(identity, "screen.lcd_response_enabled") == 0) {
+         g_lcd_response_enabled = (strcmp(value, "0") != 0);
+         return;
+@@ -1325,6 +1507,8 @@ static void load_runtime_preferences(void) {
+      * replaces them; a missing one leaves them. */
+     g_screen_effect = g_screen_effect_default;
+     g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
++    g_color_profile = g_color_profile_default;
++    g_tactical_fx_enabled = g_tactical_fx_default;
+     g_vsync = g_vsync_default;
+     g_rumble_enabled = g_rumble_default;
+     g_rumble_strength = 100;
+@@ -1602,6 +1786,10 @@ static void save_runtime_preferences(void) {
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.effect").c_str(), (int)g_screen_effect);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.effect_intensity").c_str(),
+             g_screen_effect_intensity);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.color_profile").c_str(),
++            (int)g_color_profile);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.tactical_fx").c_str(),
++            g_tactical_fx_enabled ? 1 : 0);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_enabled").c_str(),
+             g_lcd_response_enabled ? 1 : 0);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_ms").c_str(),
+@@ -2454,7 +2642,7 @@ static void set_app_suspended(bool suspended) {
+     g_app_suspended = suspended;
+     if (suspended) {
+         stop_controller_rumble();
+-        destroy_savestate_thumb_texture();
++        destroy_savestate_thumb_textures();
+     }
+     refresh_audio_device_pause_state();
+ 
+@@ -2474,6 +2662,8 @@ static void reset_runtime_display_defaults(void) {
+     g_scale = 5;
+     g_speed_percent = 100;
+     g_palette_idx = 0;
++    g_color_profile = g_color_profile_default;
++    g_tactical_fx_enabled = g_tactical_fx_default;
+     g_smooth_lcd_transitions = true;
+     g_show_overlay = false;
+     g_max_speed_mode = false;
+@@ -2709,11 +2899,63 @@ static void ensure_lcd_off_framebuffer(void) {
+     g_lcd_off_framebuffer_initialized = true;
+ }
+ 
++static float clampf(float value, float low, float high) {
++    return value < low ? low : (value > high ? high : value);
++}
++
++static bool gl_shader_is_ready(void);
++
++static uint32_t apply_color_profile_argb(uint32_t px, GBColorProfile profile) {
++    if (profile == GB_COLOR_PROFILE_RAW ||
++        (int)profile <= (int)GB_COLOR_PROFILE_RAW ||
++        (int)profile >= (int)GB_COLOR_PROFILE_COUNT) {
++        return px;
++    }
++    const uint32_t a = px & 0xFF000000u;
++    const float r = (float)((px >> 16) & 0xFFu) / 255.0f;
++    const float g = (float)((px >> 8) & 0xFFu) / 255.0f;
++    const float b = (float)(px & 0xFFu) / 255.0f;
++    float out_r = r;
++    float out_g = g;
++    float out_b = b;
++    if (profile == GB_COLOR_PROFILE_MODERN) {
++        const float luma = 0.2126f * r + 0.7152f * g + 0.0722f * b;
++        const float sat = 1.16f;
++        out_r = clampf(luma + (r - luma) * sat, 0.0f, 1.0f);
++        out_g = clampf(luma + (g - luma) * sat, 0.0f, 1.0f);
++        out_b = clampf(luma + (b - luma) * sat, 0.0f, 1.0f);
++        out_r = out_r * (0.94f + 0.06f * out_r);
++        out_g = out_g * (0.94f + 0.06f * out_g);
++        out_b = out_b * (0.94f + 0.06f * out_b);
++    } else if (profile == GB_COLOR_PROFILE_GBC_AUTHENTIC) {
++        const float lr = powf(r, 2.2f);
++        const float lg = powf(g, 2.2f);
++        const float lb = powf(b, 2.2f);
++        const float mr = clampf(lr * 0.800f + lg * 0.160f + lb * 0.040f, 0.0f, 1.0f);
++        const float mg = clampf(lr * 0.040f + lg * 0.720f + lb * 0.240f, 0.0f, 1.0f);
++        const float mb = clampf(lr * 0.060f + lg * 0.120f + lb * 0.820f, 0.0f, 1.0f);
++        out_r = powf(mr, 1.0f / 2.2f);
++        out_g = powf(mg, 1.0f / 2.2f);
++        out_b = powf(mb, 1.0f / 2.2f);
++    }
++    const uint32_t ir = (uint32_t)lrintf(clampf(out_r, 0.0f, 1.0f) * 255.0f);
++    const uint32_t ig = (uint32_t)lrintf(clampf(out_g, 0.0f, 1.0f) * 255.0f);
++    const uint32_t ib = (uint32_t)lrintf(clampf(out_b, 0.0f, 1.0f) * 255.0f);
++    return a | (ir << 16) | (ig << 8) | ib;
++}
++
+ // Keep texture layout and host palette conversion in the same tested path.
+ static void copy_display_frame(void* pixels, int pitch, const uint32_t* framebuffer,
+                                int palette_idx, const GBContext* ctx) {
+     const bool recolor = palette_idx > 0 && palette_idx < IM_ARRAYSIZE(g_palettes) &&
+         (!ctx || ctx->config.model != GB_MODEL_CGB);
++    const bool skip_gbc_color =
++        (g_screen_effect == GB_SCREEN_EFFECT_GBC_LCD && gl_shader_is_ready());
++    const GBColorProfile active_profile =
++        (skip_gbc_color && g_color_profile == GB_COLOR_PROFILE_GBC_AUTHENTIC)
++            ? GB_COLOR_PROFILE_RAW
++            : g_color_profile;
++    const bool apply_profile = (active_profile != GB_COLOR_PROFILE_RAW);
+     uint32_t source_palette[4];
+     if (recolor) {
+         for (int shade = 0; shade < 4; ++shade) {
+@@ -2723,28 +2965,30 @@ static void copy_display_frame(void* pixels, int pitch, const uint32_t* framebuf
+     for (int y = 0; y < GB_SCREEN_HEIGHT; ++y) {
+         const uint32_t* src = framebuffer + y * g_present_width;
+         uint32_t* dst = (uint32_t*)((uint8_t*)pixels + y * pitch);
+-        if (!recolor) {
++        if (!recolor && !apply_profile) {
+             memcpy(dst, src, (size_t)g_present_width * sizeof(uint32_t));
+             continue;
+         }
+         for (int x = 0; x < g_present_width; ++x) {
+-            dst[x] = src[x];
+-            for (int shade = 0; shade < 4; ++shade) {
+-                // Completed frames use the PPU's RGB555-expanded colors;
+-                // startup and LCD-off frames can still use the legacy colors.
+-                if (src[x] == source_palette[shade] || src[x] == g_palettes[0][shade]) {
+-                    dst[x] = g_palettes[palette_idx][shade];
+-                    break;
++            uint32_t color = src[x];
++            if (recolor) {
++                for (int shade = 0; shade < 4; ++shade) {
++                    // Completed frames use the PPU's RGB555-expanded colors;
++                    // startup and LCD-off frames can still use the legacy colors.
++                    if (color == source_palette[shade] || color == g_palettes[0][shade]) {
++                        color = g_palettes[palette_idx][shade];
++                        break;
++                    }
+                 }
+             }
++            if (apply_profile) {
++                color = apply_color_profile_argb(color, active_profile);
++            }
++            dst[x] = color;
+         }
+     }
+ }
+ 
+-static float clampf(float value, float low, float high) {
+-    return value < low ? low : (value > high ? high : value);
+-}
+-
+ static float smooth_ramp(float t) {
+     const float v = clampf(t, 0.0f, 1.0f);
+     return v * v * (3.0f - 2.0f * v);
+@@ -3149,6 +3393,14 @@ struct GBGLShaderPipeline {
+ 
+ static GBGLShaderPipeline g_gl_shader = {};
+ 
++static bool gl_shader_is_ready(void) {
++#if !defined(__ANDROID__)
++    return g_gl_shader.ready;
++#else
++    return false;
++#endif
++}
++
+ template <typename FnPtr>
+ static bool load_gl_proc(const char* name, FnPtr* out_fn) {
+     void* sym = SDL_GL_GetProcAddress(name);
+@@ -3722,8 +3974,51 @@ void gb_platform_test_compute_screen_effect_overlay(uint32_t* dst, int dst_w, in
+     compute_screen_effect_overlay(dst, dst_w, dst_h, effect, intensity_percent,
+                                   scale_factor);
+ }
++
++uint32_t gb_platform_test_apply_color_profile(uint32_t argb, int profile) {
++    return apply_color_profile_argb(argb, (GBColorProfile)profile);
++}
+ #endif
+ 
++static void draw_tactical_vignette_overlay(ImDrawList* dl) {
++    if (!dl || !g_tactical_fx_enabled ||
++        g_game_viewport.w <= 0 || g_game_viewport.h <= 0) {
++        return;
++    }
++    const float alert = clampf(g_tactical_alert_level, 0.0f, 1.0f);
++    const float danger = clampf(g_tactical_danger_level, 0.0f, 1.0f);
++    if (alert <= 0.01f && danger <= 0.01f) {
++        return;
++    }
++    const float now_s = (float)SDL_GetTicks() * 0.001f;
++    const float alert_pulse = alert * (0.55f + 0.45f * sinf(now_s * 7.5f));
++    const float danger_pulse = danger * (0.50f + 0.50f * sinf(now_s * 10.5f));
++    const float strength = (alert_pulse > danger_pulse) ? alert_pulse : danger_pulse;
++    const int alpha = (int)lrintf(clampf(strength, 0.0f, 1.0f) * 118.0f);
++    if (alpha <= 1) {
++        return;
++    }
++    const int red = 225;
++    const int green = (alert >= danger) ? 26 : 18;
++    const int blue = (alert >= danger) ? 34 : 24;
++    const ImU32 edge_col = IM_COL32(red, green, blue, alpha);
++    const ImU32 mid_col = IM_COL32(red, green, blue, alpha / 3);
++    const ImU32 clear_col = IM_COL32(red, green, blue, 0);
++
++    const float x0 = (float)g_game_viewport.x;
++    const float y0 = (float)g_game_viewport.y;
++    const float x1 = x0 + (float)g_game_viewport.w;
++    const float y1 = y0 + (float)g_game_viewport.h;
++    const float band_x = (float)g_game_viewport.w * 0.09f;
++    const float band_y = (float)g_game_viewport.h * 0.09f;
++
++    dl->AddRectFilledMultiColor(ImVec2(x0, y0), ImVec2(x0 + band_x, y1), edge_col, clear_col, clear_col, edge_col);
++    dl->AddRectFilledMultiColor(ImVec2(x1 - band_x, y0), ImVec2(x1, y1), clear_col, edge_col, edge_col, clear_col);
++    dl->AddRectFilledMultiColor(ImVec2(x0, y0), ImVec2(x1, y0 + band_y), edge_col, edge_col, clear_col, clear_col);
++    dl->AddRectFilledMultiColor(ImVec2(x0, y1 - band_y), ImVec2(x1, y1), clear_col, clear_col, edge_col, edge_col);
++    dl->AddRect(ImVec2(x0, y0), ImVec2(x1, y1), mid_col, 0.0f, 0, 2.0f);
++}
++
+ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_frame) {
+     if (!framebuffer) {
+         DBG_FRAME("Platform render_frame: SKIPPED (null: texture=%d, renderer=%d, fb=%d)",
+@@ -3939,12 +4234,15 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+     ImGuiIO& imgui_io = ImGui::GetIO();
+     imgui_io.FontGlobalScale = settings_ui_scale_for_size(imgui_io.DisplaySize);
+ 
++    draw_tactical_vignette_overlay(ImGui::GetBackgroundDrawList());
++
+     if (g_show_menu) {
+         const float ui_scale = imgui_io.FontGlobalScale;
+         static const char* const kMenuTabNames[] = {
+             "MISSION", "DISPLAY", "AUDIO", "CONTROLS", "SYSTEM",
+         };
+         constexpr int kMenuTabCount = IM_ARRAYSIZE(kMenuTabNames);
++        bool nav_moved_this_frame = false;
+ 
+         if (g_menu_just_opened) {
+             g_menu_active_tab = 0;
+@@ -3956,11 +4254,29 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             !ImGui::IsPopupOpen((const char*)NULL, ImGuiPopupFlags_AnyPopupId)) {
+             if (ImGui::IsKeyPressed(ImGuiKey_GamepadL1, false)) {
+                 g_menu_active_tab = (g_menu_active_tab + kMenuTabCount - 1) % kMenuTabCount;
++                play_ui_sfx(GB_UI_SFX_MOVE);
+             } else if (ImGui::IsKeyPressed(ImGuiKey_GamepadR1, false)) {
+                 g_menu_active_tab = (g_menu_active_tab + 1) % kMenuTabCount;
++                play_ui_sfx(GB_UI_SFX_MOVE);
+             } else if (!ImGui::IsAnyItemActive() &&
+                        ImGui::IsKeyPressed(ImGuiKey_GamepadFaceRight, false)) {
+                 set_menu_open(false);
++            } else {
++                nav_moved_this_frame =
++                    ImGui::IsKeyPressed(ImGuiKey_GamepadDpadUp, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_GamepadDpadDown, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_GamepadDpadLeft, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_GamepadDpadRight, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_UpArrow, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_DownArrow, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_LeftArrow, false) ||
++                    ImGui::IsKeyPressed(ImGuiKey_RightArrow, false);
++                if (nav_moved_this_frame) {
++                    play_ui_sfx(GB_UI_SFX_MOVE);
++                } else if (!ImGui::IsAnyItemActive() &&
++                           ImGui::IsKeyPressed(ImGuiKey_GamepadFaceDown, false)) {
++                    play_ui_sfx(GB_UI_SFX_CONFIRM);
++                }
+             }
+         }
+ 
+@@ -4066,6 +4382,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             }
+             if (ImGui::Button(kMenuTabNames[t], ImVec2(tab_w, 0.0f))) {
+                 g_menu_active_tab = t;
++                play_ui_sfx(GB_UI_SFX_MOVE);
+             }
+             if (active) {
+                 ImGui::PopStyleColor(2);
+@@ -4081,56 +4398,129 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             /* MISSION TAB */
+             const float body_w = ImGui::GetContentRegionAvail().x;
+             const float sp = ImGui::GetStyle().ItemSpacing.x;
+-            const float btn3_w = (body_w - sp * 2.0f) / 3.0f;
+-            if (ImGui::Button("Resume Mission", ImVec2(btn3_w, 0.0f))) {
++            const float btn4_w = (body_w - sp * 3.0f) / 4.0f;
++            if (ImGui::Button("Resume Mission", ImVec2(btn4_w, 0.0f))) {
+                 set_menu_open(false);
+             }
+             ImGui::SameLine();
+-            if (ImGui::Button("Save State (F5)", ImVec2(btn3_w, 0.0f))) {
++            if (ImGui::Button("Save State (F5)", ImVec2(btn4_w, 0.0f))) {
+                 save_savestate_slot(g_registered_ctx, g_savestate_slot);
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
+             }
+             ImGui::SameLine();
+-            if (ImGui::Button("Load State (F8)", ImVec2(btn3_w, 0.0f))) {
++            if (ImGui::Button("Load State (F8)", ImVec2(btn4_w, 0.0f))) {
+                 load_savestate_slot(g_registered_ctx, g_savestate_slot);
+-            }
+-
+-            menu_section_header("Mission State Slot");
+-            int savestate_slot = g_savestate_slot + 1;
+-            if (ImGui::SliderInt("Active Slot", &savestate_slot, 1, GB_SAVESTATE_SLOT_COUNT)) {
+-                g_savestate_slot = savestate_slot - 1;
+-                g_savestate_thumb_dirty = true;
+-                save_runtime_preferences();
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
+             }
+             ImGui::SameLine();
+-            if (ImGui::Button("Delete Slot")) {
++            if (ImGui::Button("Delete Slot", ImVec2(btn4_w, 0.0f))) {
+                 delete_savestate_slot(g_registered_ctx, g_savestate_slot);
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
+             }
+ 
+-            std::string savestate_path;
+-            const bool slot_exists = savestate_slot_exists(g_registered_ctx, g_savestate_slot, &savestate_path);
+-            refresh_savestate_thumb_preview(savestate_path, g_savestate_slot);
+-            if (slot_exists) {
+-                char saved_at[64];
+-                if (format_file_timestamp(savestate_path.c_str(), saved_at, sizeof(saved_at))) {
+-                    ImGui::Text("Slot %d: Ready (%s)", g_savestate_slot + 1, saved_at);
+-                } else {
+-                    ImGui::Text("Slot %d: Ready", g_savestate_slot + 1);
++            menu_section_header("Mission State Gallery");
++            for (int slot = 0; slot < GB_SAVESTATE_SLOT_COUNT; ++slot) {
++                refresh_savestate_thumb_preview(g_registered_ctx, slot);
++            }
++            if (ImGui::BeginTable("MissionSlotGallery", 5, ImGuiTableFlags_SizingStretchSame)) {
++                const float line_h = ImGui::GetTextLineHeight();
++                for (int slot = 0; slot < GB_SAVESTATE_SLOT_COUNT; ++slot) {
++                    ImGui::TableNextColumn();
++                    ImGui::PushID(slot);
++                    const GBSavestateThumbEntry& entry = g_savestate_thumbs[slot];
++                    const float card_w = ImGui::GetContentRegionAvail().x;
++                    const float pad = 5.0f * ui_scale;
++                    const float img_box_w = (card_w > pad * 2.0f + 16.0f) ? (card_w - pad * 2.0f) : 16.0f;
++                    const float img_box_h = img_box_w * 0.5625f;
++                    const float card_h = pad * 2.0f + img_box_h + line_h * 2.2f;
++
++                    const bool clicked = ImGui::InvisibleButton("##slot_card", ImVec2(card_w, card_h));
++                    const bool focused = ImGui::IsItemFocused();
++                    const bool hovered = ImGui::IsItemHovered();
++                    if (clicked) {
++                        g_savestate_slot = slot;
++                        save_runtime_preferences();
++                        play_ui_sfx(GB_UI_SFX_CONFIRM);
++                    } else if (focused && nav_moved_this_frame && g_savestate_slot != slot) {
++                        g_savestate_slot = slot;
++                    }
++
++                    const bool active = (slot == g_savestate_slot);
++                    ImDrawList* card_dl = ImGui::GetWindowDrawList();
++                    const ImVec2 p0 = ImGui::GetItemRectMin();
++                    const ImVec2 p1 = ImGui::GetItemRectMax();
++                    const ImU32 bg_col = active
++                        ? IM_COL32(28, 66, 48, 255)
++                        : (hovered || focused ? IM_COL32(22, 48, 36, 255) : IM_COL32(12, 26, 20, 235));
++                    const ImU32 border_col = active
++                        ? IM_COL32(46, 232, 138, 255)
++                        : (focused ? IM_COL32(130, 245, 185, 220) : IM_COL32(36, 98, 66, 180));
++                    card_dl->AddRectFilled(p0, p1, bg_col, 2.0f);
++                    card_dl->AddRect(p0, p1, border_col, 2.0f, 0, active ? 2.0f : 1.0f);
++
++                    const ImVec2 box_min(p0.x + pad, p0.y + pad);
++                    const ImVec2 box_max(box_min.x + img_box_w, box_min.y + img_box_h);
++                    card_dl->AddRectFilled(box_min, box_max, IM_COL32(6, 14, 11, 255));
++                    if (entry.has_image && entry.texture && entry.w > 0 && entry.h > 0) {
++                        const float src_aspect = (float)entry.w / (float)entry.h;
++                        float draw_w = img_box_w;
++                        float draw_h = draw_w / src_aspect;
++                        if (draw_h > img_box_h) {
++                            draw_h = img_box_h;
++                            draw_w = draw_h * src_aspect;
++                        }
++                        const ImVec2 img_min(box_min.x + (img_box_w - draw_w) * 0.5f,
++                                             box_min.y + (img_box_h - draw_h) * 0.5f);
++                        const ImVec2 img_max(img_min.x + draw_w, img_min.y + draw_h);
++                        card_dl->AddImage((ImTextureID)(intptr_t)entry.texture, img_min, img_max);
++                    } else {
++                        const char* empty_label = entry.exists ? "SAVED" : "EMPTY";
++                        const ImVec2 txt_sz = ImGui::CalcTextSize(empty_label);
++                        card_dl->AddText(
++                            ImVec2(box_min.x + (img_box_w - txt_sz.x) * 0.5f,
++                                   box_min.y + (img_box_h - txt_sz.y) * 0.5f),
++                            entry.exists ? IM_COL32(120, 220, 165, 220) : IM_COL32(82, 128, 102, 165),
++                            empty_label);
++                    }
++
++                    char slot_title[24];
++                    snprintf(slot_title, sizeof(slot_title), "SLOT %02d", slot + 1);
++                    const ImVec2 text_pos(box_min.x, box_max.y + 3.0f * ui_scale);
++                    card_dl->AddText(text_pos,
++                                     active ? IM_COL32(235, 255, 242, 255) : IM_COL32(190, 232, 208, 240),
++                                     slot_title);
++
++                    const char* sub_text = "--";
++                    if (entry.exists) {
++                        if (entry.timestamp.size() >= 16) {
++                            sub_text = entry.timestamp.c_str() + 5; /* MM-DD HH:MM */
++                        } else if (!entry.timestamp.empty()) {
++                            sub_text = entry.timestamp.c_str();
++                        } else {
++                            sub_text = "Ready";
++                        }
++                    }
++                    card_dl->AddText(ImVec2(box_min.x, text_pos.y + line_h),
++                                     entry.exists ? IM_COL32(140, 210, 170, 230) : IM_COL32(95, 138, 115, 175),
++                                     sub_text);
++                    ImGui::PopID();
+                 }
+-                if (g_savestate_thumb_has_image && g_savestate_thumb_texture &&
+-                    g_savestate_thumb_w > 0 && g_savestate_thumb_h > 0) {
+-                    const float preview_w = 240.0f * ui_scale;
+-                    const float preview_h = preview_w * ((float)g_savestate_thumb_h / (float)g_savestate_thumb_w);
+-                    ImGui::Image((ImTextureID)(intptr_t)g_savestate_thumb_texture,
+-                                 ImVec2(preview_w, preview_h),
+-                                 ImVec2(0.0f, 0.0f),
+-                                 ImVec2(1.0f, 1.0f),
+-                                 ImVec4(1.0f, 1.0f, 1.0f, 1.0f),
+-                                 ImVec4(0.18f, 0.91f, 0.54f, 0.85f));
++                ImGui::EndTable();
++            }
++
++            {
++                const GBSavestateThumbEntry& cur = g_savestate_thumbs[g_savestate_slot];
++                if (cur.exists) {
++                    if (!cur.timestamp.empty()) {
++                        ImGui::Text("Active Slot %d: Ready (%s)",
++                                    g_savestate_slot + 1,
++                                    cur.timestamp.c_str());
++                    } else {
++                        ImGui::Text("Active Slot %d: Ready", g_savestate_slot + 1);
++                    }
+                 } else {
+-                    ImGui::TextDisabled("No thumbnail saved for this slot yet.");
++                    ImGui::TextDisabled("Active Slot %d: Empty", g_savestate_slot + 1);
+                 }
+-            } else {
+-                ImGui::TextDisabled("Slot %d: Empty", g_savestate_slot + 1);
+             }
+             if (!g_savestate_status.empty()) {
+                 ImGui::TextWrapped("%s", g_savestate_status.c_str());
+@@ -4162,6 +4552,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                 g_screen_effect = (GBScreenEffect)screen_effect;
+                 g_screen_effect_dirty = true;
+                 show_toast("SCREEN EFFECT", g_screen_effect_names[screen_effect]);
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
+                 save_runtime_preferences();
+             }
+             if (g_screen_effect != GB_SCREEN_EFFECT_OFF) {
+@@ -4176,6 +4567,27 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                 }
+             }
+ 
++            int color_profile = (int)g_color_profile;
++            if (ImGui::Combo("Color Profile",
++                             &color_profile,
++                             g_color_profile_names,
++                             IM_ARRAYSIZE(g_color_profile_names))) {
++                if (color_profile >= 0 && color_profile < GB_COLOR_PROFILE_COUNT) {
++                    g_color_profile = (GBColorProfile)color_profile;
++                    show_toast("COLOR PROFILE", g_color_profile_names[color_profile]);
++                    play_ui_sfx(GB_UI_SFX_CONFIRM);
++                    save_runtime_preferences();
++                }
++            }
++
++            bool tactical_fx = g_tactical_fx_enabled;
++            if (ImGui::Checkbox("Tactical Edge FX (Alert / HP)", &tactical_fx)) {
++                g_tactical_fx_enabled = tactical_fx;
++                show_toast("TACTICAL FX", tactical_fx ? "ON" : "OFF");
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
++                save_runtime_preferences();
++            }
++
+             bool lcd_response = g_lcd_response_enabled;
+             if (ImGui::Checkbox("LCD Response", &lcd_response)) {
+                 g_lcd_response_enabled = lcd_response;
+@@ -4291,14 +4703,34 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                 }
+             }
+             if (g_control_preset == GB_CONTROL_PRESET_MODERN) {
+-                ImGui::BulletText("A: Action / Punch      B: Crouch / Prone");
+-                ImGui::BulletText("X / RT: Fire Weapon    Y / Back: Equip Menu");
+-                ImGui::BulletText("Start: Codec           RB / LT: Next / Prev Weapon");
+-                ImGui::BulletText("LB: Next Item          L3: Pause Menu");
++                ImGui::BulletText("%s: Action / Punch      %s: Crouch / Prone",
++                                  controller_short_confirm_label(),
++                                  controller_short_cancel_label());
++                ImGui::BulletText("%s / %s: Fire Weapon    %s / %s: Equip Menu",
++                                  controller_short_west_label(),
++                                  controller_short_rt_label(),
++                                  controller_short_north_label(),
++                                  controller_short_back_label());
++                ImGui::BulletText("%s: Codec           %s / %s: Next / Prev Weapon",
++                                  controller_short_start_label(),
++                                  controller_short_rb_label(),
++                                  controller_short_lt_label());
++                ImGui::BulletText("%s: Next Item          L3: Pause Menu",
++                                  controller_short_lb_label());
+             } else {
+-                ImGui::BulletText("B / RB: Action (GB A)  A / LB: Weapon (GB B)");
+-                ImGui::BulletText("Back: Equip Menu       Start: Crouch / Codec");
+-                ImGui::BulletText("X / Y: Save / Load     RT / LT: Fast / Max Speed");
++                ImGui::BulletText("%s / %s: Action (GB A)  %s / %s: Weapon (GB B)",
++                                  controller_short_cancel_label(),
++                                  controller_short_rb_label(),
++                                  controller_short_confirm_label(),
++                                  controller_short_lb_label());
++                ImGui::BulletText("%s: Equip Menu       %s: Crouch / Codec",
++                                  controller_short_back_label(),
++                                  controller_short_start_label());
++                ImGui::BulletText("%s / %s: Save / Load     %s / %s: Fast / Max Speed",
++                                  controller_short_west_label(),
++                                  controller_short_north_label(),
++                                  controller_short_rt_label(),
++                                  controller_short_lt_label());
+             }
+ 
+             menu_section_header("Gamepad & Rumble");
+@@ -4464,8 +4896,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         ImGui::PopItemWidth();
+         ImGui::EndChild();
+         ImGui::Separator();
+-        ImGui::TextColored(ImVec4(0.50f, 0.80f, 0.62f, 1.0f),
+-                           "[D-PAD] Navigate   [A] Select   [B / ESC / L3] Resume   [LB/RB] Switch Tab");
++        ImGui::TextColored(ImVec4(0.50f, 0.80f, 0.62f, 1.0f), "%s", menu_footer_hint_text());
+         ImGui::End();
+         ImGui::PopStyleColor(22);
+         ImGui::PopStyleVar(6);
+@@ -4614,7 +5045,9 @@ void gb_platform_shutdown(void) {
+     g_port_frame_valid = false;
+ 
+     clear_controller_state();
+-    destroy_savestate_thumb_texture();
++    destroy_savestate_thumb_textures();
++    g_audio_menu_paused.store(false, std::memory_order_relaxed);
++    g_ui_sfx_pending.store(GB_UI_SFX_NONE, std::memory_order_relaxed);
+     g_binding_capture_active = false;
+     g_binding_capture_device = GB_CAPTURE_DEVICE_NONE;
+     g_debug_snapshot_requested = false;
+@@ -4832,7 +5265,6 @@ static bool audio_output_should_run(void) {
+            g_audio_output_enabled &&
+            !g_benchmark_mode &&
+            !g_app_suspended &&
+-           !g_show_menu &&
+            effective_speed_percent() == 100;
+ }
+ 
+@@ -4898,7 +5330,10 @@ static void refresh_audio_device_pause_state(void) {
+         return;
+     }
+ 
+-    const bool paused = !audio_output_should_run() || !g_audio_started;
++    const bool keep_open_for_ui_sfx =
++        g_show_menu && !g_audio_muted.load(std::memory_order_relaxed);
++    const bool paused =
++        !audio_output_should_run() || (!g_audio_started && !keep_open_for_ui_sfx);
+     SDL_PauseAudioDevice(g_audio_device, paused ? 1 : 0);
+ }
+ 
+@@ -5202,12 +5637,121 @@ static uint32_t resample_stereo_block(const int16_t* ring,
+ }
+ 
+ /* SDL callback - pulls samples from ring buffer */
++typedef struct GBUiSfxSynthState {
++    float phase;
++    float time_s;
++    float duration_s;
++    float freq_start;
++    float freq_end;
++    float amp;
++    bool two_step;
++} GBUiSfxSynthState;
++
++static GBUiSfxSynthState g_ui_sfx_synth = {};
++
++static void play_ui_sfx(GBUiSfxKind kind) {
++    if (kind == GB_UI_SFX_NONE || g_benchmark_mode || !g_audio_output_enabled) {
++        return;
++    }
++    g_ui_sfx_pending.store((uint32_t)kind, std::memory_order_release);
++}
++
++static void mix_ui_sfx_block(int16_t* out, uint32_t samples_needed, float sample_rate,
++                             bool muted, uint32_t volume_percent) {
++    const uint32_t pending =
++        g_ui_sfx_pending.exchange((uint32_t)GB_UI_SFX_NONE, std::memory_order_acq_rel);
++    if (pending != (uint32_t)GB_UI_SFX_NONE) {
++        g_ui_sfx_synth.phase = 0.0f;
++        g_ui_sfx_synth.time_s = 0.0f;
++        switch ((GBUiSfxKind)pending) {
++            case GB_UI_SFX_MOVE:
++                g_ui_sfx_synth.duration_s = 0.024f;
++                g_ui_sfx_synth.freq_start = 1320.0f;
++                g_ui_sfx_synth.freq_end = 1520.0f;
++                g_ui_sfx_synth.amp = 0.09f;
++                g_ui_sfx_synth.two_step = false;
++                break;
++            case GB_UI_SFX_CONFIRM:
++                g_ui_sfx_synth.duration_s = 0.056f;
++                g_ui_sfx_synth.freq_start = 980.0f;
++                g_ui_sfx_synth.freq_end = 1660.0f;
++                g_ui_sfx_synth.amp = 0.13f;
++                g_ui_sfx_synth.two_step = true;
++                break;
++            case GB_UI_SFX_OPEN:
++                g_ui_sfx_synth.duration_s = 0.092f;
++                g_ui_sfx_synth.freq_start = 740.0f;
++                g_ui_sfx_synth.freq_end = 1480.0f;
++                g_ui_sfx_synth.amp = 0.14f;
++                g_ui_sfx_synth.two_step = true;
++                break;
++            case GB_UI_SFX_CLOSE:
++                g_ui_sfx_synth.duration_s = 0.072f;
++                g_ui_sfx_synth.freq_start = 1280.0f;
++                g_ui_sfx_synth.freq_end = 640.0f;
++                g_ui_sfx_synth.amp = 0.12f;
++                g_ui_sfx_synth.two_step = true;
++                break;
++            default:
++                g_ui_sfx_synth.duration_s = 0.0f;
++                break;
++        }
++    }
++    if (g_ui_sfx_synth.duration_s <= 0.0f || muted || volume_percent == 0u ||
++        sample_rate <= 0.0f) {
++        return;
++    }
++    const float dt = 1.0f / sample_rate;
++    const float vol = clampf((float)volume_percent / 100.0f, 0.0f, 1.5f);
++    const float two_pi = 6.2831853f;
++    for (uint32_t i = 0; i < samples_needed; ++i) {
++        if (g_ui_sfx_synth.time_s >= g_ui_sfx_synth.duration_s) {
++            g_ui_sfx_synth.duration_s = 0.0f;
++            break;
++        }
++        const float u = g_ui_sfx_synth.time_s / g_ui_sfx_synth.duration_s;
++        float freq = g_ui_sfx_synth.freq_start;
++        if (g_ui_sfx_synth.two_step) {
++            freq = (u < 0.45f) ? g_ui_sfx_synth.freq_start : g_ui_sfx_synth.freq_end;
++        } else {
++            freq = g_ui_sfx_synth.freq_start +
++                   (g_ui_sfx_synth.freq_end - g_ui_sfx_synth.freq_start) * u;
++        }
++        const float attack = (u < 0.08f) ? (u / 0.08f) : 1.0f;
++        const float env = attack * (1.0f - u) * (1.0f - u * 0.35f);
++        const float s = sinf(g_ui_sfx_synth.phase);
++        const float wave = 0.80f * s + 0.20f * sinf(g_ui_sfx_synth.phase * 3.0f);
++        const int32_t sample = (int32_t)lrintf(wave * env * g_ui_sfx_synth.amp * vol * 32767.0f);
++        int32_t l = (int32_t)out[i * 2u] + sample;
++        int32_t r = (int32_t)out[i * 2u + 1u] + sample;
++        if (l < -32768) l = -32768;
++        if (l > 32767) l = 32767;
++        if (r < -32768) r = -32768;
++        if (r > 32767) r = 32767;
++        out[i * 2u] = (int16_t)l;
++        out[i * 2u + 1u] = (int16_t)r;
++
++        g_ui_sfx_synth.phase += two_pi * freq * dt;
++        if (g_ui_sfx_synth.phase >= two_pi) {
++            g_ui_sfx_synth.phase -= two_pi;
++        }
++        g_ui_sfx_synth.time_s += dt;
++    }
++}
++
+ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     (void)userdata;
+     int16_t* out = (int16_t*)stream;
+     const uint32_t samples_needed = (uint32_t)(len / 4);
+     const bool muted = g_audio_muted.load(std::memory_order_relaxed);
+     const uint32_t volume_percent = g_audio_volume_percent.load(std::memory_order_relaxed);
++    const float sample_rate = (float)(g_audio_device_sample_rate ? g_audio_device_sample_rate
++                                                                 : AUDIO_SAMPLE_RATE);
++    if (g_audio_menu_paused.load(std::memory_order_relaxed)) {
++        memset(out, 0, (size_t)samples_needed * 2u * sizeof(int16_t));
++        mix_ui_sfx_block(out, samples_needed, sample_rate, muted, volume_percent);
++        return;
++    }
+     const uint32_t write_pos = g_audio_write_pos.load(std::memory_order_acquire);
+     uint32_t read_pos = g_audio_read_pos.load(std::memory_order_relaxed);
+     const uint32_t available = (write_pos >= read_pos)
+@@ -5231,8 +5775,6 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     /* Envelope smoothing for this block. Derived once from the sample rate
+      * rather than per sample: expf in the audio thread is avoidable, and a
+      * 512-frame block does not need a different curve on each of its samples. */
+-    const float sample_rate = (float)(g_audio_device_sample_rate ? g_audio_device_sample_rate
+-                                                                 : AUDIO_SAMPLE_RATE);
+     const float attack = 1.0f - expf(-1000.0f / (AUDIO_MASTER_ATTACK_MS * sample_rate));
+     const float release = 1.0f - expf(-1000.0f / (AUDIO_MASTER_RELEASE_MS * sample_rate));
+     const float lp_alpha = compute_warmth_lp_alpha(sample_rate);
+@@ -5342,6 +5884,7 @@ static void sdl_audio_callback(void* userdata, Uint8* stream, int len) {
+     }
+ 
+     g_audio_read_pos.store(read_pos, std::memory_order_release);
++    mix_ui_sfx_block(out, samples_needed, sample_rate, muted, volume_percent);
+ }
+ 
+ static void publish_audio_write_batch(void) {
+@@ -5381,7 +5924,7 @@ static bool enqueue_audio_sample(int16_t left, int16_t right) {
+ 
+ static void on_audio_sample(GBContext* ctx, int16_t left, int16_t right) {
+     (void)ctx;
+-    if (!audio_output_should_run()) return;
++    if (!audio_output_should_run() || g_audio_menu_paused.load(std::memory_order_relaxed)) return;
+     (void)enqueue_audio_sample(left, right);
+ }
+ 
+@@ -5704,7 +6247,9 @@ bool gb_platform_init(int scale) {
+     }
+     update_game_viewport();
+ 
+-    g_savestate_thumb_dirty = true;
++    mark_all_savestate_thumbs_dirty();
++    g_audio_menu_paused.store(false, std::memory_order_relaxed);
++    g_ui_sfx_pending.store(GB_UI_SFX_NONE, std::memory_order_relaxed);
+     g_vsync_pacing_fallback = false;
+     g_vsync_fast_frame_streak = 0;
+     g_vsync_prev_exit_ticks = 0;
+@@ -6358,14 +6903,16 @@ void gb_platform_vsync(uint32_t frame_cycles) {
+         vsync_60_direct = !g_vsync_pacing_fallback;
+     }
+ 
++    const bool menu_audio_paused = g_audio_menu_paused.load(std::memory_order_relaxed);
+     if (vsync_60_direct) {
+-        g_audio_drc_active.store(audio_output_should_run() && g_audio_started,
++        g_audio_drc_active.store(audio_output_should_run() && !menu_audio_paused && g_audio_started,
+                                  std::memory_order_relaxed);
+         next_frame_time = now;
+         frame_remainder = 0;
+     } else {
+         const bool lock_120_half = (can_vsync_lock && refresh_is_120);
+-        g_audio_drc_active.store(lock_120_half && audio_output_should_run() && g_audio_started,
++        g_audio_drc_active.store(lock_120_half && audio_output_should_run() &&
++                                     !menu_audio_paused && g_audio_started,
+                                  std::memory_order_relaxed);
+         uint64_t frame_ticks_num;
+         uint64_t frame_ticks_den;
+@@ -6387,7 +6934,8 @@ void gb_platform_vsync(uint32_t frame_cycles) {
+         frame_remainder = frame_ticks_num % frame_ticks_den;
+ 
+         uint32_t audio_fill = audio_ring_fill_samples();
+-        bool audio_starved = !lock_120_half && audio_output_should_run() && g_audio_started &&
++        bool audio_starved = !lock_120_half && audio_output_should_run() &&
++                             !menu_audio_paused && g_audio_started &&
+                              g_audio_low_watermark > 0u && audio_fill < g_audio_low_watermark;
+ 
+         uint64_t frame_wait_ticks = frame_ticks;
+@@ -6525,12 +7073,16 @@ static void set_menu_open(bool open) {
+         return;
+     }
+     g_show_menu = open;
++    g_audio_menu_paused.store(open, std::memory_order_relaxed);
+     g_vsync_prev_exit_ticks = 0;
+     if (open) {
+         g_menu_just_opened = true;
+         g_remaster_btn_edge_mask = 0;
+         stop_controller_rumble();
+-        g_savestate_thumb_dirty = true;
++        mark_all_savestate_thumbs_dirty();
++        play_ui_sfx(GB_UI_SFX_OPEN);
++    } else {
++        play_ui_sfx(GB_UI_SFX_CLOSE);
+     }
+     update_effective_joypad_state();
+     refresh_audio_device_pause_state();
+@@ -6544,6 +7096,29 @@ bool gb_platform_get_vsync(void) {
+     return g_vsync;
+ }
+ 
++void gb_platform_set_color_profile_default(GBColorProfile profile) {
++    if ((int)profile >= 0 && (int)profile < GB_COLOR_PROFILE_COUNT) {
++        g_color_profile_default = profile;
++    }
++}
++
++GBColorProfile gb_platform_get_color_profile(void) {
++    return g_color_profile;
++}
++
++void gb_platform_set_tactical_fx_default(bool enabled) {
++    g_tactical_fx_default = enabled;
++}
++
++bool gb_platform_get_tactical_fx(void) {
++    return g_tactical_fx_enabled;
++}
++
++void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_intensity) {
++    g_tactical_alert_level = clampf(alert_intensity, 0.0f, 1.0f);
++    g_tactical_danger_level = clampf(danger_intensity, 0.0f, 1.0f);
++}
++
+ void gb_platform_set_rumble_default(bool enabled) {
+     g_rumble_default = enabled;
+ }
+@@ -6711,17 +7286,27 @@ static bool savestate_slot_exists(const GBContext* ctx, int slot, std::string* o
+     return fs::exists(fs::path(filename), ec) && !ec;
+ }
+ 
+-static void destroy_savestate_thumb_texture(void) {
+-    if (g_savestate_thumb_texture) {
+-        SDL_DestroyTexture(g_savestate_thumb_texture);
+-        g_savestate_thumb_texture = NULL;
++static void mark_all_savestate_thumbs_dirty(void) {
++    for (int slot = 0; slot < GB_SAVESTATE_SLOT_COUNT; ++slot) {
++        g_savestate_thumbs[slot].dirty = true;
++    }
++}
++
++static void destroy_savestate_thumb_textures(void) {
++    for (int slot = 0; slot < GB_SAVESTATE_SLOT_COUNT; ++slot) {
++        GBSavestateThumbEntry& entry = g_savestate_thumbs[slot];
++        if (entry.texture) {
++            SDL_DestroyTexture(entry.texture);
++            entry.texture = NULL;
++        }
++        entry.w = 0;
++        entry.h = 0;
++        entry.has_image = false;
++        entry.dirty = true;
++        entry.exists = false;
++        entry.path.clear();
++        entry.timestamp.clear();
+     }
+-    g_savestate_thumb_slot = -1;
+-    g_savestate_thumb_w = 0;
+-    g_savestate_thumb_h = 0;
+-    g_savestate_thumb_has_image = false;
+-    g_savestate_thumb_dirty = true;
+-    g_savestate_thumb_path.clear();
+ }
+ 
+ static bool write_savestate_thumbnail(const char* state_path,
+@@ -6869,18 +7454,30 @@ static bool format_file_timestamp(const char* path, char* out, size_t out_size)
+     return std::strftime(out, out_size, "%Y-%m-%d %H:%M:%S", &tm_local) > 0;
+ }
+ 
+-static void refresh_savestate_thumb_preview(const std::string& state_path, int slot) {
+-    if (!g_savestate_thumb_dirty &&
+-        g_savestate_thumb_slot == slot &&
+-        g_savestate_thumb_path == state_path) {
++static void refresh_savestate_thumb_preview(const GBContext* ctx, int slot) {
++    if (slot < 0 || slot >= GB_SAVESTATE_SLOT_COUNT) {
+         return;
+     }
+-    g_savestate_thumb_dirty = false;
+-    g_savestate_thumb_slot = slot;
+-    g_savestate_thumb_path = state_path;
+-    g_savestate_thumb_has_image = false;
++    GBSavestateThumbEntry& entry = g_savestate_thumbs[slot];
++    std::string state_path;
++    const bool exists = savestate_slot_exists(ctx, slot, &state_path);
++    if (!entry.dirty && entry.exists == exists && entry.path == state_path) {
++        return;
++    }
++    entry.dirty = false;
++    entry.exists = exists;
++    entry.path = state_path;
++    entry.has_image = false;
++    entry.timestamp.clear();
+ 
+-    if (!g_renderer || state_path.empty()) {
++    if (!exists || state_path.empty()) {
++        return;
++    }
++    char saved_at[64];
++    if (format_file_timestamp(state_path.c_str(), saved_at, sizeof(saved_at))) {
++        entry.timestamp = saved_at;
++    }
++    if (!g_renderer) {
+         return;
+     }
+     std::vector<uint16_t> pixels;
+@@ -6889,29 +7486,24 @@ static void refresh_savestate_thumb_preview(const std::string& state_path, int s
+     if (!read_savestate_thumbnail(state_path.c_str(), &pixels, &w, &h)) {
+         return;
+     }
+-    if (!g_savestate_thumb_texture ||
+-        g_savestate_thumb_w != w ||
+-        g_savestate_thumb_h != h) {
+-        if (g_savestate_thumb_texture) {
+-            SDL_DestroyTexture(g_savestate_thumb_texture);
+-            g_savestate_thumb_texture = NULL;
++    if (!entry.texture || entry.w != w || entry.h != h) {
++        if (entry.texture) {
++            SDL_DestroyTexture(entry.texture);
++            entry.texture = NULL;
+         }
+-        g_savestate_thumb_texture = SDL_CreateTexture(
++        entry.texture = SDL_CreateTexture(
+             g_renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, w, h);
+-        if (!g_savestate_thumb_texture) {
++        if (!entry.texture) {
+             return;
+         }
+ #if SDL_VERSION_ATLEAST(2, 0, 12)
+-        SDL_SetTextureScaleMode(g_savestate_thumb_texture, SDL_ScaleModeLinear);
++        SDL_SetTextureScaleMode(entry.texture, SDL_ScaleModeLinear);
+ #endif
+-        g_savestate_thumb_w = w;
+-        g_savestate_thumb_h = h;
++        entry.w = w;
++        entry.h = h;
+     }
+-    if (SDL_UpdateTexture(g_savestate_thumb_texture,
+-                          NULL,
+-                          pixels.data(),
+-                          w * (int)sizeof(uint16_t)) == 0) {
+-        g_savestate_thumb_has_image = true;
++    if (SDL_UpdateTexture(entry.texture, NULL, pixels.data(), w * (int)sizeof(uint16_t)) == 0) {
++        entry.has_image = true;
+     }
+ }
+ 
+@@ -6934,7 +7526,9 @@ static bool save_savestate_slot(GBContext* ctx, int slot) {
+                                ctx);
+             write_savestate_thumbnail(filename, argb_tmp.data(), g_present_width, GB_SCREEN_HEIGHT);
+         }
+-        g_savestate_thumb_dirty = true;
++        if (slot >= 0 && slot < GB_SAVESTATE_SLOT_COUNT) {
++            g_savestate_thumbs[slot].dirty = true;
++        }
+     }
+     set_savestate_status("Save", slot, success, filename);
+     return success;
+@@ -6977,7 +7571,9 @@ static bool delete_savestate_slot(GBContext* ctx, int slot) {
+     const bool removed = fs::remove(fs::path(filename), ec);
+     std::error_code thumb_ec;
+     fs::remove(fs::path(std::string(filename) + ".thumb"), thumb_ec);
+-    g_savestate_thumb_dirty = true;
++    if (slot >= 0 && slot < GB_SAVESTATE_SLOT_COUNT) {
++        g_savestate_thumbs[slot].dirty = true;
++    }
+     if (!removed && !ec) {
+         set_savestate_status("Delete", slot, false, "Slot file does not exist");
+         return false;
+@@ -7379,6 +7975,27 @@ bool gb_platform_is_menu_open(void) {
+     return false;
+ }
+ 
++void gb_platform_set_color_profile_default(GBColorProfile profile) {
++    (void)profile;
++}
++
++GBColorProfile gb_platform_get_color_profile(void) {
++    return GB_COLOR_PROFILE_RAW;
++}
++
++void gb_platform_set_tactical_fx_default(bool enabled) {
++    (void)enabled;
++}
++
++bool gb_platform_get_tactical_fx(void) {
++    return false;
++}
++
++void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_intensity) {
++    (void)alert_intensity;
++    (void)danger_intensity;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+index 2a74aa9..5951eff 100644
+--- a/tests/test_qol_features.cpp
++++ b/tests/test_qol_features.cpp
+@@ -288,6 +288,71 @@ void test_control_presets_and_macro_override() {
+     fs::remove(prefs_path, ec);
+ }
+ 
++void test_color_profiles_and_tactical_fx() {
++    check(gb_platform_test_apply_color_profile(0xFF804020u, GB_COLOR_PROFILE_RAW) == 0xFF804020u,
++          "RAW color profile preserves input pixel identically");
++    check(gb_platform_test_apply_color_profile(0xFF000000u, GB_COLOR_PROFILE_MODERN) == 0xFF000000u &&
++              gb_platform_test_apply_color_profile(0xFFFFFFFFu, GB_COLOR_PROFILE_MODERN) ==
++                  0xFFFFFFFFu,
++          "MODERN color profile preserves pure black and white endpoints");
++    const uint32_t modern_warm =
++        gb_platform_test_apply_color_profile(0xFF804020u, GB_COLOR_PROFILE_MODERN);
++    check(modern_warm != 0xFF804020u, "MODERN color profile adjusts chromatic tones");
++    const uint32_t modern_gray =
++        gb_platform_test_apply_color_profile(0xFF808080u, GB_COLOR_PROFILE_MODERN);
++    check(((modern_gray >> 16) & 0xFFu) == ((modern_gray >> 8) & 0xFFu) &&
++              ((modern_gray >> 8) & 0xFFu) == (modern_gray & 0xFFu),
++          "MODERN color profile keeps neutral grays balanced");
++    const uint32_t gbc_red =
++        gb_platform_test_apply_color_profile(0xFFFF0000u, GB_COLOR_PROFILE_GBC_AUTHENTIC);
++    check(((gbc_red >> 16) & 0xFFu) < 255u && ((gbc_red >> 8) & 0xFFu) > 0u,
++          "GBC_AUTHENTIC color profile mixes primaries via LCD color matrix");
++
++    const fs::path prefs_path =
++        fs::temp_directory_path() / "gb_recompiled_qol_color_tactical_prefs.ini";
++    std::error_code ec;
++    fs::remove(prefs_path, ec);
++    const std::string prefs_str = prefs_path.string();
++    gb_platform_test_set_runtime_prefs_path(prefs_str.c_str());
++
++    gb_platform_set_preference_scope("");
++    gb_platform_set_color_profile_default(GB_COLOR_PROFILE_RAW);
++    gb_platform_set_tactical_fx_default(false);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx(),
++          "unscoped host keeps RAW color profile and tactical FX off by default");
++    gb_platform_test_save_runtime_prefs();
++
++    gb_platform_set_preference_scope("remaster");
++    gb_platform_set_color_profile_default(GB_COLOR_PROFILE_MODERN);
++    gb_platform_set_tactical_fx_default(true);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_MODERN &&
++              gb_platform_get_tactical_fx(),
++          "remaster scope opens with MODERN color profile and tactical FX enabled");
++    gb_platform_test_save_runtime_prefs();
++
++    gb_platform_set_preference_scope("");
++    gb_platform_set_color_profile_default(GB_COLOR_PROFILE_RAW);
++    gb_platform_set_tactical_fx_default(false);
++    gb_platform_test_load_runtime_prefs();
++    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx(),
++          "unscoped load keeps RAW/off untouched after remaster save");
++    gb_platform_test_save_runtime_prefs();
++
++    std::ifstream ifs(prefs_path);
++    std::string contents((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
++    check(contents.find("screen.color_profile=0") != std::string::npos &&
++              contents.find("screen.color_profile.remaster=1") != std::string::npos &&
++              contents.find("screen.tactical_fx=0") != std::string::npos &&
++              contents.find("screen.tactical_fx.remaster=1") != std::string::npos,
++          "runtime_prefs preserves scoped color profile and tactical FX keys");
++
++    gb_platform_set_preference_scope("");
++    gb_platform_test_set_runtime_prefs_path(nullptr);
++    fs::remove(prefs_path, ec);
++}
++
+ }  // namespace
+ 
+ int main() {
+@@ -295,6 +360,7 @@ int main() {
+     test_drc_rate_and_resampler();
+     test_audio_rumble_metrics();
+     test_control_presets_and_macro_override();
++    test_color_profiles_and_tactical_fx();
+     if (g_failures > 0) {
+         std::printf("qol_features: %d failure(s)\n", g_failures);
+         return 1;
+-- 
+2.56.0
+
+
+From fe2260477f6d448327f3d73b3d5bfe2a74e3a60e Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Wed, 25 Nov 2026 08:44:46 -0300
+Subject: [PATCH 43/44] feat(ui): animate Codec menu unfold, scanlines,
+ phosphor sweep, and signal bars
+
+---
+ runtime/src/platform_sdl.cpp | 81 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 75 insertions(+), 6 deletions(-)
+
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index f678534..dbbd154 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -120,6 +120,7 @@ static GBPlatformTimingInfo g_last_timing = {};
+ /* Menu State */
+ static bool g_show_menu = false;
+ static bool g_menu_just_opened = false;
++static uint32_t g_menu_open_ticks = 0;
+ static int g_menu_active_tab = 0;
+ static bool g_show_overlay = false;
+ static int g_speed_percent = 100;
+@@ -4280,8 +4281,14 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             }
+         }
+ 
++        const float now_s = (float)SDL_GetTicks() * 0.001f;
++        const float open_t =
++            clampf((float)(SDL_GetTicks() - g_menu_open_ticks) / 140.0f, 0.0f, 1.0f);
++        const float inv_t = 1.0f - open_t;
++        const float open_ease = 1.0f - inv_t * inv_t * inv_t;
++        const int bg_alpha = (int)lrintf(188.0f * open_ease);
+         ImGui::GetBackgroundDrawList()->AddRectFilled(
+-            ImVec2(0.0f, 0.0f), imgui_io.DisplaySize, IM_COL32(2, 10, 8, 188));
++            ImVec2(0.0f, 0.0f), imgui_io.DisplaySize, IM_COL32(2, 10, 8, bg_alpha));
+ 
+         const float max_w = 940.0f * ui_scale;
+         const float max_h = 620.0f * ui_scale;
+@@ -4291,11 +4298,12 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         const float modal_h = (imgui_io.DisplaySize.y * 0.88f < max_h)
+                                   ? (imgui_io.DisplaySize.y * 0.88f)
+                                   : max_h;
++        const float cur_h = modal_h * (0.14f + 0.86f * open_ease);
+         ImGui::SetNextWindowPos(
+             ImVec2((imgui_io.DisplaySize.x - modal_w) * 0.5f,
+-                   (imgui_io.DisplaySize.y - modal_h) * 0.5f),
++                   (imgui_io.DisplaySize.y - cur_h) * 0.5f),
+             ImGuiCond_Always);
+-        ImGui::SetNextWindowSize(ImVec2(modal_w, modal_h), ImGuiCond_Always);
++        ImGui::SetNextWindowSize(ImVec2(modal_w, cur_h), ImGuiCond_Always);
+ 
+         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 2.0f);
+@@ -4335,13 +4343,38 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                          ImGuiWindowFlags_NoSavedSettings |
+                          ImGuiWindowFlags_NoCollapse);
+ 
+-        /* Draw outer tactical Codec corner brackets. */
++        /* Animated Codec scanlines, slow phosphor refresh sweep & breathing corner brackets. */
++        ImDrawList* wd = ImGui::GetWindowDrawList();
+         {
+-            ImDrawList* wd = ImGui::GetWindowDrawList();
+             const ImVec2 p0 = ImGui::GetWindowPos();
+             const ImVec2 sz = ImGui::GetWindowSize();
+             const ImVec2 p1(p0.x + sz.x, p0.y + sz.y);
+-            const ImU32 col = IM_COL32(68, 255, 153, 220);
++
++            wd->PushClipRect(p0, p1, true);
++            const float scan_step = (4.0f * ui_scale >= 3.0f) ? (4.0f * ui_scale) : 3.0f;
++            for (float sy = p0.y + 2.0f; sy < p1.y; sy += scan_step) {
++                wd->AddLine(ImVec2(p0.x, sy), ImVec2(p1.x, sy), IM_COL32(0, 0, 0, 26), 1.0f);
++            }
++            const float sweep_phase = fmodf(now_s / 3.2f, 1.0f);
++            const float band_h = 28.0f * ui_scale;
++            const float band_mid = p0.y - band_h + (sz.y + band_h * 2.0f) * sweep_phase;
++            const ImU32 sweep_mid = IM_COL32(68, 255, 153, 14);
++            const ImU32 sweep_clear = IM_COL32(68, 255, 153, 0);
++            wd->AddRectFilledMultiColor(ImVec2(p0.x, band_mid - band_h), ImVec2(p1.x, band_mid),
++                                        sweep_clear, sweep_clear, sweep_mid, sweep_mid);
++            wd->AddRectFilledMultiColor(ImVec2(p0.x, band_mid), ImVec2(p1.x, band_mid + band_h),
++                                        sweep_mid, sweep_mid, sweep_clear, sweep_clear);
++            if (open_t < 0.85f) {
++                const float flash_alpha = 1.0f - (open_t / 0.85f);
++                const float mid_y = p0.y + sz.y * 0.5f;
++                wd->AddLine(ImVec2(p0.x, mid_y), ImVec2(p1.x, mid_y),
++                            IM_COL32(150, 255, 200, (int)lrintf(flash_alpha * 190.0f)), 2.0f);
++            }
++            wd->PopClipRect();
++
++            const int bracket_alpha =
++                (int)lrintf(clampf(185.0f + 65.0f * sinf(now_s * 3.5f), 0.0f, 255.0f));
++            const ImU32 col = IM_COL32(68, 255, 153, bracket_alpha);
+             const float arm = 14.0f * ui_scale;
+             const float ins = 5.0f * ui_scale;
+             wd->AddLine(ImVec2(p0.x + ins, p0.y + ins), ImVec2(p0.x + ins + arm, p0.y + ins), col, 2.0f);
+@@ -4357,12 +4390,47 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         char rom_title[17];
+         gbrt_get_rom_title(g_registered_ctx, rom_title);
+         ImGui::TextColored(ImVec4(0.27f, 1.00f, 0.60f, 1.0f), "%s // CODEC", rom_title);
++        const ImVec2 title_min = ImGui::GetItemRectMin();
++        const ImVec2 title_end = ImGui::GetItemRectMax();
++
+         const char* preset_badge =
+             (g_control_preset == GB_CONTROL_PRESET_MODERN) ? "MODERN STEALTH" : "CLASSIC GBC";
+         char status_rhs[64];
+         snprintf(status_rhs, sizeof(status_rhs), "[%s]  %4.0f FPS",
+                  preset_badge, ImGui::GetIO().Framerate);
+         const float rhs_w = ImGui::CalcTextSize(status_rhs).x;
++        const float rhs_x = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x - rhs_w;
++        const float gap_w = rhs_x - title_end.x;
++        if (gap_w >= 120.0f * ui_scale) {
++            const float freq_blink = 0.58f + 0.42f * sinf(now_s * 5.0f);
++            const ImU32 freq_col = IM_COL32(70, 255, 154, (int)lrintf(freq_blink * 245.0f));
++            const char* freq_txt = "140.85";
++            const ImVec2 freq_sz = ImGui::CalcTextSize(freq_txt);
++            const int kBarCount = 9;
++            const float bar_w = 4.0f * ui_scale;
++            const float bar_gap = 2.0f * ui_scale;
++            const float bars_w = (float)kBarCount * bar_w + (float)(kBarCount - 1) * bar_gap;
++            const float group_w = freq_sz.x + 8.0f * ui_scale + bars_w;
++            const float start_x = title_end.x + (gap_w - group_w) * 0.5f;
++            const float hdr_mid_y = (title_min.y + title_end.y) * 0.5f;
++            wd->AddText(ImVec2(start_x, hdr_mid_y - freq_sz.y * 0.5f), freq_col, freq_txt);
++
++            const float bars_x0 = start_x + freq_sz.x + 8.0f * ui_scale;
++            const float base_y = hdr_mid_y + freq_sz.y * 0.42f;
++            const float max_bar_h = freq_sz.y * 0.85f;
++            for (int b = 0; b < kBarCount; ++b) {
++                const float lvl =
++                    0.25f + 0.35f * sinf(now_s * 6.5f + (float)b * 0.72f) +
++                    0.25f * sinf(now_s * 11.3f - (float)b * 0.45f) + 0.15f;
++                const float bar_h = max_bar_h * clampf(lvl, 0.18f, 1.0f);
++                const float bx = bars_x0 + (float)b * (bar_w + bar_gap);
++                const bool bright = (lvl > 0.65f);
++                wd->AddRectFilled(
++                    ImVec2(bx, base_y - bar_h),
++                    ImVec2(bx + bar_w, base_y),
++                    bright ? IM_COL32(115, 255, 180, 235) : IM_COL32(45, 200, 118, 200));
++            }
++        }
+         ImGui::SameLine(ImGui::GetWindowContentRegionMax().x - rhs_w);
+         ImGui::TextColored(ImVec4(0.58f, 0.88f, 0.70f, 1.0f), "%s", status_rhs);
+         ImGui::Separator();
+@@ -7077,6 +7145,7 @@ static void set_menu_open(bool open) {
+     g_vsync_prev_exit_ticks = 0;
+     if (open) {
+         g_menu_just_opened = true;
++        g_menu_open_ticks = SDL_GetTicks();
+         g_remaster_btn_edge_mask = 0;
+         stop_controller_rumble();
+         mark_all_savestate_thumbs_dirty();
+-- 
+2.56.0
+
+
+From cf85028486b32f6352e32912431310639cf1f9b3 Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Wed, 25 Nov 2026 08:53:47 -0300
+Subject: [PATCH 44/44] feat(ui): allow host to configure pause menu header
+ title
+
+---
+ runtime/include/platform_sdl.h |  5 +++++
+ runtime/src/platform_sdl.cpp   | 21 +++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 61806bb..83a2739 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -233,6 +233,11 @@ void gb_platform_set_smooth_lcd_transitions(bool enabled);
+  */
+ void gb_platform_set_title(const char* title);
+ 
++/**
++ * @brief Set custom header title shown in the pause settings menu
++ */
++void gb_platform_set_menu_title(const char* title);
++
+ /**
+  * @brief Choose the mastering default used when preferences are loaded.
+  *
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index dbbd154..08754d1 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -121,6 +121,7 @@ static GBPlatformTimingInfo g_last_timing = {};
+ static bool g_show_menu = false;
+ static bool g_menu_just_opened = false;
+ static uint32_t g_menu_open_ticks = 0;
++static std::string g_menu_title;
+ static int g_menu_active_tab = 0;
+ static bool g_show_overlay = false;
+ static int g_speed_percent = 100;
+@@ -4387,9 +4388,13 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+             wd->AddLine(ImVec2(p1.x - ins, p1.y - ins), ImVec2(p1.x - ins, p1.y - ins - arm), col, 2.0f);
+         }
+ 
+-        char rom_title[17];
+-        gbrt_get_rom_title(g_registered_ctx, rom_title);
+-        ImGui::TextColored(ImVec4(0.27f, 1.00f, 0.60f, 1.0f), "%s // CODEC", rom_title);
++        if (!g_menu_title.empty()) {
++            ImGui::TextColored(ImVec4(0.27f, 1.00f, 0.60f, 1.0f), "%s", g_menu_title.c_str());
++        } else {
++            char rom_title[17];
++            gbrt_get_rom_title(g_registered_ctx, rom_title);
++            ImGui::TextColored(ImVec4(0.27f, 1.00f, 0.60f, 1.0f), "%s // SETTINGS", rom_title);
++        }
+         const ImVec2 title_min = ImGui::GetItemRectMin();
+         const ImVec2 title_end = ImGui::GetItemRectMax();
+ 
+@@ -4401,7 +4406,7 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+         const float rhs_w = ImGui::CalcTextSize(status_rhs).x;
+         const float rhs_x = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x - rhs_w;
+         const float gap_w = rhs_x - title_end.x;
+-        if (gap_w >= 120.0f * ui_scale) {
++        if (gap_w >= 105.0f * ui_scale) {
+             const float freq_blink = 0.58f + 0.42f * sinf(now_s * 5.0f);
+             const ImU32 freq_col = IM_COL32(70, 255, 154, (int)lrintf(freq_blink * 245.0f));
+             const char* freq_txt = "140.85";
+@@ -7071,6 +7076,10 @@ void gb_platform_set_title(const char* title) {
+     }
+ }
+ 
++void gb_platform_set_menu_title(const char* title) {
++    g_menu_title = title ? title : "";
++}
++
+ void gb_platform_set_audio_mastering_default(bool enabled) {
+     g_audio_mastering_default = enabled;
+ }
+@@ -7979,6 +7988,10 @@ void gb_platform_set_title(const char* title) {
+     (void)title;
+ }
+ 
++void gb_platform_set_menu_title(const char* title) {
++    (void)title;
++}
++
+ void gb_platform_set_audio_crossfeed_default(bool enabled) {
+     (void)enabled;
+ }
 -- 
 2.56.0
 

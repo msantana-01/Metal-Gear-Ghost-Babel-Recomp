@@ -54,6 +54,8 @@ FILES=(
   remaster/room_controls.h
   remaster/room_rumble.c
   remaster/room_rumble.h
+  remaster/codec_lipsync.c
+  remaster/codec_lipsync.h
   remaster/sprite_shadow.c
   remaster/sprite_shadow.h
   tools/validate_rom.py

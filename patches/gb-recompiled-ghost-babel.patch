@@ -1,7 +1,7 @@
 From 66fe87c519416b75be7d40e19c6fe659a75cda53 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 01/44] test: include stdlib.h for mkstemp (GCC 14)
+Subject: [PATCH 01/45] test: include stdlib.h for mkstemp (GCC 14)
 
 ---
  tests/test_host_configuration.c | 1 +
@@ -26,7 +26,7 @@ index 9ad196d..6963fcd 100644
 From 0f136029493acfd566b49f6db892bb9ddba9d712 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 02/44] fix: DMG-compat I/O readback gates and calibrated
+Subject: [PATCH 02/45] fix: DMG-compat I/O readback gates and calibrated
  post-boot DIV
 
 unused_hwio-GS/C and boot_div-cgb0 now pass; boot_div-cgbABCDE stays a
@@ -142,7 +142,7 @@ index cb01b84..236f173 100644
 From e34917e9f5aecab9c6b6949018fca0dec0d06e8d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 12:56:58 -0300
-Subject: [PATCH 03/44] docs: record 74/75 accuracy after readback and DIV
+Subject: [PATCH 03/45] docs: record 74/75 accuracy after readback and DIV
  fixes
 
 ---
@@ -305,7 +305,7 @@ index 8c765d3..f850acc 100755
 From c10ac6974a54617272be1e9dce1e804a168f8b1f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 04/44] feat: per-boot-ROM-revision CGB post-boot DIV via
+Subject: [PATCH 04/45] feat: per-boot-ROM-revision CGB post-boot DIV via
  --model cgb0|cgb-abcde
 
 Mooneye boot_div-cgb0 and boot_div-cgbABCDE are mutually exclusive on
@@ -471,7 +471,7 @@ index 236f173..be62b88 100644
 From e24664d043cf5542ae64c5cb2fb135e3094c072c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 05/44] test: pin boot_div tests to their CGB boot-ROM revision
+Subject: [PATCH 05/45] test: pin boot_div tests to their CGB boot-ROM revision
  family
 
 MOONEYE_CGB_MODEL_OVERRIDES runs boot_div-cgb0 with --model cgb0 and
@@ -528,7 +528,7 @@ index f850acc..efa6972 100755
 From 4d0b45767fa2e16bfd5a7e2b5a6d861f00e0210e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 7 Oct 2026 23:35:54 -0300
-Subject: [PATCH 06/44] docs: record 75/75 accuracy after boot-revision
+Subject: [PATCH 06/45] docs: record 75/75 accuracy after boot-revision
  selection
 
 ACCURACY.md regenerated from a complete run (75/75, 100%); GBC.md table
@@ -658,7 +658,7 @@ index 7cc75b8..f4f492a 100644
 From 205d4f794eb4f8cfd121a6f93d483d3c92b8f61c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 8 Oct 2026 00:34:05 -0300
-Subject: [PATCH 07/44] test: compare challenge results field-by-field instead
+Subject: [PATCH 07/45] test: compare challenge results field-by-field instead
  of memcmp
 
 The determinism loop used memcmp on GBGameplayMutationPolicyResult, which
@@ -721,7 +721,7 @@ index 0864938..23a4c0f 100644
 From fe6260a1b6afbabc01eee2af15816a2a67b6c14c Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 14:45:34 -0300
-Subject: [PATCH 08/44] platform: show the blank shade while the guest has the
+Subject: [PATCH 08/45] platform: show the blank shade while the guest has the
  LCD off
 
 Mirror of the change already shipped in the public repo (v0.3), so the
@@ -770,7 +770,7 @@ index 9e4eeb7..db0462d 100644
 From 0634f56fd67079d16ddf5e4808ca7f59283c271a Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 20:05:08 -0300
-Subject: [PATCH 09/44] platform: confirm host actions with a transient
+Subject: [PATCH 09/45] platform: confirm host actions with a transient
  on-screen toast
 
 Fast forward, save state, load state, state slot, mute and the debug overlay all
@@ -992,7 +992,7 @@ index db0462d..77da61a 100644
 From e613498bcffc803e63900fb4ee5ac63610e1f899 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:01:21 -0300
-Subject: [PATCH 10/44] platform: name the host after the cartridge and give
+Subject: [PATCH 10/45] platform: name the host after the cartridge and give
  the menu some shape
 
 Two problems with the settings screen, one of them wrong on any ROM.
@@ -1306,7 +1306,7 @@ index 77da61a..2e3951f 100644
 From b55ab9cd91655bfc916556e191885105f1688558 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:16:55 -0300
-Subject: [PATCH 11/44] platform: move Resume to the footer and fix the header
+Subject: [PATCH 11/45] platform: move Resume to the footer and fix the header
  alignment on wide screens
 
 Caught on a 4K display. "Resume" sat in the header positioned by a SameLine()
@@ -1424,7 +1424,7 @@ index 2e3951f..22f4081 100644
 From b0ed464c7b81a08c02738c8b9a05742afdb36a14 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 21:20:58 -0300
-Subject: [PATCH 12/44] platform: centre the footer buttons on the content
+Subject: [PATCH 12/45] platform: centre the footer buttons on the content
  column
 
 Caught on screen: Reset Display, Resume and Quit were pinned to the left edge
@@ -1469,7 +1469,7 @@ index 22f4081..dcbfa38 100644
 From a83941dde9fcd0cf9dbdc49e6ba234fd39bc9dd9 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:13:52 -0300
-Subject: [PATCH 13/44] platform: fix the clipped header, tighten the binding
+Subject: [PATCH 13/45] platform: fix the clipped header, tighten the binding
  rows, move audio diagnostics out
 
 Three defects found by screenshotting the menu instead of reasoning about it.
@@ -1631,7 +1631,7 @@ index dcbfa38..cfb4f53 100644
 From 4735016ebb45b73fdc1d079c85421ee520820e41 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Wed, 14 Oct 2026 22:19:39 -0300
-Subject: [PATCH 14/44] platform: align the SECONDARY column header, widen the
+Subject: [PATCH 14/45] platform: align the SECONDARY column header, widen the
  content on large screens
 
 Two things a 4K screenshot showed.
@@ -1751,7 +1751,7 @@ index cfb4f53..6444c4b 100644
 From 90d4294638b7871fb56332faa3329c4b9f17d717 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:26:14 -0300
-Subject: [PATCH 15/44] platform: panel effects for the presented image, one
+Subject: [PATCH 15/45] platform: panel effects for the presented image, one
  key to cycle them
 
 The guest reaches the screen through a single SDL_RenderCopy, so a mask drawn
@@ -2453,7 +2453,7 @@ index 0000000..97c9335
 From 6941d5ddce13d7afc36d05f38eda18ea6714b2bd Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 11:57:14 -0300
-Subject: [PATCH 16/44] platform: persist effect strength, and give the panel a
+Subject: [PATCH 16/45] platform: persist effect strength, and give the panel a
  response time
 
 The strength selector was already written to and read from the prefs file, but
@@ -2960,7 +2960,7 @@ index 0000000..82bb705
 From abf7b195fb286f01d460846860f279afb32d05da Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 12:30:39 -0300
-Subject: [PATCH 17/44] platform: CRT as scanlines plus phosphor glow, no
+Subject: [PATCH 17/45] platform: CRT as scanlines plus phosphor glow, no
  curvature
 
 A handheld screen is not a tube, so this stops where the tube simulation would
@@ -3401,7 +3401,7 @@ index 0000000..8379338
 From be167df0313fe38048668cd52aa751f308baaf02 Mon Sep 17 00:00:00 2001
 From: Moises Santana <191926848+msantana-01@users.noreply.github.com>
 Date: Thu, 15 Oct 2026 13:18:30 -0300
-Subject: [PATCH 18/44] runtime: include math.h for the panel effects
+Subject: [PATCH 18/45] runtime: include math.h for the panel effects
 
 fmaxf, lrintf, fabsf and expf were reaching the compiler only because GCC 14
 pulls <math.h> in transitively on this host. GCC 11 through the MinGW headers
@@ -3436,7 +3436,7 @@ index 033bf79..7ff35ca 100644
 From df5615d732ed601673d029310bd49bb8cb3e5b9c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 10:37:33 -0300
-Subject: [PATCH 19/44] platform: make the presented surface width a runtime
+Subject: [PATCH 19/45] platform: make the presented surface width a runtime
  value
 
 The guest is always 160 pixels wide and that does not change. What changes is
@@ -3867,7 +3867,7 @@ index 7ff35ca..0a577d1 100644
 From 83fe842eafa5a727af9204c8d6168d34347c82e6 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 16 Oct 2026 13:23:19 -0300
-Subject: [PATCH 20/44] audio: a mastering chain for the remaster, measured
+Subject: [PATCH 20/45] audio: a mastering chain for the remaster, measured
  rather than assumed
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -4555,7 +4555,7 @@ index 0000000..727d938
 From 196741c73106aded978122364a8475f6378caac4 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 01:46:28 -0300
-Subject: [PATCH 21/44] platform: the audio valve shortens the frame wait
+Subject: [PATCH 21/45] platform: the audio valve shortens the frame wait
  instead of dropping it
 
 When the ring fell below its low watermark the vsync served no wait at all, and
@@ -4658,7 +4658,7 @@ index 8a85f93..26962aa 100644
 From 92a1ea86c885daf10a16241d0829e15aed20c950 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:09:46 -0300
-Subject: [PATCH 22/44] presentation: export LCDC per scanline and raise the
+Subject: [PATCH 22/45] presentation: export LCDC per scanline and raise the
  ABI to 2
 
 The hardware snapshot carried only the end-of-frame LCDC, which cannot see a
@@ -4778,7 +4778,7 @@ index d3f7060..3e39613 100644
 From dca9cf12c39fe2d8b9288b95a0c77245a874cdba Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 18 Oct 2026 02:45:39 -0300
-Subject: [PATCH 23/44] tests: cover the per-scanline LCDC record
+Subject: [PATCH 23/45] tests: cover the per-scanline LCDC record
 
 The ABI-2 signal drives real PPU pixels: this drives real dots through a
 frame, switches the background map at LY=3 the way Ghost Babel's HUD band
@@ -4954,7 +4954,7 @@ index 0000000..b7010cb
 From 4c449ecec8bdee12f1463512c17b794e256efb28 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:17:22 -0300
-Subject: [PATCH 24/44] audio: let the host choose the mastering default
+Subject: [PATCH 24/45] audio: let the host choose the mastering default
 
 The mastering chain has always defaulted to off, which makes the remaster artifact's mastered-audio claim depend on the player finding a checkbox. The default is now a host choice: gb_platform_set_audio_mastering_default() is read by set_default_audio_preferences(), and the remaster host sets it before gb_platform_init.
 
@@ -5036,7 +5036,7 @@ index 26962aa..1225ee9 100644
 From 13c5a22aaad8c43034846af90ffe01119b9b000c Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 10:36:04 -0300
-Subject: [PATCH 25/44] preferences: give each artifact its own identity keys
+Subject: [PATCH 25/45] preferences: give each artifact its own identity keys
 
 Two artifacts share one core, and the settings that carry their identity cannot be shared: a player who turns the mastering off in the remaster must not turn it off in the authentic too.
 
@@ -5171,7 +5171,7 @@ index 1225ee9..765c0fe 100644
 From c9f2a3b4b4816755a64ba8ced1e560de09c6479a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 20 Oct 2026 11:06:09 -0300
-Subject: [PATCH 26/44] presentation: the artifact chooses the panel effect,
+Subject: [PATCH 26/45] presentation: the artifact chooses the panel effect,
  and the effect keys are identity
 
 The remaster is supposed to open with the CRT look and the authentic with none. The panel effect had no default hook, so both artifacts opened with whatever the shared preference file said - and the file was shared, so the two artifacts could not disagree.
@@ -5499,7 +5499,7 @@ index 765c0fe..b25a803 100644
 From d0661dc5528abc26d994f6ce8309d648a12472dd Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sat, 24 Oct 2026 17:25:01 -0300
-Subject: [PATCH 27/44] audio: start stats at first presented frame, drop
+Subject: [PATCH 27/45] audio: start stats at first presented frame, drop
  startup burst
 
 Issue #7.  The first presented frame ends the window/shader setup and the
@@ -5572,7 +5572,7 @@ index b25a803..843ed21 100644
 From e5603d239f745dd9e7da4cf2185abb216c6e3e51 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 27 Oct 2026 10:23:21 -0300
-Subject: [PATCH 28/44] fix: start audio device on first sample, not after 80
+Subject: [PATCH 28/45] fix: start audio device on first sample, not after 80
  ms fill
 
 ---
@@ -5605,7 +5605,7 @@ index 843ed21..9d053c8 100644
 From 4e4d9c96fbbb33c60afec73c71aecee923b2550b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Thu, 29 Oct 2026 12:52:46 -0300
-Subject: [PATCH 29/44] feat: add GLSL CRT shader screen effect
+Subject: [PATCH 29/45] feat: add GLSL CRT shader screen effect
 
 Add GB_SCREEN_EFFECT_SHADER to GBScreenEffect enum. When active, the
 guest framebuffer is uploaded to an OpenGL texture and drawn through an
@@ -6343,7 +6343,7 @@ index 0000000..4a69c53
 From 22d1d6c4098f9800cd5943d4a79cab4abb3fba7b Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 14:36:26 -0300
-Subject: [PATCH 30/44] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
+Subject: [PATCH 30/45] fix: use std::ptrdiff_t for GLsizeiptr in OpenGL shader
  bindings
 
 ---
@@ -6378,7 +6378,7 @@ index bbf034d..f8c9f76 100644
 From dd67689b348b940fa2d662c50e49eb285a1bf147 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Fri, 20 Nov 2026 15:56:01 -0300
-Subject: [PATCH 31/44] fix(platform): bound framebuffer copies to active
+Subject: [PATCH 31/45] fix(platform): bound framebuffer copies to active
  present width
 
 ---
@@ -6452,7 +6452,7 @@ index f8c9f76..b612cf8 100644
 From 355c229f551f0bd44dcb924847e27ae8e3afe6ea Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 16:08:48 -0300
-Subject: [PATCH 32/44] fix(platform): implement cross-platform SDL_Renderer
+Subject: [PATCH 32/45] fix(platform): implement cross-platform SDL_Renderer
  CRT shader pipeline
 
 ---
@@ -7150,7 +7150,7 @@ index b612cf8..9785595 100644
 From 304eed1da58155f6e74d5e8492be1fb81e1ede00 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:16:42 -0300
-Subject: [PATCH 33/44] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
+Subject: [PATCH 33/45] feat(platform): add real OpenGL GLSL CRT-Lottes and GBC
  LCD shader presets
 
 ---
@@ -7945,7 +7945,7 @@ index 9785595..4932232 100644
 From 8f3331e1d7fd2d29a4b0a3cbd4bba60b4a951920 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Sun, 22 Nov 2026 17:29:38 -0300
-Subject: [PATCH 34/44] perf(platform): blend LCD response in linear light and
+Subject: [PATCH 34/45] perf(platform): blend LCD response in linear light and
  tune GBC default to 16ms
 
 ---
@@ -8094,7 +8094,7 @@ index 82bb705..fe185e4 100644
 From 7e99bdcd929226a8882e34a13d25ebc5d568863d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:10:20 -0300
-Subject: [PATCH 35/44] feat(audio): cycle-integrated APU anti-aliasing,
+Subject: [PATCH 35/45] feat(audio): cycle-integrated APU anti-aliasing,
  linear-peak compressor fix, warmth LPF, and headphone crossfeed
 
 ---
@@ -8779,7 +8779,7 @@ index 727d938..6bc0f4d 100644
 From 410f9d80bf11a70f80022555b2979a8f201bef4f Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Mon, 23 Nov 2026 10:58:20 -0300
-Subject: [PATCH 36/44] feat(platform,audio): add savestate thumbnails, V-Sync
+Subject: [PATCH 36/45] feat(platform,audio): add savestate thumbnails, V-Sync
  audio DRC, and controller rumble API
 
 ---
@@ -10480,7 +10480,7 @@ index 0000000..b99038d
 From 355ebc4869b8b504a4cd4d8e58edfde34110b270 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 08:31:59 -0300
-Subject: [PATCH 37/44] feat(platform): add F12 debug snapshot trigger, BMP
+Subject: [PATCH 37/45] feat(platform): add F12 debug snapshot trigger, BMP
  fallback writer, and public toast API
 
 ---
@@ -10714,7 +10714,7 @@ index dd7dfba..2584eb9 100644
 From 611ca16b5f483b077ec9d4ffe37448bb795ec199 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 09:38:36 -0300
-Subject: [PATCH 38/44] feat: add Modern Stealth control preset and macro
+Subject: [PATCH 38/45] feat: add Modern Stealth control preset and macro
  joypad override API
 
 ---
@@ -11197,7 +11197,7 @@ index 2584eb9..a4f40d8 100644
 From 4bd69cf7831f0810d0bf8cd2b55565bcc9e18b1a Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:12:58 -0300
-Subject: [PATCH 39/44] test: isolate runtime_prefs preset tests and trim
+Subject: [PATCH 39/45] test: isolate runtime_prefs preset tests and trim
  unused macro bit
 
 ---
@@ -11395,7 +11395,7 @@ index b99038d..d237998 100644
 From 2246ce3d2896bf242eff71b770af89dd6a8bbeec Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:46:12 -0300
-Subject: [PATCH 40/44] feat: add Codec tactical pause menu with pixel font and
+Subject: [PATCH 40/45] feat: add Codec tactical pause menu with pixel font and
  gamepad nav
 
 ---
@@ -12813,7 +12813,7 @@ index d237998..3494ed3 100644
 From fa04d9e4f0e71c4904312996c5a141e566366e6d Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Tue, 24 Nov 2026 10:58:09 -0300
-Subject: [PATCH 41/44] fix: migrate legacy Modern Stealth controller.start.1
+Subject: [PATCH 41/45] fix: migrate legacy Modern Stealth controller.start.1
  binding off Start
 
 ---
@@ -12875,7 +12875,7 @@ index 3494ed3..2a74aa9 100644
 From ee659d41d11f91f8a4788815f26792f963986440 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 25 Nov 2026 08:30:20 -0300
-Subject: [PATCH 42/44] feat(platform): add color profiles, tactical FX, UI
+Subject: [PATCH 42/45] feat(platform): add color profiles, tactical FX, UI
  SFX, save gallery, dynamic prompts, and ImGui gamepad assert fix
 
 ---
@@ -14250,7 +14250,7 @@ index 2a74aa9..5951eff 100644
 From fe2260477f6d448327f3d73b3d5bfe2a74e3a60e Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 25 Nov 2026 08:44:46 -0300
-Subject: [PATCH 43/44] feat(ui): animate Codec menu unfold, scanlines,
+Subject: [PATCH 43/45] feat(ui): animate Codec menu unfold, scanlines,
  phosphor sweep, and signal bars
 
 ---
@@ -14405,7 +14405,7 @@ index f678534..dbbd154 100644
 From cf85028486b32f6352e32912431310639cf1f9b3 Mon Sep 17 00:00:00 2001
 From: Moises Santana <moises.santana@ifba.edu.br>
 Date: Wed, 25 Nov 2026 08:53:47 -0300
-Subject: [PATCH 44/44] feat(ui): allow host to configure pause menu header
+Subject: [PATCH 44/45] feat(ui): allow host to configure pause menu header
  title
 
 ---
@@ -14489,6 +14489,297 @@ index dbbd154..08754d1 100644
  void gb_platform_set_audio_crossfeed_default(bool enabled) {
      (void)enabled;
  }
+-- 
+2.56.0
+
+
+From 34d09201ea0a3574f7a5d14ba8619e2712377f9c Mon Sep 17 00:00:00 2001
+From: Moises Santana <moises.santana@ifba.edu.br>
+Date: Thu, 26 Nov 2026 12:21:25 -0300
+Subject: [PATCH 45/45] feat(platform): PSX Modern Stealth L1/L2/R1/R2 triggers
+ and Codec Portrait Animation toggle
+
+---
+ runtime/include/platform_sdl.h | 11 +++++++
+ runtime/src/platform_sdl.cpp   | 60 ++++++++++++++++++++++++++++++----
+ tests/test_qol_features.cpp    | 31 +++++++++++++-----
+ 3 files changed, 87 insertions(+), 15 deletions(-)
+
+diff --git a/runtime/include/platform_sdl.h b/runtime/include/platform_sdl.h
+index 83a2739..042e4ff 100644
+--- a/runtime/include/platform_sdl.h
++++ b/runtime/include/platform_sdl.h
+@@ -67,6 +67,7 @@ enum {
+     GB_REMASTER_BTN_RB = 1u << 1,
+     GB_REMASTER_BTN_LT = 1u << 2,
+     GB_REMASTER_BTN_START = 1u << 3,
++    GB_REMASTER_BTN_RT = 1u << 4,
+ };
+ 
+ enum {
+@@ -379,6 +380,16 @@ bool gb_platform_get_tactical_fx(void);
+  */
+ void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_intensity);
+ 
++/**
++ * @brief Choose whether animated Codec portrait lip-sync/blink is enabled by default.
++ */
++void gb_platform_set_codec_lipsync_default(bool enabled);
++
++/**
++ * @brief Whether animated Codec portrait lip-sync/blink is currently enabled.
++ */
++bool gb_platform_get_codec_lipsync(void);
++
+ #ifdef GBRT_ENABLE_TEST_HOOKS
+ void gb_platform_test_copy_display_frame(void* pixels, int pitch,
+                                          const uint32_t* framebuffer,
+diff --git a/runtime/src/platform_sdl.cpp b/runtime/src/platform_sdl.cpp
+index 08754d1..54c4462 100644
+--- a/runtime/src/platform_sdl.cpp
++++ b/runtime/src/platform_sdl.cpp
+@@ -237,6 +237,8 @@ static bool g_tactical_fx_default = false;
+ static bool g_tactical_fx_enabled = false;
+ static float g_tactical_alert_level = 0.0f;
+ static float g_tactical_danger_level = 0.0f;
++static bool g_codec_lipsync_default = false;
++static bool g_codec_lipsync_enabled = false;
+ 
+ /* LCD response. Off by default: the trail is authentic and the first time
+  * someone sees it they should have turned it on deliberately, because it does
+@@ -1307,7 +1309,6 @@ static void set_default_controller_bindings_for_preset(GBControlPreset preset) {
+     if (preset == GB_CONTROL_PRESET_MODERN) {
+         g_controller_bindings[GB_INPUT_ACTION_A][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_A);
+         g_controller_bindings[GB_INPUT_ACTION_B][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_X);
+-        g_controller_bindings[GB_INPUT_ACTION_B][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+         g_controller_bindings[GB_INPUT_ACTION_START][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_B);
+         g_controller_bindings[GB_INPUT_ACTION_SELECT][0] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_Y);
+         g_controller_bindings[GB_INPUT_ACTION_SELECT][1] = make_binding(GB_INPUT_BINDING_CONTROLLER_BUTTON, SDL_CONTROLLER_BUTTON_BACK);
+@@ -1389,6 +1390,7 @@ static const char* const kIdentityPrefKeys[] = {
+     "screen.effect_intensity",
+     "screen.color_profile",
+     "screen.tactical_fx",
++    "screen.codec_lip_sync",
+     "screen.lcd_response_enabled",
+     "screen.lcd_response_ms",
+     "video.vsync",
+@@ -1473,6 +1475,10 @@ static void apply_identity_preference(const char* identity, const char* value) {
+         g_tactical_fx_enabled = (strcmp(value, "0") != 0);
+         return;
+     }
++    if (strcmp(identity, "screen.codec_lip_sync") == 0) {
++        g_codec_lipsync_enabled = (strcmp(value, "0") != 0);
++        return;
++    }
+     if (strcmp(identity, "screen.lcd_response_enabled") == 0) {
+         g_lcd_response_enabled = (strcmp(value, "0") != 0);
+         return;
+@@ -1511,6 +1517,7 @@ static void load_runtime_preferences(void) {
+     g_screen_effect_intensity = GB_SCREEN_EFFECT_INTENSITY_DEFAULT;
+     g_color_profile = g_color_profile_default;
+     g_tactical_fx_enabled = g_tactical_fx_default;
++    g_codec_lipsync_enabled = g_codec_lipsync_default;
+     g_vsync = g_vsync_default;
+     g_rumble_enabled = g_rumble_default;
+     g_rumble_strength = 100;
+@@ -1708,6 +1715,13 @@ static void load_runtime_preferences(void) {
+             g_controller_bindings[GB_INPUT_ACTION_START][1] =
+                 make_binding(GB_INPUT_BINDING_NONE, 0);
+         }
++        const GBInputBinding& legacy_modern_rt_fire =
++            g_controller_bindings[GB_INPUT_ACTION_B][1];
++        if (legacy_modern_rt_fire.kind == GB_INPUT_BINDING_CONTROLLER_AXIS_POSITIVE &&
++            legacy_modern_rt_fire.code == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
++            g_controller_bindings[GB_INPUT_ACTION_B][1] =
++                make_binding(GB_INPUT_BINDING_NONE, 0);
++        }
+     }
+ 
+     /*
+@@ -1792,6 +1806,8 @@ static void save_runtime_preferences(void) {
+             (int)g_color_profile);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.tactical_fx").c_str(),
+             g_tactical_fx_enabled ? 1 : 0);
++    fprintf(file, "%s=%d\n", scoped_pref_key("screen.codec_lip_sync").c_str(),
++            g_codec_lipsync_enabled ? 1 : 0);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_enabled").c_str(),
+             g_lcd_response_enabled ? 1 : 0);
+     fprintf(file, "%s=%d\n", scoped_pref_key("screen.lcd_response_ms").c_str(),
+@@ -2666,6 +2682,7 @@ static void reset_runtime_display_defaults(void) {
+     g_palette_idx = 0;
+     g_color_profile = g_color_profile_default;
+     g_tactical_fx_enabled = g_tactical_fx_default;
++    g_codec_lipsync_enabled = g_codec_lipsync_default;
+     g_smooth_lcd_transitions = true;
+     g_show_overlay = false;
+     g_max_speed_mode = false;
+@@ -4661,6 +4678,14 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                 save_runtime_preferences();
+             }
+ 
++            bool codec_lipsync = g_codec_lipsync_enabled;
++            if (ImGui::Checkbox("Codec Portrait Animation", &codec_lipsync)) {
++                g_codec_lipsync_enabled = codec_lipsync;
++                show_toast("CODEC PORTRAIT", codec_lipsync ? "ON" : "OFF");
++                play_ui_sfx(GB_UI_SFX_CONFIRM);
++                save_runtime_preferences();
++            }
++
+             bool lcd_response = g_lcd_response_enabled;
+             if (ImGui::Checkbox("LCD Response", &lcd_response)) {
+                 g_lcd_response_enabled = lcd_response;
+@@ -4779,17 +4804,17 @@ static void render_frame_internal(const uint32_t* framebuffer, bool count_guest_
+                 ImGui::BulletText("%s: Action / Punch      %s: Crouch / Prone",
+                                   controller_short_confirm_label(),
+                                   controller_short_cancel_label());
+-                ImGui::BulletText("%s / %s: Fire Weapon    %s / %s: Equip Menu",
++                ImGui::BulletText("%s: Fire Weapon        %s / %s: Equip Menu",
+                                   controller_short_west_label(),
+-                                  controller_short_rt_label(),
+                                   controller_short_north_label(),
+                                   controller_short_back_label());
+-                ImGui::BulletText("%s: Codec           %s / %s: Next / Prev Weapon",
+-                                  controller_short_start_label(),
++                ImGui::BulletText("%s / %s: Next / Prev Weapon   %s / %s: Next / Prev Item",
+                                   controller_short_rb_label(),
++                                  controller_short_rt_label(),
++                                  controller_short_lb_label(),
+                                   controller_short_lt_label());
+-                ImGui::BulletText("%s: Next Item          L3: Pause Menu",
+-                                  controller_short_lb_label());
++                ImGui::BulletText("%s: Codec              L3: Pause Menu",
++                                  controller_short_start_label());
+             } else {
+                 ImGui::BulletText("%s / %s: Action (GB A)  %s / %s: Weapon (GB B)",
+                                   controller_short_cancel_label(),
+@@ -6468,6 +6493,11 @@ static bool handle_runtime_event(const SDL_Event* event, GBContext* ctx) {
+                 const bool now_held = was_held ? (event->caxis.value >= 10000)
+                                                : (event->caxis.value >= 16384);
+                 set_remaster_button_held(GB_REMASTER_BTN_LT, now_held);
++            } else if (event->caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
++                const bool was_held = (g_remaster_btn_held_mask & GB_REMASTER_BTN_RT) != 0;
++                const bool now_held = was_held ? (event->caxis.value >= 10000)
++                                               : (event->caxis.value >= 16384);
++                set_remaster_button_held(GB_REMASTER_BTN_RT, now_held);
+             }
+             update_controller_axis_binding_state();
+             update_effective_joypad_state();
+@@ -7197,6 +7227,14 @@ void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_inten
+     g_tactical_danger_level = clampf(danger_intensity, 0.0f, 1.0f);
+ }
+ 
++void gb_platform_set_codec_lipsync_default(bool enabled) {
++    g_codec_lipsync_default = enabled;
++}
++
++bool gb_platform_get_codec_lipsync(void) {
++    return g_codec_lipsync_enabled;
++}
++
+ void gb_platform_set_rumble_default(bool enabled) {
+     g_rumble_default = enabled;
+ }
+@@ -8078,6 +8116,14 @@ void gb_platform_set_tactical_fx_state(float alert_intensity, float danger_inten
+     (void)danger_intensity;
+ }
+ 
++void gb_platform_set_codec_lipsync_default(bool enabled) {
++    (void)enabled;
++}
++
++bool gb_platform_get_codec_lipsync(void) {
++    return false;
++}
++
+ void gb_platform_set_dump_frames(const char* frames) { (void)frames; }
+ 
+ void gb_platform_set_screenshot_prefix(const char* prefix) { (void)prefix; }
+diff --git a/tests/test_qol_features.cpp b/tests/test_qol_features.cpp
+index 5951eff..4f773bf 100644
+--- a/tests/test_qol_features.cpp
++++ b/tests/test_qol_features.cpp
+@@ -243,6 +243,9 @@ void test_control_presets_and_macro_override() {
+           "remaster scope defaults to Modern Stealth even with legacy authentic prefs");
+     const int modern_a_code = gb_platform_test_get_controller_action_binding_code(4, 0);
+     check(modern_a_code == 0, "Modern Stealth maps GB A to controller South/A button (code 0)");
++    check(gb_platform_test_get_controller_action_binding_code(5, 0) == 2 &&
++              gb_platform_test_get_controller_action_binding_code(5, 1) == 0,
++          "Modern Stealth maps GB B (Fire) only to West Face (code 2), leaving R2 free");
+     check(gb_platform_test_get_controller_action_binding_code(7, 0) == 1 &&
+               gb_platform_test_get_controller_action_binding_code(7, 1) == 0,
+           "Modern Stealth reserves physical Start for Codec (GB Start mapped only to B)");
+@@ -269,16 +272,21 @@ void test_control_presets_and_macro_override() {
+           "runtime_prefs preserves foreign controller.remaster.a.0");
+ 
+     /* 5. Legacy Modern Stealth runtime_prefs.ini with controller.remaster.start.1=button:6
+-     * migrates cleanly so physical Start triggers Codec instead of crouching. */
++     * and controller.remaster.b.1=axis:5:+ migrates cleanly so Start -> Codec and R2 -> Prev Weapon. */
+     {
+         std::ofstream ofs(prefs_path);
+         ofs << "control.preset.remaster=1\n"
++            << "controller.remaster.b.0=button:2\n"
++            << "controller.remaster.b.1=axis:5:+\n"
+             << "controller.remaster.start.0=button:1\n"
+             << "controller.remaster.start.1=button:6\n";
+     }
+     gb_platform_set_preference_scope("remaster");
+     gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
+     gb_platform_test_load_runtime_prefs();
++    check(gb_platform_test_get_controller_action_binding_code(5, 0) == 2 &&
++              gb_platform_test_get_controller_action_binding_code(5, 1) == 0,
++          "migrates legacy Modern Stealth controller.remaster.b.1=axis:5:+ to none");
+     check(gb_platform_test_get_controller_action_binding_code(7, 0) == 1 &&
+               gb_platform_test_get_controller_action_binding_code(7, 1) == 0,
+           "migrates legacy Modern Stealth controller.remaster.start.1=button:6 to none");
+@@ -318,25 +326,30 @@ void test_color_profiles_and_tactical_fx() {
+     gb_platform_set_preference_scope("");
+     gb_platform_set_color_profile_default(GB_COLOR_PROFILE_RAW);
+     gb_platform_set_tactical_fx_default(false);
++    gb_platform_set_codec_lipsync_default(false);
+     gb_platform_test_load_runtime_prefs();
+-    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx(),
+-          "unscoped host keeps RAW color profile and tactical FX off by default");
++    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx() &&
++              !gb_platform_get_codec_lipsync(),
++          "unscoped host keeps RAW color profile, tactical FX, and Codec animation off by default");
+     gb_platform_test_save_runtime_prefs();
+ 
+     gb_platform_set_preference_scope("remaster");
+     gb_platform_set_color_profile_default(GB_COLOR_PROFILE_MODERN);
+     gb_platform_set_tactical_fx_default(true);
++    gb_platform_set_codec_lipsync_default(true);
+     gb_platform_test_load_runtime_prefs();
+     check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_MODERN &&
+-              gb_platform_get_tactical_fx(),
+-          "remaster scope opens with MODERN color profile and tactical FX enabled");
++              gb_platform_get_tactical_fx() && gb_platform_get_codec_lipsync(),
++          "remaster scope opens with MODERN color profile, tactical FX, and Codec animation enabled");
+     gb_platform_test_save_runtime_prefs();
+ 
+     gb_platform_set_preference_scope("");
+     gb_platform_set_color_profile_default(GB_COLOR_PROFILE_RAW);
+     gb_platform_set_tactical_fx_default(false);
++    gb_platform_set_codec_lipsync_default(false);
+     gb_platform_test_load_runtime_prefs();
+-    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx(),
++    check(gb_platform_get_color_profile() == GB_COLOR_PROFILE_RAW && !gb_platform_get_tactical_fx() &&
++              !gb_platform_get_codec_lipsync(),
+           "unscoped load keeps RAW/off untouched after remaster save");
+     gb_platform_test_save_runtime_prefs();
+ 
+@@ -345,8 +358,10 @@ void test_color_profiles_and_tactical_fx() {
+     check(contents.find("screen.color_profile=0") != std::string::npos &&
+               contents.find("screen.color_profile.remaster=1") != std::string::npos &&
+               contents.find("screen.tactical_fx=0") != std::string::npos &&
+-              contents.find("screen.tactical_fx.remaster=1") != std::string::npos,
+-          "runtime_prefs preserves scoped color profile and tactical FX keys");
++              contents.find("screen.tactical_fx.remaster=1") != std::string::npos &&
++              contents.find("screen.codec_lip_sync=0") != std::string::npos &&
++              contents.find("screen.codec_lip_sync.remaster=1") != std::string::npos,
++          "runtime_prefs preserves scoped color profile, tactical FX, and Codec animation keys");
+ 
+     gb_platform_set_preference_scope("");
+     gb_platform_test_set_runtime_prefs_path(nullptr);
 -- 
 2.56.0
 

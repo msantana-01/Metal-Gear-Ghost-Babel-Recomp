@@ -5,6 +5,7 @@
 /* Active-low GB joypad bit positions matching gbrt / platform_sdl.cpp. */
 #define GB_DPAD_RIGHT_BIT 0x01u
 #define GB_DPAD_LEFT_BIT 0x02u
+#define GB_DPAD_UP_BIT 0x04u
 #define GB_DPAD_DOWN_BIT 0x08u
 #define GB_BTN_A_BIT 0x01u
 #define GB_BTN_SELECT_BIT 0x04u
@@ -26,14 +27,17 @@ static RoomControlMacro decode_requested_macro(const RoomControlsInput* in) {
     if ((in->button_edges & GB_REMASTER_BTN_START) != 0u) {
         return ROOM_CONTROL_MACRO_CODEC;
     }
-    if ((in->button_edges & GB_REMASTER_BTN_RB) != 0u) {
+    if (in->button_edges & GB_REMASTER_BTN_RB) {
         return ROOM_CONTROL_MACRO_WEAPON_NEXT;
     }
-    if ((in->button_edges & GB_REMASTER_BTN_LT) != 0u) {
+    if (in->button_edges & GB_REMASTER_BTN_RT) {
         return ROOM_CONTROL_MACRO_WEAPON_PREV;
     }
-    if ((in->button_edges & GB_REMASTER_BTN_LB) != 0u) {
+    if (in->button_edges & GB_REMASTER_BTN_LB) {
         return ROOM_CONTROL_MACRO_ITEM_NEXT;
+    }
+    if (in->button_edges & GB_REMASTER_BTN_LT) {
+        return ROOM_CONTROL_MACRO_ITEM_PREV;
     }
     return ROOM_CONTROL_MACRO_NONE;
 }
@@ -46,6 +50,8 @@ static const char* macro_toast_label(RoomControlMacro macro) {
             return "PREV WEAPON";
         case ROOM_CONTROL_MACRO_ITEM_NEXT:
             return "NEXT ITEM";
+        case ROOM_CONTROL_MACRO_ITEM_PREV:
+            return "PREV ITEM";
         case ROOM_CONTROL_MACRO_CODEC:
             return "CODEC";
         case ROOM_CONTROL_MACRO_TITLE_START:
@@ -63,6 +69,8 @@ static uint8_t macro_direction_dpad_mask(RoomControlMacro macro) {
             return (uint8_t)(0xFFu & ~GB_DPAD_LEFT_BIT);
         case ROOM_CONTROL_MACRO_ITEM_NEXT:
             return (uint8_t)(0xFFu & ~GB_DPAD_DOWN_BIT);
+        case ROOM_CONTROL_MACRO_ITEM_PREV:
+            return (uint8_t)(0xFFu & ~GB_DPAD_UP_BIT);
         case ROOM_CONTROL_MACRO_CODEC:
         case ROOM_CONTROL_MACRO_TITLE_START:
         case ROOM_CONTROL_MACRO_NONE:

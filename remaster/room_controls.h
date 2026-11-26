@@ -12,6 +12,7 @@ typedef enum RoomControlMacro {
     ROOM_CONTROL_MACRO_ITEM_NEXT = 3,
     ROOM_CONTROL_MACRO_CODEC = 4,
     ROOM_CONTROL_MACRO_TITLE_START = 5,
+    ROOM_CONTROL_MACRO_ITEM_PREV = 6,
 } RoomControlMacro;
 
 typedef enum RoomControlPhase {

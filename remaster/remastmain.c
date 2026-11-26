@@ -45,6 +45,7 @@
 
 #include "audio_stats.h"
 #include "camera_extent.h"
+#include "codec_lipsync.h"
 #include "native_presenter.h"
 #include "platform_sdl.h"
 #include "room_actors.h"
@@ -1083,6 +1084,7 @@ static int run_windowed(GBContext* ctx,
     gb_platform_set_screen_effect_default(GB_SCREEN_EFFECT_SHADER);
     gb_platform_set_color_profile_default(GB_COLOR_PROFILE_MODERN);
     gb_platform_set_tactical_fx_default(true);
+    gb_platform_set_codec_lipsync_default(true);
     gb_platform_set_vsync_default(true);
     gb_platform_set_rumble_default(true);
     gb_platform_set_control_preset_default(GB_CONTROL_PRESET_MODERN);
@@ -1103,6 +1105,8 @@ static int run_windowed(GBContext* ctx,
     room_rumble_reset(&rumble);
     RoomControls controls;
     room_controls_reset(&controls);
+    CodecLipsyncState codec_lipsync;
+    codec_lipsync_reset(&codec_lipsync);
     float tactical_alert = 0.0f;
     float tactical_danger = 0.0f;
     PerfCounters perf;
@@ -1146,6 +1150,7 @@ static int run_windowed(GBContext* ctx,
             room_sync.known = false;
             room_rumble_reset(&rumble);
             room_controls_reset(&controls);
+            codec_lipsync_reset(&codec_lipsync);
             tactical_alert = 0.0f;
             tactical_danger = 0.0f;
             gb_platform_set_tactical_fx_state(0.0f, 0.0f);
@@ -1206,6 +1211,11 @@ static int run_windowed(GBContext* ctx,
             status = 1;
             break;
         }
+        const uint32_t codec_left =
+            (view_width > SCREEN_WIDTH) ? (view_width - SCREEN_WIDTH) / 2u : 0u;
+        codec_lipsync_apply(&codec_lipsync, &render_state->frame.hardware, ctx->wram, WRAM_TOTAL,
+                            surface, view_width, view_width, codec_left,
+                            gb_platform_get_codec_lipsync());
         SyncedGuestState* tmp = prev_state;
         prev_state = post_state;
         post_state = tmp;
